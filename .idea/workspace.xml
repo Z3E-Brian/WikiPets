@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreed.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreedDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1723233554614</updated>
       <workItem from="1723233557114" duration="24000" />
-      <workItem from="1723236419553" duration="4729000" />
+      <workItem from="1723236419553" duration="5114000" />
     </task>
     <servers />
   </component>
