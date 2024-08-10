@@ -5,14 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/CatBreedRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/CatBreedService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedDtoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/CatBreedRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/CatBreedServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/UserDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/UserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/UserRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/UserServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreedDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreedDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreedDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreedDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/WikiPetsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/WikiPetsApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +48,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -58,6 +67,7 @@
     "JUnit.All in WikiPets.executor": "Coverage",
     "JUnit.CatBreedServiceTest.createCatBreedTest.executor": "Debug",
     "JUnit.CatBreedServiceTest.executor": "Run",
+    "JUnit.CatBreedTest.executor": "Run",
     "JUnit.DogBreedDtoTest.argsGettersTest.executor": "Run",
     "JUnit.DogBreedDtoTest.argsSettersTest.executor": "Run",
     "JUnit.DogBreedDtoTest.executor": "Run",
@@ -70,13 +80,24 @@
     "JUnit.DogBreedTest.getAllBreedsTest.executor": "Run",
     "JUnit.DogBreedTest.getBreedByIdTest.executor": "Run",
     "JUnit.DogBreedTest.updateDogBreedTest.executor": "Run",
+    "JUnit.ReviewDtoTest.executor": "Run",
+    "JUnit.ReviewRepositoryTest.executor": "Run",
+    "JUnit.ReviewServiceTest.executor": "Run",
+    "JUnit.ReviewTest.executor": "Run",
+    "JUnit.UserDtoTest.equalsAndHashCodeTest.executor": "Run",
+    "JUnit.UserDtoTest.executor": "Run",
+    "JUnit.UserDtoTest.notEqualsAndHashCodeTest.executor": "Run",
+    "JUnit.UserDtoTest.toStringTest.executor": "Run",
+    "JUnit.UserRepositoryTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserTest.executor": "Run",
     "JUnit.org.una.programmingIII.WikiPets.Model in WikiPets.executor": "Run",
     "JUnit.org.una.programmingIII.WikiPets.Repository in WikiPets.executor": "Run",
     "JUnit.org.una.programmingIII.WikiPets.Service in WikiPets.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "Develop",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/PC/Documents/Progra 2/Preguntados",
+    "last_opened_file_path": "C:/Users/Justin/Desktop/Progra lll/WikiPets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -90,8 +111,11 @@
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.una.programmingIII.WikiPets.Service" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.una.programmingIII.WikiPets.Repository" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.CatBreedServiceTest">
+  <component name="RunManager">
     <configuration name="CatBreedServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
@@ -103,22 +127,6 @@
       <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
       <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.CatBreedServiceTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CatBreedServiceTest.createCatBreedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="WikiPets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.CatBreedServiceTest" />
-      <option name="METHOD_NAME" value="createCatBreedTest" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -139,30 +147,50 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="org.una.programmingIII.WikiPets.Repository in WikiPets" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserDtoTest.equalsAndHashCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Repository.*" />
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Repository" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.UserDtoTest" />
+      <option name="METHOD_NAME" value="equalsAndHashCodeTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="org.una.programmingIII.WikiPets.Service in WikiPets" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserDtoTest.notEqualsAndHashCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.UserDtoTest" />
+      <option name="METHOD_NAME" value="notEqualsAndHashCodeTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserDtoTest.toStringTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.UserDtoTest" />
+      <option name="METHOD_NAME" value="toStringTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -177,18 +205,18 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CatBreedServiceTest" />
+        <item itemvalue="JUnit.UserDtoTest.equalsAndHashCodeTest" />
+        <item itemvalue="JUnit.UserDtoTest.notEqualsAndHashCodeTest" />
+        <item itemvalue="JUnit.UserDtoTest.toStringTest" />
         <item itemvalue="JUnit.DogBreedServiceTest.updateDogBreedTest" />
-        <item itemvalue="JUnit.CatBreedServiceTest.createCatBreedTest" />
-        <item itemvalue="JUnit.org.una.programmingIII.WikiPets.Service in WikiPets" />
-        <item itemvalue="JUnit.org.una.programmingIII.WikiPets.Repository in WikiPets" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -202,6 +230,8 @@
       <updated>1723233554614</updated>
       <workItem from="1723233557114" duration="24000" />
       <workItem from="1723236419553" duration="17422000" />
+      <workItem from="1723297788097" duration="2290000" />
+      <workItem from="1723301179911" duration="9461000" />
     </task>
     <servers />
   </component>
