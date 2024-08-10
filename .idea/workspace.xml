@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="" />
+    <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/DogBreedRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/DogBreedService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedDtoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/DogBreedRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/DogBreedServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreedDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreedDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreedDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreedDto.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,6 +58,18 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "JUnit.All in WikiPets.executor": "Coverage",
+    "JUnit.DogBreedDtoTest.argsGettersTest.executor": "Run",
+    "JUnit.DogBreedDtoTest.argsSettersTest.executor": "Run",
+    "JUnit.DogBreedDtoTest.executor": "Coverage",
+    "JUnit.DogBreedRepositoryTest.findByBreedNameTest.executor": "Run",
+    "JUnit.DogBreedRepositoryTest.saveAndFindByIdTest.executor": "Run",
+    "JUnit.DogBreedServiceTest.executor": "Coverage",
+    "JUnit.DogBreedTest.createDogBreedTest.executor": "Run",
+    "JUnit.DogBreedTest.executor": "Run",
+    "JUnit.DogBreedTest.getAllBreedsTest.executor": "Run",
+    "JUnit.DogBreedTest.getBreedByIdTest.executor": "Run",
+    "JUnit.DogBreedTest.updateDogBreedTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "Develop",
     "kotlin-language-version-configured": "true",
@@ -57,7 +82,82 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.una.programmingIII.WikiPets.Service" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.DogBreedTest">
+    <configuration name="All in WikiPets" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DogBreedDtoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.DogBreedDtoTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DogBreedDtoTest.argsGettersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.DogBreedDtoTest" />
+      <option name="METHOD_NAME" value="argsGettersTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DogBreedDtoTest.argsSettersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.DogBreedDtoTest" />
+      <option name="METHOD_NAME" value="argsSettersTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DogBreedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.DogBreedTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WikiPetsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="WikiPets" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.una.programmingIII.WikiPets.WikiPetsApplication" />
@@ -65,6 +165,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.DogBreedTest" />
+        <item itemvalue="JUnit.DogBreedDtoTest" />
+        <item itemvalue="JUnit.All in WikiPets" />
+        <item itemvalue="JUnit.DogBreedDtoTest.argsSettersTest" />
+        <item itemvalue="JUnit.DogBreedDtoTest.argsGettersTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -83,11 +192,20 @@
       <option name="presentableId" value="Default" />
       <updated>1723233554614</updated>
       <workItem from="1723233557114" duration="24000" />
-      <workItem from="1723236419553" duration="5114000" />
+      <workItem from="1723236419553" duration="13018000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/WikiPets$DogBreedDtoTest.ic" NAME="DogBreedDtoTest Coverage Results" MODIFIED="1723251679707" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.una.programmingIII.WikiPets.Model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/WikiPets$DogBreedServiceTest.ic" NAME="DogBreedServiceTest Coverage Results" MODIFIED="1723249691910" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.una.programmingIII.WikiPets.Service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/WikiPets$All_in_WikiPets.ic" NAME="All in WikiPets Coverage Results" MODIFIED="1723251417321" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

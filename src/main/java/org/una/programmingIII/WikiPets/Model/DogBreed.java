@@ -6,6 +6,7 @@ import lombok.*;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "dog_breeds")
 public class DogBreed {
     @Id

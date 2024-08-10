@@ -1,12 +1,14 @@
 package org.una.programmingIII.WikiPets.Model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "cat_breeds")
 public class CatBreed {
     @Id

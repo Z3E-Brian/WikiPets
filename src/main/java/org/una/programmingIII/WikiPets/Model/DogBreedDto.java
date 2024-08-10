@@ -1,10 +1,10 @@
 package org.una.programmingIII.WikiPets.Model;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class DogBreedDto {
     private Long id;
     private String name;
