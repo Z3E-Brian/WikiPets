@@ -41,6 +41,10 @@ public class User {
     )
     private List<DogBreed> favoriteDogBreeds;
 
+    @Version
+    @Column(name = "USER_VERSION")
+    private Long version;
+
 
     public User(UserDto userDto) {
         this.id = userDto.getId();
@@ -48,10 +52,11 @@ public class User {
     }
 
     public void update(UserDto userDto) {
-       this.name = userDto.getName();
-       this.email = userDto.getEmail();
-       this.favoriteCatBreeds = new ArrayList<>();
-       this.favoriteDogBreeds = new ArrayList<>();
+        this.name = userDto.getName();
+        this.email = userDto.getEmail();
+        this.favoriteCatBreeds = new ArrayList<>();
+        this.favoriteDogBreeds = new ArrayList<>();
+        this.version = userDto.getVersion();
     }
 
     public List<CatBreedDto> getFavoriteCatBreedsDto() {

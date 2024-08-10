@@ -51,7 +51,8 @@ public class UserService {
                 user.getName(),
                 user.getEmail(),
                 user.getFavoriteDogBreedsDto(),
-                user.getFavoriteCatBreedsDto()
+                user.getFavoriteCatBreedsDto(),
+                user.getVersion()
         );
     }
 
@@ -61,7 +62,8 @@ public class UserService {
                 userDto.getName(),
                 userDto.getEmail(),
                 userDto.getFavoriteCatBreedsEntity(),
-                userDto.getFavoriteDogBreedsEntity()
+                userDto.getFavoriteDogBreedsEntity(),
+                userDto.getVersion()
         );
     }
 }

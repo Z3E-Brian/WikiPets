@@ -65,11 +65,11 @@ public class UserTest {
     public void equalsAndHashCodeTest() {
         User user1 = new User(1L, "John Doe", "john.doe@example.com",
                 Arrays.asList(new CatBreed(1L, "Siamese", null, null, null, null, null, null, null)),
-                Arrays.asList(new DogBreed(1L, "Golden Retriever", null, null, null, null, null, null, null)));
+                Arrays.asList(new DogBreed(1L, "Golden Retriever", null, null, null, null, null, null, null)),1L);
 
         User user2 = new User(1L, "John Doe", "john.doe@example.com",
                 Arrays.asList(new CatBreed(1L, "Siamese", null, null, null, null, null, null, null)),
-                Arrays.asList(new DogBreed(1L, "Golden Retriever", null, null, null, null, null, null, null)));
+                Arrays.asList(new DogBreed(1L, "Golden Retriever", null, null, null, null, null, null, null)),1L);
 
         assertEquals(user1, user2);
         assertEquals(user1.hashCode(), user2.hashCode());
@@ -79,11 +79,11 @@ public class UserTest {
     public void notEqualsAndHashCodeTest() {
         User user1 = new User(1L, "John Doe", "john.doe@example.com",
                 Arrays.asList(new CatBreed(1L, "Siamese", null, null, null, null, null, null, null)),
-                Arrays.asList(new DogBreed(1L, "Golden Retriever", null, null, null, null, null, null, null)));
+                Arrays.asList(new DogBreed(1L, "Golden Retriever", null, null, null, null, null, null, null)),1L);
 
         User user2 = new User(2L, "Jane Smith", "jane.smith@example.com",
                 Arrays.asList(new CatBreed(2L, "Maine Coon", null, null, null, null, null, null, null)),
-                Arrays.asList(new DogBreed(2L, "Bulldog", null, null, null, null, null, null, null)));
+                Arrays.asList(new DogBreed(2L, "Bulldog", null, null, null, null, null, null, null)),1L);
 
         assertNotEquals(user1, user2);
         assertNotEquals(user1.hashCode(), user2.hashCode());

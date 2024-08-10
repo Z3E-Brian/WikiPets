@@ -47,7 +47,7 @@ public class UserServiceTest {
         user.setFavoriteCatBreeds(Arrays.asList(siamese));
         user.setFavoriteDogBreeds(Arrays.asList(goldenRetriever));
 
-        userDto = new UserDto(1L, "John Doe", "john.doe@example.com", Arrays.asList(new DogBreedDto()), Arrays.asList(new CatBreedDto()));
+        userDto = new UserDto(1L, "John Doe", "john.doe@example.com", Arrays.asList(new DogBreedDto()), Arrays.asList(new CatBreedDto()),1L);
     }
 
     @Test

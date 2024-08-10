@@ -57,8 +57,8 @@ public class UserDtoTest {
         List<CatBreedDto> favoriteCatBreeds = new ArrayList<>();
         List<DogBreedDto> favoriteDogBreeds = new ArrayList<>();
 
-        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds);
-        UserDto userDto2 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds);
+        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds,1L);
+        UserDto userDto2 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds,1L);
 
         assertEquals(userDto1, userDto2);
         assertEquals(userDto1.hashCode(), userDto2.hashCode());
@@ -71,8 +71,8 @@ public class UserDtoTest {
         List<CatBreedDto> favoriteCatBreeds2 = new ArrayList<>();
         List<DogBreedDto> favoriteDogBreeds2 = new ArrayList<>();
 
-        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds1, favoriteCatBreeds1);
-        UserDto userDto2 = new UserDto(2L, "Jane Smith", "jane.smith@example.com", favoriteDogBreeds2, favoriteCatBreeds2);
+        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds1, favoriteCatBreeds1,1L);
+        UserDto userDto2 = new UserDto(2L, "Jane Smith", "jane.smith@example.com", favoriteDogBreeds2, favoriteCatBreeds2,1L);
 
         assertEquals(userDto1.hashCode(), userDto1.hashCode());
         assertNotEquals(userDto1, userDto2);

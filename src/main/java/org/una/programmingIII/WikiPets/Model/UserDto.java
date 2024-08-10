@@ -19,6 +19,7 @@ public class UserDto {
     private String email;
     private List<DogBreedDto> favoriteDogBreeds;
     private List<CatBreedDto> favoriteCatBreeds;
+    private Long version;
 
     public UserDto(User user) {
         this.id = user.getId();
@@ -26,6 +27,7 @@ public class UserDto {
         this.email = user.getEmail();
         this.favoriteDogBreeds = new ArrayList<>();
         this.favoriteCatBreeds = new ArrayList<>();
+        this.version = user.getVersion();
     }
 
     public List<CatBreed> getFavoriteCatBreedsEntity() {
