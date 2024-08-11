@@ -5,22 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/Review.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/ReviewDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/ReviewRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/ReviewService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewDtoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/ReviewRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/ReviewServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuide.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuideDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/TrainingGuideRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/TrainingGuideService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/TrainingGuideDtoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/TrainingGuideTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/TrainingGuideRepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/TrainingGuideServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/UserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/WikiPetsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/WikiPetsApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +81,10 @@
     "JUnit.ReviewRepositoryTest.executor": "Run",
     "JUnit.ReviewServiceTest.executor": "Run",
     "JUnit.ReviewTest.executor": "Run",
+    "JUnit.TrainingGuideDtoTest.executor": "Run",
+    "JUnit.TrainingGuideRepositoryTest.executor": "Run",
+    "JUnit.TrainingGuideServiceTest.executor": "Run",
+    "JUnit.TrainingGuideTest.executor": "Run",
     "JUnit.UserDtoTest.equalsAndHashCodeTest.executor": "Run",
     "JUnit.UserDtoTest.executor": "Run",
     "JUnit.UserDtoTest.notEqualsAndHashCodeTest.executor": "Run",
@@ -213,9 +210,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ReviewDtoTest.argsGettersTest" />
         <item itemvalue="JUnit.ReviewRepositoryTest" />
         <item itemvalue="JUnit.ReviewDtoTest.toStringTest" />
-        <item itemvalue="JUnit.ReviewDtoTest.argsGettersTest" />
         <item itemvalue="JUnit.UserDtoTest.notEqualsAndHashCodeTest" />
         <item itemvalue="JUnit.UserDtoTest.equalsAndHashCodeTest" />
       </list>
@@ -243,6 +240,7 @@
       <workItem from="1723301179911" duration="9558000" />
       <workItem from="1723314347149" duration="2858000" />
       <workItem from="1723317916848" duration="3230000" />
+      <workItem from="1723407944969" duration="3711000" />
     </task>
     <servers />
   </component>
