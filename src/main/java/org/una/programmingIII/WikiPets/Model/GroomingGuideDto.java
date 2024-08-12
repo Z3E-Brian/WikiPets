@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +15,8 @@ public class GroomingGuideDto {
     private String content;
     private String toolsNeeded;
     private String steps;
-    //    List<DogBreed | CatBreed> suitableBreeds;
+    private List<DogBreedDto> suitableDogBreeds;
+    private List<CatBreedDto> suitableCatBreeds;
     //private Long version;
 
 
@@ -23,7 +25,8 @@ public class GroomingGuideDto {
         this.content = groomingGuide.getContent();
         this.toolsNeeded = groomingGuide.getToolsNeeded();
         this.steps = groomingGuide.getSteps();
-        //this.suitableBreeds = groomingGuide.getSuitableBreeds();
+        this.suitableDogBreeds = new ArrayList<>();
+        this.suitableCatBreeds = new ArrayList<>();
         //this.version = catBreed.getVersion();
     }
 

@@ -1,4 +1,5 @@
 package org.una.programmingIII.WikiPets.Model;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,4 @@ public class GroomingGuideTest {
         assertEquals("New Tools", groomingGuide.getToolsNeeded());
         assertEquals("New Steps", groomingGuide.getSteps());
     }
-
-
 }

@@ -1,61 +1,82 @@
 package org.una.programmingIII.WikiPets.Model;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GroomingGuideDtoTest {
 
-    private GroomingGuideDto groomingGuideDto;
-    private GroomingGuide groomingGuide;
+    @Test
+    public void testDefaultConstructor() {
+        GroomingGuideDto groomingGuideDto = new GroomingGuideDto();
 
-    @BeforeEach
-    public void setUp() {
-        groomingGuide = new GroomingGuide();
-        groomingGuide.setId(1L);
-        groomingGuide.setContent("Grooming Content");
-        groomingGuide.setToolsNeeded("Tools Needed");
-        groomingGuide.setSteps("Grooming Steps");
-
-        groomingGuideDto = new GroomingGuideDto(groomingGuide);
+        assertNull(groomingGuideDto.getId());
+        assertNull(groomingGuideDto.getContent());
+        assertNull(groomingGuideDto.getToolsNeeded());
+        assertNull(groomingGuideDto.getSteps());
+        assertNull(groomingGuideDto.getSuitableDogBreeds());
+        assertNull(groomingGuideDto.getSuitableCatBreeds());
     }
 
     @Test
-    public void testGroomingGuideDtoCreation() {
-        assertNotNull(groomingGuideDto);
-    }
+    public void testAllArgsConstructor() {
+        GroomingGuideDto groomingGuideDto = new GroomingGuideDto(
+                1L,
+                "Content",
+                "Tools",
+                "Steps",
+                Arrays.asList(),
+                Arrays.asList()
+        );
 
-    @Test
-    public void testGetters() {
         assertEquals(1L, groomingGuideDto.getId());
-        assertEquals("Grooming Content", groomingGuideDto.getContent());
-        assertEquals("Tools Needed", groomingGuideDto.getToolsNeeded());
-        assertEquals("Grooming Steps", groomingGuideDto.getSteps());
-    }
-
-    @Test
-    public void testSetters() {
-        groomingGuideDto.setContent("New Content");
-        groomingGuideDto.setToolsNeeded("New Tools");
-        groomingGuideDto.setSteps("New Steps");
-
-        assertEquals("New Content", groomingGuideDto.getContent());
-        assertEquals("New Tools", groomingGuideDto.getToolsNeeded());
-        assertEquals("New Steps", groomingGuideDto.getSteps());
+        assertEquals("Content", groomingGuideDto.getContent());
+        assertEquals("Tools", groomingGuideDto.getToolsNeeded());
+        assertEquals("Steps", groomingGuideDto.getSteps());
+        assertEquals(0, groomingGuideDto.getSuitableDogBreeds().size());
+        assertEquals(0, groomingGuideDto.getSuitableCatBreeds().size());
     }
 
     @Test
     public void testConstructorWithGroomingGuide() {
+        GroomingGuide groomingGuide = new GroomingGuide();
+        groomingGuide.setId(1L);
+        groomingGuide.setContent("Content");
+        groomingGuide.setToolsNeeded("Tools");
+        groomingGuide.setSteps("Steps");
+
+        GroomingGuideDto groomingGuideDto = new GroomingGuideDto(groomingGuide);
+
         assertEquals(1L, groomingGuideDto.getId());
-        assertEquals("Grooming Content", groomingGuideDto.getContent());
-        assertEquals("Tools Needed", groomingGuideDto.getToolsNeeded());
-        assertEquals("Grooming Steps", groomingGuideDto.getSteps());
+        assertEquals("Content", groomingGuideDto.getContent());
+        assertEquals("Tools", groomingGuideDto.getToolsNeeded());
+        assertEquals("Steps", groomingGuideDto.getSteps());
+        assertNotNull(groomingGuideDto.getSuitableDogBreeds());
+        assertNotNull(groomingGuideDto.getSuitableCatBreeds());
+    }
+
+    @Test
+    public void testListIntegrity() {
+        GroomingGuideDto groomingGuideDto = new GroomingGuideDto();
+
+        DogBreedDto dogBreed = new DogBreedDto();
+        CatBreedDto catBreed = new CatBreedDto();
+
+        groomingGuideDto.getSuitableDogBreeds().add(dogBreed);
+        groomingGuideDto.getSuitableCatBreeds().add(catBreed);
+
+        assertEquals(1, groomingGuideDto.getSuitableDogBreeds().size());
+        assertEquals(1, groomingGuideDto.getSuitableCatBreeds().size());
     }
 
     @Test
     public void testEqualsAndHashCode() {
-        GroomingGuideDto anotherGroomingGuideDto = new GroomingGuideDto(groomingGuide);
-        assertEquals(groomingGuideDto, anotherGroomingGuideDto);
-        assertEquals(groomingGuideDto.hashCode(), anotherGroomingGuideDto.hashCode());
+        GroomingGuideDto dto1 = new GroomingGuideDto(1L, "Content", "Tools", "Steps", null, null);
+        GroomingGuideDto dto2 = new GroomingGuideDto(1L, "Content", "Tools", "Steps", null, null);
+
+        assertEquals(dto1, dto2);
+        assertEquals(dto1.hashCode(), dto2.hashCode());
     }
 }

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,13 +21,37 @@ public class BehaviorGuide {
     private String title;
     @Column(length = 200, nullable = false)
     private String content;
-//    @Column(length = 10, nullable = false)
-//    private List<Integer> getCommonIssues;
     @Column(length = 150, nullable = false)
     private String solutions;
-//    list (List<DogBreed | CatBreed>)
-//    @Column(length = 50, nullable = false)
-//    private List<DogBreed|CatBreed> suitableBreeds;
+    @ManyToMany
+    @JoinTable(
+            name = "common_issues_dog_breeds",
+            joinColumns = @JoinColumn(name = "common_issues_id"),
+            inverseJoinColumns = @JoinColumn(name = "dog_breed_id")
+    )
+    private List<DogBreed> dogBreedsCommonIssues;
+    @ManyToMany
+    @JoinTable(
+            name = "common_issues_cat_breeds",
+            joinColumns = @JoinColumn(name = "common_issues_id"),
+            inverseJoinColumns = @JoinColumn(name = "cat_breed_id")
+    )
+    private List<DogBreed> catBreedsCommonIssues;
+    @ManyToMany
+    @JoinTable(
+            name = "behavior_guide_dog_breeds",
+            joinColumns = @JoinColumn(name = "behavior_guide_id"),
+            inverseJoinColumns = @JoinColumn(name = "dog_breed_id")
+    )
+    private List<DogBreed> suitableDogBreeds;
+
+    @ManyToMany
+    @JoinTable(
+            name = "behavior_guide_cat_breeds",
+            joinColumns = @JoinColumn(name = "behavior_guide_id"),
+            inverseJoinColumns = @JoinColumn(name = "cat_breed_id")
+    )
+    private List<DogBreed> suitableCatBreeds;
 //    @Version
 //    @Column(name = "CAT_BREED_VERSION")
 //    private Long version;
@@ -37,7 +62,12 @@ public class BehaviorGuide {
     }
 
     public void update(BehaviorGuideDto behaviorGuideDto) {
-        this.id = behaviorGuideDto.getId();
+        this.title = behaviorGuideDto.getTitle();
+        this.content = behaviorGuideDto.getContent();
+        this.dogBreedsCommonIssues = new ArrayList<>();
+        this.catBreedsCommonIssues = new ArrayList<>();
+        this.suitableDogBreeds = new ArrayList<>();
+        this.suitableCatBreeds = new ArrayList<>();
 
         //this.version = catBreedDto.getVersion();
     }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,8 +14,11 @@ public class BehaviorGuideDto {
     private Long id;
     private String title;
     private String content;
-//    private List<Integer> commonIssues;
+//    private List<Issues> dogBreedCommonIssues;
+//    private List<Issues> catBreedCommonIssues;
     private String solutions;
+    private List<DogBreedDto> suitableDogBreeds;
+    private List<CatBreedDto> suitableCatBreeds;
     //private Long version;
 
 
@@ -24,6 +28,8 @@ public class BehaviorGuideDto {
         this.content = behaviorGuide.getContent();
         //this.commonIssues = behaviorGuide.getCommonIssues();
         this.solutions = behaviorGuide.getSolutions();
+        this.suitableDogBreeds = new ArrayList<>();
+        this.suitableCatBreeds = new ArrayList<>();
         //this.version = catBreed.getVersion();
     }
 

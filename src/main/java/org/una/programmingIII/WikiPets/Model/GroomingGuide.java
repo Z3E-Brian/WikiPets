@@ -5,13 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "grooming_guides")
 public class GroomingGuide {
-    //id, title, content, toolsNeeded, steps, suitableBreeds (List<DogBreed | CatBreed>).
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,12 +23,24 @@ public class GroomingGuide {
     private String toolsNeeded;
     @Column(length = 250, nullable = false)
     private String steps;
-//    List<DogBreed | CatBreed> suitableBreeds
-//    @Column(length = 50, nullable = false)
-//    private String suitableBreeds;
+    @ManyToMany
+    @JoinTable(
+            name = "grooming_guide_dog_breeds",
+            joinColumns = @JoinColumn(name = "grooming_guide_id"),
+            inverseJoinColumns = @JoinColumn(name = "dog_breed_id")
+    )
+    private List<DogBreed> suitableDogBreeds;
+
+    @ManyToMany
+    @JoinTable(
+            name = "grooming_guide_cat_breeds",
+            joinColumns = @JoinColumn(name = "grooming_guide_id"),
+            inverseJoinColumns = @JoinColumn(name = "cat_breed_id")
+    )
+    private List<DogBreed> suitableCatBreeds;
 
 //    @Version
-//    @Column(name = "CAT_BREED_VERSION")
+//    @Column(name = "GROOMING_GUIDE_VERSION")
 //    private Long version;
 
     public GroomingGuide(GroomingGuideDto GroomingGuideDto) {
@@ -38,6 +52,8 @@ public class GroomingGuide {
         this.content = GroomingGuideDto.getContent();
         this.toolsNeeded = GroomingGuideDto.getToolsNeeded();
         this.steps = GroomingGuideDto.getSteps();
+        this.suitableDogBreeds = new ArrayList<>();
+        this.suitableCatBreeds = new ArrayList<>();
         //this.suitableBreeds = GroomingGuideDto.getSuitableBreeds();
         //this.version = GroomingGuideDto.getVersion();
     }
