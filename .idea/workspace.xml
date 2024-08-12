@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/BehaviorGuide.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideDtoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/GroomingGuideDtoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/GroomingGuideTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +30,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "Z3E-Brian"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Z3E-Brian/WikiPets.git",
+    "accountId": "b74b7e75-b6ad-436d-a521-2ce3d8a709ec"
+  }
+}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -55,7 +65,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
     "JUnit.All in WikiPets.executor": "Coverage",
+    "JUnit.BehaviorGuideDtoTest.executor": "Run",
     "JUnit.CatBreedServiceTest.createCatBreedTest.executor": "Debug",
     "JUnit.CatBreedServiceTest.executor": "Run",
     "JUnit.CatBreedTest.executor": "Run",
@@ -242,7 +254,7 @@
       <workItem from="1723317916848" duration="3230000" />
       <workItem from="1723407944969" duration="3711000" />
       <workItem from="1723413730615" duration="1539000" />
-      <workItem from="1723422232182" duration="7974000" />
+      <workItem from="1723422232182" duration="8737000" />
     </task>
     <servers />
   </component>
