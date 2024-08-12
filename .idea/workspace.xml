@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingSchedule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/FeedingScheduleRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDtoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/FeedingScheduleRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/BehaviorGuide.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideDtoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,7 +40,7 @@
     </option>
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -106,6 +102,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.WikiPetsApplication.executor": "Run",
     "git-widget-placeholder": "Develop",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Justin/Desktop/Progra lll/WikiPets",
     "node.js.detected.package.eslint": "true",
@@ -125,7 +122,22 @@
       <recent name="org.una.programmingIII.WikiPets.Repository" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.BehaviorGuideDtoTest">
+    <configuration name="BehaviorGuideDtoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.BehaviorGuideDtoTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ReviewDtoTest.argsGettersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
@@ -173,22 +185,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserDtoTest.equalsAndHashCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="WikiPets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.UserDtoTest" />
-      <option name="METHOD_NAME" value="equalsAndHashCodeTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UserDtoTest.notEqualsAndHashCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
@@ -214,11 +210,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BehaviorGuideDtoTest" />
         <item itemvalue="JUnit.ReviewDtoTest.argsGettersTest" />
         <item itemvalue="JUnit.ReviewRepositoryTest" />
         <item itemvalue="JUnit.ReviewDtoTest.toStringTest" />
         <item itemvalue="JUnit.UserDtoTest.notEqualsAndHashCodeTest" />
-        <item itemvalue="JUnit.UserDtoTest.equalsAndHashCodeTest" />
       </list>
     </recent_temporary>
   </component>
@@ -246,6 +242,7 @@
       <workItem from="1723317916848" duration="3230000" />
       <workItem from="1723407944969" duration="3711000" />
       <workItem from="1723413730615" duration="1539000" />
+      <workItem from="1723422232182" duration="7974000" />
     </task>
     <servers />
   </component>
