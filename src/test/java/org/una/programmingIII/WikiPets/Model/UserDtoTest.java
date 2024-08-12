@@ -81,6 +81,6 @@ public class UserDtoTest {
 
     @Test
     public void toStringTest() {
-        assertEquals("UserDto(id=1, name=John Doe, email=john.doe@example.com, favoriteDogBreeds=[], favoriteCatBreeds=[])", userDto.toString());
+        assertEquals("UserDto(id=1, name=John Doe, email=john.doe@example.com, favoriteDogBreeds=[], favoriteCatBreeds=[], version=null)", userDto.toString());
     }
 }

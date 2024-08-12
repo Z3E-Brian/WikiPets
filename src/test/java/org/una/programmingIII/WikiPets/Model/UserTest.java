@@ -91,7 +91,11 @@ public class UserTest {
 
     @Test
     public void toStringTest() {
-        String expectedString = "User(id=1, name=John Doe, email=john.doe@example.com, favoriteCatBreeds=[CatBreed(id=1, name=Siamese, origin=null, size=null, coat=null, color=null, lifeSpan=null, temperament=null, description=null)], favoriteDogBreeds=[DogBreed(id=1, name=Golden Retriever, origin=null, size=null, coat=null, color=null, lifeSpan=null, temperament=null, description=null)])";
+        String expectedString = "User(id=1, name=John Doe, email=john.doe@example.com, " +
+                "favoriteCatBreeds=[CatBreed(id=1, name=Siamese, origin=null, size=null, " +
+                "coat=null, color=null, lifeSpan=null, temperament=null, description=null)]," +
+                " favoriteDogBreeds=[DogBreed(id=1, name=Golden Retriever, origin=null, size=null," +
+                " coat=null, color=null, lifeSpan=null, temperament=null, description=null)], version=null)";
         assertEquals(expectedString, user.toString());
     }
 }
