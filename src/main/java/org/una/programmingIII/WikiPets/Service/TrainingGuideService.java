@@ -60,11 +60,11 @@ public class TrainingGuideService {
         return trainingGuides.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    private TrainingGuideDto convertToDto(TrainingGuide trainingGuide) {
-        return new TrainingGuideDto(trainingGuide);
-    }
-
-    private TrainingGuide convertToEntity(TrainingGuideDto trainingGuideDto) {
-        return new TrainingGuide(trainingGuideDto);
-    }
+  private TrainingGuideDto convertToDto(TrainingGuide trainingGuide) {
+//        return new TrainingGuideDto(trainingGuide);
+  return null;}
+//
+   private TrainingGuide convertToEntity(TrainingGuideDto trainingGuideDto) {
+//        return new TrainingGuide(trainingGuideDto);
+return null;  }
 }

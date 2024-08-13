@@ -46,24 +46,26 @@ public class UserService {
     }
 
     private UserDto convertToDto(User user) {
-        return new UserDto(
-                user.getId(),
-                user.getName(),
-                user.getEmail(),
-                user.getFavoriteDogBreedsDto(),
-                user.getFavoriteCatBreedsDto(),
-                user.getVersion()
-        );
+//        return new UserDto(
+//                user.getId(),
+//                user.getName(),
+//                user.getEmail(),
+//                user.getFavoriteDogBreedsDto(),
+//                user.getFavoriteCatBreedsDto(),
+//                user.getVersion()
+//        );
+        return null;
     }
 
     private User convertToEntity(UserDto userDto) {
-        return new User(
-                userDto.getId(),
-                userDto.getName(),
-                userDto.getEmail(),
-                userDto.getFavoriteCatBreedsEntity(),
-                userDto.getFavoriteDogBreedsEntity(),
-                userDto.getVersion()
-        );
+//        return new User(
+//                userDto.getId(),
+//                userDto.getName(),
+//                userDto.getEmail(),
+//                userDto.getFavoriteCatBreedsEntity(),
+//                userDto.getFavoriteDogBreedsEntity(),
+//                userDto.getVersion()
+//        );
+        return null;
     }
 }

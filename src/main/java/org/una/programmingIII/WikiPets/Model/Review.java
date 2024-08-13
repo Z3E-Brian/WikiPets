@@ -38,17 +38,17 @@ public class Review {
     @Column(name = "REVIEW _VERSION")
     private Long version;
 
-    public Review(ReviewDto reviewDto) {
-        this.id = reviewDto.getId();
-        update(reviewDto);
-    }
-
-    public void update(ReviewDto reviewDto) {
-        this.comment = reviewDto.getComment();
-        this.rating = reviewDto.getRating();
-        this.catBreed= new CatBreed(reviewDto.getCatBreedDto());
-        this.dogBreed= new DogBreed(reviewDto.getDogBreedDto());
-        this.user= new User(reviewDto.getUserDto());
-
-    }
+//    public Review(ReviewDto reviewDto) {
+//        this.id = reviewDto.getId();
+//        update(reviewDto);
+//    }
+//
+//    public void update(ReviewDto reviewDto) {
+//        this.comment = reviewDto.getComment();
+//        this.rating = reviewDto.getRating();
+//        this.catBreed= new CatBreed(reviewDto.getCatBreedDto());
+//        this.dogBreed= new DogBreed(reviewDto.getDogBreedDto());
+//        this.user= new User(reviewDto.getUserDto());
+//
+//    }
 }

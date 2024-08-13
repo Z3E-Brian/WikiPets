@@ -34,16 +34,16 @@ public class FeedingSchedule {
     @Column(name = "FEEDING_SCHEDULE_VERSION")
     private Long version;
 
-    public FeedingSchedule(FeedingScheduleDto feedingScheduleDto) {
-        this.id = feedingScheduleDto.getId();
-        update(feedingScheduleDto);
-    }
-
-    public void update(FeedingScheduleDto feedingScheduleDto) {
-        this.catBreed = feedingScheduleDto.getCatBreedDto() != null ? new CatBreed(feedingScheduleDto.getCatBreedDto()) : null;
-        this.dogBreed = feedingScheduleDto.getDogBreedDto() != null ? new DogBreed(feedingScheduleDto.getDogBreedDto()) : null;
-        this.ageGroup = feedingScheduleDto.getAgeGroup();
-        this.feedingTimes = feedingScheduleDto.getFeedingTimes();
-        this.version = feedingScheduleDto.getVersion();
-    }
+//    public FeedingSchedule(FeedingScheduleDto feedingScheduleDto) {
+//        this.id = feedingScheduleDto.getId();
+//        update(feedingScheduleDto);
+//    }
+//
+//    public void update(FeedingScheduleDto feedingScheduleDto) {
+//        this.catBreed = feedingScheduleDto.getCatBreedDto() != null ? new CatBreed(feedingScheduleDto.getCatBreedDto()) : null;
+//        this.dogBreed = feedingScheduleDto.getDogBreedDto() != null ? new DogBreed(feedingScheduleDto.getDogBreedDto()) : null;
+//        this.ageGroup = feedingScheduleDto.getAgeGroup();
+//        this.feedingTimes = feedingScheduleDto.getFeedingTimes();
+//        this.version = feedingScheduleDto.getVersion();
+//    }
 }

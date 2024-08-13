@@ -16,9 +16,9 @@ public class CatBreedService {
     private final CatBreedMapper catBreedMapper;
 
     @Autowired
-    public CatBreedService(CatBreedRepository catBreedRepository, CatBreedMapper catBreedMapper) {
+    public CatBreedService(CatBreedRepository catBreedRepository  ) {
         this.catBreedRepository = catBreedRepository;
-        this.catBreedMapper = catBreedMapper;
+        this.catBreedMapper = CatBreedMapper.INSTANCE;
     }
 
     public List<CatBreedDto> getAllBreeds() {

@@ -15,12 +15,12 @@ public class FeedingScheduleDto {
     private String feedingTimes;
     private Long version;
 
-    public FeedingScheduleDto(FeedingSchedule feedingSchedule) {
-        this.id = feedingSchedule.getId();
-        this.catBreedDto = new CatBreedDto(feedingSchedule.getCatBreed());
-        this.dogBreedDto = new DogBreedDto(feedingSchedule.getDogBreed());
-        this.ageGroup = feedingSchedule.getAgeGroup();
-        this.feedingTimes = feedingSchedule.getFeedingTimes();
-        this.version = feedingSchedule.getVersion();
-    }
+//    public FeedingScheduleDto(FeedingSchedule feedingSchedule) {
+//        this.id = feedingSchedule.getId();
+//        this.catBreedDto = new CatBreedDto(feedingSchedule.getCatBreed());
+//        this.dogBreedDto = new DogBreedDto(feedingSchedule.getDogBreed());
+//        this.ageGroup = feedingSchedule.getAgeGroup();
+//        this.feedingTimes = feedingSchedule.getFeedingTimes();
+//        this.version = feedingSchedule.getVersion();
+//    }
 }

@@ -45,26 +45,28 @@ public class ReviewService {
     }
 
     private ReviewDto convertToDto(Review review) {
-        return new ReviewDto(
-                review.getId(),
-                review.getCatBreed() != null ? new CatBreedDto(review.getCatBreed()) : null,
-                review.getDogBreed() != null ? new DogBreedDto(review.getDogBreed()) : null,
-                new UserDto(review.getUser()),
-                review.getRating(),
-                review.getComment(),
-                review.getVersion()
-        );
+//        return new ReviewDto(
+//                review.getId(),
+//                review.getCatBreed() != null ? new CatBreedDto(review.getCatBreed()) : null,
+//                review.getDogBreed() != null ? new DogBreedDto(review.getDogBreed()) : null,
+//                new UserDto(review.getUser()),
+//                review.getRating(),
+//                review.getComment(),
+//                review.getVersion()
+//        );
+        return null;
     }
 
     private Review convertToEntity(ReviewDto reviewDto) {
-        return new Review(
-                reviewDto.getId(),
-                reviewDto.getCatBreedDto() != null ? new CatBreed(reviewDto.getCatBreedDto()) : null,
-                reviewDto.getDogBreedDto() != null ? new DogBreed(reviewDto.getDogBreedDto()) : null,
-                new User(reviewDto.getUserDto()),
-                reviewDto.getRating(),
-                reviewDto.getComment(),
-                reviewDto.getVersion()
-        );
+//        return new Review(
+//                reviewDto.getId(),
+//                reviewDto.getCatBreedDto() != null ? new CatBreed(reviewDto.getCatBreedDto()) : null,
+//                reviewDto.getDogBreedDto() != null ? new DogBreed(reviewDto.getDogBreedDto()) : null,
+//                new User(reviewDto.getUserDto()),
+//                reviewDto.getRating(),
+//                reviewDto.getComment(),
+//                reviewDto.getVersion()
+//        );
+        return null;
     }
 }

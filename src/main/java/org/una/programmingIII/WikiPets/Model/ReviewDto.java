@@ -17,12 +17,12 @@ public class ReviewDto {
     private String comment;
     private Long version;
 
-    public ReviewDto(Review review) {
-        this.id = review.getId();
-        this.catBreedDto = new CatBreedDto(review.getCatBreed());
-        this.dogBreedDto = new DogBreedDto(review.getDogBreed());
-        this.userDto = new UserDto(review.getUser());
-        this.rating = review.getRating();
-        this.comment = review.getComment();
-    }
+//    public ReviewDto(Review review) {
+//        this.id = review.getId();
+//        this.catBreedDto = new CatBreedDto(review.getCatBreed());
+//        this.dogBreedDto = new DogBreedDto(review.getDogBreed());
+//        this.userDto = new UserDto(review.getUser());
+//        this.rating = review.getRating();
+//        this.comment = review.getComment();
+//    }
 }
