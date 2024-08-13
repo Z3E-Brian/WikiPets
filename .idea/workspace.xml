@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/BreedComparisonServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/WikiPetsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/WikiPetsApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,71 +63,72 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;JUnit.All in WikiPets.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.BehaviorGuideDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CatBreedServiceTest.createCatBreedTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.CatBreedServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CatBreedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedDtoTest.argsGettersTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedDtoTest.argsSettersTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedRepositoryTest.findByBreedNameTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedRepositoryTest.saveAndFindByIdTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedServiceTest.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.DogBreedServiceTest.updateDogBreedTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.DogBreedTest.createDogBreedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.getAllBreedsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.getBreedByIdTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.updateDogBreedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GroomingGuideDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GroomingGuideDtoTest.testDefaultConstructor.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewDtoTest.argsGettersTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewDtoTest.toStringTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.ReviewRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.equalsAndHashCodeTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.notEqualsAndHashCodeTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.toStringTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.org.una.programmingIII.WikiPets.Model in WikiPets.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.org.una.programmingIII.WikiPets.Repository in WikiPets.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.org.una.programmingIII.WikiPets.Service in WikiPets.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.WikiPetsApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Develop&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Justin/Desktop/Progra lll/WikiPets&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "JUnit.All in WikiPets.executor": "Coverage",
+    "JUnit.BehaviorGuideDtoTest.executor": "Run",
+    "JUnit.BreedComparisonServiceTest.executor": "Run",
+    "JUnit.CatBreedServiceTest.createCatBreedTest.executor": "Debug",
+    "JUnit.CatBreedServiceTest.executor": "Run",
+    "JUnit.CatBreedTest.executor": "Run",
+    "JUnit.DogBreedDtoTest.argsGettersTest.executor": "Run",
+    "JUnit.DogBreedDtoTest.argsSettersTest.executor": "Run",
+    "JUnit.DogBreedDtoTest.executor": "Run",
+    "JUnit.DogBreedRepositoryTest.findByBreedNameTest.executor": "Run",
+    "JUnit.DogBreedRepositoryTest.saveAndFindByIdTest.executor": "Run",
+    "JUnit.DogBreedServiceTest.executor": "Coverage",
+    "JUnit.DogBreedServiceTest.updateDogBreedTest.executor": "Debug",
+    "JUnit.DogBreedTest.createDogBreedTest.executor": "Run",
+    "JUnit.DogBreedTest.executor": "Run",
+    "JUnit.DogBreedTest.getAllBreedsTest.executor": "Run",
+    "JUnit.DogBreedTest.getBreedByIdTest.executor": "Run",
+    "JUnit.DogBreedTest.updateDogBreedTest.executor": "Run",
+    "JUnit.FeedingScheduleDtoTest.executor": "Run",
+    "JUnit.FeedingScheduleRepositoryTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.executor": "Run",
+    "JUnit.FeedingScheduleTest.executor": "Run",
+    "JUnit.GroomingGuideDtoTest.executor": "Run",
+    "JUnit.GroomingGuideDtoTest.testDefaultConstructor.executor": "Run",
+    "JUnit.ReviewDtoTest.argsGettersTest.executor": "Run",
+    "JUnit.ReviewDtoTest.executor": "Run",
+    "JUnit.ReviewDtoTest.toStringTest.executor": "Debug",
+    "JUnit.ReviewRepositoryTest.executor": "Run",
+    "JUnit.ReviewServiceTest.executor": "Run",
+    "JUnit.ReviewTest.executor": "Run",
+    "JUnit.TrainingGuideDtoTest.executor": "Run",
+    "JUnit.TrainingGuideRepositoryTest.executor": "Run",
+    "JUnit.TrainingGuideServiceTest.executor": "Run",
+    "JUnit.TrainingGuideTest.executor": "Run",
+    "JUnit.UserDtoTest.equalsAndHashCodeTest.executor": "Run",
+    "JUnit.UserDtoTest.executor": "Run",
+    "JUnit.UserDtoTest.notEqualsAndHashCodeTest.executor": "Run",
+    "JUnit.UserDtoTest.toStringTest.executor": "Run",
+    "JUnit.UserRepositoryTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserTest.executor": "Run",
+    "JUnit.org.una.programmingIII.WikiPets.Model in WikiPets.executor": "Run",
+    "JUnit.org.una.programmingIII.WikiPets.Repository in WikiPets.executor": "Run",
+    "JUnit.org.una.programmingIII.WikiPets.Service in WikiPets.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.WikiPetsApplication.executor": "Run",
+    "git-widget-placeholder": "Develop",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Justin/Desktop/Progra lll/WikiPets",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "inlay.hints",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.una.programmingIII.WikiPets.Service" />
@@ -259,6 +260,7 @@
       <workItem from="1723481242510" duration="38000" />
       <workItem from="1723481287177" duration="5382000" />
       <workItem from="1723500931225" duration="118000" />
+      <workItem from="1723561930907" duration="467000" />
     </task>
     <servers />
   </component>
