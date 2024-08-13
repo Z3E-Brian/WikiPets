@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Data
@@ -19,20 +20,7 @@ public class CatBreedDto {
     private String lifeSpan;
     private String temperament;
     private String description;
-    //private Long version;
-
-
-    public CatBreedDto(CatBreed catBreed) {
-        this.id = catBreed.getId();
-        this.name = catBreed.getName();
-        this.origin = catBreed.getOrigin();
-        this.size = catBreed.getSize();
-        this.coat = catBreed.getCoat();
-        this.color = catBreed.getColor();
-        this.lifeSpan = catBreed.getLifeSpan();
-        this.temperament = catBreed.getTemperament();
-        this.description = catBreed.getDescription();
-        //this.version = catBreed.getVersion();
-    }
+    private LocalDate createdDate;
+    private LocalDate modifiedDate;
 
 }

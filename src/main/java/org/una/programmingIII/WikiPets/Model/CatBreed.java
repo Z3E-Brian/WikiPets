@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -30,24 +32,9 @@ public class CatBreed {
     private String temperament;
     @Column(length = 2000, nullable = false)
     private String description;
-//    @Version
-//    @Column(name = "CAT_BREED_VERSION")
-//    private Long version;
+    @Column (nullable = false)
+    private LocalDate createdDate;
+    @Column (nullable = false)
+    private LocalDate modifiedDate;
 
-    public CatBreed(CatBreedDto catBreedDto) {
-        this.id = catBreedDto.getId();
-        update(catBreedDto);
-    }
-
-    public void update(CatBreedDto catBreedDto) {
-        this.name = catBreedDto.getName();
-        this.origin = catBreedDto.getOrigin();
-        this.size = catBreedDto.getSize();
-        this.coat = catBreedDto.getCoat();
-        this.color = catBreedDto.getColor();
-        this.lifeSpan = catBreedDto.getLifeSpan();
-        this.temperament = catBreedDto.getTemperament();
-        this.description = catBreedDto.getDescription();
-        //this.version = catBreedDto.getVersion();
-    }
 }

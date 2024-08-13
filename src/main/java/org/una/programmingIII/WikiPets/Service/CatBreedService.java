@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Mapper.CatBreedMapper;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Model.CatBreedDto;
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class CatBreedService {
     private final CatBreedRepository catBreedRepository;
+    private final CatBreedMapper catBreedMapper;
 
     @Autowired
-    public CatBreedService(CatBreedRepository catBreedRepository) {
+    public CatBreedService(CatBreedRepository catBreedRepository, CatBreedMapper catBreedMapper) {
         this.catBreedRepository = catBreedRepository;
+        this.catBreedMapper = catBreedMapper;
     }
 
     public List<CatBreedDto> getAllBreeds() {
@@ -45,30 +48,10 @@ public class CatBreedService {
     }
 
     private CatBreedDto convertToDto(CatBreed catBreed) {
-        return new CatBreedDto(
-                catBreed.getId(),
-                catBreed.getName(),
-                catBreed.getOrigin(),
-                catBreed.getSize(),
-                catBreed.getCoat(),
-                catBreed.getColor(),
-                catBreed.getLifeSpan(),
-                catBreed.getTemperament(),
-                catBreed.getDescription()
-        );
+        return catBreedMapper.toCatBreedDto(catBreed);
     }
 
     private CatBreed convertToEntity(CatBreedDto catBreedDto) {
-        return new CatBreed(
-                catBreedDto.getId(),
-                catBreedDto.getName(),
-                catBreedDto.getOrigin(),
-                catBreedDto.getSize(),
-                catBreedDto.getCoat(),
-                catBreedDto.getColor(),
-                catBreedDto.getLifeSpan(),
-                catBreedDto.getTemperament(),
-                catBreedDto.getDescription()
-        );
+        return catBreedMapper.toCatBreed(catBreedDto);
     }
 }
