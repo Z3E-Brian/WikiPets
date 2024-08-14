@@ -32,8 +32,8 @@ public class CatBreedRepositoryTest {
 
     @Test
     public void findByBreedNameTest() {
-        when(catBreedRepository.findByBreedName("Siamese")).thenReturn(catBreed);
-        CatBreed result = catBreedRepository.findByBreedName("Siamese");
+        when(catBreedRepository.findByCatBreedName("Siamese")).thenReturn(catBreed);
+        CatBreed result = catBreedRepository.findByCatBreedName("Siamese");
 
         assertEquals(1L, result.getId());
         assertEquals("Siamese", result.getName());
