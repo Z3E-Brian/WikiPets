@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Mapper.UserMapper;
 import org.una.programmingIII.WikiPets.Model.User;
 import org.una.programmingIII.WikiPets.Model.UserDto;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.userMapper = UserMapper.INSTANCE;
     }
 
     public List<UserDto> getAllUsers() {
@@ -46,26 +49,10 @@ public class UserService {
     }
 
     private UserDto convertToDto(User user) {
-//        return new UserDto(
-//                user.getId(),
-//                user.getName(),
-//                user.getEmail(),
-//                user.getFavoriteDogBreedsDto(),
-//                user.getFavoriteCatBreedsDto(),
-//                user.getVersion()
-//        );
-        return null;
+        return UserMapper.INSTANCE.toCatBreedDto(user);
     }
 
     private User convertToEntity(UserDto userDto) {
-//        return new User(
-//                userDto.getId(),
-//                userDto.getName(),
-//                userDto.getEmail(),
-//                userDto.getFavoriteCatBreedsEntity(),
-//                userDto.getFavoriteDogBreedsEntity(),
-//                userDto.getVersion()
-//        );
-        return null;
+        return UserMapper.INSTANCE.toCatBreed(userDto);
     }
 }

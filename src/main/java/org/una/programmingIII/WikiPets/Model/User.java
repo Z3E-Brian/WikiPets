@@ -44,35 +44,4 @@ public class User {
     @Version
     @Column(name = "USER_VERSION")
     private Long version;
-
-//
-//    public User(UserDto userDto) {
-//        this.id = userDto.getId();
-//        update(userDto);
-//    }
-//
-//    public void update(UserDto userDto) {
-//        this.name = userDto.getName();
-//        this.email = userDto.getEmail();
-//        this.favoriteCatBreeds = new ArrayList<>();
-//        this.favoriteDogBreeds = new ArrayList<>();
-//        this.version = userDto.getVersion();
-//    }
-//
-//    public List<CatBreedDto> getFavoriteCatBreedsDto() {
-//        List<CatBreedDto> favoriteCatBreedsDto = new ArrayList<>();
-//        for (CatBreed catBreed : favoriteCatBreeds) {
-//            favoriteCatBreedsDto.add(catBreedMapper.toCatBreedDto(catBreed));
-//        }
-//        return favoriteCatBreedsDto;
-//    }
-//
-//    public List<DogBreedDto> getFavoriteDogBreedsDto() {
-//        List<DogBreedDto> favoriteDogBreedsDto = new ArrayList<>();
-//        for (DogBreed dogBreed : favoriteDogBreeds) {
-//            favoriteDogBreedsDto.add(new DogBreedDto(dogBreed));
-//        }
-//        return favoriteDogBreedsDto;
-//    }
-
 }

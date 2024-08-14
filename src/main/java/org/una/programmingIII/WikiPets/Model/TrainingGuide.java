@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -46,32 +45,4 @@ public class TrainingGuide {
     @Column(name = "TRAINING_GUIDE_VERSION")
     private Long version;
 
-//
-//    public TrainingGuide(TrainingGuideDto trainingGuideDto) {
-//        this.id = trainingGuideDto.getId();
-//        update(trainingGuideDto);
-//    }
-//
-//    public void update(TrainingGuideDto trainingGuideDto) {
-//      this.title = trainingGuideDto.getTitle();
-//      this.content = trainingGuideDto.getContent();
-//      this.catBreeds= trainingGuideDto.getTrainingGuideForCatsBreeds();
-//      this.dogBreeds = trainingGuideDto.getTrainingGuideForDogsBreeds();
-//    }
-//
-//    public List<CatBreedDto> getTrainingGuideForCatsBreedsDto() {
-//        List<CatBreedDto> favoriteCatBreedsDto = new ArrayList<>();
-//        for (CatBreed catBreed : catBreeds) {
-//            favoriteCatBreedsDto.add(new CatBreedDto(catBreed));
-//        }
-//        return favoriteCatBreedsDto;
-//    }
-//
-//    public List<DogBreedDto> getTrainingGuideForDogBreedsDto() {
-//        List<DogBreedDto> favoriteDogBreedsDto = new ArrayList<>();
-//        for (DogBreed dogBreed : dogBreeds) {
-//            favoriteDogBreedsDto.add(new DogBreedDto(dogBreed));
-//        }
-//        return favoriteDogBreedsDto;
-//    }
 }

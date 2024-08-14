@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Mapper.TrainingGuideMapper;
 import org.una.programmingIII.WikiPets.Model.TrainingGuide;
 import org.una.programmingIII.WikiPets.Model.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class TrainingGuideService {
     private final TrainingGuideRepository trainingGuideRepository;
+    private final TrainingGuideMapper trainingGuideMapper;
 
     @Autowired
     public TrainingGuideService(TrainingGuideRepository trainingGuideRepository) {
         this.trainingGuideRepository = trainingGuideRepository;
+        this.trainingGuideMapper = TrainingGuideMapper.INSTANCE;
     }
 
     public List<TrainingGuideDto> getAllTrainingGuides() {
@@ -60,11 +63,11 @@ public class TrainingGuideService {
         return trainingGuides.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-  private TrainingGuideDto convertToDto(TrainingGuide trainingGuide) {
-//        return new TrainingGuideDto(trainingGuide);
-  return null;}
-//
-   private TrainingGuide convertToEntity(TrainingGuideDto trainingGuideDto) {
-//        return new TrainingGuide(trainingGuideDto);
-return null;  }
+    private TrainingGuideDto convertToDto(TrainingGuide trainingGuide) {
+        return TrainingGuideMapper.INSTANCE.toTrainingGuideDto(trainingGuide);
+    }
+
+    private TrainingGuide convertToEntity(TrainingGuideDto trainingGuideDto) {
+        return TrainingGuideMapper.INSTANCE.toTrainingGuide(trainingGuideDto);
+    }
 }

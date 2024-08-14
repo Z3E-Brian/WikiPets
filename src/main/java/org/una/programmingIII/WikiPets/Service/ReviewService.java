@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Mapper.ReviewMapper;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.ReviewRepository;
 
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+    private final ReviewMapper reviewMapper;
 
     @Autowired
     public ReviewService(ReviewRepository reviewRepository) {
         this.reviewRepository = reviewRepository;
+        this.reviewMapper = ReviewMapper.INSTANCE;
     }
 
     public List<ReviewDto> getAllReviews() {
@@ -45,28 +48,10 @@ public class ReviewService {
     }
 
     private ReviewDto convertToDto(Review review) {
-//        return new ReviewDto(
-//                review.getId(),
-//                review.getCatBreed() != null ? new CatBreedDto(review.getCatBreed()) : null,
-//                review.getDogBreed() != null ? new DogBreedDto(review.getDogBreed()) : null,
-//                new UserDto(review.getUser()),
-//                review.getRating(),
-//                review.getComment(),
-//                review.getVersion()
-//        );
-        return null;
+        return ReviewMapper.INSTANCE.toReviewDto(review);
     }
 
     private Review convertToEntity(ReviewDto reviewDto) {
-//        return new Review(
-//                reviewDto.getId(),
-//                reviewDto.getCatBreedDto() != null ? new CatBreed(reviewDto.getCatBreedDto()) : null,
-//                reviewDto.getDogBreedDto() != null ? new DogBreed(reviewDto.getDogBreedDto()) : null,
-//                new User(reviewDto.getUserDto()),
-//                reviewDto.getRating(),
-//                reviewDto.getComment(),
-//                reviewDto.getVersion()
-//        );
-        return null;
+        return ReviewMapper.INSTANCE.toReview(reviewDto);
     }
 }

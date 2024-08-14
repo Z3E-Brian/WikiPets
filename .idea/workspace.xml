@@ -5,14 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/DogBreedMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/FeedingScheduleMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/ReviewMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/TrainingGuideMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/UserMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreedDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/DogBreedDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/DogBreedService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/DogBreedService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreedDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/CatBreedDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingSchedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingSchedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/ReviewDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/ReviewDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/ReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/TrainingGuideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/TrainingGuideService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +31,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -82,7 +91,7 @@
     "JUnit.DogBreedDtoTest.executor": "Run",
     "JUnit.DogBreedRepositoryTest.findByBreedNameTest.executor": "Run",
     "JUnit.DogBreedRepositoryTest.saveAndFindByIdTest.executor": "Run",
-    "JUnit.DogBreedServiceTest.executor": "Coverage",
+    "JUnit.DogBreedServiceTest.executor": "Run",
     "JUnit.DogBreedServiceTest.updateDogBreedTest.executor": "Debug",
     "JUnit.DogBreedTest.createDogBreedTest.executor": "Run",
     "JUnit.DogBreedTest.executor": "Run",
@@ -90,6 +99,7 @@
     "JUnit.DogBreedTest.getBreedByIdTest.executor": "Run",
     "JUnit.DogBreedTest.updateDogBreedTest.executor": "Run",
     "JUnit.FeedingScheduleDtoTest.executor": "Run",
+    "JUnit.FeedingScheduleDtoTest.feedingScheduleDtoConstructorTest.executor": "Run",
     "JUnit.FeedingScheduleRepositoryTest.executor": "Run",
     "JUnit.FeedingScheduleServiceTest.executor": "Run",
     "JUnit.FeedingScheduleTest.executor": "Run",
@@ -142,7 +152,7 @@
       <recent name="org.una.programmingIII.WikiPets.Repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CatBreedTest">
+  <component name="RunManager" selected="Spring Boot.WikiPetsApplication">
     <configuration name="BehaviorGuideDtoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
@@ -169,6 +179,22 @@
       <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
       <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.CatBreedTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FeedingScheduleDtoTest.feedingScheduleDtoConstructorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.FeedingScheduleDtoTest" />
+      <option name="METHOD_NAME" value="feedingScheduleDtoConstructorTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -204,22 +230,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReviewDtoTest.argsGettersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="WikiPets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.ReviewDtoTest" />
-      <option name="METHOD_NAME" value="argsGettersTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WikiPetsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="WikiPets" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.una.programmingIII.WikiPets.WikiPetsApplication" />
@@ -229,19 +239,19 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.FeedingScheduleDtoTest.feedingScheduleDtoConstructorTest" />
         <item itemvalue="JUnit.CatBreedTest" />
         <item itemvalue="JUnit.GroomingGuideDtoTest.testDefaultConstructor" />
         <item itemvalue="JUnit.GroomingGuideDtoTest" />
         <item itemvalue="JUnit.BehaviorGuideDtoTest" />
-        <item itemvalue="JUnit.ReviewDtoTest.argsGettersTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
       </set>
     </attachedChunks>
   </component>
@@ -267,6 +277,7 @@
       <workItem from="1723500931225" duration="118000" />
       <workItem from="1723561930907" duration="467000" />
       <workItem from="1723583497588" duration="5716000" />
+      <workItem from="1723594820572" duration="3223000" />
     </task>
     <servers />
   </component>
