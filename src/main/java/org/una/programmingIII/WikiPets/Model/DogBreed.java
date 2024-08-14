@@ -3,6 +3,8 @@ package org.una.programmingIII.WikiPets.Model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -28,24 +30,8 @@ public class DogBreed {
     private String temperament;
     @Column(length = 2000, nullable = false)
     private String description;
-//    @Version
-//    @Column(name = "DOG_BREED_VERSION")
-//    private Long version;
-
-    public DogBreed(DogBreedDto dogBreedDto) {
-        this.id = dogBreedDto.getId();
-        update(dogBreedDto);
-    }
-
-    public void update(DogBreedDto dogBreedDto) {
-        this.name = dogBreedDto.getName();
-        this.origin = dogBreedDto.getOrigin();
-        this.size = dogBreedDto.getSize();
-        this.coat = dogBreedDto.getCoat();
-        this.color = dogBreedDto.getColor();
-        this.lifeSpan = dogBreedDto.getLifeSpan();
-        this.temperament = dogBreedDto.getTemperament();
-        this.description = dogBreedDto.getDescription();
-        //this.version=dogBreedDto.getVersion();
-    }
+    @Column (nullable = false)
+    private LocalDate createdDate;
+    @Column (nullable = false)
+    private LocalDate modifiedDate;
 }

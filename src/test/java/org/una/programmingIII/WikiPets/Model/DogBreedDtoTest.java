@@ -3,6 +3,8 @@ package org.una.programmingIII.WikiPets.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -19,7 +21,9 @@ public class DogBreedDtoTest {
         dogBreedDto.setColor("Golden");
         dogBreedDto.setLifeSpan("10-12 years");
         dogBreedDto.setTemperament("Intelligent, Friendly, Devoted");
-        dogBreedDto.setDescription("Popular house dog");}
+        dogBreedDto.setDescription("Popular house dog");
+        dogBreedDto.setCreatedDate(LocalDate.ofEpochDay(22-10-2021));
+        dogBreedDto.setModifiedDate(LocalDate.ofEpochDay(22-10-2021));}
 
     @Test
     public void argsGettersTest() {
@@ -59,8 +63,8 @@ public class DogBreedDtoTest {
 
     @Test
     public void equalsAndHashCodeTest() {
-        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
-        DogBreedDto dogBreedDto2 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
+        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+        DogBreedDto dogBreedDto2 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
 
         assertEquals(dogBreedDto1, dogBreedDto2);
         assertEquals(dogBreedDto1.hashCode(), dogBreedDto2.hashCode());
@@ -68,8 +72,8 @@ public class DogBreedDtoTest {
 
     @Test
     public void notEqualsAndHashCodeTest() {
-        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
-        DogBreedDto dogBreedDto2 = new DogBreedDto(2L, "Labrador Retriever", "Canada", 2, "Short", "Black", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
+        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+        DogBreedDto dogBreedDto2 = new DogBreedDto(2L, "Labrador Retriever", "Canada", 2, "Short", "Black", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog", LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
 
         assertEquals(dogBreedDto1.hashCode(), dogBreedDto1.hashCode());
         assertNotEquals(dogBreedDto1, dogBreedDto2);

@@ -3,6 +3,8 @@ package org.una.programmingIII.WikiPets.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -19,7 +21,9 @@ public class DogBreedTest {
         dogBreed.setColor("Golden");
         dogBreed.setLifeSpan("10-12 years");
         dogBreed.setTemperament("Intelligent, Friendly, Devoted");
-        dogBreed.setDescription("Popular house dog");}
+        dogBreed.setDescription("Popular house dog");
+        dogBreed.setCreatedDate(LocalDate.ofEpochDay(22-10-2021));
+        dogBreed.setModifiedDate(LocalDate.ofEpochDay(22-10-2021));}
 
     @Test
     public void argsGettersTest() {
@@ -59,8 +63,8 @@ public class DogBreedTest {
 
     @Test
     public void equalsAndHashCodeTest() {
-        DogBreed dogBreed1 = new DogBreed(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
-        DogBreed dogBreed2 = new DogBreed(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
+        DogBreed dogBreed1 = new DogBreed(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+        DogBreed dogBreed2 = new DogBreed(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
 
         assertEquals(dogBreed1, dogBreed2);
         assertEquals(dogBreed1.hashCode(), dogBreed2.hashCode());
@@ -68,8 +72,8 @@ public class DogBreedTest {
 
     @Test
     public void notEqualsAndHashCodeTest() {
-        DogBreed dogBreed1 = new DogBreed(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
-        DogBreed dogBreed2 = new DogBreed(2L, "Labrador Retriever", "Canada", 2, "Short", "Black", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
+        DogBreed dogBreed1 = new DogBreed(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+        DogBreed dogBreed2 = new DogBreed(2L, "Labrador Retriever", "Canada", 2, "Short", "Black", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
 
         assertEquals(dogBreed1.hashCode(), dogBreed1.hashCode());
         assertNotEquals(dogBreed1, dogBreed2);

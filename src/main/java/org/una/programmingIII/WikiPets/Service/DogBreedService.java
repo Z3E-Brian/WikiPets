@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Mapper.DogBreedMapper;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Model.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
@@ -14,10 +15,12 @@ import java.util.stream.Collectors;
 public class DogBreedService {
 
     private final DogBreedRepository dogBreedRepository;
+    private final DogBreedMapper dogBreedMapper;
 
     @Autowired
     public DogBreedService(DogBreedRepository dogBreedRepository) {
         this.dogBreedRepository = dogBreedRepository;
+        this.dogBreedMapper = DogBreedMapper.INSTANCE;
     }
 
     public List<DogBreedDto> getAllBreeds() {
@@ -47,30 +50,10 @@ public class DogBreedService {
     }
 
     private DogBreedDto convertToDto(DogBreed dogBreed) {
-        return new DogBreedDto(
-                dogBreed.getId(),
-                dogBreed.getName(),
-                dogBreed.getOrigin(),
-                dogBreed.getSize(),
-                dogBreed.getCoat(),
-                dogBreed.getColor(),
-                dogBreed.getLifeSpan(),
-                dogBreed.getTemperament(),
-                dogBreed.getDescription()
-        );
+        return dogBreedMapper.toDogBreedDto(dogBreed);
     }
 
     private DogBreed convertToEntity(DogBreedDto dogBreedDto) {
-        return new DogBreed(
-                dogBreedDto.getId(),
-                dogBreedDto.getName(),
-                dogBreedDto.getOrigin(),
-                dogBreedDto.getSize(),
-                dogBreedDto.getCoat(),
-                dogBreedDto.getColor(),
-                dogBreedDto.getLifeSpan(),
-                dogBreedDto.getTemperament(),
-                dogBreedDto.getDescription()
-        );
+        return dogBreedMapper.toDogBreed(dogBreedDto);
     }
 }

@@ -3,6 +3,8 @@ package org.una.programmingIII.WikiPets.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -21,7 +23,8 @@ public class CatBreedDtoTest {
         catBreedDto.setLifeSpan("12-16 years");
         catBreedDto.setTemperament("Affectionate, Social, Vocal");
         catBreedDto.setDescription("Popular breed known for its striking appearance and vocal nature.");
-    }
+        catBreedDto.setCreatedDate(LocalDate.ofEpochDay(22-10-2021));
+        catBreedDto.setModifiedDate(LocalDate.ofEpochDay(22-10-2021));}
 
     @Test
     public void argsGettersTest() {
@@ -61,8 +64,8 @@ public class CatBreedDtoTest {
 
     @Test
     public void equalsAndHashCodeTest() {
-        CatBreedDto catBreedDto1 = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.");
-        CatBreedDto catBreedDto2 = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.");
+        CatBreedDto catBreedDto1 = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+        CatBreedDto catBreedDto2 = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
 
         assertEquals(catBreedDto1, catBreedDto2);
         assertEquals(catBreedDto1.hashCode(), catBreedDto2.hashCode());
@@ -70,8 +73,8 @@ public class CatBreedDtoTest {
 
     @Test
     public void notEqualsAndHashCodeTest() {
-        CatBreedDto catBreedDto1 = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.");
-        CatBreedDto catBreedDto2 = new CatBreedDto(2L, "Maine Coon", "United States", 4, "Long", "Tabby", "12-15 years", "Gentle, Playful, Friendly", "Large and friendly breed known for its gentle temperament.");
+        CatBreedDto catBreedDto1 = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+        CatBreedDto catBreedDto2 = new CatBreedDto(2L, "Maine Coon", "United States", 4, "Long", "Tabby", "12-15 years", "Gentle, Playful, Friendly", "Large and friendly breed known for its gentle temperament.", LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
 
         assertEquals(catBreedDto1.hashCode(), catBreedDto1.hashCode());
         assertNotEquals(catBreedDto1, catBreedDto2);
