@@ -49,10 +49,10 @@ public class UserService {
     }
 
     private UserDto convertToDto(User user) {
-        return UserMapper.INSTANCE.toCatBreedDto(user);
+        return UserMapper.INSTANCE.toUserDto(user);
     }
 
     private User convertToEntity(UserDto userDto) {
-        return UserMapper.INSTANCE.toCatBreed(userDto);
+        return UserMapper.INSTANCE.toUser(userDto);
     }
 }

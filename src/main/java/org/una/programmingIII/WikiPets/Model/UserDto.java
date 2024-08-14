@@ -1,5 +1,6 @@
 package org.una.programmingIII.WikiPets.Model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +17,8 @@ public class UserDto {
     private Long id;
     private String name;
     private String email;
-    private List<DogBreedDto> favoriteDogBreeds;
-    private List<CatBreedDto> favoriteCatBreeds;
-    private Long version;
+    private List<DogBreedDto> favoriteDogBreedsDto;
+    private List<CatBreedDto> favoriteCatBreedsDto;
+    private LocalDateTime createDate;
+    private LocalDateTime lastUpdate;
 }
