@@ -44,7 +44,7 @@ public class CatBreedServiceTest {
         catBreed.setLifeSpan("12-16 years");
         catBreed.setTemperament("Affectionate, Social, Vocal");
         catBreed.setDescription("Popular breed known for its striking appearance and vocal nature.");
-        catBreedDto = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.");
+       // catBreedDto = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.");
     }
 
     @Test

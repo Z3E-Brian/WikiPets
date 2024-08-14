@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/HealthIssueRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/HealthIssueService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/CatBreedRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/CatBreedRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/CatBreedRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/CatBreedRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewDtoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/CatBreedServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/CatBreedServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/DogBreedServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/DogBreedServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,72 +69,74 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;JUnit.All in WikiPets.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.BehaviorGuideDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.BreedComparisonServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CatBreedServiceTest.createCatBreedTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.CatBreedServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.CatBreedTest.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.DogBreedDtoTest.argsGettersTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedDtoTest.argsSettersTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedRepositoryTest.findByBreedNameTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedRepositoryTest.saveAndFindByIdTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedServiceTest.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.DogBreedServiceTest.updateDogBreedTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.DogBreedTest.createDogBreedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.getAllBreedsTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.getBreedByIdTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DogBreedTest.updateDogBreedTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.FeedingScheduleTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GroomingGuideDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.GroomingGuideDtoTest.testDefaultConstructor.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewDtoTest.argsGettersTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewDtoTest.toStringTest.executor&quot;: &quot;Debug&quot;,
-    &quot;JUnit.ReviewRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.ReviewTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.TrainingGuideTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.equalsAndHashCodeTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.notEqualsAndHashCodeTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserDtoTest.toStringTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserRepositoryTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserServiceTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.UserTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.org.una.programmingIII.WikiPets.Model in WikiPets.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.org.una.programmingIII.WikiPets.Repository in WikiPets.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.org.una.programmingIII.WikiPets.Service in WikiPets.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.WikiPetsApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/optimize-performance&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/PC/Documents/Progra 2/Preguntados&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "JUnit.All in WikiPets.executor": "Coverage",
+    "JUnit.BehaviorGuideDtoTest.executor": "Run",
+    "JUnit.BreedComparisonServiceTest.executor": "Run",
+    "JUnit.CatBreedServiceTest.createCatBreedTest.executor": "Debug",
+    "JUnit.CatBreedServiceTest.executor": "Run",
+    "JUnit.CatBreedTest.executor": "Coverage",
+    "JUnit.DogBreedDtoTest.argsGettersTest.executor": "Run",
+    "JUnit.DogBreedDtoTest.argsSettersTest.executor": "Run",
+    "JUnit.DogBreedDtoTest.executor": "Run",
+    "JUnit.DogBreedRepositoryTest.findByBreedNameTest.executor": "Run",
+    "JUnit.DogBreedRepositoryTest.saveAndFindByIdTest.executor": "Run",
+    "JUnit.DogBreedServiceTest.executor": "Coverage",
+    "JUnit.DogBreedServiceTest.updateDogBreedTest.executor": "Debug",
+    "JUnit.DogBreedTest.createDogBreedTest.executor": "Run",
+    "JUnit.DogBreedTest.executor": "Run",
+    "JUnit.DogBreedTest.getAllBreedsTest.executor": "Run",
+    "JUnit.DogBreedTest.getBreedByIdTest.executor": "Run",
+    "JUnit.DogBreedTest.updateDogBreedTest.executor": "Run",
+    "JUnit.FeedingScheduleDtoTest.executor": "Run",
+    "JUnit.FeedingScheduleRepositoryTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.executor": "Run",
+    "JUnit.FeedingScheduleTest.executor": "Run",
+    "JUnit.GroomingGuideDtoTest.executor": "Run",
+    "JUnit.GroomingGuideDtoTest.testDefaultConstructor.executor": "Run",
+    "JUnit.ReviewDtoTest.argsGettersTest.executor": "Run",
+    "JUnit.ReviewDtoTest.executor": "Run",
+    "JUnit.ReviewDtoTest.toStringTest.executor": "Debug",
+    "JUnit.ReviewRepositoryTest.executor": "Run",
+    "JUnit.ReviewServiceTest.executor": "Run",
+    "JUnit.ReviewTest.executor": "Run",
+    "JUnit.TrainingGuideDtoTest.executor": "Run",
+    "JUnit.TrainingGuideRepositoryTest.executor": "Run",
+    "JUnit.TrainingGuideServiceTest.executor": "Run",
+    "JUnit.TrainingGuideTest.executor": "Run",
+    "JUnit.UserDtoTest.equalsAndHashCodeTest.executor": "Run",
+    "JUnit.UserDtoTest.executor": "Run",
+    "JUnit.UserDtoTest.notEqualsAndHashCodeTest.executor": "Run",
+    "JUnit.UserDtoTest.toStringTest.executor": "Run",
+    "JUnit.UserRepositoryTest.executor": "Run",
+    "JUnit.UserServiceTest.createUserTest.executor": "Run",
+    "JUnit.UserServiceTest.executor": "Run",
+    "JUnit.UserServiceTest.testUpdateUserNotFound.executor": "Run",
+    "JUnit.UserTest.executor": "Run",
+    "JUnit.org.una.programmingIII.WikiPets.Model in WikiPets.executor": "Run",
+    "JUnit.org.una.programmingIII.WikiPets.Repository in WikiPets.executor": "Run",
+    "JUnit.org.una.programmingIII.WikiPets.Service in WikiPets.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.WikiPetsApplication.executor": "Run",
+    "git-widget-placeholder": "feature/optimize-performance",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/PC/Documents/Progra 2/Preguntados",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "inlay.hints",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.una.programmingIII.WikiPets.Service" />
@@ -140,21 +146,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="BehaviorGuideDtoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="WikiPets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.BehaviorGuideDtoTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CatBreedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
@@ -201,17 +192,33 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReviewDtoTest.argsGettersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.createUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.ReviewDtoTest" />
-      <option name="METHOD_NAME" value="argsGettersTest" />
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.UserServiceTest" />
+      <option name="METHOD_NAME" value="createUserTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserServiceTest.testUpdateUserNotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.UserServiceTest" />
+      <option name="METHOD_NAME" value="testUpdateUserNotFound" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -226,11 +233,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.UserServiceTest.testUpdateUserNotFound" />
+        <item itemvalue="JUnit.UserServiceTest.createUserTest" />
         <item itemvalue="JUnit.CatBreedTest" />
         <item itemvalue="JUnit.GroomingGuideDtoTest.testDefaultConstructor" />
         <item itemvalue="JUnit.GroomingGuideDtoTest" />
-        <item itemvalue="JUnit.BehaviorGuideDtoTest" />
-        <item itemvalue="JUnit.ReviewDtoTest.argsGettersTest" />
       </list>
     </recent_temporary>
   </component>
@@ -267,6 +274,7 @@
       <workItem from="1723665754156" duration="206000" />
       <workItem from="1723666045072" duration="274000" />
       <workItem from="1723666345934" duration="2070000" />
+      <workItem from="1723669030768" duration="3612000" />
     </task>
     <servers />
   </component>

@@ -41,7 +41,7 @@ public class DogBreedServiceTest {
         dogBreed.setLifeSpan("10-12 years");
         dogBreed.setTemperament("Intelligent, Friendly, Devoted");
         dogBreed.setDescription("Popular house dog");
-        dogBreedDto = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
+       // dogBreedDto = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
     }
 
     @Test
