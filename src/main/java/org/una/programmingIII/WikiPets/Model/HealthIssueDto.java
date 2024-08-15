@@ -15,6 +15,6 @@ public class HealthIssueDto {
     private String description;
     private String symptoms;
     private String treatment;
-    private List<DogBreed> suitableDogBreeds;
-    private List<CatBreed> suitableCatBreeds;
+    private List<DogBreedDto> suitableDogBreeds;
+    private List<CatBreedDto> suitableCatBreeds;
 }

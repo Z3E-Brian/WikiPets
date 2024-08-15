@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/HealthIssueServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/HealthIssueDtoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/HealthIssueTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Repository/HealthIssueRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/HealthIssueService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/HealthIssueService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/BehaviorGuideTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/CatBreedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/DogBreedTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/GroomingGuideDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/GroomingGuideDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/CatBreedServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/CatBreedServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/DogBreedServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/DogBreedServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/HealthIssueDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/HealthIssueDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/HealthIssueRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/HealthIssueRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/HealthIssueServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/HealthIssueServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +95,13 @@
     "JUnit.FeedingScheduleTest.executor": "Run",
     "JUnit.GroomingGuideDtoTest.executor": "Run",
     "JUnit.GroomingGuideDtoTest.testDefaultConstructor.executor": "Run",
+    "JUnit.HealthIssueDtoTest.executor": "Coverage",
+    "JUnit.HealthIssueDtoTest.settersAndGettersTest.executor": "Run",
+    "JUnit.HealthIssueRepositoryTest.findByHealthIssueNameTest.executor": "Run",
+    "JUnit.HealthIssueServiceTest.createHealthIssueTest.executor": "Run",
+    "JUnit.HealthIssueServiceTest.executor": "Coverage",
+    "JUnit.HealthIssueServiceTest.updateHealthIssueTest.executor": "Run",
+    "JUnit.HealthIssueTest.executor": "Coverage",
     "JUnit.ReviewDtoTest.argsGettersTest.executor": "Run",
     "JUnit.ReviewDtoTest.executor": "Run",
     "JUnit.ReviewDtoTest.toStringTest.executor": "Debug",
@@ -152,55 +154,55 @@
       <recent name="org.una.programmingIII.WikiPets.Repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.org.una.programmingIII.WikiPets in WikiPets">
-    <configuration name="CatBreedServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.HealthIssueRepositoryTest.findByHealthIssueNameTest">
+    <configuration name="HealthIssueDtoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.CatBreedServiceTest" />
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.HealthIssueDtoTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CatBreedServiceTest.createCatBreedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="HealthIssueDtoTest.settersAndGettersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.CatBreedServiceTest" />
-      <option name="METHOD_NAME" value="createCatBreedTest" />
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.HealthIssueDtoTest" />
+      <option name="METHOD_NAME" value="settersAndGettersTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CatBreedServiceTest.updateCatBreedTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="HealthIssueRepositoryTest.findByHealthIssueNameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Repository.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.CatBreedServiceTest" />
-      <option name="METHOD_NAME" value="updateCatBreedTest" />
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Repository" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Repository.HealthIssueRepositoryTest" />
+      <option name="METHOD_NAME" value="findByHealthIssueNameTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DogBreedServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="HealthIssueServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
@@ -209,22 +211,23 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.DogBreedServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.HealthIssueServiceTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="org.una.programmingIII.WikiPets in WikiPets" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="HealthIssueTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.*" />
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Model.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets" />
-      <option name="TEST_OBJECT" value="package" />
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.HealthIssueTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -238,11 +241,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.org.una.programmingIII.WikiPets in WikiPets" />
-        <item itemvalue="JUnit.DogBreedServiceTest" />
-        <item itemvalue="JUnit.CatBreedServiceTest" />
-        <item itemvalue="JUnit.CatBreedServiceTest.createCatBreedTest" />
-        <item itemvalue="JUnit.CatBreedServiceTest.updateCatBreedTest" />
+        <item itemvalue="JUnit.HealthIssueRepositoryTest.findByHealthIssueNameTest" />
+        <item itemvalue="JUnit.HealthIssueDtoTest" />
+        <item itemvalue="JUnit.HealthIssueDtoTest.settersAndGettersTest" />
+        <item itemvalue="JUnit.HealthIssueTest" />
+        <item itemvalue="JUnit.HealthIssueServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -286,7 +289,7 @@
       <workItem from="1723752943493" duration="47000" />
       <workItem from="1723752999281" duration="167000" />
       <workItem from="1723753177190" duration="192000" />
-      <workItem from="1723753377672" duration="4331000" />
+      <workItem from="1723753377672" duration="6568000" />
     </task>
     <servers />
   </component>
@@ -314,6 +317,15 @@
     </SUITE>
     <SUITE FILE_PATH="coverage/WikiPets$CatBreedServiceTest.ic" NAME="CatBreedServiceTest Coverage Results" MODIFIED="1723756807663" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.una.programmingIII.WikiPets.Service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/WikiPets$HealthIssueServiceTest.ic" NAME="HealthIssueServiceTest Coverage Results" MODIFIED="1723758803344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.una.programmingIII.WikiPets.Service.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/WikiPets$HealthIssueDtoTest.ic" NAME="HealthIssueDtoTest Coverage Results" MODIFIED="1723760306820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.una.programmingIII.WikiPets.Model.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/WikiPets$HealthIssueTest.ic" NAME="HealthIssueTest Coverage Results" MODIFIED="1723759481269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.una.programmingIII.WikiPets.Model.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/WikiPets$org_una_programmingIII_WikiPets_Model_in_WikiPets.ic" NAME="org.una.programmingIII.WikiPets.Model in WikiPets Coverage Results" MODIFIED="1723756093447" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.una.programmingIII.WikiPets.Model.*</FILTER>

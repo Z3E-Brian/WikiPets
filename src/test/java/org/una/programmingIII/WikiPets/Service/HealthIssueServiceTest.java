@@ -12,6 +12,7 @@ import org.una.programmingIII.WikiPets.Repository.HealthIssueRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -45,5 +46,48 @@ public class HealthIssueServiceTest {
         assertEquals(1, healthIssueDtos.size());
         verify(healthIssueRepository, times(1)).findAll();
 
+    }
+    @Test
+    public void getHealthIssueByIdTest() {
+        HealthIssue healthIssue = new HealthIssue();
+        when(healthIssueRepository.findById(anyLong())).thenReturn(Optional.of(healthIssue));
+        when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+
+        HealthIssueDto healthIssueDto = healthIssueService.getHealthIssueById(1L);
+
+        assertNotNull(healthIssueDto);
+        verify(healthIssueRepository, times(1)).findById(anyLong());
+    }
+    @Test
+    public void createHealthIssueTest() {
+        HealthIssue healthIssue = new HealthIssue();
+
+        when(healthIssueRepository.save(any(HealthIssue.class))).thenReturn(healthIssue);
+        when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+
+        HealthIssueDto healthIssueDto = healthIssueService.createHealthIssue(new HealthIssueDto());
+
+        assertNotNull(healthIssueDto);
+        verify(healthIssueRepository, times(1)).save(any(HealthIssue.class));
+    }
+
+    @Test
+    public void updateHealthIssueTest() {
+        HealthIssue healthIssue = new HealthIssue();
+
+        when(healthIssueRepository.save(any(HealthIssue.class))).thenReturn(healthIssue);
+        when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+
+        HealthIssueDto healthIssueDto = healthIssueService.updateHealthIssue(new HealthIssueDto());
+
+        assertNotNull(healthIssueDto);
+        verify(healthIssueRepository, times(1)).save(any(HealthIssue.class));
+    }
+    @Test
+    public void deleteHealthIssueTest() {
+
+        healthIssueService.deleteHealthIssue(1L);
+
+        verify(healthIssueRepository, times(1)).deleteById(1L);
     }
 }
