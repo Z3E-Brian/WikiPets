@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.una.programmingIII.WikiPets.Mapper.DogBreedMapper;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Model.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
@@ -41,8 +42,9 @@ public class DogBreedServiceTest {
         dogBreed.setLifeSpan("10-12 years");
         dogBreed.setTemperament("Intelligent, Friendly, Devoted");
         dogBreed.setDescription("Popular house dog");
-       // dogBreedDto = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog");
-    }
+        dogBreedDto = new DogBreedDto();
+        dogBreedDto = DogBreedMapper.INSTANCE.toDogBreedDto(dogBreed);
+        }
 
     @Test
     public void createDogBreedTest() {

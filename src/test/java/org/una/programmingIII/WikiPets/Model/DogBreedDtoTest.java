@@ -82,6 +82,6 @@ public class DogBreedDtoTest {
 
     @Test
     public void toStringTest() {
-        assertEquals("DogBreedDto(id=1, name=Golden Retriever, origin=Scotland, size=3, coat=Long, color=Golden, lifeSpan=10-12 years, temperament=Intelligent, Friendly, Devoted, description=Popular house dog)", dogBreedDto.toString());
+        assertEquals("DogBreedDto(id=1, name=Golden Retriever, origin=Scotland, size=3, coat=Long, color=Golden, lifeSpan=10-12 years, temperament=Intelligent, Friendly, Devoted, description=Popular house dog, createdDate=1964-07-02, modifiedDate=1964-07-02)", dogBreedDto.toString());
     }
 }

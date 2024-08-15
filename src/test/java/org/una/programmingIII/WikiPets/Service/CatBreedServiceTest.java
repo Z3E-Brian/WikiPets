@@ -8,10 +8,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.una.programmingIII.WikiPets.Mapper.CatBreedMapper;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Model.CatBreedDto;
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -29,21 +31,27 @@ public class CatBreedServiceTest {
     @InjectMocks
     private CatBreedService catBreedService;
 
-    private CatBreed catBreed;
     private CatBreedDto catBreedDto;
+    private CatBreed catBreed;
 
     @BeforeEach
     void setUp() {
+        catBreedDto = new CatBreedDto();
+        catBreedDto.setId(1L);
+        catBreedDto.setName("Siamese");
+        catBreedDto.setOrigin("Thailand");
+        catBreedDto.setSize(2);
+        catBreedDto.setCoat("Short");
+        catBreedDto.setColor("Cream with points");
+        catBreedDto.setLifeSpan("12-16 years");
+        catBreedDto.setTemperament("Affectionate, Social, Vocal");
+        catBreedDto.setDescription("Popular breed known for its striking appearance and vocal nature.");
+        catBreedDto.setCreatedDate(LocalDate.ofEpochDay(2020-10-22));
+        catBreedDto.setModifiedDate(LocalDate.ofEpochDay(2020-10-22));
         catBreed = new CatBreed();
-        catBreed.setId(1L);
-        catBreed.setName("Siamese");
-        catBreed.setOrigin("Thailand");
-        catBreed.setSize(2);
-        catBreed.setCoat("Short");
-        catBreed.setColor("Cream with points");
-        catBreed.setLifeSpan("12-16 years");
-        catBreed.setTemperament("Affectionate, Social, Vocal");
-        catBreed.setDescription("Popular breed known for its striking appearance and vocal nature.");
+        catBreed= CatBreedMapper.INSTANCE.toCatBreed(catBreedDto);
+
+
        // catBreedDto = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.");
     }
 

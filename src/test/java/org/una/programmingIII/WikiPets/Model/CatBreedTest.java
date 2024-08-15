@@ -84,6 +84,6 @@ public class CatBreedTest {
 
     @Test
     public void toStringTest() {
-        assertEquals("CatBreed(id=1, name=Siamese, origin=Thailand, size=2, coat=Short, color=Cream with points, lifeSpan=12-16 years, temperament=Affectionate, Social, Vocal, description=Popular breed known for its striking appearance and vocal nature.)", catBreed.toString());
+        assertEquals("CatBreed(id=1, name=Siamese, origin=Thailand, size=2, coat=Short, color=Cream with points, lifeSpan=12-16 years, temperament=Affectionate, Social, Vocal, description=Popular breed known for its striking appearance and vocal nature., createdDate=1964-07-02, modifiedDate=1964-07-02)", catBreed.toString());
     }
 }
