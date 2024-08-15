@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -36,20 +36,10 @@ public class Review {
     @Column(length = 1000)
     private String comment;
 
-
     @Column(name = "create_date", nullable = false, updatable = false)
-    private LocalDateTime createDate;
+    private LocalDate createDate;
 
     @Column(name = "last_update")
-    private LocalDateTime lastUpdate;
+    private LocalDate lastUpdate;
 
-    @PrePersist
-    protected void onCreate() {
-        createDate = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        lastUpdate = LocalDateTime.now();
-    }
 }

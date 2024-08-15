@@ -3,7 +3,7 @@ package org.una.programmingIII.WikiPets.Model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class UserDtoTest {
     void setUp() {
         List<CatBreedDto> favoriteCatBreeds = new ArrayList<>();
         List<DogBreedDto> favoriteDogBreeds = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDate.now();
 
         userDto = new UserDto();
         userDto.setId(1L);
@@ -33,7 +33,7 @@ public class UserDtoTest {
     public void argsGettersTest() {
         List<CatBreedDto> emptyCatBreeds = new ArrayList<>();
         List<DogBreedDto> emptyDogBreeds = new ArrayList<>();
-        LocalDateTime now = userDto.getCreateDate(); // Use the same timestamp for consistency
+        LocalDate now = userDto.getCreateDate(); // Use the same timestamp for consistency
 
         assertEquals(1L, userDto.getId());
         assertEquals("John Doe", userDto.getName());
@@ -48,8 +48,8 @@ public class UserDtoTest {
     public void argsSettersTest() {
         List<CatBreedDto> favoriteCatBreeds = new ArrayList<>();
         List<DogBreedDto> favoriteDogBreeds = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime later = now.plusDays(1);
+        LocalDate now = LocalDate.now();
+        LocalDate later = now.plusDays(1);
 
         userDto.setId(2L);
         userDto.setName("Jane Smith");
@@ -72,7 +72,7 @@ public class UserDtoTest {
     public void equalsAndHashCodeTest() {
         List<CatBreedDto> favoriteCatBreeds = new ArrayList<>();
         List<DogBreedDto> favoriteDogBreeds = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDate.now();
 
         UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds, now, now);
         UserDto userDto2 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds, now, now);
@@ -87,8 +87,8 @@ public class UserDtoTest {
         List<DogBreedDto> favoriteDogBreeds1 = new ArrayList<>();
         List<CatBreedDto> favoriteCatBreeds2 = new ArrayList<>();
         List<DogBreedDto> favoriteDogBreeds2 = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime later = now.plusDays(1);
+        LocalDate now = LocalDate.now();
+        LocalDate later = now.plusDays(1);
 
         UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds1, favoriteCatBreeds1, now, now);
         UserDto userDto2 = new UserDto(2L, "Jane Smith", "jane.smith@example.com", favoriteDogBreeds2, favoriteCatBreeds2, later, later);
@@ -99,7 +99,7 @@ public class UserDtoTest {
 
     @Test
     public void toStringTest() {
-        LocalDateTime now = userDto.getCreateDate();
+        LocalDate now = userDto.getCreateDate();
         String expectedString = String.format(
                 "UserDto(id=1, name=John Doe, email=john.doe@example.com, favoriteDogBreedsDto=[], favoriteCatBreedsDto=[], createDate=%s, lastUpdate=%s)",
                 now, now

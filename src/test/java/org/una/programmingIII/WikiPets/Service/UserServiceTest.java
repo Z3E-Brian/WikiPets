@@ -10,12 +10,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.una.programmingIII.WikiPets.Mapper.UserMapper;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -48,8 +46,8 @@ public class UserServiceTest {
         user.setEmail("john.doe@example.com");
         user.setFavoriteCatBreeds(Arrays.asList(siamese));
         user.setFavoriteDogBreeds(Arrays.asList(goldenRetriever));
-        user.setCreateDate(LocalDateTime.now());
-        user.setLastUpdate(LocalDateTime.now());
+        user.setCreateDate(LocalDate.now());
+        user.setLastUpdate(LocalDate.now());
         userDto = (UserMapper.INSTANCE.toUserDto(user));
     }
 

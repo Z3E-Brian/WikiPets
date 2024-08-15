@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -14,51 +14,48 @@ public class ReviewDtoTest {
 
     @BeforeEach
     void setUp() {
-            CatBreedDto catBreedDto = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Seal Point", "15 years", "Active, Vocal", "Elegant and sleek", LocalDate.now(),LocalDate.now());
-            DogBreedDto dogBreedDto = new DogBreedDto(2L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Friendly, Reliable", "Popular house dog",LocalDate.now(),LocalDate.now());
-            UserDto userDto = new UserDto(1L, "John Doe", "john.doe@example.com", null, null,LocalDateTime.now(),LocalDateTime.now());
-            reviewDto = new ReviewDto(1L, catBreedDto, dogBreedDto, userDto, 5, "Great breed!", LocalDateTime.now(),LocalDateTime.now());
+        LocalDate nowDate = LocalDate.now();
+
+        reviewDto = new ReviewDto();
+        reviewDto.setId(1L);
+        reviewDto.setCatBreedDto(new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate));
+        reviewDto.setUserDto(new UserDto(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate));
+        reviewDto.setRating(5);
+        reviewDto.setComment("Excellent breed!");
+        reviewDto.setCreateDate(nowDate);
+        reviewDto.setLastUpdate(nowDate);
     }
 
     @Test
     public void argsGettersTest() {
-            assertEquals(1L, reviewDto.getId());
-            assertEquals(5, reviewDto.getRating());
-            assertEquals("Great breed!", reviewDto.getComment());
-            assertEquals(1L, reviewDto.getCatBreedDto().getId());
-            assertEquals(2L, reviewDto.getDogBreedDto().getId());
-            assertEquals(1L, reviewDto.getUserDto().getId());
+        assertEquals(1L, reviewDto.getId());
+        assertEquals("Siamese", reviewDto.getCatBreedDto().getName());
+        assertEquals(5, reviewDto.getRating());
+        assertEquals("Excellent breed!", reviewDto.getComment());
     }
 
     @Test
     public void argsSettersTest() {
-        CatBreedDto newCatBreedDto = new CatBreedDto(2L, "Maine Coon", "USA", 4, "Long", "Brown Tabby", "12-15 years", "Friendly, Affectionate", "Large and lovable",LocalDate.now(),LocalDate.now());
-        DogBreedDto newDogBreedDto = new DogBreedDto(3L, "Bulldog", "UK", 2, "Short", "Brindle", "8-10 years", "Courageous, Friendly", "Loyal and dependable",LocalDate.now(),LocalDate.now());
-        UserDto newUserDto = new UserDto(2L, "Jane Smith", "jane.smith@example.com", null, null,LocalDateTime.now(),LocalDateTime.now());
+        LocalDate nowDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
 
         reviewDto.setId(2L);
+        reviewDto.setDogBreedDto(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate));
         reviewDto.setRating(4);
-        reviewDto.setComment("Good breed, but has some issues");
-        reviewDto.setCatBreedDto(newCatBreedDto);
-        reviewDto.setDogBreedDto(newDogBreedDto);
-        reviewDto.setUserDto(newUserDto);
+        reviewDto.setComment("Great dog breed!");
 
         assertEquals(2L, reviewDto.getId());
+        assertEquals("Labrador", reviewDto.getDogBreedDto().getName());
         assertEquals(4, reviewDto.getRating());
-        assertEquals("Good breed, but has some issues", reviewDto.getComment());
-        assertEquals(2L, reviewDto.getCatBreedDto().getId());
-        assertEquals(3L, reviewDto.getDogBreedDto().getId());
-        assertEquals(2L, reviewDto.getUserDto().getId());
+        assertEquals("Great dog breed!", reviewDto.getComment());
     }
 
     @Test
     public void equalsAndHashCodeTest() {
-        CatBreedDto catBreedDto = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Seal Point", "15 years", "Active, Vocal", "Elegant and sleek",LocalDate.now(),LocalDate.now());
-        DogBreedDto dogBreedDto = new DogBreedDto(2L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Friendly, Reliable", "Popular house dog",LocalDate.now(),LocalDate.now());
-        UserDto userDto = new UserDto(1L, "John Doe", "john.doe@example.com", null, null, LocalDateTime.now(),LocalDateTime.now());
+        LocalDate nowDate = LocalDate.now();
 
-        ReviewDto reviewDto1 = new ReviewDto(1L, catBreedDto, dogBreedDto, userDto, 5, "Great breed!",LocalDateTime.now(),LocalDateTime.now());
-        ReviewDto reviewDto2 = new ReviewDto(1L, catBreedDto, dogBreedDto, userDto, 5, "Great breed!",LocalDateTime.now(),LocalDateTime.now());
+        ReviewDto reviewDto1 = new ReviewDto(1L, new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, new UserDto(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
+        ReviewDto reviewDto2 = new ReviewDto(1L, new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, new UserDto(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
 
         assertEquals(reviewDto1, reviewDto2);
         assertEquals(reviewDto1.hashCode(), reviewDto2.hashCode());
@@ -66,16 +63,10 @@ public class ReviewDtoTest {
 
     @Test
     public void notEqualsAndHashCodeTest() {
-        CatBreedDto catBreedDto1 = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Seal Point", "15 years", "Active, Vocal", "Elegant and sleek",LocalDate.now(),LocalDate.now());
-        DogBreedDto dogBreedDto1 = new DogBreedDto(2L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Friendly, Reliable", "Popular house dog",LocalDate.now(),LocalDate.now());
-        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", null, null,LocalDateTime.now(),LocalDateTime.now());
+        LocalDate nowDate = LocalDate.now();
 
-        CatBreedDto catBreedDto2 = new CatBreedDto(2L, "Maine Coon", "USA", 4, "Long", "Brown Tabby", "12-15 years", "Friendly, Affectionate", "Large and lovable",LocalDate.now(),LocalDate.now());
-        DogBreedDto dogBreedDto2 = new DogBreedDto(3L, "Bulldog", "UK", 2, "Short", "Brindle", "8-10 years", "Courageous, Friendly", "Loyal and dependable",LocalDate.now(),LocalDate.now());
-        UserDto userDto2 = new UserDto(2L, "Jane Smith", "jane.smith@example.com", null, null, LocalDateTime.now(),LocalDateTime.now());
-
-        ReviewDto reviewDto1 = new ReviewDto(1L, catBreedDto1, dogBreedDto1, userDto1, 5, "Great breed!", LocalDateTime.now(),LocalDateTime.now());
-        ReviewDto reviewDto2 = new ReviewDto(2L, catBreedDto2, dogBreedDto2, userDto2, 3, "Not as expected",LocalDateTime.now(),LocalDateTime.now());
+        ReviewDto reviewDto1 = new ReviewDto(1L, new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, new UserDto(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
+        ReviewDto reviewDto2 = new ReviewDto(2L, null, new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate), new UserDto(2L, "Jane Doe", "jane.doe@example.com", null, null, nowDate, nowDate), 4, "Great dog breed!", nowDate, nowDate);
 
         assertNotEquals(reviewDto1, reviewDto2);
         assertNotEquals(reviewDto1.hashCode(), reviewDto2.hashCode());
@@ -83,10 +74,8 @@ public class ReviewDtoTest {
 
     @Test
     public void toStringTest() {
-        String expectedToString = "ReviewDto(id=1, catBreedDto=CatBreedDto(id=1, name=Siamese, origin=Thailand, size=2, coat=Short, color=Seal Point, lifeSpan=15 years, temperament=Active, Vocal, description=Elegant and sleek, creationDate=" + LocalDate.now() + ", lastUpdate=" + LocalDate.now() + "), " +
-                "dogBreedDto=DogBreedDto(id=2, name=Golden Retriever, origin=Scotland, size=3, coat=Long, color=Golden, lifeSpan=10-12 years, temperament=Friendly, Reliable, description=Popular house dog, creationDate=" + LocalDate.now() + ", lastUpdate=" + LocalDate.now() + "), " +
-                "userDto=UserDto(id=1, name=John Doe, email=john.doe@example.com, favoriteDogBreeds=null, favoriteCatBreeds=null, version=1), " +
-                "rating=5, comment=Great breed!, version=1)";
-        assertEquals(expectedToString, reviewDto.toString());
+        LocalDate nowDate = LocalDate.now();
+
+        assertEquals("ReviewDto(id=1, catBreedDto=CatBreedDto(id=1, name=Siamese, origin=Thailand, size=2, coat=Short, color=Cream with points, lifeSpan=12-16 years, temperament=Affectionate, Social, Vocal, description=Popular breed known for its striking appearance and vocal nature., createdDate=" + nowDate + ", modifiedDate=" + nowDate + "), dogBreedDto=null, userDto=UserDto(id=1, name=John Doe, email=john.doe@example.com, favoriteDogBreedsDto=null, favoriteCatBreedsDto=null, createDate=" + nowDate + ", lastUpdate=" + nowDate + "), rating=5, comment=Excellent breed!, createDate=" + nowDate + ", lastUpdate=" + nowDate + ")", reviewDto.toString());
     }
 }

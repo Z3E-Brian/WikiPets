@@ -5,14 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/TrainingGuideMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/TrainingGuideMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingSchedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingSchedule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/Review.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/ReviewDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/ReviewDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuideDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuideDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleDtoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/FeedingScheduleTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewDtoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/ReviewTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/TrainingGuideDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/TrainingGuideDtoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/TrainingGuideTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/TrainingGuideTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserDtoTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/UserTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/CatBreedServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/CatBreedServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/DogBreedServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/DogBreedServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/UserServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +113,9 @@
     "JUnit.ReviewRepositoryTest.executor": "Run",
     "JUnit.ReviewServiceTest.executor": "Run",
     "JUnit.ReviewTest.executor": "Run",
+    "JUnit.TrainingGuideDtoTest.argsSettersTest.executor": "Run",
     "JUnit.TrainingGuideDtoTest.executor": "Run",
+    "JUnit.TrainingGuideDtoTest.toStringTest.executor": "Run",
     "JUnit.TrainingGuideRepositoryTest.executor": "Run",
     "JUnit.TrainingGuideServiceTest.executor": "Run",
     "JUnit.TrainingGuideTest.executor": "Run",
@@ -161,7 +174,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GroomingGuideDtoTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TrainingGuideDtoTest.argsSettersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
@@ -170,13 +183,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.GroomingGuideDtoTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.TrainingGuideDtoTest" />
+      <option name="METHOD_NAME" value="argsSettersTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GroomingGuideDtoTest.testDefaultConstructor" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TrainingGuideDtoTest.toStringTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
@@ -185,8 +199,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Model" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.GroomingGuideDtoTest" />
-      <option name="METHOD_NAME" value="testDefaultConstructor" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Model.TrainingGuideDtoTest" />
+      <option name="METHOD_NAME" value="toStringTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -233,11 +247,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TrainingGuideDtoTest.toStringTest" />
+        <item itemvalue="JUnit.TrainingGuideDtoTest.argsSettersTest" />
         <item itemvalue="JUnit.UserServiceTest.testUpdateUserNotFound" />
         <item itemvalue="JUnit.UserServiceTest.createUserTest" />
         <item itemvalue="JUnit.CatBreedTest" />
-        <item itemvalue="JUnit.GroomingGuideDtoTest.testDefaultConstructor" />
-        <item itemvalue="JUnit.GroomingGuideDtoTest" />
       </list>
     </recent_temporary>
   </component>
@@ -275,6 +289,8 @@
       <workItem from="1723666045072" duration="274000" />
       <workItem from="1723666345934" duration="2070000" />
       <workItem from="1723669030768" duration="3612000" />
+      <workItem from="1723676375792" duration="1133000" />
+      <workItem from="1723701087653" duration="2275000" />
     </task>
     <servers />
   </component>

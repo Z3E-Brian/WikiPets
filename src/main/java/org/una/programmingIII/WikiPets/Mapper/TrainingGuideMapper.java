@@ -9,11 +9,11 @@ import org.una.programmingIII.WikiPets.Model.*;
 public interface TrainingGuideMapper {
     TrainingGuideMapper INSTANCE = Mappers.getMapper(TrainingGuideMapper.class);
 
-    @Mapping(target = "catBreeds", source = "catsBreedDto")
-    @Mapping(target = "dogBreeds", source = "dogsBreedDto")
-    TrainingGuideDto toTrainingGuideDto(TrainingGuide trainingGuide);
-
     @Mapping(target = "catsBreedDto", source = "catBreeds")
     @Mapping(target = "dogsBreedDto", source = "dogBreeds")
+    TrainingGuideDto toTrainingGuideDto(TrainingGuide trainingGuide);
+
+    @Mapping(target = "catBreeds", source = "catsBreedDto")
+    @Mapping(target = "dogBreeds", source = "dogsBreedDto")
     TrainingGuide toTrainingGuide(TrainingGuideDto trainingGuideDto);
 }

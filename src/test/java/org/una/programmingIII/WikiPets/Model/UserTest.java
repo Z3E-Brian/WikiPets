@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class UserTest {
         MockitoAnnotations.openMocks(this);
         List<CatBreed> favoriteCatBreeds = new ArrayList<>();
         List<DogBreed> favoriteDogBreeds = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDate.now();
 
         user = new User();
         user.setId(1L);
@@ -36,7 +36,7 @@ public class UserTest {
     public void testInitialValues() {
         List<CatBreed> emptyCatBreeds = new ArrayList<>();
         List<DogBreed> emptyDogBreeds = new ArrayList<>();
-        LocalDateTime now = user.getCreateDate(); // Use the same timestamp for consistency
+        LocalDate now = user.getCreateDate(); // Use the same timestamp for consistency
 
         assertEquals(1L, user.getId());
         assertEquals("John Doe", user.getName());
@@ -51,8 +51,8 @@ public class UserTest {
     public void testSetters() {
         List<CatBreed> favoriteCatBreeds = new ArrayList<>();
         List<DogBreed> favoriteDogBreeds = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime later = now.plusDays(1);
+        LocalDate now = LocalDate.now();
+        LocalDate later = now.plusDays(1);
 
         user.setId(2L);
         user.setName("Jane Smith");
@@ -75,7 +75,7 @@ public class UserTest {
     public void testEqualsAndHashCode() {
         List<CatBreed> favoriteCatBreeds = new ArrayList<>();
         List<DogBreed> favoriteDogBreeds = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDate.now();
 
         User user1 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds, favoriteDogBreeds, now, now);
         User user2 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds, favoriteDogBreeds, now, now);
@@ -90,8 +90,8 @@ public class UserTest {
         List<DogBreed> favoriteDogBreeds1 = new ArrayList<>();
         List<CatBreed> favoriteCatBreeds2 = new ArrayList<>();
         List<DogBreed> favoriteDogBreeds2 = new ArrayList<>();
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime later = now.plusDays(1);
+        LocalDate now = LocalDate.now();
+        LocalDate later = now.plusDays(1);
 
         User user1 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds1, favoriteDogBreeds1, now, now);
         User user2 = new User(2L, "Jane Smith", "jane.smith@example.com", favoriteCatBreeds2, favoriteDogBreeds2, later, later);
@@ -102,7 +102,7 @@ public class UserTest {
 
     @Test
     public void testToString() {
-        LocalDateTime now = user.getCreateDate();
+        LocalDate now = user.getCreateDate();
         String expectedString = String.format(
                 "User(id=1, name=John Doe, email=john.doe@example.com, favoriteCatBreeds=[], favoriteDogBreeds=[], createDate=%s, lastUpdate=%s)",
                 now, now
