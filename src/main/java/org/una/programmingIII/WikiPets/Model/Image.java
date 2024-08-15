@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @Entity
 @NoArgsConstructor
@@ -19,24 +21,12 @@ public class Image {
     private String url;
     @Column(length = 250, nullable = false)
     private String description;
-    @Column(length = 1, nullable = false)
+    @Column(nullable = false)
     private Boolean isDogBreed;
     @Column(length = 100, nullable = false)
-    private String petBreed;
-//    @Version
-//    @Column(name = "IMAGE_VERSION")
-//    private Long version;
-
-    public Image(ImageDto imageDto) {
-        this.id = imageDto.getId();
-        update(imageDto);
-    }
-
-    public void update(ImageDto imageDto) {
-        this.url = imageDto.getUrl();
-        this.description = imageDto.getDescription();
-        this.isDogBreed = imageDto.getIsDogBreed();
-        this.petBreed = imageDto.getPetBreed();
-        //this.version = GroomingGuideDto.getVersion();
-    }
+    private int petBreedId;
+    @Column(name = "create_date", nullable = false, updatable = false)
+    private LocalDate createDate;
+    @Column(name = "last_update")
+    private LocalDate lastUpdate;
 }
