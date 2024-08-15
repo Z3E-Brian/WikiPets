@@ -21,9 +21,9 @@ public class Image {
     private String url;
     @Column(length = 250, nullable = false)
     private String description;
-    @Column(nullable = false)
+    @Column(name = "is_dog_breed", nullable = false)
     private Boolean isDogBreed;
-    @Column(length = 100, nullable = false)
+    @Column(name = "pet_breed_id", length = 100, nullable = false)
     private int petBreedId;
     @Column(name = "create_date", nullable = false, updatable = false)
     private LocalDate createDate;

@@ -22,7 +22,7 @@ public class BehaviorGuide {
     private String title;
     @Column(length = 500, nullable = false)
     private String content;
-    @Column(length = 200, nullable = false)
+    @Column(name = "behavioral_issues", length = 300, nullable = false)
     private String behavioralIssues;
     @Column(length = 300, nullable = false)
     private String solutions;
@@ -35,7 +35,7 @@ public class BehaviorGuide {
     @JoinTable(name = "behavior_guide_cat_breeds",
             joinColumns = @JoinColumn(name = "behavior_guide_id"),
             inverseJoinColumns = @JoinColumn(name = "cat_breed_id"))
-    private List<DogBreed> suitableCatBreeds;
+    private List<CatBreed> suitableCatBreeds;
     @Column(name = "create_date", nullable = false, updatable = false)
     private LocalDate createDate;
     @Column(name = "last_update")

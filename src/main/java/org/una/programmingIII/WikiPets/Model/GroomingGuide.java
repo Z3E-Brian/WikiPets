@@ -20,7 +20,7 @@ public class GroomingGuide {
     private Long id;
     @Column(length = 250, nullable = false)
     private String content;
-    @Column(length = 200, nullable = false)
+    @Column(name = "tools_needed", length = 200, nullable = false)
     private String toolsNeeded;
     @Column(length = 250, nullable = false)
     private String steps;
