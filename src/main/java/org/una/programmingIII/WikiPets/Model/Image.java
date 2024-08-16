@@ -11,9 +11,8 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "image")
+@Table(name = "images")
 public class Image {
-    //id, url, description, breed (DogBreed | CatBreed).
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

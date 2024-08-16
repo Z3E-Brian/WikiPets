@@ -26,12 +26,12 @@ public class BehaviorGuide {
     @Column(length = 300, nullable = false)
     private String solutions;
     @ManyToMany
-    @JoinTable(name = "behavior_guide_dog_breeds",
+    @JoinTable(name = "behavior_guides_dog_breeds",
             joinColumns = @JoinColumn(name = "behavior_guide_id"),
             inverseJoinColumns = @JoinColumn(name = "dog_breed_id"))
     private List<DogBreed> suitableDogBreeds;
     @ManyToMany
-    @JoinTable(name = "behavior_guide_cat_breeds",
+    @JoinTable(name = "behavior_guides_cat_breeds",
             joinColumns = @JoinColumn(name = "behavior_guide_id"),
             inverseJoinColumns = @JoinColumn(name = "cat_breed_id"))
     private List<CatBreed> suitableCatBreeds;
