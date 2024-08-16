@@ -26,10 +26,10 @@ public class FeedingSchedule {
     @JoinColumn(name = "dog_breed_id")
     private DogBreed dogBreed;
 
-    @Column(length = 50, nullable = false)
+    @Column(name ="age_group",length = 50, nullable = false)
     private String ageGroup;
 
-    @Column(length = 500, nullable = false)
+    @Column(name ="feeding_times",length = 500, nullable = false)
     private String feedingTimes;
 
     @Column(name = "create_date", nullable = false, updatable = false)
