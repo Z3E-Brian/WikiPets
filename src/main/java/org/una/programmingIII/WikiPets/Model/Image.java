@@ -21,10 +21,12 @@ public class Image {
     private String url;
     @Column(length = 250, nullable = false)
     private String description;
-    @Column(name = "is_dog_breed", nullable = false)
-    private Boolean isDogBreed;
-    @Column(name = "pet_breed_id", length = 100, nullable = false)
-    private int petBreedId;
+    @ManyToOne
+    @JoinColumn(name = "dog_breed_id")
+    private DogBreed dogBreed;
+    @ManyToOne
+    @JoinColumn(name = "cat_breed_id")
+    private CatBreed catBreed;
     @Column(name = "create_date", nullable = false, updatable = false)
     private LocalDate createDate;
     @Column(name = "last_update")
