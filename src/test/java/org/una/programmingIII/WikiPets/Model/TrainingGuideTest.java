@@ -16,10 +16,10 @@ public class TrainingGuideTest {
     @BeforeEach
     void setUp() {
         List<CatBreed> catBreeds = new ArrayList<>();
-        catBreeds.add(new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
+        catBreeds.add(new CatBreed());
 
         List<DogBreed> dogBreeds = new ArrayList<>();
-        dogBreeds.add(new DogBreed(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now()));
+        dogBreeds.add(new DogBreed());
 
         trainingGuide = new TrainingGuide();
         trainingGuide.setId(1L);
@@ -56,10 +56,10 @@ public class TrainingGuideTest {
     @Test
     public void equalsAndHashCodeTest() {
         List<CatBreed> catBreeds = new ArrayList<>();
-        catBreeds.add(new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
+        catBreeds.add(new CatBreed());
 
         List<DogBreed> dogBreeds = new ArrayList<>();
-        dogBreeds.add(new DogBreed(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now()));
+        dogBreeds.add(new DogBreed());
 
         TrainingGuide trainingGuide1 = new TrainingGuide(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, dogBreeds, LocalDate.now(), LocalDate.now());
         TrainingGuide trainingGuide2 = new TrainingGuide(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, dogBreeds, LocalDate.now(), LocalDate.now());
@@ -71,7 +71,7 @@ public class TrainingGuideTest {
     @Test
     public void notEqualsAndHashCodeTest() {
         List<CatBreed> catBreeds = new ArrayList<>();
-        catBreeds.add(new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
+        catBreeds.add(new CatBreed());
 
         TrainingGuide trainingGuide1 = new TrainingGuide(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, new ArrayList<>(), LocalDate.now(), LocalDate.now());
         TrainingGuide trainingGuide2 = new TrainingGuide(2L, "Advanced Training Guide for Dogs", "This is an advanced training guide specifically for dogs.", new ArrayList<>(), null, LocalDate.now(), LocalDate.now());

@@ -17,7 +17,7 @@ public class ReviewTest {
 
         review = new Review();
         review.setId(1L);
-        review.setCatBreed(new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate));
+        review.setCatBreed(new CatBreed());
         review.setUser(new User(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate));
         review.setRating(5);
         review.setComment("Excellent breed!");
@@ -38,7 +38,7 @@ public class ReviewTest {
         LocalDate nowDate = LocalDate.now();
 
         review.setId(2L);
-        review.setDogBreed(new DogBreed(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate));
+        review.setDogBreed(new DogBreed());
         review.setRating(4);
         review.setComment("Great dog breed!");
 
@@ -52,8 +52,8 @@ public class ReviewTest {
     public void equalsAndHashCodeTest() {
         LocalDate nowDate = LocalDate.now();
 
-        Review review1 = new Review(1L, new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, new User(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
-        Review review2 = new Review(1L, new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, new User(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
+        Review review1 = new Review(1L, new CatBreed(), null, new User(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
+        Review review2 = new Review(1L, new CatBreed(), null, new User(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
 
         assertEquals(review1, review2);
         assertEquals(review1.hashCode(), review2.hashCode());
@@ -63,8 +63,8 @@ public class ReviewTest {
     public void notEqualsAndHashCodeTest() {
         LocalDate nowDate = LocalDate.now();
 
-        Review review1 = new Review(1L, new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, new User(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
-        Review review2 = new Review(2L, null, new DogBreed(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate), new User(2L, "Jane Doe", "jane.doe@example.com", null, null, nowDate, nowDate), 4, "Great dog breed!", nowDate, nowDate);
+        Review review1 = new Review(1L, new CatBreed(), null, new User(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate), 5, "Excellent breed!", nowDate, nowDate);
+        Review review2 = new Review(2L, null, new DogBreed(), new User(2L, "Jane Doe", "jane.doe@example.com", null, null, nowDate, nowDate), 4, "Great dog breed!", nowDate, nowDate);
 
         assertNotEquals(review1, review2);
         assertNotEquals(review1.hashCode(), review2.hashCode());
