@@ -21,7 +21,7 @@ public class NutritionGuideTest {
         assertEquals(catBreeds, nutritionGuide.getRecommendedCatBreeds());
         assertEquals("Dietary", nutritionGuide.getDietaryRequirements());
 
-        
+
         nutritionGuide.setTitle("New Title");
         assertEquals("New Title", nutritionGuide.getTitle());
     }

@@ -16,4 +16,5 @@ public interface NutritionGuideMapper {
     @Mapping(target = "recommendedCatBreeds", source = "recommendedCatBreeds")
     @Mapping(target = "recommendedDogBreeds", source = "recommendedDogBreeds")
     public NutritionGuideDto toNutritionGuideDto(NutritionGuide nutritionGuide);
+
 }

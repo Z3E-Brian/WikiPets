@@ -7,5 +7,4 @@ public interface BehaviorGuideMapper {
     BehaviorGuideMapper INSTANCE = Mappers.getMapper(BehaviorGuideMapper.class);
     BehaviorGuideDto toCatBreedDto(BehaviorGuide behaviorGuide);
     BehaviorGuide toBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
-
 }

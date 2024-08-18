@@ -13,7 +13,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "image")
 public class Image {
-    //id, url, description, breed (DogBreed | CatBreed).
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
