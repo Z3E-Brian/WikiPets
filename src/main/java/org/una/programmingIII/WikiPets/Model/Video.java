@@ -11,15 +11,15 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "images")
-public class Image {
+@Table(name = "videos")
+public class Video {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(length = 250, nullable = false)
     private String url;
     @Column(length = 250, nullable = false)
-    private String description;
+    private String title;
     @ManyToOne
     @JoinColumn(name = "dog_breed_id")
     private DogBreed dogBreed;
