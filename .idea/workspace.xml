@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/AdoptionCenterDtoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/AdoptionCenterTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Model/VideoTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/AdoptionCenterMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/GroomingGuideMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/ImageMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/VideoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Repository/BehaviorGuideRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/BehaviorGuideService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/BehaviorGuideServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuide.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/TrainingGuide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/BehaviorGuideMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/BehaviorGuideMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +75,7 @@
     &quot;JUnit.All in WikiPets.executor&quot;: &quot;Coverage&quot;,
     &quot;JUnit.BehaviorGuideDtoTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.BehaviorGuideDtoTest.testNoArgsConstructor.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BehaviorGuideServiceTest.executor&quot;: &quot;Coverage&quot;,
     &quot;JUnit.BehaviorGuideTest.executor&quot;: &quot;Coverage&quot;,
     &quot;JUnit.BreedComparisonServiceTest.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.BreedComparisonServiceTest.testCompareDogBreeds_Same.executor&quot;: &quot;Run&quot;,
@@ -145,7 +149,7 @@
     &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;Spring Boot.WikiPetsApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/add-entities-and-tests&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/services&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/brein/Downloads/one-dark-theme-5.11.0.zip&quot;,
@@ -158,11 +162,6 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="QodanaReportsService">
-    <option name="descriptions">
-      <ReportDescription localRun="true" path="C:\Users\Usuario\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="88988067-262e-4db6-a1f9-cce0d77aede3" reportId="WikiPets/qodana/2024-08-16" />
-    </option>
-  </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="org.una.programmingIII.WikiPets.Model" />
@@ -172,8 +171,8 @@
       <recent name="org.una.programmingIII.WikiPets.Repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.java in WikiPets">
-    <configuration name="BreedComparisonServiceTest.testCompareMixedBreeds_DogAndCat" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.BehaviorGuideServiceTest">
+    <configuration name="BehaviorGuideServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
@@ -182,9 +181,8 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.BreedComparisonServiceTest" />
-      <option name="METHOD_NAME" value="testCompareMixedBreeds_DogAndCat" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.BehaviorGuideServiceTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -245,11 +243,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BehaviorGuideServiceTest" />
         <item itemvalue="JUnit.java in WikiPets" />
         <item itemvalue="JUnit.Model in WikiPets" />
         <item itemvalue="JUnit.VideoTest" />
         <item itemvalue="JUnit.UserServiceTest.testGetUserById_Success" />
-        <item itemvalue="JUnit.BreedComparisonServiceTest.testCompareMixedBreeds_DogAndCat" />
       </list>
     </recent_temporary>
   </component>
@@ -299,6 +297,8 @@
       <workItem from="1723837126091" duration="6408000" />
       <workItem from="1723853138536" duration="2392000" />
       <workItem from="1723856493489" duration="964000" />
+      <workItem from="1723945875765" duration="715000" />
+      <workItem from="1724021125290" duration="429000" />
     </task>
     <servers />
   </component>
@@ -329,6 +329,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WikiPets$Model_in_WikiPets.ic" NAME="Model in WikiPets Coverage Results" MODIFIED="1723858682433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
     <SUITE FILE_PATH="coverage/WikiPets$java_in_WikiPets.ic" NAME="java in WikiPets Coverage Results" MODIFIED="1723858701137" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/WikiPets$BehaviorGuideServiceTest.ic" NAME="BehaviorGuideServiceTest Coverage Results" MODIFIED="1723934344756" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.una.programmingIII.WikiPets.Service.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/WikiPets$VideoTest.ic" NAME="VideoTest Coverage Results" MODIFIED="1723854179213" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.una.programmingIII.WikiPets.Model.*</FILTER>
     </SUITE>
