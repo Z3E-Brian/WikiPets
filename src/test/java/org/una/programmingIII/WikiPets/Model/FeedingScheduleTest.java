@@ -17,7 +17,7 @@ public class FeedingScheduleTest {
 
         feedingSchedule = new FeedingSchedule();
         feedingSchedule.setId(1L);
-        feedingSchedule.setCatBreed(new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate));
+        feedingSchedule.setCatBreed(new CatBreed());
         feedingSchedule.setAgeGroup("Kitten");
         feedingSchedule.setFeedingTimes("Three times a day");
         feedingSchedule.setCreateDate(nowDate);
@@ -37,7 +37,7 @@ public class FeedingScheduleTest {
         LocalDate nowDate = LocalDate.now();
 
         feedingSchedule.setId(2L);
-        feedingSchedule.setDogBreed(new DogBreed(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate));
+        feedingSchedule.setDogBreed(new DogBreed());
         feedingSchedule.setAgeGroup("Puppy");
         feedingSchedule.setFeedingTimes("Twice a day");
 
@@ -51,8 +51,8 @@ public class FeedingScheduleTest {
     public void equalsAndHashCodeTest() {
         LocalDate nowDate = LocalDate.now();
 
-        FeedingSchedule feedingSchedule1 = new FeedingSchedule(1L, new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, "Kitten", "Three times a day", nowDate, nowDate);
-        FeedingSchedule feedingSchedule2 = new FeedingSchedule(1L, new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, "Kitten", "Three times a day", nowDate, nowDate);
+        FeedingSchedule feedingSchedule1 = new FeedingSchedule(1L, new CatBreed(), null, "Kitten", "Three times a day", nowDate, nowDate);
+        FeedingSchedule feedingSchedule2 = new FeedingSchedule(1L, new CatBreed(), null, "Kitten", "Three times a day", nowDate, nowDate);
 
         assertEquals(feedingSchedule1, feedingSchedule2);
         assertEquals(feedingSchedule1.hashCode(), feedingSchedule2.hashCode());
@@ -62,8 +62,8 @@ public class FeedingScheduleTest {
     public void notEqualsAndHashCodeTest() {
         LocalDate nowDate = LocalDate.now();
 
-        FeedingSchedule feedingSchedule1 = new FeedingSchedule(1L, new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, "Kitten", "Three times a day", nowDate, nowDate);
-        FeedingSchedule feedingSchedule2 = new FeedingSchedule(2L, null, new DogBreed(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate), "Puppy", "Twice a day", nowDate, nowDate);
+        FeedingSchedule feedingSchedule1 = new FeedingSchedule(1L, new CatBreed(), null, "Kitten", "Three times a day", nowDate, nowDate);
+        FeedingSchedule feedingSchedule2 = new FeedingSchedule(2L, null, new DogBreed(), "Puppy", "Twice a day", nowDate, nowDate);
 
         assertNotEquals(feedingSchedule1, feedingSchedule2);
         assertNotEquals(feedingSchedule1.hashCode(), feedingSchedule2.hashCode());

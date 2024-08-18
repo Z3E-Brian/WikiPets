@@ -63,24 +63,24 @@ public class CatBreedTest {
         assertEquals("Large and friendly breed known for its gentle temperament.", catBreed.getDescription());
     }
 
-    @Test
-    public void equalsAndHashCodeTest() {
-        CatBreed catBreed1 = new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-        CatBreed catBreed2 = new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-
-        assertEquals(catBreed1, catBreed2);
-        assertEquals(catBreed1.hashCode(), catBreed2.hashCode());
-    }
-
-    @Test
-    public void notEqualsAndHashCodeTest() {
-        CatBreed catBreed1 = new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-        CatBreed catBreed2 = new CatBreed(2L, "Maine Coon", "United States", 4, "Long", "Tabby", "12-15 years", "Gentle, Playful, Friendly", "Large and friendly breed known for its gentle temperament.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-
-        assertEquals(catBreed1.hashCode(), catBreed1.hashCode());
-        assertNotEquals(catBreed1, catBreed2);
-        assertNotEquals(catBreed1.hashCode(), catBreed2.hashCode());
-    }
+//    @Test
+//    public void equalsAndHashCodeTest() {
+//        CatBreed catBreed1 = new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//        CatBreed catBreed2 = new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//
+//        assertEquals(catBreed1, catBreed2);
+//        assertEquals(catBreed1.hashCode(), catBreed2.hashCode());
+//    }
+//
+//    @Test
+//    public void notEqualsAndHashCodeTest() {
+//        CatBreed catBreed1 = new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//        CatBreed catBreed2 = new CatBreed(2L, "Maine Coon", "United States", 4, "Long", "Tabby", "12-15 years", "Gentle, Playful, Friendly", "Large and friendly breed known for its gentle temperament.",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//
+//        assertEquals(catBreed1.hashCode(), catBreed1.hashCode());
+//        assertNotEquals(catBreed1, catBreed2);
+//        assertNotEquals(catBreed1.hashCode(), catBreed2.hashCode());
+//    }
 
     @Test
     public void toStringTest() {

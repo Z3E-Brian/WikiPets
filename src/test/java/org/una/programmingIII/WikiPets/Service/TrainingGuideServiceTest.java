@@ -41,9 +41,9 @@ public class TrainingGuideServiceTest {
         trainingGuide.setTitle("Basic Training");
         trainingGuide.setContent("A basic guide for training your pet.");
         List<CatBreed> catBreeds = new ArrayList<>();
-        catBreeds.add(new CatBreed(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(),LocalDate.now()));
+        catBreeds.add(new CatBreed());
         List<DogBreed> dogBreeds = new ArrayList<>();
-        dogBreeds.add(new DogBreed(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.",LocalDate.now(),LocalDate.now()));
+        dogBreeds.add(new DogBreed());
         trainingGuide.setCatBreeds(catBreeds);
         trainingGuide.setDogBreeds(dogBreeds);
         trainingGuideDto = (TrainingGuideMapper.INSTANCE.toTrainingGuideDto(trainingGuide));

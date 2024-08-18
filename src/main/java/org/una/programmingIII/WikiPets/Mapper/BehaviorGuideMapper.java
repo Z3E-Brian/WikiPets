@@ -7,7 +7,7 @@ import org.una.programmingIII.WikiPets.Model.BehaviorGuideDto;
 
 @Mapper(componentModel = "spring")
 public interface BehaviorGuideMapper {
-
+    BehaviorGuideMapper INSTANCE = Mappers.getMapper(BehaviorGuideMapper.class);
     @Mapping(target = "suitableDogBreeds", source = "suitableDogBreeds")
     @Mapping(target = "suitableCatBreeds", source = "suitableCatBreeds")
     BehaviorGuideDto BehaviorGuideDto(BehaviorGuide behaviorGuide);

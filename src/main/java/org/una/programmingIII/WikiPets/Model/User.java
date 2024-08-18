@@ -47,5 +47,6 @@ public class User {
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
+   // TODO: Falta hacer la relacion con review desde user
 
 }
