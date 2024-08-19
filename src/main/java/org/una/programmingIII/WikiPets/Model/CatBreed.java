@@ -35,28 +35,28 @@ public class CatBreed {
     private LocalDate createdDate;
     @Column (nullable = false)
     private LocalDate modifiedDate;
-//    @ManyToMany(mappedBy ="availableCatBreeds")
-//    private List<AdoptionCenter> adoptionCenters;
-//    @ManyToMany(mappedBy = "suitableCatBreeds")
-//    private List<HealthIssue> healthIssues;
-//    @ManyToMany(mappedBy = "recommendedCatBreeds")
-//    private List<NutritionGuide> nutritionGuides;
-//    @ManyToMany (mappedBy = "favoriteCatBreeds")
-//    private List<User> users;
-//    @ManyToMany(mappedBy = "catBreeds")
-//    private List<TrainingGuide> trainingGuides;
-//    @ManyToMany(mappedBy = "suitableCatBreeds")
-//    private List<BehaviorGuide> behaviorGuides;
-//    @ManyToMany(mappedBy = "relevantCatBreeds")
-//    private List<CareTip> careTips;
-//    @ManyToMany(mappedBy = "suitableCatBreeds")
-//    private List<GroomingGuide> groomingGuides;
-//    @OneToMany(mappedBy = "catBreed")
-//    private List<FeedingSchedule> feedingSchedules;
-//    @OneToMany(mappedBy = "catBreed")
-//    private List<Image> images;
-//    @OneToMany  (mappedBy = "catBreed")
-//    private List<Video> videos;
-//    @OneToMany(mappedBy = "catBreed")
-//    private List<Review> reviews;
+    @ManyToMany(mappedBy ="availableCatBreeds")
+    private List<AdoptionCenter> adoptionCenters;
+    @ManyToMany(mappedBy = "suitableCatBreeds")
+    private List<HealthIssue> healthIssues;
+    @ManyToMany(mappedBy = "recommendedCatBreeds")
+    private List<NutritionGuide> nutritionGuides;
+    @ManyToMany (mappedBy = "favoriteCatBreeds")
+    private List<User> users;
+    @ManyToMany(mappedBy = "catBreeds")
+    private List<TrainingGuide> trainingGuides;
+    @ManyToMany(mappedBy = "suitableCatBreeds")
+    private List<BehaviorGuide> behaviorGuides;
+    @ManyToMany(mappedBy = "relevantCatBreeds")
+    private List<CareTip> careTips;
+    @ManyToMany(mappedBy = "suitableCatBreeds")
+    private List<GroomingGuide> groomingGuides;
+    @OneToMany(mappedBy = "catBreed")
+    private List<FeedingSchedule> feedingSchedules;
+    @OneToMany(mappedBy = "catBreed")
+    private List<Image> images;
+    @OneToMany  (mappedBy = "catBreed")
+    private List<Video> videos;
+    @OneToMany(mappedBy = "catBreed")
+    private List<Review> reviews;
 }
