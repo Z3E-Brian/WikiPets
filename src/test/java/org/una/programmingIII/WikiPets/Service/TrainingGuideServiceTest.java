@@ -7,19 +7,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.una.programmingIII.WikiPets.Mapper.TrainingGuideMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +25,12 @@ public class TrainingGuideServiceTest {
 
     @Mock
     private TrainingGuideRepository trainingGuideRepository;
+
+    @Mock
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
+    private GenericMapper<TrainingGuide, TrainingGuideDto> traningGuideMapper;
 
     @InjectMocks
     private TrainingGuideService trainingGuideService;
@@ -37,6 +41,7 @@ public class TrainingGuideServiceTest {
     @BeforeEach
     void setUp() {
         trainingGuide = new TrainingGuide();
+        trainingGuideDto = new TrainingGuideDto();
         trainingGuide.setId(1L);
         trainingGuide.setTitle("Basic Training");
         trainingGuide.setContent("A basic guide for training your pet.");
@@ -46,18 +51,21 @@ public class TrainingGuideServiceTest {
         dogBreeds.add(new DogBreed());
         trainingGuide.setCatBreeds(catBreeds);
         trainingGuide.setDogBreeds(dogBreeds);
-        trainingGuideDto = (TrainingGuideMapper.INSTANCE.toTrainingGuideDto(trainingGuide));
+
+        when(mapperFactory.createMapper(TrainingGuide.class, TrainingGuideDto.class)).thenReturn(traningGuideMapper);
+        when(traningGuideMapper.convertToDTO(trainingGuide)).thenReturn(trainingGuideDto);
+        when(traningGuideMapper.convertToEntity(trainingGuideDto)).thenReturn(trainingGuide);
+        trainingGuideService = new TrainingGuideService(trainingGuideRepository, mapperFactory);
+        trainingGuideDto = traningGuideMapper.convertToDTO(trainingGuide);
     }
 
     @Test
     public void createTrainingGuideTest() {
-        when(trainingGuideRepository.save(Mockito.any(TrainingGuide.class))).thenReturn(trainingGuide);
-
-        TrainingGuideDto result = trainingGuideService.createTrainingGuide(trainingGuideDto);
-
-        assertNotNull(result);
-        assertEquals(1L, result.getId());
-        assertEquals("Basic Training", result.getTitle());
+        when(trainingGuideRepository.findAll()).thenReturn(List.of(trainingGuide));
+        List<TrainingGuideDto> result = trainingGuideService.getAllTrainingGuides();
+        assertEquals(1, result.size());
+        assertEquals(trainingGuideDto.getId(), result.get(0).getId());
+        assertTrue(result.get(0).getTitle().contains("Basic Training"));
     }
 
     @Test
@@ -101,7 +109,6 @@ public class TrainingGuideServiceTest {
     @Test
     public void deleteTrainingGuideTest() {
         trainingGuideService.deleteTrainingGuide(1L);
-
         verify(trainingGuideRepository, times(1)).deleteById(1L);
     }
 

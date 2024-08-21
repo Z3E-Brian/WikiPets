@@ -5,20 +5,33 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.una.programmingIII.WikiPets.Mapper.ReviewMapper;
-import org.una.programmingIII.WikiPets.Model.*;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.Review;
+import org.una.programmingIII.WikiPets.Model.ReviewDto;
+import org.una.programmingIII.WikiPets.Model.User;
+import org.una.programmingIII.WikiPets.Model.UserDto;
 import org.una.programmingIII.WikiPets.Repository.ReviewRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 public class ReviewServiceTest {
 
     @Mock
     private ReviewRepository reviewRepository;
+
+    @Mock
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
+    private GenericMapper<Review, ReviewDto> reviewMapper;
+    @Mock
+    private GenericMapper<User, UserDto> userMapper;
 
     @InjectMocks
     private ReviewService reviewService;
@@ -29,7 +42,7 @@ public class ReviewServiceTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
 
         user = new User();
         user.setId(1L);
@@ -46,8 +59,15 @@ public class ReviewServiceTest {
         reviewDto.setId(1L);
         reviewDto.setRating(5);
         reviewDto.setComment("Great breed!");
-        reviewDto.setUserDto(ReviewMapper.INSTANCE.toReviewDto(review).getUserDto());
+        reviewDto.setUserDto(userMapper.convertToDTO(user));
+
+        when(mapperFactory.createMapper(Review.class, ReviewDto.class)).thenReturn(reviewMapper);
+        when(reviewMapper.convertToDTO(review)).thenReturn(reviewDto);
+        when(reviewMapper.convertToEntity(reviewDto)).thenReturn(review);
+        reviewService = new ReviewService(reviewRepository, mapperFactory);
+
     }
+
 
     @Test
     public void getAllReviewsTest() {
@@ -81,7 +101,6 @@ public class ReviewServiceTest {
     public void deleteReviewTest() {
         doNothing().when(reviewRepository).deleteById(1L);
         reviewService.deleteReview(1L);
-
         verify(reviewRepository, times(1)).deleteById(1L);
     }
 
