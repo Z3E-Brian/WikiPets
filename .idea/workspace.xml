@@ -6,12 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7a02369a-4c5a-415a-bc32-62f490435582" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/ReviewMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/TrainingGuideMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/ReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/TrainingGuideService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/TrainingGuideService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/FeedingScheduleMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/GenericMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Mapper/GenericMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/FeedingScheduleServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/ReviewServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/ReviewServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/TrainingGuideServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/una/programmingIII/WikiPets/Service/TrainingGuideServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +81,7 @@
     "JUnit.BreedComparisonServiceTest.testCompareMixedBreeds_DogAndCat.executor": "Run",
     "JUnit.CatBreedDtoTest.executor": "Run",
     "JUnit.CatBreedServiceTest.createCatBreedTest.executor": "Run",
-    "JUnit.CatBreedServiceTest.executor": "Coverage",
+    "JUnit.CatBreedServiceTest.executor": "Run",
     "JUnit.CatBreedServiceTest.updateCatBreedTest.executor": "Run",
     "JUnit.CatBreedTest.executor": "Coverage",
     "JUnit.DogBreedDtoTest.argsGettersTest.executor": "Run",
@@ -98,7 +98,13 @@
     "JUnit.DogBreedTest.updateDogBreedTest.executor": "Run",
     "JUnit.FeedingScheduleDtoTest.executor": "Run",
     "JUnit.FeedingScheduleRepositoryTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.createFeedingScheduleTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.deleteFeedingScheduleNotFoundTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.deleteFeedingScheduleTest.executor": "Run",
     "JUnit.FeedingScheduleServiceTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.getAllFeedingSchedulesTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.getFeedingScheduleByIdNotFoundTest.executor": "Run",
+    "JUnit.FeedingScheduleServiceTest.getFeedingScheduleByIdTest.executor": "Run",
     "JUnit.FeedingScheduleTest.executor": "Run",
     "JUnit.GroomingGuideDtoTest.executor": "Coverage",
     "JUnit.GroomingGuideDtoTest.testDefaultConstructor.executor": "Run",
@@ -174,8 +180,8 @@
       <recent name="org.una.programmingIII.WikiPets.Repository" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TrainingGuideServiceTest.createTrainingGuideTest">
-    <configuration name="BehaviorGuideServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.FeedingScheduleServiceTest">
+    <configuration name="FeedingScheduleServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="WikiPets" />
       <extension name="coverage">
         <pattern>
@@ -184,8 +190,56 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.BehaviorGuideServiceTest" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.FeedingScheduleServiceTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FeedingScheduleServiceTest.createFeedingScheduleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.FeedingScheduleServiceTest" />
+      <option name="METHOD_NAME" value="createFeedingScheduleTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FeedingScheduleServiceTest.getFeedingScheduleByIdNotFoundTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.FeedingScheduleServiceTest" />
+      <option name="METHOD_NAME" value="getFeedingScheduleByIdNotFoundTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FeedingScheduleServiceTest.getFeedingScheduleByIdTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="WikiPets" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
+      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.FeedingScheduleServiceTest" />
+      <option name="METHOD_NAME" value="getFeedingScheduleByIdTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -206,46 +260,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ReviewServiceTest.updateReviewTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="WikiPets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.ReviewServiceTest" />
-      <option name="METHOD_NAME" value="updateReviewTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TrainingGuideServiceTest.createTrainingGuideTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="WikiPets" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.una.programmingIII.WikiPets.Service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.una.programmingIII.WikiPets.Service" />
-      <option name="MAIN_CLASS_NAME" value="org.una.programmingIII.WikiPets.Service.TrainingGuideServiceTest" />
-      <option name="METHOD_NAME" value="createTrainingGuideTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="java in WikiPets" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="WikiPets" />
-      <option name="TEST_OBJECT" value="directory" />
-      <dir value="$PROJECT_DIR$/src/test/java" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WikiPetsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="WikiPets" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="org.una.programmingIII.WikiPets.WikiPetsApplication" />
@@ -255,11 +269,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TrainingGuideServiceTest.createTrainingGuideTest" />
+        <item itemvalue="JUnit.FeedingScheduleServiceTest" />
+        <item itemvalue="JUnit.FeedingScheduleServiceTest.createFeedingScheduleTest" />
+        <item itemvalue="JUnit.FeedingScheduleServiceTest.getFeedingScheduleByIdNotFoundTest" />
+        <item itemvalue="JUnit.FeedingScheduleServiceTest.getFeedingScheduleByIdTest" />
         <item itemvalue="JUnit.ReviewServiceTest.getAllReviewsTest" />
-        <item itemvalue="JUnit.ReviewServiceTest.updateReviewTest" />
-        <item itemvalue="JUnit.java in WikiPets" />
-        <item itemvalue="JUnit.BehaviorGuideServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -323,6 +337,11 @@
       <workItem from="1724271111340" duration="931000" />
       <workItem from="1724273878585" duration="263000" />
       <workItem from="1724274233715" duration="5394000" />
+      <workItem from="1724338433289" duration="3046000" />
+      <workItem from="1724341530241" duration="42000" />
+      <workItem from="1724341591086" duration="119000" />
+      <workItem from="1724341735764" duration="82000" />
+      <workItem from="1724341831280" duration="1931000" />
     </task>
     <servers />
   </component>

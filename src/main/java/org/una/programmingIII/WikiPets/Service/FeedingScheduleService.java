@@ -2,7 +2,8 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Mapper.FeedingScheduleMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.FeedingSchedule;
 import org.una.programmingIII.WikiPets.Model.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Repository.FeedingScheduleRepository;
@@ -14,29 +15,29 @@ import java.util.stream.Collectors;
 public class FeedingScheduleService {
 
     private final FeedingScheduleRepository feedingScheduleRepository;
-    private final FeedingScheduleMapper feedingScheduleMapper;
+    private final GenericMapper<FeedingSchedule, FeedingScheduleDto> feedingScheduleMapper;
 
     @Autowired
-    public FeedingScheduleService(FeedingScheduleRepository feedingScheduleRepository) {
+    public FeedingScheduleService(FeedingScheduleRepository feedingScheduleRepository, GenericMapperFactory mapperFactory) {
         this.feedingScheduleRepository = feedingScheduleRepository;
-        this.feedingScheduleMapper = FeedingScheduleMapper.INSTANCE;
+        this.feedingScheduleMapper = mapperFactory.createMapper(FeedingSchedule.class, FeedingScheduleDto.class);
     }
 
     public List<FeedingScheduleDto> getAllFeedingSchedules() {
         List<FeedingSchedule> feedingSchedules = feedingScheduleRepository.findAll();
-        return feedingSchedules.stream().map(this::convertToDto).collect(Collectors.toList());
+        return feedingSchedules.stream().map(this.feedingScheduleMapper::convertToDTO).collect(Collectors.toList());
     }
 
     public FeedingScheduleDto getFeedingScheduleById(Long id) {
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("FeedingSchedule not found with id: " + id));
-        return convertToDto(feedingSchedule);
+        return feedingScheduleMapper.convertToDTO(feedingSchedule);
     }
 
     public FeedingScheduleDto createFeedingSchedule(FeedingScheduleDto feedingScheduleDto) {
-        FeedingSchedule feedingSchedule = convertToEntity(feedingScheduleDto);
+        FeedingSchedule feedingSchedule = feedingScheduleMapper.convertToEntity(feedingScheduleDto);
         FeedingSchedule savedFeedingSchedule = feedingScheduleRepository.save(feedingSchedule);
-        return convertToDto(savedFeedingSchedule);
+        return  feedingScheduleMapper.convertToDTO(savedFeedingSchedule);
     }
 
     public void deleteFeedingSchedule(Long id) {
@@ -46,16 +47,8 @@ public class FeedingScheduleService {
     }
 
     public FeedingScheduleDto updateFeedingSchedule1(FeedingScheduleDto feedingScheduleDto) {
-        FeedingSchedule feedingSchedule = convertToEntity(feedingScheduleDto);
+        FeedingSchedule feedingSchedule =  feedingScheduleMapper.convertToEntity(feedingScheduleDto);
         FeedingSchedule updatedFeedingSchedule = feedingScheduleRepository.save(feedingSchedule);
-        return convertToDto(updatedFeedingSchedule);
-    }
-
-    private FeedingScheduleDto convertToDto(FeedingSchedule feedingSchedule) {
-        return feedingScheduleMapper.toFeedingScheduleDto(feedingSchedule);
-    }
-
-    private FeedingSchedule convertToEntity(FeedingScheduleDto feedingScheduleDto) {
-        return feedingScheduleMapper.toFeedingSchedule(feedingScheduleDto);
+        return feedingScheduleMapper.convertToDTO(updatedFeedingSchedule);
     }
 }

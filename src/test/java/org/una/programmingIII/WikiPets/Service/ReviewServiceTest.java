@@ -65,7 +65,6 @@ public class ReviewServiceTest {
         when(reviewMapper.convertToDTO(review)).thenReturn(reviewDto);
         when(reviewMapper.convertToEntity(reviewDto)).thenReturn(review);
         reviewService = new ReviewService(reviewRepository, mapperFactory);
-
     }
 
 
@@ -92,7 +91,6 @@ public class ReviewServiceTest {
     public void createReviewTest() {
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
         ReviewDto result = reviewService.createReview(reviewDto);
-
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getRating(), result.getRating());
     }
@@ -108,7 +106,6 @@ public class ReviewServiceTest {
     public void updateReviewTest() {
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
         ReviewDto result = reviewService.updateReview(reviewDto);
-
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getComment(), result.getComment());
     }
