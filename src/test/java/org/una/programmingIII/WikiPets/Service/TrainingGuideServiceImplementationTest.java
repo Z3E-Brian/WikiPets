@@ -11,7 +11,6 @@ import org.una.programmingIII.WikiPets.Mapper.TrainingGuideMapper;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,13 +22,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class TrainingGuideServiceTest {
+public class TrainingGuideServiceImplementationTest {
 
     @Mock
     private TrainingGuideRepository trainingGuideRepository;
 
     @InjectMocks
-    private TrainingGuideService trainingGuideService;
+    private TrainingGuideServiceImplementation trainingGuideServiceImplementation;
 
     private TrainingGuide trainingGuide;
     private TrainingGuideDto trainingGuideDto;
@@ -53,7 +52,7 @@ public class TrainingGuideServiceTest {
     public void createTrainingGuideTest() {
         when(trainingGuideRepository.save(Mockito.any(TrainingGuide.class))).thenReturn(trainingGuide);
 
-        TrainingGuideDto result = trainingGuideService.createTrainingGuide(trainingGuideDto);
+        TrainingGuideDto result = trainingGuideServiceImplementation.createTrainingGuide(trainingGuideDto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -64,7 +63,7 @@ public class TrainingGuideServiceTest {
     public void updateTrainingGuideTest() {
         when(trainingGuideRepository.save(Mockito.any(TrainingGuide.class))).thenReturn(trainingGuide);
 
-        TrainingGuideDto result = trainingGuideService.updateTrainingGuide(trainingGuideDto);
+        TrainingGuideDto result = trainingGuideServiceImplementation.updateTrainingGuide(trainingGuideDto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -75,7 +74,7 @@ public class TrainingGuideServiceTest {
     public void getGuideByIdTest() {
         when(trainingGuideRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(trainingGuide));
 
-        TrainingGuideDto result = trainingGuideService.getTrainingGuideById(1L);
+        TrainingGuideDto result = trainingGuideServiceImplementation.getTrainingGuideById(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -85,14 +84,14 @@ public class TrainingGuideServiceTest {
     public void getGuideByIdNotFoundTest() {
         when(trainingGuideRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> trainingGuideService.getTrainingGuideById(1L));
+        assertThrows(RuntimeException.class, () -> trainingGuideServiceImplementation.getTrainingGuideById(1L));
     }
 
     @Test
     public void getAllGuidesTest() {
         when(trainingGuideRepository.findAll()).thenReturn(Arrays.asList(trainingGuide));
 
-        List<TrainingGuideDto> result = trainingGuideService.getAllTrainingGuides();
+        List<TrainingGuideDto> result = trainingGuideServiceImplementation.getAllTrainingGuides();
 
         assertNotNull(result);
         assertEquals(1L, result.get(0).getId());
@@ -100,7 +99,7 @@ public class TrainingGuideServiceTest {
 
     @Test
     public void deleteTrainingGuideTest() {
-        trainingGuideService.deleteTrainingGuide(1L);
+        trainingGuideServiceImplementation.deleteTrainingGuide(1L);
 
         verify(trainingGuideRepository, times(1)).deleteById(1L);
     }
@@ -109,7 +108,7 @@ public class TrainingGuideServiceTest {
     public void searchByTitleTest() {
         when(trainingGuideRepository.findByTitleContainingIgnoreCase(Mockito.anyString())).thenReturn(Arrays.asList(trainingGuide));
 
-        List<TrainingGuideDto> result = trainingGuideService.searchByTitle("Basic");
+        List<TrainingGuideDto> result = trainingGuideServiceImplementation.searchByTitle("Basic");
 
         assertNotNull(result);
         assertEquals(1L, result.get(0).getId());
@@ -119,7 +118,7 @@ public class TrainingGuideServiceTest {
     public void getTrainingGuidesByCatBreedIdTest() {
         when(trainingGuideRepository.findByCatBreedsId(Mockito.anyLong())).thenReturn(Arrays.asList(trainingGuide));
 
-        List<TrainingGuideDto> result = trainingGuideService.getTrainingGuidesByCatBreedId(1L);
+        List<TrainingGuideDto> result = trainingGuideServiceImplementation.getTrainingGuidesByCatBreedId(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.get(0).getId());
@@ -129,7 +128,7 @@ public class TrainingGuideServiceTest {
     public void getTrainingGuidesByDogBreedIdTest() {
         when(trainingGuideRepository.findByDogBreedsId(Mockito.anyLong())).thenReturn(Arrays.asList(trainingGuide));
 
-        List<TrainingGuideDto> result = trainingGuideService.getTrainingGuidesByDogBreedId(1L);
+        List<TrainingGuideDto> result = trainingGuideServiceImplementation.getTrainingGuidesByDogBreedId(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.get(0).getId());

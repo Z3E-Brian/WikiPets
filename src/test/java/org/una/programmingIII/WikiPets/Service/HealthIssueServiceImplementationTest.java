@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class HealthIssueServiceTest {
+public class HealthIssueServiceImplementationTest {
     @Mock
     private HealthIssueRepository healthIssueRepository;
 
@@ -27,7 +27,7 @@ public class HealthIssueServiceTest {
     private HealthIssueMapper healthIssueMapper;
 
     @InjectMocks
-    private HealthIssueService healthIssueService;
+    private HealthIssueServiceImplementation healthIssueServiceImplementation;
 
     @BeforeEach
     public void setup() {
@@ -40,7 +40,7 @@ public class HealthIssueServiceTest {
         when(healthIssueRepository.findAll()).thenReturn(Arrays.asList(healthIssue));
         when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
 
-        List<HealthIssueDto> healthIssueDtos = healthIssueService.getAllHealthIssues();
+        List<HealthIssueDto> healthIssueDtos = healthIssueServiceImplementation.getAllHealthIssues();
 
         assertNotNull(healthIssueDtos);
         assertEquals(1, healthIssueDtos.size());
@@ -53,7 +53,7 @@ public class HealthIssueServiceTest {
         when(healthIssueRepository.findById(anyLong())).thenReturn(Optional.of(healthIssue));
         when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
 
-        HealthIssueDto healthIssueDto = healthIssueService.getHealthIssueById(1L);
+        HealthIssueDto healthIssueDto = healthIssueServiceImplementation.getHealthIssueById(1L);
 
         assertNotNull(healthIssueDto);
         verify(healthIssueRepository, times(1)).findById(anyLong());
@@ -65,7 +65,7 @@ public class HealthIssueServiceTest {
         when(healthIssueRepository.save(any(HealthIssue.class))).thenReturn(healthIssue);
         when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
 
-        HealthIssueDto healthIssueDto = healthIssueService.createHealthIssue(new HealthIssueDto());
+        HealthIssueDto healthIssueDto = healthIssueServiceImplementation.createHealthIssue(new HealthIssueDto());
 
         assertNotNull(healthIssueDto);
         verify(healthIssueRepository, times(1)).save(any(HealthIssue.class));
@@ -78,7 +78,7 @@ public class HealthIssueServiceTest {
         when(healthIssueRepository.save(any(HealthIssue.class))).thenReturn(healthIssue);
         when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
 
-        HealthIssueDto healthIssueDto = healthIssueService.updateHealthIssue(new HealthIssueDto());
+        HealthIssueDto healthIssueDto = healthIssueServiceImplementation.updateHealthIssue(new HealthIssueDto());
 
         assertNotNull(healthIssueDto);
         verify(healthIssueRepository, times(1)).save(any(HealthIssue.class));
@@ -86,7 +86,7 @@ public class HealthIssueServiceTest {
     @Test
     public void deleteHealthIssueTest() {
 
-        healthIssueService.deleteHealthIssue(1L);
+        healthIssueServiceImplementation.deleteHealthIssue(1L);
 
         verify(healthIssueRepository, times(1)).deleteById(1L);
     }

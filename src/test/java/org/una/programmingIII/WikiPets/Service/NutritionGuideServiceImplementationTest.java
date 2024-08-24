@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class NutritionGuideServiceTest {
+public class NutritionGuideServiceImplementationTest {
 
     @Mock
     private NutritionGuideRepository nutritionGuideRepository;
@@ -27,7 +27,7 @@ public class NutritionGuideServiceTest {
     private NutritionGuideMapper nutritionGuideMapper;
 
     @InjectMocks
-    private NutritionGuideService nutritionGuideService;
+    private NutritionGuideServiceImplementation nutritionGuideServiceImplementation;
 
     @Test
     void getAllNutritionGuidesTest() {
@@ -35,7 +35,7 @@ public class NutritionGuideServiceTest {
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
         when(nutritionGuideRepository.findAll()).thenReturn(Collections.singletonList(nutritionGuide));
 
-        List<NutritionGuideDto> result = nutritionGuideService.getAllNutritionGuides();
+        List<NutritionGuideDto> result = nutritionGuideServiceImplementation.getAllNutritionGuides();
 
         assertEquals(1, result.size());
         assertEquals(nutritionGuideDto, result.get(0));
@@ -48,7 +48,7 @@ public class NutritionGuideServiceTest {
         when(nutritionGuideRepository.findById(1L)).thenReturn(Optional.of(nutritionGuide));
 
 
-        NutritionGuideDto result = nutritionGuideService.getNutritionGuideById(1L);
+        NutritionGuideDto result = nutritionGuideServiceImplementation.getNutritionGuideById(1L);
 
         assertEquals(nutritionGuideDto, result);
     }
@@ -57,7 +57,7 @@ public class NutritionGuideServiceTest {
     void getNutritionGuideById_NotFoundTest() {
         when(nutritionGuideRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> nutritionGuideService.getNutritionGuideById(1L));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> nutritionGuideServiceImplementation.getNutritionGuideById(1L));
 
         assertEquals("Nutrition Guide not found", exception.getMessage());
     }
@@ -68,7 +68,7 @@ public class NutritionGuideServiceTest {
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
         when(nutritionGuideRepository.findByTitle("title")).thenReturn(nutritionGuide);
 
-        NutritionGuideDto result = nutritionGuideService.getNutritionGuideByTitle("title");
+        NutritionGuideDto result = nutritionGuideServiceImplementation.getNutritionGuideByTitle("title");
 
         assertEquals(nutritionGuideDto, result);
     }
@@ -77,7 +77,7 @@ public class NutritionGuideServiceTest {
     void getNutritionGuideByTitle_NotFoundTest() {
         when(nutritionGuideRepository.findByTitle("title")).thenReturn(null);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> nutritionGuideService.getNutritionGuideByTitle("title"));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> nutritionGuideServiceImplementation.getNutritionGuideByTitle("title"));
 
         assertEquals("Nutrition Guide not found", exception.getMessage());
     }
@@ -88,7 +88,7 @@ public class NutritionGuideServiceTest {
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
         when(nutritionGuideRepository.save(nutritionGuide)).thenReturn(nutritionGuide);
 
-        NutritionGuideDto result = nutritionGuideService.createNutritionGuide(nutritionGuideDto);
+        NutritionGuideDto result = nutritionGuideServiceImplementation.createNutritionGuide(nutritionGuideDto);
 
         assertEquals(nutritionGuideDto, result);
     }
@@ -97,7 +97,7 @@ public class NutritionGuideServiceTest {
     void deleteNutritionGuideTest() {
         doNothing().when(nutritionGuideRepository).deleteById(1L);
 
-        nutritionGuideService.deleteNutritionGuide(1L);
+        nutritionGuideServiceImplementation.deleteNutritionGuide(1L);
 
         verify(nutritionGuideRepository, times(1)).deleteById(1L);
     }
@@ -109,7 +109,7 @@ public class NutritionGuideServiceTest {
         when(nutritionGuideRepository.save(nutritionGuide)).thenReturn(nutritionGuide);
 
 
-        NutritionGuideDto result = nutritionGuideService.updateNutritionGuide(nutritionGuideDto);
+        NutritionGuideDto result = nutritionGuideServiceImplementation.updateNutritionGuide(nutritionGuideDto);
 
         assertEquals(nutritionGuideDto, result);
     }

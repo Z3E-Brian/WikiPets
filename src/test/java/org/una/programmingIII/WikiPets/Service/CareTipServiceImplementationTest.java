@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CareTipServiceTest {
+public class CareTipServiceImplementationTest {
 
     @Mock
     private CareTipRepository careTipRepository;
@@ -29,7 +29,7 @@ public class CareTipServiceTest {
     private CareTipMapper careTipMapper;
 
     @InjectMocks
-    private CareTipService careTipService;
+    private CareTipServiceImplementation careTipServiceImplementation;
 
     @Test
     void getAllCareTipsTest() {
@@ -37,7 +37,7 @@ public class CareTipServiceTest {
         CareTipDto careTipDto = new CareTipDto();
         when(careTipRepository.findAll()).thenReturn(Collections.singletonList(careTip));
 
-        List<CareTipDto> result = careTipService.getAllCareTips();
+        List<CareTipDto> result = careTipServiceImplementation.getAllCareTips();
 
         assertEquals(1, result.size());
         assertEquals(careTipDto, result.get(0));
@@ -50,7 +50,7 @@ public class CareTipServiceTest {
         when(careTipRepository.findById(1L)).thenReturn(Optional.of(careTip));
 
 
-        CareTipDto result = careTipService.getCareTipById(1L);
+        CareTipDto result = careTipServiceImplementation.getCareTipById(1L);
 
         assertEquals(careTipDto, result);
     }
@@ -59,7 +59,7 @@ public class CareTipServiceTest {
     void getCareTipById_NotFoundTest() {
         when(careTipRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> careTipService.getCareTipById(1L));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> careTipServiceImplementation.getCareTipById(1L));
 
         assertEquals("Care Tip not found", exception.getMessage());
     }
@@ -70,7 +70,7 @@ public class CareTipServiceTest {
         CareTipDto careTipDto = new CareTipDto();
         when(careTipRepository.findByTitle("title")).thenReturn(careTip);
 
-        CareTipDto result = careTipService.getCareTipByTitle("title");
+        CareTipDto result = careTipServiceImplementation.getCareTipByTitle("title");
 
         assertEquals(careTipDto, result);
     }
@@ -79,7 +79,7 @@ public class CareTipServiceTest {
     void getCareTipByTitle_NotFoundTest() {
         when(careTipRepository.findByTitle("title")).thenReturn(null);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> careTipService.getCareTipByTitle("title"));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> careTipServiceImplementation.getCareTipByTitle("title"));
 
         assertEquals("Care Tip not found", exception.getMessage());
     }
@@ -90,7 +90,7 @@ public class CareTipServiceTest {
         CareTipDto careTipDto = new CareTipDto();
         when(careTipRepository.save(careTip)).thenReturn(careTip);
 
-        CareTipDto result = careTipService.createCareTip(careTipDto);
+        CareTipDto result = careTipServiceImplementation.createCareTip(careTipDto);
 
         assertEquals(careTipDto, result);
     }
@@ -99,7 +99,7 @@ public class CareTipServiceTest {
     void deleteCareTipTest() {
         doNothing().when(careTipRepository).deleteById(1L);
 
-        careTipService.deleteCareTip(1L);
+        careTipServiceImplementation.deleteCareTip(1L);
 
         verify(careTipRepository, times(1)).deleteById(1L);
     }
@@ -110,7 +110,7 @@ public class CareTipServiceTest {
         CareTipDto careTipDto = new CareTipDto();
         when(careTipRepository.save(careTip)).thenReturn(careTip);
 
-        CareTipDto result = careTipService.updateCareTip(careTipDto);
+        CareTipDto result = careTipServiceImplementation.updateCareTip(careTipDto);
 
         assertEquals(careTipDto, result);
     }

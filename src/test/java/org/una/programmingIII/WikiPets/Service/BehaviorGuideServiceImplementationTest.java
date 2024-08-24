@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class BehaviorGuideServiceTest {
+public class BehaviorGuideServiceImplementationTest {
 
     @Mock
     private BehaviorGuideRepository behaviorGuideRepository;
@@ -26,7 +26,7 @@ public class BehaviorGuideServiceTest {
     private BehaviorGuideMapper behaviorGuideMapper;
 
     @InjectMocks
-    private BehaviorGuideService behaviorGuideService;
+    private BehaviorGuideServiceImplementation behaviorGuideServiceImplementation;
 
     private BehaviorGuide behaviorGuide;
     private BehaviorGuideDto behaviorGuideDto;
@@ -49,7 +49,7 @@ public class BehaviorGuideServiceTest {
         when(behaviorGuideRepository.findById(1L)).thenReturn(Optional.of(behaviorGuide));
         when(behaviorGuideMapper.BehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
 
-        BehaviorGuideDto dto = behaviorGuideService.getBehaviorGuideById(1L);
+        BehaviorGuideDto dto = behaviorGuideServiceImplementation.getBehaviorGuideById(1L);
 
         assertNotNull(dto);
         assertEquals("Training Guide", dto.getTitle());
@@ -62,7 +62,7 @@ public class BehaviorGuideServiceTest {
         when(behaviorGuideMapper.toBehaviorGuide(any(BehaviorGuideDto.class))).thenReturn(behaviorGuide);
         when(behaviorGuideMapper.BehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
 
-        BehaviorGuideDto savedDto = behaviorGuideService.saveBehaviorGuide(behaviorGuideDto);
+        BehaviorGuideDto savedDto = behaviorGuideServiceImplementation.saveBehaviorGuide(behaviorGuideDto);
 
         assertNotNull(savedDto);
         assertEquals("Training Guide", savedDto.getTitle());
@@ -71,7 +71,7 @@ public class BehaviorGuideServiceTest {
 
     @Test
     public void testDeleteBehaviorGuide() {
-        behaviorGuideService.deleteBehaviorGuide(1L);
+        behaviorGuideServiceImplementation.deleteBehaviorGuide(1L);
 
         verify(behaviorGuideRepository, times(1)).deleteById(1L);
     }
