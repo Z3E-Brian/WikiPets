@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Model.*;
 
 @Mapper

@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.una.programmingIII.WikiPets.Model.HealthIssue;
-import org.una.programmingIII.WikiPets.Model.HealthIssueDto;
+import org.una.programmingIII.WikiPets.Dto.HealthIssueDto;
 
 @Mapper
 public interface HealthIssueMapper {

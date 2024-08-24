@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.una.programmingIII.WikiPets.Mapper.UserMapper;
 import org.una.programmingIII.WikiPets.Model.User;
-import org.una.programmingIII.WikiPets.Model.UserDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
 
 import java.util.Arrays;

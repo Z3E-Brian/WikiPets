@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.FeedingScheduleMapper;
 import org.una.programmingIII.WikiPets.Model.FeedingSchedule;
-import org.una.programmingIII.WikiPets.Model.FeedingScheduleDto;
+import org.una.programmingIII.WikiPets.Dto.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Repository.FeedingScheduleRepository;
 
 import java.util.List;

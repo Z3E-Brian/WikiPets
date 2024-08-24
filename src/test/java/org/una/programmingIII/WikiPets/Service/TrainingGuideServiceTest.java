@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Mapper.TrainingGuideMapper;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;

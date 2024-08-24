@@ -1,10 +1,9 @@
-package org.una.programmingIII.WikiPets.Model;
+package org.una.programmingIII.WikiPets.Dto;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

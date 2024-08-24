@@ -8,9 +8,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Mapper.CatBreedMapper;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
-import org.una.programmingIII.WikiPets.Model.CatBreedDto;
+
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
 
 import java.time.LocalDate;

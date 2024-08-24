@@ -1,15 +1,13 @@
-package org.una.programmingIII.WikiPets.Model;
+package org.una.programmingIII.WikiPets.Dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CatBreedDto {
+public class DogBreedDto {
     private Long id;
     private String name;
     private String origin;
@@ -21,5 +19,4 @@ public class CatBreedDto {
     private String description;
     private LocalDate createdDate;
     private LocalDate modifiedDate;
-
 }

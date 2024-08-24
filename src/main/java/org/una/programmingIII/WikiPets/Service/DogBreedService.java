@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.DogBreedMapper;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
-import org.una.programmingIII.WikiPets.Model.DogBreedDto;
+import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
 
 import java.util.List;

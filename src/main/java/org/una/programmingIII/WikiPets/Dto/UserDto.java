@@ -1,4 +1,4 @@
-package org.una.programmingIII.WikiPets.Model;
+package org.una.programmingIII.WikiPets.Dto;
 
 import java.time.LocalDate;
 import java.util.List;

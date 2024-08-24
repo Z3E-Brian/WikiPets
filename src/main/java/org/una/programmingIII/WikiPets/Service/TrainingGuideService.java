@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.TrainingGuideMapper;
 import org.una.programmingIII.WikiPets.Model.TrainingGuide;
-import org.una.programmingIII.WikiPets.Model.TrainingGuideDto;
+import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
 
 import java.util.List;

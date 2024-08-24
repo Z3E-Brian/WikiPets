@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.HealthIssueMapper;
 import org.una.programmingIII.WikiPets.Model.HealthIssue;
-import org.una.programmingIII.WikiPets.Model.HealthIssueDto;
+import org.una.programmingIII.WikiPets.Dto.HealthIssueDto;
 import org.una.programmingIII.WikiPets.Repository.HealthIssueRepository;
 
 import java.util.List;
