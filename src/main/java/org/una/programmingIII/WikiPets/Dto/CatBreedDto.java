@@ -1,4 +1,4 @@
-package org.una.programmingIII.WikiPets.Model;
+package org.una.programmingIII.WikiPets.Dto;
 
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;

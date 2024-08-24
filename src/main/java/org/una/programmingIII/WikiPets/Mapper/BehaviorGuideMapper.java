@@ -1,19 +1,12 @@
 package org.una.programmingIII.WikiPets.Mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import org.una.programmingIII.WikiPets.Model.BehaviorGuide;
-import org.una.programmingIII.WikiPets.Model.BehaviorGuideDto;
+import org.una.programmingIII.WikiPets.Dto.BehaviorGuideDto;
+import org.una.programmingIII.WikiPets.Model.*;
 
-@Mapper(componentModel = "spring")
 public interface BehaviorGuideMapper {
     BehaviorGuideMapper INSTANCE = Mappers.getMapper(BehaviorGuideMapper.class);
-    @Mapping(target = "suitableDogBreeds", source = "suitableDogBreeds")
-    @Mapping(target = "suitableCatBreeds", source = "suitableCatBreeds")
-    BehaviorGuideDto BehaviorGuideDto(BehaviorGuide behaviorGuide);
-
-    @Mapping(target = "suitableDogBreeds", source = "suitableDogBreeds")
-    @Mapping(target = "suitableCatBreeds", source = "suitableCatBreeds")
+    BehaviorGuideDto toCatBreedDto(BehaviorGuide behaviorGuide);
     BehaviorGuide toBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
+
 }

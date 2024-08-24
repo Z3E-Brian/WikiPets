@@ -3,6 +3,7 @@ package org.una.programmingIII.WikiPets.Mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Model.*;
 
 @Mapper

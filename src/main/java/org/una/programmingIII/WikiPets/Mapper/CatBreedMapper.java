@@ -1,10 +1,9 @@
 package org.una.programmingIII.WikiPets.Mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
-import org.una.programmingIII.WikiPets.Model.CatBreedDto;
+import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 
 @Mapper
 public interface CatBreedMapper {
