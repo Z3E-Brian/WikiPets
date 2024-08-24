@@ -5,24 +5,36 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.una.programmingIII.WikiPets.Dto.ReviewDto;
-import org.una.programmingIII.WikiPets.Mapper.ReviewMapper;
-import org.una.programmingIII.WikiPets.Model.*;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.Review;
+import org.una.programmingIII.WikiPets.Model.ReviewDto;
+import org.una.programmingIII.WikiPets.Model.User;
+import org.una.programmingIII.WikiPets.Model.UserDto;
 import org.una.programmingIII.WikiPets.Repository.ReviewRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class ReviewServiceImplementationTest {
+public class ReviewServiceTest {
 
     @Mock
     private ReviewRepository reviewRepository;
 
+    @Mock
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
+    private GenericMapper<Review, ReviewDto> reviewMapper;
+    @Mock
+    private GenericMapper<User, UserDto> userMapper;
+
     @InjectMocks
-    private ReviewServiceImplementation reviewServiceImplementation;
+    private ReviewService reviewService;
 
     private Review review;
     private ReviewDto reviewDto;
@@ -30,7 +42,7 @@ public class ReviewServiceImplementationTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.initMocks(this);
 
         user = new User();
         user.setId(1L);
@@ -47,14 +59,19 @@ public class ReviewServiceImplementationTest {
         reviewDto.setId(1L);
         reviewDto.setRating(5);
         reviewDto.setComment("Great breed!");
-        reviewDto.setUserDto(ReviewMapper.INSTANCE.toReviewDto(review).getUserDto());
+        reviewDto.setUserDto(userMapper.convertToDTO(user));
+
+        when(mapperFactory.createMapper(Review.class, ReviewDto.class)).thenReturn(reviewMapper);
+        when(reviewMapper.convertToDTO(review)).thenReturn(reviewDto);
+        when(reviewMapper.convertToEntity(reviewDto)).thenReturn(review);
+        reviewService = new ReviewService(reviewRepository, mapperFactory);
     }
+
 
     @Test
     public void getAllReviewsTest() {
         when(reviewRepository.findAll()).thenReturn(List.of(review));
-        List<ReviewDto> result = reviewServiceImplementation.getAllReviews();
-
+        List<ReviewDto> result = reviewService.getAllReviews();
         assertEquals(1, result.size());
         assertEquals(reviewDto.getId(), result.get(0).getId());
         assertTrue(result.get(0).getComment().contains("Great breed!"));
@@ -63,8 +80,7 @@ public class ReviewServiceImplementationTest {
     @Test
     public void getReviewByIdTest() {
         when(reviewRepository.findById(1L)).thenReturn(Optional.of(review));
-        ReviewDto result = reviewServiceImplementation.getReviewById(1L);
-
+        ReviewDto result = reviewService.getReviewById(1L);
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getComment(), result.getComment());
     }
@@ -72,8 +88,7 @@ public class ReviewServiceImplementationTest {
     @Test
     public void createReviewTest() {
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
-        ReviewDto result = reviewServiceImplementation.createReview(reviewDto);
-
+        ReviewDto result = reviewService.createReview(reviewDto);
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getRating(), result.getRating());
     }
@@ -81,16 +96,14 @@ public class ReviewServiceImplementationTest {
     @Test
     public void deleteReviewTest() {
         doNothing().when(reviewRepository).deleteById(1L);
-        reviewServiceImplementation.deleteReview(1L);
-
+        reviewService.deleteReview(1L);
         verify(reviewRepository, times(1)).deleteById(1L);
     }
 
     @Test
     public void updateReviewTest() {
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
-        ReviewDto result = reviewServiceImplementation.updateReview(reviewDto);
-
+        ReviewDto result = reviewService.updateReview(reviewDto);
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getComment(), result.getComment());
     }
