@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.Review;
 import org.una.programmingIII.WikiPets.Model.TrainingGuide;
 import org.una.programmingIII.WikiPets.Model.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
@@ -51,16 +52,6 @@ public class TrainingGuideService {
 
     public List<TrainingGuideDto> searchByTitle(String title) {
         List<TrainingGuide> trainingGuides = trainingGuideRepository.findByTitleContainingIgnoreCase(title);
-        return trainingGuides.stream().map(this.trainingGuideMapper::convertToDTO).collect(Collectors.toList());
-    }
-
-    public List<TrainingGuideDto> getTrainingGuidesByCatBreedId(Long catBreedId) {
-        List<TrainingGuide> trainingGuides = trainingGuideRepository.findByCatBreedsId(catBreedId);
-        return trainingGuides.stream().map(this.trainingGuideMapper::convertToDTO).collect(Collectors.toList());
-    }
-
-    public List<TrainingGuideDto> getTrainingGuidesByDogBreedId(Long dogBreedId) {
-        List<TrainingGuide> trainingGuides = trainingGuideRepository.findByDogBreedsId(dogBreedId);
         return trainingGuides.stream().map(this.trainingGuideMapper::convertToDTO).collect(Collectors.toList());
     }
 }
