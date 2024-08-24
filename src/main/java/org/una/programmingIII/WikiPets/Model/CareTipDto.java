@@ -3,6 +3,8 @@ package org.una.programmingIII.WikiPets.Model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
+import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 
 import java.util.List;
 

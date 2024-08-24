@@ -6,7 +6,7 @@ import org.una.programmingIII.WikiPets.Model.*;
 
 public interface BehaviorGuideMapper {
     BehaviorGuideMapper INSTANCE = Mappers.getMapper(BehaviorGuideMapper.class);
-    BehaviorGuideDto toCatBreedDto(BehaviorGuide behaviorGuide);
+    BehaviorGuideDto toBehaviorGuideDto(BehaviorGuide behaviorGuide);
     BehaviorGuide toBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
 
 }

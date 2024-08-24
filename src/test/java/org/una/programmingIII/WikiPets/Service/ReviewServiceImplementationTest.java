@@ -8,9 +8,9 @@ import org.mockito.MockitoAnnotations;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.Review;
-import org.una.programmingIII.WikiPets.Model.ReviewDto;
+import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Model.User;
-import org.una.programmingIII.WikiPets.Model.UserDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Repository.ReviewRepository;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-public class ReviewServiceTest {
+public class ReviewServiceImplementationTest {
 
     @Mock
     private ReviewRepository reviewRepository;
@@ -64,7 +64,7 @@ public class ReviewServiceTest {
         when(mapperFactory.createMapper(Review.class, ReviewDto.class)).thenReturn(reviewMapper);
         when(reviewMapper.convertToDTO(review)).thenReturn(reviewDto);
         when(reviewMapper.convertToEntity(reviewDto)).thenReturn(review);
-        reviewService = new ReviewService(reviewRepository, mapperFactory);
+        reviewService = new ReviewServiceImplementation(reviewRepository, mapperFactory);
     }
 
 

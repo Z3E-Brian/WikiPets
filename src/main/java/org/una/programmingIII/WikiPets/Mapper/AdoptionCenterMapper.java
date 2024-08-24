@@ -3,7 +3,7 @@ package org.una.programmingIII.WikiPets.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import org.una.programmingIII.WikiPets.Model.AdoptionCenter;
-import org.una.programmingIII.WikiPets.Model.AdoptionCenterDto;
+import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 
 public interface AdoptionCenterMapper {
     AdoptionCenterMapper INSTANCE = Mappers.getMapper(AdoptionCenterMapper.class);

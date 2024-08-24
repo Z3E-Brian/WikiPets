@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.FeedingSchedule;
-import org.una.programmingIII.WikiPets.Model.FeedingScheduleDto;
+import org.una.programmingIII.WikiPets.Dto.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Repository.FeedingScheduleRepository;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class FeedingScheduleServiceTest {
+public class FeedingScheduleServiceImplementationTest {
 
     @Mock
     private FeedingScheduleRepository feedingScheduleRepository;
@@ -54,7 +54,7 @@ public class FeedingScheduleServiceTest {
         when(mapperFactory.createMapper(FeedingSchedule.class, FeedingScheduleDto.class)).thenReturn(feedingScheduleMapper);
         when(feedingScheduleMapper.convertToDTO(feedingSchedule)).thenReturn(feedingScheduleDto);
         when(feedingScheduleMapper.convertToEntity(feedingScheduleDto)).thenReturn(feedingSchedule);
-        feedingScheduleService = new FeedingScheduleService(feedingScheduleRepository, mapperFactory);
+        feedingScheduleService = new FeedingScheduleServiceImplementation(feedingScheduleRepository, mapperFactory);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class FeedingScheduleServiceTest {
     @Test
     public void updateFeedingScheduleTest() {
         when(feedingScheduleRepository.save(any(FeedingSchedule.class))).thenReturn(feedingSchedule);
-        FeedingScheduleDto result = feedingScheduleService.updateFeedingSchedule1(feedingScheduleDto);
+        FeedingScheduleDto result = feedingScheduleService.updateFeedingSchedule(feedingScheduleDto);
         assertEquals(feedingSchedule.getId(), feedingScheduleDto.getId());
         assertEquals(feedingSchedule.getFeedingTimes(), feedingScheduleDto.getFeedingTimes());
         assertNotNull(result);

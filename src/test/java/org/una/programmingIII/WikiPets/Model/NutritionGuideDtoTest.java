@@ -1,6 +1,8 @@
 package org.una.programmingIII.WikiPets.Model;
 
 import org.junit.jupiter.api.Test;
+import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
+import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 
 import java.util.ArrayList;
 import java.util.List;

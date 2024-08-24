@@ -1,6 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
-import org.una.programmingIII.WikiPets.Model.BehaviorGuideDto;
+import org.una.programmingIII.WikiPets.Dto.BehaviorGuideDto;
 
 import java.util.List;
 

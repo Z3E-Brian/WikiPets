@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
@@ -17,7 +18,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class TrainingGuideServiceTest {
+public class TrainingGuideServiceImplementationTest {
 
     @Mock
     private TrainingGuideRepository trainingGuideRepository;
@@ -60,7 +61,7 @@ public class TrainingGuideServiceTest {
         when(trainingGuideMapper.convertToDTO(trainingGuide)).thenReturn(trainingGuideDto);
         when(trainingGuideMapper.convertToEntity(trainingGuideDto)).thenReturn(trainingGuide);
 
-        trainingGuideService = new TrainingGuideService(trainingGuideRepository, mapperFactory);
+        trainingGuideService = new TrainingGuideServiceImplementation(trainingGuideRepository, mapperFactory);
     }
 
     @Test

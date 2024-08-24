@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.una.programmingIII.WikiPets.Model.BehaviorGuideDto;
+import org.una.programmingIII.WikiPets.Dto.BehaviorGuideDto;
 import org.una.programmingIII.WikiPets.Mapper.BehaviorGuideMapper;
 import org.una.programmingIII.WikiPets.Model.BehaviorGuide;
 import org.una.programmingIII.WikiPets.Repository.BehaviorGuideRepository;
@@ -47,7 +47,7 @@ public class BehaviorGuideServiceImplementationTest {
     @Test
     public void testGetBehaviorGuideById() {
         when(behaviorGuideRepository.findById(1L)).thenReturn(Optional.of(behaviorGuide));
-        when(behaviorGuideMapper.BehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
+        when(behaviorGuideMapper.toBehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
 
         BehaviorGuideDto dto = behaviorGuideServiceImplementation.getBehaviorGuideById(1L);
 
@@ -60,7 +60,7 @@ public class BehaviorGuideServiceImplementationTest {
     public void testSaveBehaviorGuide() {
         when(behaviorGuideRepository.save(any(BehaviorGuide.class))).thenReturn(behaviorGuide);
         when(behaviorGuideMapper.toBehaviorGuide(any(BehaviorGuideDto.class))).thenReturn(behaviorGuide);
-        when(behaviorGuideMapper.BehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
+        when(behaviorGuideMapper.toBehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
 
         BehaviorGuideDto savedDto = behaviorGuideServiceImplementation.saveBehaviorGuide(behaviorGuideDto);
 

@@ -2,7 +2,7 @@ package org.una.programmingIII.WikiPets.Mapper;
 
 import org.mapstruct.factory.Mappers;
 import org.una.programmingIII.WikiPets.Model.Video;
-import org.una.programmingIII.WikiPets.Model.VideoDto;
+import org.una.programmingIII.WikiPets.Dto.VideoDto;
 
 public interface VideoMapper {
     VideoMapper INSTANCE = Mappers.getMapper(VideoMapper.class);
