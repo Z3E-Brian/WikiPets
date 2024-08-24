@@ -47,5 +47,6 @@ public class User {
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 }

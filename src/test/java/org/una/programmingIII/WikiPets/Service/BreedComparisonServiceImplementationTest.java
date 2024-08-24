@@ -11,9 +11,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BreedComparisonServiceTest {
+public class BreedComparisonServiceImplementationTest {
 
-    private BreedComparisonService breedComparisonService;
+    private BreedComparisonServiceImplementation breedComparisonServiceImplementation;
 
     private CatBreed catBreed1;
     private CatBreed catBreed2;
@@ -22,7 +22,7 @@ public class BreedComparisonServiceTest {
 
     @BeforeEach
     void setUp() {
-        breedComparisonService = new BreedComparisonService();
+        breedComparisonServiceImplementation = new BreedComparisonServiceImplementation();
 
         catBreed1 = new CatBreed();
         catBreed1.setName("Siamese");
@@ -67,7 +67,7 @@ public class BreedComparisonServiceTest {
 
     @Test
     void testCompareCatBreeds_Same() {
-        BreedComparisonResult result = breedComparisonService.compareBreeds(catBreed1, catBreed2);
+        BreedComparisonResult result = breedComparisonServiceImplementation.compareBreeds(catBreed1, catBreed2);
 
         assertTrue(result.getSimilarities().contains("Name: Siamese"));
         assertTrue(result.getSimilarities().contains("Origin: Thailand"));
@@ -82,7 +82,7 @@ public class BreedComparisonServiceTest {
 
     @Test
     void testCompareDogBreeds_Same() {
-        BreedComparisonResult result = breedComparisonService.compareBreeds(dogBreed1, dogBreed2);
+        BreedComparisonResult result = breedComparisonServiceImplementation.compareBreeds(dogBreed1, dogBreed2);
 
         assertTrue(result.getSimilarities().contains("Name: Labrador"));
         assertTrue(result.getSimilarities().contains("Origin: Canada"));
@@ -98,7 +98,7 @@ public class BreedComparisonServiceTest {
 
     @Test
     void testCompareMixedBreeds_DogAndCat() {
-        BreedComparisonResult result = breedComparisonService.compareBreeds(dogBreed1, catBreed1);
+        BreedComparisonResult result = breedComparisonServiceImplementation.compareBreeds(dogBreed1, catBreed1);
         assertTrue(result.getDifferences().contains("Name: Labrador vs Siamese"));
         assertTrue(result.getDifferences().contains("Origin: Canada vs Thailand"));
         assertTrue(result.getDifferences().contains("Size: 10 vs 5"));
@@ -112,7 +112,7 @@ public class BreedComparisonServiceTest {
 
     @Test
     void testCompareMixedBreeds_CatAndDog() {
-        BreedComparisonResult result = breedComparisonService.compareBreeds(catBreed1, dogBreed1);
+        BreedComparisonResult result = breedComparisonServiceImplementation.compareBreeds(catBreed1, dogBreed1);
         assertTrue(result.getDifferences().contains("Name: Labrador vs Siamese"));
         assertTrue(result.getDifferences().contains("Origin: Canada vs Thailand"));
         assertTrue(result.getDifferences().contains("Size: 10 vs 5"));
@@ -126,7 +126,7 @@ public class BreedComparisonServiceTest {
 
     @Test
     void testCompareBreeds_NullInputs() {
-        BreedComparisonResult result = breedComparisonService.compareBreeds(null, null);
+        BreedComparisonResult result = breedComparisonServiceImplementation.compareBreeds(null, null);
         assertNotNull(result);
         assertTrue(result.getSimilarities().isEmpty());
         assertTrue(result.getDifferences().isEmpty());
@@ -134,7 +134,7 @@ public class BreedComparisonServiceTest {
 
     @Test
     void testCompareBreeds_DifferentTypes() {
-        BreedComparisonResult result = breedComparisonService.compareBreeds(dogBreed1, "Some string");
+        BreedComparisonResult result = breedComparisonServiceImplementation.compareBreeds(dogBreed1, "Some string");
         assertNotNull(result);
         assertTrue(result.getSimilarities().isEmpty());
         assertTrue(result.getDifferences().isEmpty());
@@ -144,7 +144,7 @@ public class BreedComparisonServiceTest {
     void testCompareCatBreeds() {
         List<String> similarities = new ArrayList<>();
         List<String> differences = new ArrayList<>();
-        breedComparisonService.compareCatBreeds(catBreed1, catBreed2, similarities, differences);
+        breedComparisonServiceImplementation.compareCatBreeds(catBreed1, catBreed2, similarities, differences);
 
         assertTrue(similarities.contains("Name: Siamese"));
         assertTrue(differences.isEmpty());
@@ -154,7 +154,7 @@ public class BreedComparisonServiceTest {
     void testCompareDogBreeds() {
         List<String> similarities = new ArrayList<>();
         List<String> differences = new ArrayList<>();
-        breedComparisonService.compareDogBreeds(dogBreed1, dogBreed2, similarities, differences);
+        breedComparisonServiceImplementation.compareDogBreeds(dogBreed1, dogBreed2, similarities, differences);
 
         assertTrue(similarities.contains("Name: Labrador"));
         assertTrue(differences.isEmpty());
@@ -164,7 +164,7 @@ public class BreedComparisonServiceTest {
     void testCompareMixedBreeds() {
         List<String> similarities = new ArrayList<>();
         List<String> differences = new ArrayList<>();
-        breedComparisonService.compareMixedBreeds(dogBreed1, catBreed1, similarities, differences);
+        breedComparisonServiceImplementation.compareMixedBreeds(dogBreed1, catBreed1, similarities, differences);
 
         assertTrue(differences.contains("Name: Labrador vs Siamese"));
         assertTrue(!similarities.isEmpty());
@@ -174,7 +174,7 @@ public class BreedComparisonServiceTest {
     void testCompareFields_Similar() {
         List<String> similarities = new ArrayList<>();
         List<String> differences = new ArrayList<>();
-        breedComparisonService.compareFields("Field1", "Field1", "TestField", similarities, differences);
+        breedComparisonServiceImplementation.compareFields("Field1", "Field1", "TestField", similarities, differences);
 
         assertTrue(similarities.contains("TestField: Field1"));
         assertTrue(differences.isEmpty());
@@ -184,7 +184,7 @@ public class BreedComparisonServiceTest {
     void testCompareFields_Different() {
         List<String> similarities = new ArrayList<>();
         List<String> differences = new ArrayList<>();
-        breedComparisonService.compareFields("Field1", "Field2", "TestField", similarities, differences);
+        breedComparisonServiceImplementation.compareFields("Field1", "Field2", "TestField", similarities, differences);
 
         assertTrue(differences.contains("TestField: Field1 vs Field2"));
         assertTrue(similarities.isEmpty());

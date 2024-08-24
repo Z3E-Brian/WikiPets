@@ -16,13 +16,13 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ReviewServiceTest {
+public class ReviewServiceImplementationTest {
 
     @Mock
     private ReviewRepository reviewRepository;
 
     @InjectMocks
-    private ReviewService reviewService;
+    private ReviewServiceImplementation reviewServiceImplementation;
 
     private Review review;
     private ReviewDto reviewDto;
@@ -53,7 +53,7 @@ public class ReviewServiceTest {
     @Test
     public void getAllReviewsTest() {
         when(reviewRepository.findAll()).thenReturn(List.of(review));
-        List<ReviewDto> result = reviewService.getAllReviews();
+        List<ReviewDto> result = reviewServiceImplementation.getAllReviews();
 
         assertEquals(1, result.size());
         assertEquals(reviewDto.getId(), result.get(0).getId());
@@ -63,7 +63,7 @@ public class ReviewServiceTest {
     @Test
     public void getReviewByIdTest() {
         when(reviewRepository.findById(1L)).thenReturn(Optional.of(review));
-        ReviewDto result = reviewService.getReviewById(1L);
+        ReviewDto result = reviewServiceImplementation.getReviewById(1L);
 
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getComment(), result.getComment());
@@ -72,7 +72,7 @@ public class ReviewServiceTest {
     @Test
     public void createReviewTest() {
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
-        ReviewDto result = reviewService.createReview(reviewDto);
+        ReviewDto result = reviewServiceImplementation.createReview(reviewDto);
 
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getRating(), result.getRating());
@@ -81,7 +81,7 @@ public class ReviewServiceTest {
     @Test
     public void deleteReviewTest() {
         doNothing().when(reviewRepository).deleteById(1L);
-        reviewService.deleteReview(1L);
+        reviewServiceImplementation.deleteReview(1L);
 
         verify(reviewRepository, times(1)).deleteById(1L);
     }
@@ -89,7 +89,7 @@ public class ReviewServiceTest {
     @Test
     public void updateReviewTest() {
         when(reviewRepository.save(any(Review.class))).thenReturn(review);
-        ReviewDto result = reviewService.updateReview(reviewDto);
+        ReviewDto result = reviewServiceImplementation.updateReview(reviewDto);
 
         assertEquals(reviewDto.getId(), result.getId());
         assertEquals(reviewDto.getComment(), result.getComment());

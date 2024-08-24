@@ -21,4 +21,5 @@ public class UserDto {
     private List<CatBreedDto> favoriteCatBreedsDto;
     private LocalDate createDate;
     private LocalDate lastUpdate;
+    private List<ReviewDto> reviewsDto;
 }

@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class FeedingScheduleServiceTest {
+public class FeedingScheduleServiceImplementationTest {
 
     @Mock
     private FeedingScheduleRepository feedingScheduleRepository;
@@ -30,7 +30,7 @@ public class FeedingScheduleServiceTest {
     private FeedingScheduleMapper feedingScheduleMapper;
 
     @InjectMocks
-    private FeedingScheduleService feedingScheduleService;
+    private FeedingScheduleServiceImplementation feedingScheduleServiceImplementation;
 
     @BeforeEach
     public void setup() {
@@ -44,7 +44,7 @@ public class FeedingScheduleServiceTest {
         when(feedingScheduleMapper.toFeedingScheduleDto(any(FeedingSchedule.class)))
                 .thenReturn(new FeedingScheduleDto());
 
-        List<FeedingScheduleDto> feedingScheduleDtos = feedingScheduleService.getAllFeedingSchedules();
+        List<FeedingScheduleDto> feedingScheduleDtos = feedingScheduleServiceImplementation.getAllFeedingSchedules();
 
         assertNotNull(feedingScheduleDtos);
         assertEquals(1, feedingScheduleDtos.size());
@@ -58,7 +58,7 @@ public class FeedingScheduleServiceTest {
         when(feedingScheduleMapper.toFeedingScheduleDto(any(FeedingSchedule.class)))
                 .thenReturn(new FeedingScheduleDto());
 
-        FeedingScheduleDto feedingScheduleDto = feedingScheduleService.getFeedingScheduleById(1L);
+        FeedingScheduleDto feedingScheduleDto = feedingScheduleServiceImplementation.getFeedingScheduleById(1L);
 
         assertNotNull(feedingScheduleDto);
         verify(feedingScheduleRepository, times(1)).findById(anyLong());
@@ -68,7 +68,7 @@ public class FeedingScheduleServiceTest {
     public void getFeedingScheduleByIdNotFoundTest() {
         when(feedingScheduleRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> feedingScheduleService.getFeedingScheduleById(1L));
+        assertThrows(RuntimeException.class, () -> feedingScheduleServiceImplementation.getFeedingScheduleById(1L));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class FeedingScheduleServiceTest {
         when(feedingScheduleMapper.toFeedingScheduleDto(any(FeedingSchedule.class))).thenReturn(feedingScheduleDto);
         when(feedingScheduleMapper.toFeedingSchedule(any(FeedingScheduleDto.class))).thenReturn(feedingSchedule);
 
-        FeedingScheduleDto createdFeedingScheduleDto = feedingScheduleService.createFeedingSchedule(feedingScheduleDto);
+        FeedingScheduleDto createdFeedingScheduleDto = feedingScheduleServiceImplementation.createFeedingSchedule(feedingScheduleDto);
 
         assertNotNull(createdFeedingScheduleDto);
         verify(feedingScheduleRepository, times(1)).save(any(FeedingSchedule.class));
@@ -95,7 +95,7 @@ public class FeedingScheduleServiceTest {
         when(feedingScheduleMapper.toFeedingScheduleDto(any(FeedingSchedule.class))).thenReturn(feedingScheduleDto);
         when(feedingScheduleMapper.toFeedingSchedule(any(FeedingScheduleDto.class))).thenReturn(feedingSchedule);
 
-        FeedingScheduleDto updatedFeedingScheduleDto = feedingScheduleService.updateFeedingSchedule1(feedingScheduleDto);
+        FeedingScheduleDto updatedFeedingScheduleDto = feedingScheduleServiceImplementation.updateFeedingSchedule(feedingScheduleDto);
 
         assertNotNull(updatedFeedingScheduleDto);
         verify(feedingScheduleRepository, times(1)).save(any(FeedingSchedule.class));
@@ -107,7 +107,7 @@ public class FeedingScheduleServiceTest {
         when(feedingScheduleRepository.findById(anyLong())).thenReturn(Optional.of(feedingSchedule));
         doNothing().when(feedingScheduleRepository).delete(any(FeedingSchedule.class));
 
-        feedingScheduleService.deleteFeedingSchedule(1L);
+        feedingScheduleServiceImplementation.deleteFeedingSchedule(1L);
 
         verify(feedingScheduleRepository, times(1)).findById(anyLong());
         verify(feedingScheduleRepository, times(1)).delete(any(FeedingSchedule.class));
@@ -117,6 +117,6 @@ public class FeedingScheduleServiceTest {
     public void deleteFeedingScheduleNotFoundTest() {
         when(feedingScheduleRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> feedingScheduleService.deleteFeedingSchedule(1L));
+        assertThrows(RuntimeException.class, () -> feedingScheduleServiceImplementation.deleteFeedingSchedule(1L));
     }
 }

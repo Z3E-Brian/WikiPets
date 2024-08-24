@@ -77,8 +77,8 @@ public class UserTest {
         List<DogBreed> favoriteDogBreeds = new ArrayList<>();
         LocalDate now = LocalDate.now();
 
-        User user1 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds, favoriteDogBreeds, now, now);
-        User user2 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds, favoriteDogBreeds, now, now);
+        User user1 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds, favoriteDogBreeds, now, now,null);
+        User user2 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds, favoriteDogBreeds, now, now,null);
 
         assertEquals(user1, user2);
         assertEquals(user1.hashCode(), user2.hashCode());
@@ -93,8 +93,8 @@ public class UserTest {
         LocalDate now = LocalDate.now();
         LocalDate later = now.plusDays(1);
 
-        User user1 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds1, favoriteDogBreeds1, now, now);
-        User user2 = new User(2L, "Jane Smith", "jane.smith@example.com", favoriteCatBreeds2, favoriteDogBreeds2, later, later);
+        User user1 = new User(1L, "John Doe", "john.doe@example.com", favoriteCatBreeds1, favoriteDogBreeds1, now, now,null);
+        User user2 = new User(2L, "Jane Smith", "jane.smith@example.com", favoriteCatBreeds2, favoriteDogBreeds2, later, later,null);
 
         assertNotEquals(user1, user2);
         assertNotEquals(user1.hashCode(), user2.hashCode());
@@ -104,7 +104,7 @@ public class UserTest {
     public void testToString() {
         LocalDate now = user.getCreateDate();
         String expectedString = String.format(
-                "User(id=1, name=John Doe, email=john.doe@example.com, favoriteCatBreeds=[], favoriteDogBreeds=[], createDate=%s, lastUpdate=%s)",
+                "User(id=1, name=John Doe, email=john.doe@example.com, favoriteCatBreeds=[], favoriteDogBreeds=[], createDate=%s, lastUpdate=%s, reviews=null)",
                 now, now
         );
 

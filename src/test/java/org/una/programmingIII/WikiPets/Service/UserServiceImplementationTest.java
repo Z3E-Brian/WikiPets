@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-public class UserServiceTest {
+public class UserServiceImplementationTest {
 
     @Mock
     private UserRepository userRepository;
@@ -29,7 +29,7 @@ public class UserServiceTest {
     private UserMapper userMapper;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImplementation userServiceImplementation;
 
     @BeforeEach
     public void setup() {
@@ -42,7 +42,7 @@ public class UserServiceTest {
         when(userRepository.findAll()).thenReturn(Arrays.asList(user));
         when(userMapper.toUserDto(any(User.class))).thenReturn(new UserDto());
 
-        List<UserDto> userDtos = userService.getAllUsers();
+        List<UserDto> userDtos = userServiceImplementation.getAllUsers();
 
         assertNotNull(userDtos);
         assertEquals(1, userDtos.size());
@@ -55,7 +55,7 @@ public class UserServiceTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(userMapper.toUserDto(any(User.class))).thenReturn(new UserDto());
 
-        UserDto userDto = userService.getUserById(1L);
+        UserDto userDto = userServiceImplementation.getUserById(1L);
 
         assertNotNull(userDto);
         verify(userRepository, times(1)).findById(anyLong());
@@ -70,7 +70,7 @@ public class UserServiceTest {
         when(userMapper.toUserDto(any(User.class))).thenReturn(userDto);
         when(userMapper.toUser(any(UserDto.class))).thenReturn(user);
 
-        UserDto createdUserDto = userService.createUser(userDto);
+        UserDto createdUserDto = userServiceImplementation.createUser(userDto);
 
         assertNotNull(createdUserDto);
         verify(userRepository, times(1)).save(any(User.class));
@@ -85,7 +85,7 @@ public class UserServiceTest {
         when(userMapper.toUserDto(any(User.class))).thenReturn(userDto);
         when(userMapper.toUser(any(UserDto.class))).thenReturn(user);
 
-        UserDto updatedUserDto = userService.updateUser(userDto);
+        UserDto updatedUserDto = userServiceImplementation.updateUser(userDto);
 
         assertNotNull(updatedUserDto);
         verify(userRepository, times(1)).save(any(User.class));
@@ -95,7 +95,7 @@ public class UserServiceTest {
     public void deleteUserTest() {
         doNothing().when(userRepository).deleteById(anyLong());
 
-        userService.deleteUser(1L);
+        userServiceImplementation.deleteUser(1L);
 
         verify(userRepository, times(1)).deleteById(1L);
     }

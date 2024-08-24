@@ -74,8 +74,8 @@ public class UserDtoTest {
         List<DogBreedDto> favoriteDogBreeds = new ArrayList<>();
         LocalDate now = LocalDate.now();
 
-        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds, now, now);
-        UserDto userDto2 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds, now, now);
+        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds, now, now,null);
+        UserDto userDto2 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds, favoriteCatBreeds, now, now,null);
 
         assertEquals(userDto1, userDto2);
         assertEquals(userDto1.hashCode(), userDto2.hashCode());
@@ -90,8 +90,8 @@ public class UserDtoTest {
         LocalDate now = LocalDate.now();
         LocalDate later = now.plusDays(1);
 
-        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds1, favoriteCatBreeds1, now, now);
-        UserDto userDto2 = new UserDto(2L, "Jane Smith", "jane.smith@example.com", favoriteDogBreeds2, favoriteCatBreeds2, later, later);
+        UserDto userDto1 = new UserDto(1L, "John Doe", "john.doe@example.com", favoriteDogBreeds1, favoriteCatBreeds1, now, now,null);
+        UserDto userDto2 = new UserDto(2L, "Jane Smith", "jane.smith@example.com", favoriteDogBreeds2, favoriteCatBreeds2, later, later,null);
 
         assertNotEquals(userDto1, userDto2);
         assertNotEquals(userDto1.hashCode(), userDto2.hashCode());
@@ -101,7 +101,7 @@ public class UserDtoTest {
     public void toStringTest() {
         LocalDate now = userDto.getCreateDate();
         String expectedString = String.format(
-                "UserDto(id=1, name=John Doe, email=john.doe@example.com, favoriteDogBreedsDto=[], favoriteCatBreedsDto=[], createDate=%s, lastUpdate=%s)",
+                "UserDto(id=1, name=John Doe, email=john.doe@example.com, favoriteDogBreedsDto=[], favoriteCatBreedsDto=[], createDate=%s, lastUpdate=%s, reviewsDto=null)",
                 now, now
         );
 

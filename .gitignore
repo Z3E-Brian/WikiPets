@@ -16,9 +16,12 @@ target/
 ### IntelliJ IDEA ###
 .idea
 .idea/
+.idea\
+idea
 *.iws
 *.iml
 *.ipr
+.idea/workspace.xml
 
 ### NetBeans ###
 /nbproject/private/

@@ -24,13 +24,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CatBreedServiceTest {
+public class CatBreedServiceImplementationTest {
 
     @Mock
     private CatBreedRepository catBreedRepository;
 
     @InjectMocks
-    private CatBreedService catBreedService;
+    private CatBreedServiceImplementation catBreedServiceImplementation;
 
     private CatBreedDto catBreedDto;
     private CatBreed catBreed;
@@ -60,7 +60,7 @@ public class CatBreedServiceTest {
     public void createCatBreedTest() {
         when(catBreedRepository.save(Mockito.any(CatBreed.class))).thenReturn(catBreed);
 
-        CatBreedDto result = catBreedService.createCatBreed(catBreedDto);
+        CatBreedDto result = catBreedServiceImplementation.createCatBreed(catBreedDto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -71,7 +71,7 @@ public class CatBreedServiceTest {
     public void updateCatBreedTest() {
         when(catBreedRepository.save(Mockito.any(CatBreed.class))).thenReturn(catBreed);
 
-        CatBreedDto result = catBreedService.updateCatBreed(catBreedDto);
+        CatBreedDto result = catBreedServiceImplementation.updateCatBreed(catBreedDto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -82,7 +82,7 @@ public class CatBreedServiceTest {
     public void getBreedByIdTest() {
         when(catBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(catBreed));
 
-        CatBreedDto result = catBreedService.getBreedById(1L);
+        CatBreedDto result = catBreedServiceImplementation.getBreedById(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -92,7 +92,7 @@ public class CatBreedServiceTest {
     public void getAllBreedsTest() {
         when(catBreedRepository.findAll()).thenReturn(Arrays.asList(catBreed));
 
-        List<CatBreedDto> result = catBreedService.getAllBreeds();
+        List<CatBreedDto> result = catBreedServiceImplementation.getAllBreeds();
 
         assertNotNull(result);
         assertEquals(1L, result.getFirst().getId());
@@ -100,7 +100,7 @@ public class CatBreedServiceTest {
 
     @Test
     public void deleteCatBreedTest() {
-        catBreedService.deleteCatBreed(1L);
+        catBreedServiceImplementation.deleteCatBreed(1L);
     }
 }
 

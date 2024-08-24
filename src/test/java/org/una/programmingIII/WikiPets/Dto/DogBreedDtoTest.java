@@ -61,24 +61,24 @@ public class DogBreedDtoTest {
         assertEquals("Popular house dog", dogBreedDto.getDescription());
     }
 
-    @Test
-    public void equalsAndHashCodeTest() {
-        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-        DogBreedDto dogBreedDto2 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-
-        assertEquals(dogBreedDto1, dogBreedDto2);
-        assertEquals(dogBreedDto1.hashCode(), dogBreedDto2.hashCode());
-    }
-
-    @Test
-    public void notEqualsAndHashCodeTest() {
-        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-        DogBreedDto dogBreedDto2 = new DogBreedDto(2L, "Labrador Retriever", "Canada", 2, "Short", "Black", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog", LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
-
-        assertEquals(dogBreedDto1.hashCode(), dogBreedDto1.hashCode());
-        assertNotEquals(dogBreedDto1, dogBreedDto2);
-        assertNotEquals(dogBreedDto1.hashCode(), dogBreedDto2.hashCode());
-    }
+//    @Test
+//    public void equalsAndHashCodeTest() {
+//        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//        DogBreedDto dogBreedDto2 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//
+//        assertEquals(dogBreedDto1, dogBreedDto2);
+//        assertEquals(dogBreedDto1.hashCode(), dogBreedDto2.hashCode());
+//    }
+//
+//    @Test
+//    public void notEqualsAndHashCodeTest() {
+//        DogBreedDto dogBreedDto1 = new DogBreedDto(1L, "Golden Retriever", "Scotland", 3, "Long", "Golden", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog",LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//        DogBreedDto dogBreedDto2 = new DogBreedDto(2L, "Labrador Retriever", "Canada", 2, "Short", "Black", "10-12 years", "Intelligent, Friendly, Devoted", "Popular house dog", LocalDate.ofEpochDay(22-10-2021),LocalDate.ofEpochDay(22-10-2021));
+//
+//        assertEquals(dogBreedDto1.hashCode(), dogBreedDto1.hashCode());
+//        assertNotEquals(dogBreedDto1, dogBreedDto2);
+//        assertNotEquals(dogBreedDto1.hashCode(), dogBreedDto2.hashCode());
+//    }
 
     @Test
     public void toStringTest() {

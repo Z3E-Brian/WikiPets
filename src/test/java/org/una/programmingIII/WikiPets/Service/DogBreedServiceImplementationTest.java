@@ -19,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class DogBreedServiceTest {
+public class DogBreedServiceImplementationTest {
 
     @Mock
     private DogBreedRepository dogBreedRepository;
 
     @InjectMocks
-    private DogBreedService dogBreedService;
+    private DogBreedServiceImplementation dogBreedServiceImplementation;
 
     private DogBreed dogBreed;
     private DogBreedDto dogBreedDto;
@@ -50,7 +50,7 @@ public class DogBreedServiceTest {
     public void createDogBreedTest() {
         when(dogBreedRepository.save(Mockito.any(DogBreed.class))).thenReturn(dogBreed);
 
-        DogBreedDto result = dogBreedService.createDogBreed(dogBreedDto);
+        DogBreedDto result = dogBreedServiceImplementation.createDogBreed(dogBreedDto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -61,7 +61,7 @@ public class DogBreedServiceTest {
     public void updateDogBreedTest() {
         when(dogBreedRepository.save(Mockito.any(DogBreed.class))).thenReturn(dogBreed);
 
-        DogBreedDto result = dogBreedService.updateDogBreed(dogBreedDto);
+        DogBreedDto result = dogBreedServiceImplementation.updateDogBreed(dogBreedDto);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -72,7 +72,7 @@ public class DogBreedServiceTest {
     public void getBreedByIdTest() {
         when(dogBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(dogBreed));
 
-        DogBreedDto result = dogBreedService.getBreedById(1L);
+        DogBreedDto result = dogBreedServiceImplementation.getBreedById(1L);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -82,7 +82,7 @@ public class DogBreedServiceTest {
     public void getAllBreedsTest() {
         when(dogBreedRepository.findAll()).thenReturn(Arrays.asList(dogBreed));
 
-        List<DogBreedDto> result = dogBreedService.getAllBreeds();
+        List<DogBreedDto> result = dogBreedServiceImplementation.getAllBreeds();
 
         assertNotNull(result);
         assertEquals(1L, result.getFirst().getId());
@@ -90,6 +90,6 @@ public class DogBreedServiceTest {
 
     @Test
     public void deleteDogBreedTest() {
-        dogBreedService.deleteDogBreed(1L);
+        dogBreedServiceImplementation.deleteDogBreed(1L);
     }
 }
