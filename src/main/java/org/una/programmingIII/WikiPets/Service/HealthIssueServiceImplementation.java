@@ -2,7 +2,8 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Mapper.HealthIssueMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.HealthIssue;
 import org.una.programmingIII.WikiPets.Dto.HealthIssueDto;
 import org.una.programmingIII.WikiPets.Repository.HealthIssueRepository;
@@ -13,12 +14,12 @@ import java.util.stream.Collectors;
 @Service
 public class HealthIssueServiceImplementation implements HealthIssueService {
     private final HealthIssueRepository healthIssueRepository;
-    private final HealthIssueMapper healthIssueMapper;
+    private final GenericMapper<HealthIssue, HealthIssueDto> healthIssueMapper;
 
     @Autowired
-    public HealthIssueServiceImplementation(HealthIssueRepository healthIssueRepository) {
+    public HealthIssueServiceImplementation(HealthIssueRepository healthIssueRepository, GenericMapperFactory mapperFactory) {
         this.healthIssueRepository = healthIssueRepository;
-        this.healthIssueMapper = HealthIssueMapper.INSTANCE;
+        this.healthIssueMapper = mapperFactory.createMapper(HealthIssue.class, HealthIssueDto.class);
     }
 
     @Override
@@ -54,12 +55,12 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
     }
 
     private HealthIssueDto convertToDto(HealthIssue healthIssue) {
-        return healthIssueMapper.toHealthIssueDto(healthIssue);
+        return healthIssueMapper.convertToDTO(healthIssue);
 
     }
 
     private HealthIssue convertToEntity(HealthIssueDto healthIssueDto) {
-        return healthIssueMapper.toHealthIssue(healthIssueDto);
+        return healthIssueMapper.convertToEntity(healthIssueDto);
     }
 
 }

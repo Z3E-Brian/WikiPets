@@ -1,11 +1,14 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.una.programmingIII.WikiPets.Mapper.NutritionGuideMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.NutritionGuide;
 import org.una.programmingIII.WikiPets.Model.NutritionGuideDto;
 import org.una.programmingIII.WikiPets.Repository.NutritionGuideRepository;
@@ -24,15 +27,27 @@ public class NutritionGuideServiceImplementationTest {
     private NutritionGuideRepository nutritionGuideRepository;
 
     @Mock
-    private NutritionGuideMapper nutritionGuideMapper;
+    private GenericMapper<NutritionGuide, NutritionGuideDto> nutritionGuideMapper;
+
+    @Mock
+    private GenericMapperFactory mapperFactory;
 
     @InjectMocks
     private NutritionGuideServiceImplementation nutritionGuideServiceImplementation;
 
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        when(mapperFactory.createMapper(NutritionGuide.class, NutritionGuideDto.class)).thenReturn(nutritionGuideMapper);
+        nutritionGuideServiceImplementation = new NutritionGuideServiceImplementation(nutritionGuideRepository, mapperFactory);
+
+    }
+
     @Test
     void getAllNutritionGuidesTest() {
-        NutritionGuide nutritionGuide = new NutritionGuide();
+        when(nutritionGuideMapper.convertToDTO(any())).thenReturn(new NutritionGuideDto());
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
+        NutritionGuide nutritionGuide = new NutritionGuide();
         when(nutritionGuideRepository.findAll()).thenReturn(Collections.singletonList(nutritionGuide));
 
         List<NutritionGuideDto> result = nutritionGuideServiceImplementation.getAllNutritionGuides();
@@ -43,6 +58,7 @@ public class NutritionGuideServiceImplementationTest {
 
     @Test
     void getNutritionGuideByIdTest() {
+        when(nutritionGuideMapper.convertToDTO(any())).thenReturn(new NutritionGuideDto());
         NutritionGuide nutritionGuide = new NutritionGuide();
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
         when(nutritionGuideRepository.findById(1L)).thenReturn(Optional.of(nutritionGuide));
@@ -64,6 +80,7 @@ public class NutritionGuideServiceImplementationTest {
 
     @Test
     void getNutritionGuideByTitleTest() {
+        when(nutritionGuideMapper.convertToDTO(any())).thenReturn(new NutritionGuideDto());
         NutritionGuide nutritionGuide = new NutritionGuide();
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
         when(nutritionGuideRepository.findByTitle("title")).thenReturn(nutritionGuide);
@@ -84,6 +101,8 @@ public class NutritionGuideServiceImplementationTest {
 
     @Test
     void createNutritionGuideTest() {
+        when(nutritionGuideMapper.convertToDTO(any())).thenReturn(new NutritionGuideDto());
+        when(nutritionGuideMapper.convertToEntity(any())).thenReturn(new NutritionGuide());
         NutritionGuide nutritionGuide = new NutritionGuide();
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
         when(nutritionGuideRepository.save(nutritionGuide)).thenReturn(nutritionGuide);
@@ -104,6 +123,8 @@ public class NutritionGuideServiceImplementationTest {
 
     @Test
     void updateNutritionGuideTest() {
+        when(nutritionGuideMapper.convertToDTO(any())).thenReturn(new NutritionGuideDto());
+        when(nutritionGuideMapper.convertToEntity(any())).thenReturn(new NutritionGuide());
         NutritionGuide nutritionGuide = new NutritionGuide();
         NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
         when(nutritionGuideRepository.save(nutritionGuide)).thenReturn(nutritionGuide);

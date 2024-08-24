@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.una.programmingIII.WikiPets.Mapper.HealthIssueMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.HealthIssue;
 import org.una.programmingIII.WikiPets.Dto.HealthIssueDto;
 import org.una.programmingIII.WikiPets.Repository.HealthIssueRepository;
@@ -24,7 +25,10 @@ public class HealthIssueServiceImplementationTest {
     private HealthIssueRepository healthIssueRepository;
 
     @Mock
-    private HealthIssueMapper healthIssueMapper;
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
+    private GenericMapper<HealthIssue,HealthIssueDto> healthIssueMapper;
 
     @InjectMocks
     private HealthIssueServiceImplementation healthIssueServiceImplementation;
@@ -32,13 +36,15 @@ public class HealthIssueServiceImplementationTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
+        when(mapperFactory.createMapper(HealthIssue.class, HealthIssueDto.class)).thenReturn(healthIssueMapper);
+        healthIssueServiceImplementation = new HealthIssueServiceImplementation(healthIssueRepository, mapperFactory);
     }
 
     @Test
     public void getAllHealthIssuesTest() {
         HealthIssue healthIssue = new HealthIssue();
         when(healthIssueRepository.findAll()).thenReturn(Arrays.asList(healthIssue));
-        when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+        when(healthIssueMapper.convertToDTO(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
 
         List<HealthIssueDto> healthIssueDtos = healthIssueServiceImplementation.getAllHealthIssues();
 
@@ -51,7 +57,7 @@ public class HealthIssueServiceImplementationTest {
     public void getHealthIssueByIdTest() {
         HealthIssue healthIssue = new HealthIssue();
         when(healthIssueRepository.findById(anyLong())).thenReturn(Optional.of(healthIssue));
-        when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+        when(healthIssueMapper.convertToDTO(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
 
         HealthIssueDto healthIssueDto = healthIssueServiceImplementation.getHealthIssueById(1L);
 
@@ -63,7 +69,8 @@ public class HealthIssueServiceImplementationTest {
         HealthIssue healthIssue = new HealthIssue();
 
         when(healthIssueRepository.save(any(HealthIssue.class))).thenReturn(healthIssue);
-        when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+        when(healthIssueMapper.convertToDTO(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+        when(healthIssueMapper.convertToEntity(any(HealthIssueDto.class))).thenReturn(healthIssue);
 
         HealthIssueDto healthIssueDto = healthIssueServiceImplementation.createHealthIssue(new HealthIssueDto());
 
@@ -76,7 +83,8 @@ public class HealthIssueServiceImplementationTest {
         HealthIssue healthIssue = new HealthIssue();
 
         when(healthIssueRepository.save(any(HealthIssue.class))).thenReturn(healthIssue);
-        when(healthIssueMapper.toHealthIssueDto(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+        when(healthIssueMapper.convertToDTO(any(HealthIssue.class))).thenReturn(new HealthIssueDto());
+        when(healthIssueMapper.convertToEntity(any(HealthIssueDto.class))).thenReturn(healthIssue);
 
         HealthIssueDto healthIssueDto = healthIssueServiceImplementation.updateHealthIssue(new HealthIssueDto());
 

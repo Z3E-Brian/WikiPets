@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.una.programmingIII.WikiPets.Mapper.DogBreedMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
@@ -24,6 +25,11 @@ public class DogBreedServiceImplementationTest {
     @Mock
     private DogBreedRepository dogBreedRepository;
 
+    @Mock
+    private GenericMapper<DogBreed, DogBreedDto> dogBreedMapper;
+    @Mock
+    private GenericMapperFactory mapperFactory;
+
     @InjectMocks
     private DogBreedServiceImplementation dogBreedServiceImplementation;
 
@@ -32,6 +38,8 @@ public class DogBreedServiceImplementationTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
+        when(mapperFactory.createMapper(DogBreed.class, DogBreedDto.class)).thenReturn(dogBreedMapper);
         dogBreed = new DogBreed();
         dogBreed.setId(1L);
         dogBreed.setName("Golden Retriever");
@@ -43,11 +51,18 @@ public class DogBreedServiceImplementationTest {
         dogBreed.setTemperament("Intelligent, Friendly, Devoted");
         dogBreed.setDescription("Popular house dog");
         dogBreedDto = new DogBreedDto();
-        dogBreedDto = DogBreedMapper.INSTANCE.toDogBreedDto(dogBreed);
+        dogBreedDto.setId(1L);
+        dogBreedDto.setName("Golden Retriever");
+        dogBreedDto.setOrigin("Scotland");
+        dogBreedDto.setSize(3);
+        dogBreedDto.setCoat("Long");
+        dogBreedServiceImplementation = new DogBreedServiceImplementation(dogBreedRepository, mapperFactory);
         }
 
     @Test
     public void createDogBreedTest() {
+        when(dogBreedMapper.convertToEntity(Mockito.any(DogBreedDto.class))).thenReturn(dogBreed);
+        when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenReturn(dogBreedDto);
         when(dogBreedRepository.save(Mockito.any(DogBreed.class))).thenReturn(dogBreed);
 
         DogBreedDto result = dogBreedServiceImplementation.createDogBreed(dogBreedDto);
@@ -59,6 +74,8 @@ public class DogBreedServiceImplementationTest {
 
     @Test
     public void updateDogBreedTest() {
+        when(dogBreedMapper.convertToEntity(Mockito.any(DogBreedDto.class))).thenReturn(dogBreed);
+        when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenReturn(dogBreedDto);
         when(dogBreedRepository.save(Mockito.any(DogBreed.class))).thenReturn(dogBreed);
 
         DogBreedDto result = dogBreedServiceImplementation.updateDogBreed(dogBreedDto);
@@ -70,6 +87,7 @@ public class DogBreedServiceImplementationTest {
 
     @Test
     public void getBreedByIdTest() {
+        when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenReturn(dogBreedDto);
         when(dogBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(dogBreed));
 
         DogBreedDto result = dogBreedServiceImplementation.getBreedById(1L);
@@ -80,6 +98,7 @@ public class DogBreedServiceImplementationTest {
 
     @Test
     public void getAllBreedsTest() {
+        when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenReturn(dogBreedDto);
         when(dogBreedRepository.findAll()).thenReturn(Arrays.asList(dogBreed));
 
         List<DogBreedDto> result = dogBreedServiceImplementation.getAllBreeds();

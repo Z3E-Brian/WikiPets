@@ -2,7 +2,8 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Mapper.DogBreedMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
@@ -15,12 +16,12 @@ import java.util.stream.Collectors;
 public class DogBreedServiceImplementation implements DogBreedService {
 
     private final DogBreedRepository dogBreedRepository;
-    private final DogBreedMapper dogBreedMapper;
+    private final GenericMapper<DogBreed,DogBreedDto> dogBreedMapper;
 
     @Autowired
-    public DogBreedServiceImplementation(DogBreedRepository dogBreedRepository) {
+    public DogBreedServiceImplementation(DogBreedRepository dogBreedRepository, GenericMapperFactory mapperFactory) {
         this.dogBreedRepository = dogBreedRepository;
-        this.dogBreedMapper = DogBreedMapper.INSTANCE;
+        this.dogBreedMapper = mapperFactory.createMapper(DogBreed.class, DogBreedDto.class);
     }
 
     @Override
@@ -55,10 +56,10 @@ public class DogBreedServiceImplementation implements DogBreedService {
     }
 
     private DogBreedDto convertToDto(DogBreed dogBreed) {
-        return dogBreedMapper.toDogBreedDto(dogBreed);
+        return dogBreedMapper.convertToDTO(dogBreed);
     }
 
     private DogBreed convertToEntity(DogBreedDto dogBreedDto) {
-        return dogBreedMapper.toDogBreed(dogBreedDto);
+        return dogBreedMapper.convertToEntity(dogBreedDto);
     }
 }

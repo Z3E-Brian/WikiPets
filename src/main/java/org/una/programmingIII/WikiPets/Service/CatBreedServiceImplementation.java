@@ -2,7 +2,8 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Mapper.CatBreedMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
@@ -13,12 +14,12 @@ import java.util.stream.Collectors;
 @Service
 public class CatBreedServiceImplementation implements CatBreedService {
     private final CatBreedRepository catBreedRepository;
-    private final CatBreedMapper catBreedMapper;
+    private final GenericMapper<CatBreed,CatBreedDto> catBreedMapper;
 
     @Autowired
-    public CatBreedServiceImplementation(CatBreedRepository catBreedRepository) {
+    public CatBreedServiceImplementation(CatBreedRepository catBreedRepository, GenericMapperFactory mapperFactory) {
         this.catBreedRepository = catBreedRepository;
-        this.catBreedMapper = CatBreedMapper.INSTANCE;
+        this.catBreedMapper = mapperFactory.createMapper(CatBreed.class, CatBreedDto.class);
     }
 
     @Override
@@ -52,11 +53,9 @@ public class CatBreedServiceImplementation implements CatBreedService {
         return convertToDto(updatedCatBreed);
     }
 
-    private CatBreedDto convertToDto(CatBreed catBreed) {
-        return catBreedMapper.toCatBreedDto(catBreed);
+    private CatBreedDto convertToDto(CatBreed catBreed) {return catBreedMapper.convertToDTO(catBreed);
     }
 
-    private CatBreed convertToEntity(CatBreedDto catBreedDto) {
-        return catBreedMapper.toCatBreed(catBreedDto);
+    private CatBreed convertToEntity(CatBreedDto catBreedDto) {return catBreedMapper.convertToEntity(catBreedDto);
     }
 }

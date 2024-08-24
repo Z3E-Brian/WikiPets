@@ -7,9 +7,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
-import org.una.programmingIII.WikiPets.Mapper.CatBreedMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.CareTip;
+import org.una.programmingIII.WikiPets.Model.CareTipDto;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
@@ -21,7 +25,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CatBreedServiceImplementationTest {
@@ -29,6 +33,10 @@ public class CatBreedServiceImplementationTest {
     @Mock
     private CatBreedRepository catBreedRepository;
 
+    @Mock
+    private GenericMapperFactory mapperFactory;
+    @Mock
+    private GenericMapper<CatBreed, CatBreedDto> catBreedMapper;
     @InjectMocks
     private CatBreedServiceImplementation catBreedServiceImplementation;
 
@@ -37,6 +45,7 @@ public class CatBreedServiceImplementationTest {
 
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
         catBreedDto = new CatBreedDto();
         catBreedDto.setId(1L);
         catBreedDto.setName("Siamese");
@@ -50,14 +59,22 @@ public class CatBreedServiceImplementationTest {
         catBreedDto.setCreatedDate(LocalDate.ofEpochDay(2020-10-22));
         catBreedDto.setModifiedDate(LocalDate.ofEpochDay(2020-10-22));
         catBreed = new CatBreed();
-        catBreed= CatBreedMapper.INSTANCE.toCatBreed(catBreedDto);
+        catBreed.setId(1L);
+        catBreed.setName("Siamese");
+        catBreed.setOrigin("Thailand");
+        catBreed.setSize(2);
+        MockitoAnnotations.openMocks(this);
 
+        when(mapperFactory.createMapper(CatBreed.class, CatBreedDto.class)).thenReturn(catBreedMapper);
 
-       // catBreedDto = new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.");
+        catBreedServiceImplementation = new CatBreedServiceImplementation(catBreedRepository, mapperFactory);
+
     }
 
     @Test
     public void createCatBreedTest() {
+        when(catBreedMapper.convertToEntity(Mockito.any(CatBreedDto.class))).thenReturn(catBreed);
+        when(catBreedMapper.convertToDTO(Mockito.any(CatBreed.class))).thenReturn(catBreedDto);
         when(catBreedRepository.save(Mockito.any(CatBreed.class))).thenReturn(catBreed);
 
         CatBreedDto result = catBreedServiceImplementation.createCatBreed(catBreedDto);
@@ -69,6 +86,8 @@ public class CatBreedServiceImplementationTest {
 
     @Test
     public void updateCatBreedTest() {
+        when(catBreedMapper.convertToEntity(Mockito.any(CatBreedDto.class))).thenReturn(catBreed);
+        when(catBreedMapper.convertToDTO(Mockito.any(CatBreed.class))).thenReturn(catBreedDto);
         when(catBreedRepository.save(Mockito.any(CatBreed.class))).thenReturn(catBreed);
 
         CatBreedDto result = catBreedServiceImplementation.updateCatBreed(catBreedDto);
@@ -80,6 +99,7 @@ public class CatBreedServiceImplementationTest {
 
     @Test
     public void getBreedByIdTest() {
+        when(catBreedMapper.convertToDTO(Mockito.any(CatBreed.class))).thenReturn(catBreedDto);
         when(catBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(catBreed));
 
         CatBreedDto result = catBreedServiceImplementation.getBreedById(1L);
@@ -90,17 +110,20 @@ public class CatBreedServiceImplementationTest {
 
     @Test
     public void getAllBreedsTest() {
+        when(catBreedMapper.convertToDTO(Mockito.any(CatBreed.class))).thenReturn(catBreedDto);
         when(catBreedRepository.findAll()).thenReturn(Arrays.asList(catBreed));
 
         List<CatBreedDto> result = catBreedServiceImplementation.getAllBreeds();
 
         assertNotNull(result);
-        assertEquals(1L, result.getFirst().getId());
+        assertEquals(1L, result.get(0).getId());
     }
 
     @Test
     public void deleteCatBreedTest() {
+        doNothing().when(catBreedRepository).deleteById(1L);
         catBreedServiceImplementation.deleteCatBreed(1L);
+        verify(catBreedRepository, times(1)).deleteById(1L);
     }
 }
 

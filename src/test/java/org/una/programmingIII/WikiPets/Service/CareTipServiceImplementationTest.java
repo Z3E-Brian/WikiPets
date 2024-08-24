@@ -1,21 +1,23 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.una.programmingIII.WikiPets.Mapper.CareTipMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CareTip;
 import org.una.programmingIII.WikiPets.Model.CareTipDto;
 import org.una.programmingIII.WikiPets.Repository.CareTipRepository;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
 
@@ -26,80 +28,106 @@ public class CareTipServiceImplementationTest {
     private CareTipRepository careTipRepository;
 
     @Mock
-    private CareTipMapper careTipMapper;
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
+    private GenericMapper<CareTip, CareTipDto> careTipMapper;
 
     @InjectMocks
-    private CareTipServiceImplementation careTipServiceImplementation;
+    private CareTipServiceImplementation careTipService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+        when(mapperFactory.createMapper(CareTip.class, CareTipDto.class)).thenReturn(careTipMapper);
+        careTipService = new CareTipServiceImplementation(careTipRepository, mapperFactory);
+    }
 
     @Test
     void getAllCareTipsTest() {
-        CareTip careTip = new CareTip();
-        CareTipDto careTipDto = new CareTipDto();
-        when(careTipRepository.findAll()).thenReturn(Collections.singletonList(careTip));
+            CareTip careTip1 = new CareTip();
+            CareTip careTip2 = new CareTip();
+            CareTipDto careTipDto1 = new CareTipDto();
+            CareTipDto careTipDto2 = new CareTipDto();
 
-        List<CareTipDto> result = careTipServiceImplementation.getAllCareTips();
+            when(careTipRepository.findAll()).thenReturn(Arrays.asList(careTip1, careTip2));
+            when(careTipMapper.convertToDTO(careTip1)).thenReturn(careTipDto1);
+            when(careTipMapper.convertToDTO(careTip2)).thenReturn(careTipDto2);
 
-        assertEquals(1, result.size());
-        assertEquals(careTipDto, result.get(0));
+            List<CareTipDto> result = careTipService.getAllCareTips();
+
+            assertEquals(2, result.size());
+            verify(careTipRepository, times(1)).findAll();
     }
 
     @Test
     void getCareTipByIdTest() {
         CareTip careTip = new CareTip();
         CareTipDto careTipDto = new CareTipDto();
+
         when(careTipRepository.findById(1L)).thenReturn(Optional.of(careTip));
+        when(careTipMapper.convertToDTO(careTip)).thenReturn(careTipDto);
 
+        CareTipDto result = careTipService.getCareTipById(1L);
 
-        CareTipDto result = careTipServiceImplementation.getCareTipById(1L);
-
-        assertEquals(careTipDto, result);
+        assertNotNull(result);
+        verify(careTipRepository, times(1)).findById(1L);
     }
 
     @Test
-    void getCareTipById_NotFoundTest() {
+    void getCareTipByIdNotFoundTest() {
         when(careTipRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> careTipServiceImplementation.getCareTipById(1L));
+        Exception exception = assertThrows(RuntimeException.class, () -> careTipService.getCareTipById(1L));
 
         assertEquals("Care Tip not found", exception.getMessage());
+        verify(careTipRepository, times(1)).findById(1L);
     }
 
     @Test
     void getCareTipByTitleTest() {
         CareTip careTip = new CareTip();
         CareTipDto careTipDto = new CareTipDto();
-        when(careTipRepository.findByTitle("title")).thenReturn(careTip);
 
-        CareTipDto result = careTipServiceImplementation.getCareTipByTitle("title");
+        when(careTipRepository.findByTitle("Test Title")).thenReturn(careTip);
+        when(careTipMapper.convertToDTO(careTip)).thenReturn(careTipDto);
 
-        assertEquals(careTipDto, result);
+        CareTipDto result = careTipService.getCareTipByTitle("Test Title");
+
+        assertNotNull(result);
+        verify(careTipRepository, times(1)).findByTitle("Test Title");
     }
 
     @Test
-    void getCareTipByTitle_NotFoundTest() {
-        when(careTipRepository.findByTitle("title")).thenReturn(null);
+    void getCareTipByTitleNotFoundTest() {
+        when(careTipRepository.findByTitle("Nonexistent Title")).thenReturn(null);
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> careTipServiceImplementation.getCareTipByTitle("title"));
+        Exception exception = assertThrows(RuntimeException.class, () -> careTipService.getCareTipByTitle("Nonexistent Title"));
 
         assertEquals("Care Tip not found", exception.getMessage());
+        verify(careTipRepository, times(1)).findByTitle("Nonexistent Title");
     }
 
     @Test
     void createCareTipTest() {
         CareTip careTip = new CareTip();
         CareTipDto careTipDto = new CareTipDto();
+
+        when(careTipMapper.convertToEntity(careTipDto)).thenReturn(careTip);
         when(careTipRepository.save(careTip)).thenReturn(careTip);
+        when(careTipMapper.convertToDTO(careTip)).thenReturn(careTipDto);
 
-        CareTipDto result = careTipServiceImplementation.createCareTip(careTipDto);
+        CareTipDto result = careTipService.createCareTip(careTipDto);
 
-        assertEquals(careTipDto, result);
+        assertNotNull(result);
+        verify(careTipRepository, times(1)).save(careTip);
     }
 
     @Test
     void deleteCareTipTest() {
         doNothing().when(careTipRepository).deleteById(1L);
 
-        careTipServiceImplementation.deleteCareTip(1L);
+        careTipService.deleteCareTip(1L);
 
         verify(careTipRepository, times(1)).deleteById(1L);
     }
@@ -108,10 +136,14 @@ public class CareTipServiceImplementationTest {
     void updateCareTipTest() {
         CareTip careTip = new CareTip();
         CareTipDto careTipDto = new CareTipDto();
+
+        when(careTipMapper.convertToEntity(careTipDto)).thenReturn(careTip);
         when(careTipRepository.save(careTip)).thenReturn(careTip);
+        when(careTipMapper.convertToDTO(careTip)).thenReturn(careTipDto);
 
-        CareTipDto result = careTipServiceImplementation.updateCareTip(careTipDto);
+        CareTipDto result = careTipService.updateCareTip(careTipDto);
 
-        assertEquals(careTipDto, result);
+        assertNotNull(result);
+        verify(careTipRepository, times(1)).save(careTip);
     }
 }
