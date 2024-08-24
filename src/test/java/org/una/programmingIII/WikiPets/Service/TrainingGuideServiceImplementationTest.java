@@ -30,7 +30,7 @@ public class TrainingGuideServiceImplementationTest {
     private GenericMapper<TrainingGuide, TrainingGuideDto> trainingGuideMapper;
 
     @InjectMocks
-    private TrainingGuideService trainingGuideService;
+    private TrainingGuideServiceImplementation trainingGuideServiceImplementation;
 
     private TrainingGuide trainingGuide;
     private TrainingGuideDto trainingGuideDto;
@@ -61,13 +61,13 @@ public class TrainingGuideServiceImplementationTest {
         when(trainingGuideMapper.convertToDTO(trainingGuide)).thenReturn(trainingGuideDto);
         when(trainingGuideMapper.convertToEntity(trainingGuideDto)).thenReturn(trainingGuide);
 
-        trainingGuideService = new TrainingGuideServiceImplementation(trainingGuideRepository, mapperFactory);
+        trainingGuideServiceImplementation = new TrainingGuideServiceImplementation(trainingGuideRepository, mapperFactory);
     }
 
     @Test
     public void createTrainingGuideTest() {
         when(trainingGuideRepository.save(any(TrainingGuide.class))).thenReturn(trainingGuide);
-        TrainingGuideDto result = trainingGuideService.createTrainingGuide(trainingGuideDto);
+        TrainingGuideDto result = trainingGuideServiceImplementation.createTrainingGuide(trainingGuideDto);
         assertEquals(trainingGuideDto.getId(), result.getId());
         assertEquals(trainingGuideDto.getTitle(), result.getTitle());
     }
@@ -75,7 +75,7 @@ public class TrainingGuideServiceImplementationTest {
     @Test
     public void updateTrainingGuideTest() {
         when(trainingGuideRepository.save(any(TrainingGuide.class))).thenReturn(trainingGuide);
-        TrainingGuideDto result = trainingGuideService.updateTrainingGuide(trainingGuideDto);
+        TrainingGuideDto result = trainingGuideServiceImplementation.updateTrainingGuide(trainingGuideDto);
         assertEquals(trainingGuideDto.getId(), result.getId());
         assertEquals(trainingGuideDto.getTitle(), result.getTitle());
     }
@@ -83,7 +83,7 @@ public class TrainingGuideServiceImplementationTest {
     @Test
     public void getGuideByIdTest() {
         when(trainingGuideRepository.findById(1L)).thenReturn(Optional.of(trainingGuide));
-        TrainingGuideDto result = trainingGuideService.getTrainingGuideById(1L);
+        TrainingGuideDto result = trainingGuideServiceImplementation.getTrainingGuideById(1L);
         assertEquals(trainingGuideDto.getId(), result.getId());
         assertEquals(trainingGuideDto.getTitle(), result.getTitle());
     }
@@ -91,13 +91,13 @@ public class TrainingGuideServiceImplementationTest {
     @Test
     public void getGuideByIdNotFoundTest() {
         when(trainingGuideRepository.findById(anyLong())).thenReturn(Optional.empty());
-        assertThrows(RuntimeException.class, () -> trainingGuideService.getTrainingGuideById(1L));
+        assertThrows(RuntimeException.class, () -> trainingGuideServiceImplementation.getTrainingGuideById(1L));
     }
 
     @Test
     public void getAllGuidesTest() {
         when(trainingGuideRepository.findAll()).thenReturn(List.of(trainingGuide));
-        List<TrainingGuideDto> result = trainingGuideService.getAllTrainingGuides();
+        List<TrainingGuideDto> result = trainingGuideServiceImplementation.getAllTrainingGuides();
         assertEquals(1, result.size());
         assertEquals(trainingGuideDto.getId(), result.get(0).getId());
         assertTrue(result.get(0).getTitle().contains("Basic Training"));
@@ -106,7 +106,7 @@ public class TrainingGuideServiceImplementationTest {
     @Test
     public void deleteTrainingGuideTest() {
         doNothing().when(trainingGuideRepository).deleteById(1L);
-        trainingGuideService.deleteTrainingGuide(1L);
+        trainingGuideServiceImplementation.deleteTrainingGuide(1L);
         verify(trainingGuideRepository, times(1)).deleteById(1L);
     }
 }
