@@ -41,7 +41,7 @@ public class DogBreed {
     private List<NutritionGuide> nutritionGuides;
     @ManyToMany(mappedBy = "suitableDogBreeds")
     private List<HealthIssue> healthIssues;
-    @ManyToMany (mappedBy = "favoriteCatBreeds")
+    @ManyToMany (mappedBy = "favoriteDogBreeds")
     private List<User> users;
     @ManyToMany(mappedBy = "dogBreeds")
     private List<TrainingGuide> trainingGuides;

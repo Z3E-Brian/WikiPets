@@ -32,7 +32,7 @@ public class GroomingGuide {
     @JoinTable(name = "grooming_guide_cat_breeds",
             joinColumns = @JoinColumn(name = "grooming_guide_id"),
             inverseJoinColumns = @JoinColumn(name = "cat_breed_id"))
-    private List<DogBreed> suitableCatBreeds;
+    private List<CatBreed> suitableCatBreeds;
     @Column(name = "create_date", nullable = false, updatable = false)
     private LocalDate createDate;
     @Column(name = "last_update")
