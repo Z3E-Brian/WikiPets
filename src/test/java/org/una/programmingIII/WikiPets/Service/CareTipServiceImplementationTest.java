@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CareTip;
-import org.una.programmingIII.WikiPets.Model.CareTipDto;
+import org.una.programmingIII.WikiPets.Dto.CareTipDto;
 import org.una.programmingIII.WikiPets.Repository.CareTipRepository;
 
 import java.util.Arrays;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.NutritionGuide;
-import org.una.programmingIII.WikiPets.Model.NutritionGuideDto;
+import org.una.programmingIII.WikiPets.Dto.NutritionGuideDto;
 import org.una.programmingIII.WikiPets.Repository.NutritionGuideRepository;
 
 import java.util.List;

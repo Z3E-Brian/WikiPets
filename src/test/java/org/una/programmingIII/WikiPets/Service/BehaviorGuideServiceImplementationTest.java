@@ -6,14 +6,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.una.programmingIII.WikiPets.Dto.BehaviorGuideDto;
-import org.una.programmingIII.WikiPets.Mapper.BehaviorGuideMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.BehaviorGuide;
+import org.una.programmingIII.WikiPets.Model.CatBreed;
+import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Repository.BehaviorGuideRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -23,7 +28,11 @@ public class BehaviorGuideServiceImplementationTest {
     private BehaviorGuideRepository behaviorGuideRepository;
 
     @Mock
-    private BehaviorGuideMapper behaviorGuideMapper;
+    private GenericMapperFactory genericMapperFactory;
+
+    @Mock
+    private GenericMapper<BehaviorGuide, BehaviorGuideDto> behaviorGuideMapper;
+
 
     @InjectMocks
     private BehaviorGuideServiceImplementation behaviorGuideServiceImplementation;
@@ -32,47 +41,72 @@ public class BehaviorGuideServiceImplementationTest {
     private BehaviorGuideDto behaviorGuideDto;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
 
         behaviorGuide = new BehaviorGuide();
         behaviorGuide.setId(1L);
-        behaviorGuide.setTitle("Training Guide");
+        behaviorGuide.setTitle("Pet Behavior");
+        behaviorGuide.setContent("A basic guide about the behavior of your pet.");
+
+        List<CatBreed> catBreeds = new ArrayList<>();
+        catBreeds.add(new CatBreed());
+        behaviorGuide.setSuitableCatBreeds(catBreeds);
+
+        List<DogBreed> dogBreeds = new ArrayList<>();
+        dogBreeds.add(new DogBreed()    );
+        behaviorGuide.setSuitableDogBreeds(dogBreeds);
 
         behaviorGuideDto = new BehaviorGuideDto();
         behaviorGuideDto.setId(1L);
-        behaviorGuideDto.setTitle("Training Guide");
+        behaviorGuideDto.setTitle("Pet Behavior");
+        behaviorGuideDto.setContent("A basic guide about the behavior of your pet.");
+
+        when(genericMapperFactory.createMapper(BehaviorGuide.class, BehaviorGuideDto.class)).thenReturn(behaviorGuideMapper);
+        when(behaviorGuideMapper.convertToDTO(behaviorGuide)).thenReturn(behaviorGuideDto);
+        when(behaviorGuideMapper.convertToEntity(behaviorGuideDto)).thenReturn(behaviorGuide);
+
+        behaviorGuideServiceImplementation = new BehaviorGuideServiceImplementation(behaviorGuideRepository,genericMapperFactory);
     }
 
     @Test
-    public void testGetBehaviorGuideById() {
-        when(behaviorGuideRepository.findById(1L)).thenReturn(Optional.of(behaviorGuide));
-        when(behaviorGuideMapper.toBehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
-
-        BehaviorGuideDto dto = behaviorGuideServiceImplementation.getBehaviorGuideById(1L);
-
-        assertNotNull(dto);
-        assertEquals("Training Guide", dto.getTitle());
-        verify(behaviorGuideRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    public void testSaveBehaviorGuide() {
+    public void createBehaviorGuideTest() {
         when(behaviorGuideRepository.save(any(BehaviorGuide.class))).thenReturn(behaviorGuide);
-        when(behaviorGuideMapper.toBehaviorGuide(any(BehaviorGuideDto.class))).thenReturn(behaviorGuide);
-        when(behaviorGuideMapper.toBehaviorGuideDto(any(BehaviorGuide.class))).thenReturn(behaviorGuideDto);
-
-        BehaviorGuideDto savedDto = behaviorGuideServiceImplementation.saveBehaviorGuide(behaviorGuideDto);
-
-        assertNotNull(savedDto);
-        assertEquals("Training Guide", savedDto.getTitle());
-        verify(behaviorGuideRepository, times(1)).save(any(BehaviorGuide.class));
+        BehaviorGuideDto result = behaviorGuideServiceImplementation.createBehaviorGuide(behaviorGuideDto);
+        assertEquals(behaviorGuideDto.getId(), result.getId());
+        assertEquals(behaviorGuideDto.getTitle(), result.getTitle());
     }
 
     @Test
-    public void testDeleteBehaviorGuide() {
-        behaviorGuideServiceImplementation.deleteBehaviorGuide(1L);
+    public void updateBehaviorGuideTest() {
+        when(behaviorGuideRepository.save(any(BehaviorGuide.class))).thenReturn(behaviorGuide);
+        BehaviorGuideDto result = behaviorGuideServiceImplementation.updateBehaviorGuide(behaviorGuideDto);
+        assertEquals(behaviorGuideDto.getId(), result.getId());
+        assertEquals(behaviorGuideDto.getTitle(), result.getTitle());
+    }
 
+    @Test
+    public void deleteBehaviorGuideTest() {
+        doNothing().when(behaviorGuideRepository).deleteById(1L);
+        behaviorGuideServiceImplementation.deleteBehaviorGuide(1L);
         verify(behaviorGuideRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void getBehaviorGuideByIdTest() {
+        when(behaviorGuideRepository.findById(1L)).thenReturn(Optional.of(behaviorGuide));
+        BehaviorGuideDto result = behaviorGuideServiceImplementation.getBehaviorGuideById(1L);
+        assertEquals(behaviorGuideDto.getId(), result.getId());
+        assertEquals(behaviorGuideDto.getTitle(), result.getTitle());
+    }
+
+    @Test
+    public void getAllBehaviorGuideTest() {
+        when(behaviorGuideRepository.findAll()).thenReturn(List.of(behaviorGuide));
+        List<BehaviorGuideDto> result = behaviorGuideServiceImplementation.getAllBehaviorGuides();
+        assertEquals(1, result.size());
+        assertEquals(behaviorGuideDto.getId(), result.get(0).getId());
+        assertTrue(result.get(0).getTitle().contains("Pet Behavior"));
+
     }
 }

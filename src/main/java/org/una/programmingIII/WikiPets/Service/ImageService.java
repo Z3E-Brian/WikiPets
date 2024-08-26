@@ -1,6 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
-import org.una.programmingIII.WikiPets.Model.ImageDto;
+import org.una.programmingIII.WikiPets.Dto.ImageDto;
 
 import java.util.List;
 

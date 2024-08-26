@@ -1,6 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
-import org.una.programmingIII.WikiPets.Model.NutritionGuideDto;
+import org.una.programmingIII.WikiPets.Dto.NutritionGuideDto;
 
 import java.util.List;
 

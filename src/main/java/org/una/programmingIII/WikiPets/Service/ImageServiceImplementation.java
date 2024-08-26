@@ -5,10 +5,11 @@ import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.Image;
-import org.una.programmingIII.WikiPets.Model.ImageDto;
+import org.una.programmingIII.WikiPets.Dto.ImageDto;
 import org.una.programmingIII.WikiPets.Repository.ImageRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ImageServiceImplementation implements ImageService {
@@ -24,8 +25,9 @@ public class ImageServiceImplementation implements ImageService {
 
     @Override
     public List<ImageDto> getAllImages() {
-        List<Image> images = imageRepository.findAll();
-        return imageMapper.convertToDTOList(images);
+        return imageRepository.findAll().stream()
+                .map(imageMapper::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

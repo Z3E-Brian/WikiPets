@@ -5,11 +5,13 @@ import org.una.programmingIII.WikiPets.Dto.BehaviorGuideDto;
 import java.util.List;
 
 public interface BehaviorGuideService {
-    public BehaviorGuideDto getBehaviorGuideById(Long id);
+    BehaviorGuideDto getBehaviorGuideById(Long id);
 
-    public List<BehaviorGuideDto> getAllBehaviorGuides();
+    List<BehaviorGuideDto> getAllBehaviorGuides();
 
-    public BehaviorGuideDto saveBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
+    BehaviorGuideDto updateBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
 
-    public void deleteBehaviorGuide(Long id);
+    BehaviorGuideDto createBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
+
+    void deleteBehaviorGuide(Long id);
 }

@@ -1,6 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
-import org.una.programmingIII.WikiPets.Model.CareTipDto;
+import org.una.programmingIII.WikiPets.Dto.CareTipDto;
 
 import java.util.List;
 
