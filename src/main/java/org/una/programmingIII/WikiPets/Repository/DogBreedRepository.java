@@ -6,5 +6,4 @@ import org.una.programmingIII.WikiPets.Model.DogBreed;
 
 @Repository
 public interface DogBreedRepository extends JpaRepository<DogBreed, Long>{
-    DogBreed findByBreedName(String breedName);
 }

@@ -11,7 +11,6 @@ import java.util.Optional;
 public interface FeedingScheduleRepository extends JpaRepository<FeedingSchedule, Long> {
 
     // Encontrar por ID (método heredado de JpaRepository)
-    Optional<FeedingSchedule> findById(Long id);
     List<FeedingSchedule> findByCatBreedId(Long catBreedId);
     List<FeedingSchedule> findByDogBreedId(Long dogBreedId);
     List<FeedingSchedule> findByAgeGroup(String ageGroup);

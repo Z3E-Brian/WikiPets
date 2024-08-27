@@ -6,5 +6,4 @@ import org.una.programmingIII.WikiPets.Model.CatBreed;
 
 @Repository
 public interface CatBreedRepository extends JpaRepository<CatBreed, Long> {
-    CatBreed findByCatBreedName(String breedName);
 }

@@ -6,5 +6,5 @@ import org.una.programmingIII.WikiPets.Model.HealthIssue;
 
 @Repository
 public interface HealthIssueRepository extends JpaRepository<HealthIssue, Long> {
-    HealthIssue findByHealthIssueName(String issueName);
+
 }
