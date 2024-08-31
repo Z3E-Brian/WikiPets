@@ -5,19 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.una.programmingIII.WikiPets.Mapper.UserMapper;
-import org.una.programmingIII.WikiPets.Model.User;
 import org.una.programmingIII.WikiPets.Dto.UserDto;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.User;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UserServiceImplementationTest {
@@ -26,77 +24,81 @@ public class UserServiceImplementationTest {
     private UserRepository userRepository;
 
     @Mock
-    private UserMapper userMapper;
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
+    private GenericMapper<User, UserDto> userMapper;
 
     @InjectMocks
     private UserServiceImplementation userServiceImplementation;
 
+    private User user;
+    private UserDto userDto;
+
     @BeforeEach
-    public void setup() {
+    void setUp() {
         MockitoAnnotations.initMocks(this);
-    }
 
-    @Test
-    public void getAllUsersTest() {
-        User user = new User();
-        when(userRepository.findAll()).thenReturn(Arrays.asList(user));
-        when(userMapper.toUserDto(any(User.class))).thenReturn(new UserDto());
+        user = new User();
+        user.setId(1L);
+        user.setName("John Doe");
+        user.setEmail("john.doe@example.com");
 
-        List<UserDto> userDtos = userServiceImplementation.getAllUsers();
+        userDto = new UserDto();
+        userDto.setId(1L);
+        userDto.setName("John Doe");
+        userDto.setEmail("john.doe@example.com");
 
-        assertNotNull(userDtos);
-        assertEquals(1, userDtos.size());
-        verify(userRepository, times(1)).findAll();
-    }
+        when(mapperFactory.createMapper(User.class, UserDto.class)).thenReturn(userMapper);
+        when(userMapper.convertToDTO(user)).thenReturn(userDto);
+        when(userMapper.convertToEntity(userDto)).thenReturn(user);
 
-    @Test
-    public void getUserByIdTest() {
-        User user = new User();
-        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
-        when(userMapper.toUserDto(any(User.class))).thenReturn(new UserDto());
-
-        UserDto userDto = userServiceImplementation.getUserById(1L);
-
-        assertNotNull(userDto);
-        verify(userRepository, times(1)).findById(anyLong());
+        userServiceImplementation = new UserServiceImplementation(userRepository, mapperFactory);
     }
 
     @Test
     public void createUserTest() {
-        User user = new User();
-        UserDto userDto = new UserDto();
-
         when(userRepository.save(any(User.class))).thenReturn(user);
-        when(userMapper.toUserDto(any(User.class))).thenReturn(userDto);
-        when(userMapper.toUser(any(UserDto.class))).thenReturn(user);
-
-        UserDto createdUserDto = userServiceImplementation.createUser(userDto);
-
-        assertNotNull(createdUserDto);
-        verify(userRepository, times(1)).save(any(User.class));
+        UserDto result = userServiceImplementation.createUser(userDto);
+        assertEquals(userDto.getId(), result.getId());
+        assertEquals(userDto.getName(), result.getName());
     }
 
     @Test
     public void updateUserTest() {
-        User user = new User();
-        UserDto userDto = new UserDto();
-
         when(userRepository.save(any(User.class))).thenReturn(user);
-        when(userMapper.toUserDto(any(User.class))).thenReturn(userDto);
-        when(userMapper.toUser(any(UserDto.class))).thenReturn(user);
+        UserDto result = userServiceImplementation.updateUser(userDto);
+        assertEquals(userDto.getId(), result.getId());
+        assertEquals(userDto.getName(), result.getName());
+    }
 
-        UserDto updatedUserDto = userServiceImplementation.updateUser(userDto);
+    @Test
+    public void getUserByIdTest() {
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        UserDto result = userServiceImplementation.getUserById(1L);
+        assertEquals(userDto.getId(), result.getId());
+        assertEquals(userDto.getName(), result.getName());
+    }
 
-        assertNotNull(updatedUserDto);
-        verify(userRepository, times(1)).save(any(User.class));
+    @Test
+    public void getUserByIdNotFoundTest() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+        assertThrows(RuntimeException.class, () -> userServiceImplementation.getUserById(1L));
+    }
+
+    @Test
+    public void getAllUsersTest() {
+        when(userRepository.findAll()).thenReturn(List.of(user));
+        List<UserDto> result = userServiceImplementation.getAllUsers();
+        assertEquals(1, result.size());
+        assertEquals(userDto.getId(), result.get(0).getId());
+        assertTrue(result.get(0).getName().contains("John Doe"));
     }
 
     @Test
     public void deleteUserTest() {
-        doNothing().when(userRepository).deleteById(anyLong());
-
+        doNothing().when(userRepository).deleteById(1L);
         userServiceImplementation.deleteUser(1L);
-
         verify(userRepository, times(1)).deleteById(1L);
     }
 }

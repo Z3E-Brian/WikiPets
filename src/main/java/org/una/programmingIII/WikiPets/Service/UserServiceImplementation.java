@@ -2,7 +2,8 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Mapper.UserMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.User;
 import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
@@ -14,31 +15,32 @@ import java.util.stream.Collectors;
 public class UserServiceImplementation implements UserService {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final GenericMapper<User, UserDto> userMapper;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository) {
+    public UserServiceImplementation(UserRepository userRepository,GenericMapperFactory mapperFactory) {
         this.userRepository = userRepository;
-        this.userMapper = UserMapper.INSTANCE;
+        this.userMapper = mapperFactory.createMapper(User.class, UserDto.class);
     }
+
 
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(this::convertToDto).collect(Collectors.toList());
+        return users.stream().map(this.userMapper::convertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public UserDto getUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not Found with id: " + id));
-        return convertToDto(user);
+        return userMapper.convertToDTO(user);
     }
 
     @Override
     public UserDto createUser(UserDto userDto) {
-        User user = convertToEntity(userDto);
+        User user = userMapper.convertToEntity(userDto);
         User savedUser = userRepository.save(user);
-        return convertToDto(savedUser);
+        return userMapper.convertToDTO(savedUser);
     }
 
     @Override
@@ -48,16 +50,8 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto updateUser(UserDto userDto) {
-        User user = convertToEntity(userDto);
+        User user = userMapper.convertToEntity(userDto);
         User updatedUser = userRepository.save(user);
-        return convertToDto(updatedUser);
-    }
-
-    private UserDto convertToDto(User user) {
-        return UserMapper.INSTANCE.toUserDto(user);
-    }
-
-    private User convertToEntity(UserDto userDto) {
-        return UserMapper.INSTANCE.toUser(userDto);
+        return userMapper.convertToDTO(updatedUser);
     }
 }

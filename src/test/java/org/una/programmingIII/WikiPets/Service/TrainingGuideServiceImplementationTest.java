@@ -109,4 +109,27 @@ public class TrainingGuideServiceImplementationTest {
         trainingGuideServiceImplementation.deleteTrainingGuide(1L);
         verify(trainingGuideRepository, times(1)).deleteById(1L);
     }
+    @Test
+    public void getTrainingGuideByTitleTest() {
+        when(trainingGuideRepository.findByTitle("Basic Training")).thenReturn(trainingGuide);
+        TrainingGuideDto result = trainingGuideServiceImplementation.getTrainingGuideByTitle("Basic Training");
+        assertEquals(trainingGuideDto.getTitle(), result.getTitle());
+        assertEquals(trainingGuideDto.getContent(), result.getContent());
+    }
+
+    @Test
+    public void searchByTitleTest() {
+        when(trainingGuideRepository.findByTitleContainingIgnoreCase("Basic")).thenReturn(List.of(trainingGuide));
+        List<TrainingGuideDto> result = trainingGuideServiceImplementation.searchByTitle("Basic");
+        assertEquals(1, result.size());
+        assertEquals(trainingGuideDto.getTitle(), result.get(0).getTitle());
+    }
+
+    @Test
+    public void searchByTitleNoResultsTest() {
+        when(trainingGuideRepository.findByTitleContainingIgnoreCase("Advanced")).thenReturn(new ArrayList<>());
+        List<TrainingGuideDto> result = trainingGuideServiceImplementation.searchByTitle("Advanced");
+        assertTrue(result.isEmpty());
+    }
+
 }
