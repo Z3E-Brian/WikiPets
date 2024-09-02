@@ -22,4 +22,14 @@ public class UserDto {
     private LocalDate createDate;
     private LocalDate lastUpdate;
     private List<ReviewDto> reviewsDto;
+
+    public UserDto(String name, String email) {
+        this.name = name;
+        this.email = email;
+        this.favoriteDogBreedsDto = null;
+        this.favoriteCatBreedsDto = null;
+        this.createDate = LocalDate.now();
+        this.lastUpdate = LocalDate.now();
+        this.reviewsDto = null;
+    }
 }
