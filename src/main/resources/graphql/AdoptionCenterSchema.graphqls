@@ -1,0 +1,14 @@
+extend type Query {
+    getAdoptionCenters: [AdoptionCenterDto]
+    getAdoptionCenterById(id: ID!): AdoptionCenterDto
+}
+extend type Mutation{
+    createAdoptionCenter(name: String!, location: String!): AdoptionCenterDto
+    updateAdoptionCenter(id: ID!, name: String!, location: String!): AdoptionCenterDto
+    deleteAdoptionCenter(id: ID!): Boolean
+}
+ type AdoptionCenterDto{
+    id: ID
+    name: String
+    location: String
+}
