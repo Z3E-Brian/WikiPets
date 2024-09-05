@@ -91,14 +91,15 @@ public class AdoptionCenterController {
         }
     }
 
-@MutationMapping
-public AdoptionCenterDto addDogBreedInAdoptionCenter(@Argument Long id, @Argument Long idDogBreed) {
-    try {
-        return adoptionCenterService.addDogBreedInAdoptionCenter(id, idDogBreed);
-    } catch (Exception e) {
-        throw new CustomException("Could not update adoption center" + e.getMessage());
+    @MutationMapping
+    public AdoptionCenterDto addDogBreedInAdoptionCenter(@Argument Long id, @Argument Long idDogBreed) {
+        try {
+            return adoptionCenterService.addDogBreedInAdoptionCenter(id, idDogBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not update adoption center with id: " + id + ". " + e.getMessage(), e);
+        }
     }
-}
+
     private AdoptionCenterDto convertToDto(AdoptionCenterInput adoptionCenter) {
         return adoptionCenterMapper.convertToDTO(adoptionCenter);
     }

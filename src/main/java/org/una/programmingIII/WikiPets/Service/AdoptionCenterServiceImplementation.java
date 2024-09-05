@@ -63,34 +63,51 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
             System.out.println(adoptionCenterDto.getAvailableDogBreeds());
         }
         return adoptionCenterDtos;
-}
+    }
 
     @Override
     public AdoptionCenterDto createAdoptionCenter(AdoptionCenterDto adoptionCenterDto) {
-        AdoptionCenter adoptionCenter = adoptionCenterMapper.convertToEntity(adoptionCenterDto);
         adoptionCenterDto.setLastUpdate(LocalDate.now());
         adoptionCenterDto.setCreateDate(LocalDate.now());
-        adoptionCenterDto.setAvailableCatBreeds(null);
-        adoptionCenterDto.setAvailableDogBreeds(null);
+        AdoptionCenter adoptionCenter = adoptionCenterMapper.convertToEntity(adoptionCenterDto);
         return adoptionCenterMapper.convertToDTO(adoptionCenterRepository.save(adoptionCenter));
     }
 
-@Override
-public AdoptionCenterDto updateAdoptionCenter(AdoptionCenterDto adoptionCenterDto) {
-    AdoptionCenter oldCenter = adoptionCenterRepository.findById(adoptionCenterDto.getId()).orElseThrow();
-    AdoptionCenter newCenter = adoptionCenterMapper.convertToEntity(adoptionCenterDto);
-    newCenter.setCreateDate(oldCenter.getCreateDate());
-    newCenter.getAvailableCatBreeds().addAll(oldCenter.getAvailableCatBreeds());
-    newCenter.getAvailableDogBreeds().addAll(oldCenter.getAvailableDogBreeds());
-    newCenter.setLastUpdate(LocalDate.now());
-    return adoptionCenterMapper.convertToDTO(adoptionCenterRepository.save(newCenter));
-}
+    @Override
+    public AdoptionCenterDto updateAdoptionCenter(AdoptionCenterDto adoptionCenterDto) {
+        AdoptionCenter oldCenter = adoptionCenterRepository.findById(adoptionCenterDto.getId())
+                .orElseThrow(() -> new CustomException("Adoption center with id " + adoptionCenterDto.getId() + " not found"));
+
+        AdoptionCenter newCenter = adoptionCenterMapper.convertToEntity(adoptionCenterDto);
+        newCenter.setCreateDate(oldCenter.getCreateDate());
+        newCenter.setLastUpdate(LocalDate.now());
+
+        oldCenter.getAvailableCatBreeds().forEach(catBreed -> {
+            if (!newCenter.getAvailableCatBreeds().contains(catBreed)) {
+                newCenter.getAvailableCatBreeds().add(catBreed);
+            }
+        });
+
+        oldCenter.getAvailableDogBreeds().forEach(dogBreed -> {
+            if (!newCenter.getAvailableDogBreeds().contains(dogBreed)) {
+                newCenter.getAvailableDogBreeds().add(dogBreed);
+            }
+        });
+
+        return adoptionCenterMapper.convertToDTO(adoptionCenterRepository.save(newCenter));
+    }
+
     @Override
     public AdoptionCenterDto addDogBreedInAdoptionCenter(Long id, Long idDogBreed) {
-        AdoptionCenterDto adoptionCenterDto = getAdoptionCenterById(id);
-        DogBreedDto dogBreedDto = dogBreedService.getBreedById(idDogBreed);
-        adoptionCenterDto.getAvailableDogBreeds().add(dogBreedDto);
-        return updateAdoptionCenter(adoptionCenterDto);
+        AdoptionCenter adoptionCenter = adoptionCenterRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Adoption center not found"));
+
+        DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+        if (!adoptionCenter.getAvailableDogBreeds().contains(dogBreed)) {
+            adoptionCenter.getAvailableDogBreeds().add(dogBreed);
+        }
+
+        return adoptionCenterMapper.convertToDTO(adoptionCenterRepository.save(adoptionCenter));
     }
 
     @Override
@@ -101,7 +118,7 @@ public AdoptionCenterDto updateAdoptionCenter(AdoptionCenterDto adoptionCenterDt
                 .collect(Collectors.toList());
     }
 
-    @Override
+    @Override 
     public void deleteAdoptionCenter(Long id) {
         adoptionCenterRepository.deleteById(id);
     }
