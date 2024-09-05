@@ -39,6 +39,7 @@ public class AdoptionCenterServiceImplementationTest {
 
     private AdoptionCenter adoptionCenter;
     private AdoptionCenterDto adoptionCenterDto;
+    private DogBreedService dogBreedService;
 
     @BeforeEach
     void setUp() {
@@ -66,7 +67,7 @@ public class AdoptionCenterServiceImplementationTest {
         when(adoptionCenterMapper.convertToDTO(adoptionCenter)).thenReturn(adoptionCenterDto);
         when(adoptionCenterMapper.convertToEntity(adoptionCenterDto)).thenReturn(adoptionCenter);
 
-        adoptionCenterServiceImplementation = new AdoptionCenterServiceImplementation(adoptionCenterRepository,genericMapperFactory);
+        adoptionCenterServiceImplementation = new AdoptionCenterServiceImplementation(adoptionCenterRepository,genericMapperFactory,dogBreedService);
     }
 
     @Test

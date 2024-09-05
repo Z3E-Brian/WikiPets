@@ -1,0 +1,33 @@
+input DogBreedInput {
+    id: ID
+    name: String!
+    origin: String!
+    size: Int!
+    coat: String!
+    color: String!
+    lifeSpan: String!
+    temperament: String!
+    description: String!
+}
+
+extend type Mutation {
+    createDogBreed(input:DogBreedInput): DogBreedDto
+    updateDogBreed(input:DogBreedInput): DogBreedDto
+    deleteDogBreed(id: ID!): Boolean
+}
+extend type Query {
+    getDogBreeds: [DogBreedDto]
+    getDogBreedById(id: ID!): DogBreedDto
+}
+type DogBreedDto{
+    id: ID
+    name: String!
+    origin: String
+    size: Int
+    coat: String
+    color: String
+    lifeSpan: String
+    temperament: String
+    description: String
+    adoptionCenter: [AdoptionCenterDto]
+}

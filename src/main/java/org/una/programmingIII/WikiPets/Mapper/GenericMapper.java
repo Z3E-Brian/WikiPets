@@ -15,4 +15,5 @@ public interface GenericMapper<E, D> {
     default List<E> convertToEntityList(List<D> dtos) {
         return dtos.stream().map(this::convertToEntity).collect(Collectors.toList());
     }
+
 }

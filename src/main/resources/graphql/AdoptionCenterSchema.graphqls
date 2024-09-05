@@ -1,14 +1,51 @@
+input AdoptionCenterInput{
+    id: ID
+    name: String!
+    location: String!
+}
+
+input CatBreedInput {
+    id: ID
+    name: String!
+    origin: String
+    size: Int
+    coat: String
+    color: String
+    lifeSpan: String
+    temperament: String
+    description: String
+}
+
 extend type Query {
     getAdoptionCenters: [AdoptionCenterDto]
     getAdoptionCenterById(id: ID!): AdoptionCenterDto
+    getAvailableDogBreeds(id: ID!): [DogBreedDto]
+
 }
 extend type Mutation{
-    createAdoptionCenter(name: String!, location: String!): AdoptionCenterDto
-    updateAdoptionCenter(id: ID!, name: String!, location: String!): AdoptionCenterDto
+    createAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
+    updateAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
     deleteAdoptionCenter(id: ID!): Boolean
+    addDogBreedInAdoptionCenter(id: ID!, idDogBreed: ID!): AdoptionCenterDto
 }
- type AdoptionCenterDto{
+type AdoptionCenterDto{
     id: ID
     name: String
     location: String
+    availableDogBreeds: [DogBreedDto]
+    availableCatBreeds: [CatBreedDto]
+    dateCreated: String
+    dateUpdated: String
+}
+
+type CatBreedDto{
+    id: ID
+    name: String!
+    origin: String
+    size: Int
+    coat: String
+    color: String
+    lifeSpan: String
+    temperament: String
+    description: String
 }

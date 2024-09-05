@@ -31,17 +31,17 @@ public class DogBreed {
     private String temperament;
     @Column(length = 2000, nullable = false)
     private String description;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private LocalDate createdDate;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private LocalDate modifiedDate;
-    @ManyToMany(mappedBy ="availableDogBreeds")
+    @ManyToMany(mappedBy = "availableDogBreeds", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<AdoptionCenter> adoptionCenters;
     @ManyToMany(mappedBy = "recommendedDogBreeds")
     private List<NutritionGuide> nutritionGuides;
     @ManyToMany(mappedBy = "suitableDogBreeds")
     private List<HealthIssue> healthIssues;
-    @ManyToMany (mappedBy = "favoriteDogBreeds")
+    @ManyToMany(mappedBy = "favoriteDogBreeds")
     private List<User> users;
     @ManyToMany(mappedBy = "dogBreeds")
     private List<TrainingGuide> trainingGuides;
@@ -55,7 +55,7 @@ public class DogBreed {
     private List<FeedingSchedule> feedingSchedules;
     @OneToMany(mappedBy = "dogBreed")
     private List<Image> images;
-    @OneToMany  (mappedBy = "dogBreed")
+    @OneToMany(mappedBy = "dogBreed")
     private List<Video> videos;
     @OneToMany(mappedBy = "dogBreed")
     private List<Review> reviews;

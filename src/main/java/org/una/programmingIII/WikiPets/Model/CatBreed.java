@@ -31,17 +31,17 @@ public class CatBreed {
     private String temperament;
     @Column(length = 2000, nullable = false)
     private String description;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private LocalDate createdDate;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private LocalDate modifiedDate;
-    @ManyToMany(mappedBy ="availableCatBreeds")
+    @ManyToMany(mappedBy = "availableCatBreeds", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<AdoptionCenter> adoptionCenters;
     @ManyToMany(mappedBy = "suitableCatBreeds")
     private List<HealthIssue> healthIssues;
     @ManyToMany(mappedBy = "recommendedCatBreeds")
     private List<NutritionGuide> nutritionGuides;
-    @ManyToMany (mappedBy = "favoriteCatBreeds")
+    @ManyToMany(mappedBy = "favoriteCatBreeds")
     private List<User> users;
     @ManyToMany(mappedBy = "catBreeds")
     private List<TrainingGuide> trainingGuides;
@@ -55,7 +55,7 @@ public class CatBreed {
     private List<FeedingSchedule> feedingSchedules;
     @OneToMany(mappedBy = "catBreed")
     private List<Image> images;
-    @OneToMany  (mappedBy = "catBreed")
+    @OneToMany(mappedBy = "catBreed")
     private List<Video> videos;
     @OneToMany(mappedBy = "catBreed")
     private List<Review> reviews;
