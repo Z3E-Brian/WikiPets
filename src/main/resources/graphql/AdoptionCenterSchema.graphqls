@@ -17,10 +17,10 @@ input CatBreedInput {
 }
 
 extend type Query {
-    getAdoptionCenters: [AdoptionCenterDto]
+    #getAdoptionCenters: [AdoptionCenterDto]
     getAdoptionCenterById(id: ID!): AdoptionCenterDto
     getAvailableDogBreeds(id: ID!): [DogBreedDto]
-
+    getAdoptionCenters(page: Int!, size: Int!): AdoptionCenterResponse
 }
 extend type Mutation{
     createAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
@@ -34,8 +34,8 @@ type AdoptionCenterDto{
     location: String
     availableDogBreeds: [DogBreedDto]
     availableCatBreeds: [CatBreedDto]
-    dateCreated: String
-    dateUpdated: String
+    createDate: LocalDate
+    lastUpdate: LocalDate
 }
 
 type CatBreedDto{
@@ -48,4 +48,9 @@ type CatBreedDto{
     lifeSpan: String
     temperament: String
     description: String
+}
+type AdoptionCenterResponse {
+    adoptionCenters: [AdoptionCenterDto]
+    totalPages: Int
+    totalElements: Int
 }

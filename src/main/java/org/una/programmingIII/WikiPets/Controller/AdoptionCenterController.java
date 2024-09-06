@@ -2,6 +2,9 @@ package org.una.programmingIII.WikiPets.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -17,7 +20,9 @@ import org.una.programmingIII.WikiPets.Service.AdoptionCenterService;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Service.DogBreedService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -35,13 +40,26 @@ public class AdoptionCenterController {
         this.dogBreedMapper = mapperFactory.createMapper(DogBreedInput.class, DogBreedDto.class);
     }
 
-    @QueryMapping
-    public List<AdoptionCenterDto> getAdoptionCenters() {
-        try {
-            return adoptionCenterService.getAllAdoptionCenters();
-        } catch (Exception e) {
-            throw new CustomException("Could not find adoption centers" + e.getMessage());
+    /*    @QueryMapping
+        public List<AdoptionCenterDto> getAdoptionCenters() {
+            try {
+                return adoptionCenterService.getAllAdoptionCenters();
+            } catch (Exception e) {
+                throw new CustomException("Could not find adoption centers" + e.getMessage());
+            }
         }
+    */
+    @QueryMapping
+    public Map<String, Object> getAdoptionCenters(@Argument int page, @Argument int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<AdoptionCenterDto> adoptionCenterPage = adoptionCenterService.getAllAdoptionCenters(pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("adoptionCenters", adoptionCenterPage.getContent());
+        response.put("totalPages", adoptionCenterPage.getTotalPages());
+        response.put("totalElements", adoptionCenterPage.getTotalElements());
+
+        return response;
     }
 
     @QueryMapping

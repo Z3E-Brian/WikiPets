@@ -1,6 +1,8 @@
 package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
@@ -14,9 +16,7 @@ import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.AdoptionCenterRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -121,5 +121,10 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
     @Override 
     public void deleteAdoptionCenter(Long id) {
         adoptionCenterRepository.deleteById(id);
+    }
+    @Override
+    public Page<AdoptionCenterDto> getAllAdoptionCenters(Pageable pageable) {
+        Page<AdoptionCenter> adoptionCenters = adoptionCenterRepository.findAll(pageable);
+        return adoptionCenters.map(adoptionCenterMapper::convertToDTO);
     }
 }

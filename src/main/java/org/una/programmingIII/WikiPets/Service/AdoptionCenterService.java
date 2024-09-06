@@ -1,5 +1,7 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 
@@ -19,4 +21,6 @@ public interface AdoptionCenterService {
     void deleteAdoptionCenter(Long id);
 
     List<DogBreedDto> getAvailableDogBreeds(Long adoptionCenterId);
+
+    Page<AdoptionCenterDto> getAllAdoptionCenters(Pageable pageable);
 }
