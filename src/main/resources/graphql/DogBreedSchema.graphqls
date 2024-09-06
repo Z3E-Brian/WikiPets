@@ -1,3 +1,4 @@
+scalar LocalDate
 input DogBreedInput {
     id: ID
     name: String!
@@ -29,5 +30,7 @@ type DogBreedDto{
     lifeSpan: String
     temperament: String
     description: String
+    createdDate: LocalDate
+    modifiedDate: LocalDate
     adoptionCenter: [AdoptionCenterDto]
 }

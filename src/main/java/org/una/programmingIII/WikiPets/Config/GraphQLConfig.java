@@ -10,7 +10,7 @@ public class    GraphQLConfig {
 
     @Bean
     public RuntimeWiringConfigurer runtimeWiringConfigurer() {
-        return wiringBuilder -> wiringBuilder
+        return wiringBuilder -> wiringBuilder.scalar(LocalDateScalar.INSTANCE)
                 .type("Query", typeWiring -> typeWiring
                         .dataFetcher("hello", env -> "Hello, World!")
                 );
