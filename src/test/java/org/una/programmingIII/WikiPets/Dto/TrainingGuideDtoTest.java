@@ -19,7 +19,7 @@ public class TrainingGuideDtoTest {
         catBreeds.add(new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
 
         List<DogBreedDto> dogBreeds = new ArrayList<>();
-        dogBreeds.add(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now()));
+        dogBreeds.add(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now(),null,null,null,null,null,null,null,null,null,null,null,null));
 
         trainingGuideDto = new TrainingGuideDto();
         trainingGuideDto.setId(1L);
@@ -59,7 +59,7 @@ public class TrainingGuideDtoTest {
         catBreeds.add(new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
 
         List<DogBreedDto> dogBreeds = new ArrayList<>();
-        dogBreeds.add(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now()));
+        dogBreeds.add(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now(),null,null,null,null,null,null,null,null,null,null,null,null));
 
         TrainingGuideDto trainingGuideDto1 = new TrainingGuideDto(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, dogBreeds, LocalDate.now(), LocalDate.now());
         TrainingGuideDto trainingGuideDto2 = new TrainingGuideDto(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, dogBreeds, LocalDate.now(), LocalDate.now());

@@ -32,21 +32,20 @@ public class FeedingScheduleDtoTest {
         assertEquals("Three times a day", feedingScheduleDto.getFeedingTimes());
     }
 
-    @Test
-    public void argsSettersTest() {
-        LocalDate nowDate = LocalDate.now();
+@Test
+public void argsSettersTest() {
+    LocalDate nowDate = LocalDate.now();
 
-        feedingScheduleDto.setId(2L);
-        feedingScheduleDto.setDogBreedDto(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate));
-        feedingScheduleDto.setAgeGroup("Puppy");
-        feedingScheduleDto.setFeedingTimes("Twice a day");
+    feedingScheduleDto.setId(2L);
+    feedingScheduleDto.setDogBreedDto(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate,null,null,null,null,null,null,null,null,null,null,null,null));
+    feedingScheduleDto.setAgeGroup("Puppy");
+    feedingScheduleDto.setFeedingTimes("Twice a day");
 
-        assertEquals(2L, feedingScheduleDto.getId());
-        assertEquals("Labrador", feedingScheduleDto.getDogBreedDto().getName());
-        assertEquals("Puppy", feedingScheduleDto.getAgeGroup());
-        assertEquals("Twice a day", feedingScheduleDto.getFeedingTimes());
-    }
-
+    assertEquals(2L, feedingScheduleDto.getId());
+    assertEquals("Labrador", feedingScheduleDto.getDogBreedDto().getName());
+    assertEquals("Puppy", feedingScheduleDto.getAgeGroup());
+    assertEquals("Twice a day", feedingScheduleDto.getFeedingTimes());
+}
     @Test
     public void equalsAndHashCodeTest() {
         LocalDate nowDate = LocalDate.now();
@@ -63,7 +62,7 @@ public class FeedingScheduleDtoTest {
         LocalDate nowDate = LocalDate.now();
 
         FeedingScheduleDto feedingScheduleDto1 = new FeedingScheduleDto(1L, new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, "Kitten", "Three times a day", nowDate, nowDate);
-        FeedingScheduleDto feedingScheduleDto2 = new FeedingScheduleDto(2L, null, new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate), "Puppy", "Twice a day", nowDate, nowDate);
+        FeedingScheduleDto feedingScheduleDto2 = new FeedingScheduleDto(2L, null, new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate,null,null,null,null,null,null,null,null,null,null,null,null), "Puppy", "Twice a day", nowDate, nowDate);
 
         assertNotEquals(feedingScheduleDto1, feedingScheduleDto2);
         assertNotEquals(feedingScheduleDto1.hashCode(), feedingScheduleDto2.hashCode());

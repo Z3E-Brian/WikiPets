@@ -40,7 +40,7 @@ public class ReviewDtoTest {
         LocalTime nowTime = LocalTime.now();
 
         reviewDto.setId(2L);
-        reviewDto.setDogBreedDto(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate));
+        reviewDto.setDogBreedDto(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate,null,null,null,null,null,null,null,null,null,null,null,null));
         reviewDto.setRating(4);
         reviewDto.setComment("Great dog breed!");
 
@@ -66,7 +66,7 @@ public class ReviewDtoTest {
         LocalDate nowDate = LocalDate.now();
 
         ReviewDto reviewDto1 = new ReviewDto(1L, new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", nowDate, nowDate), null, new UserDto(1L, "John Doe", "john.doe@example.com", null, null, nowDate, nowDate,null), 5, "Excellent breed!", nowDate, nowDate);
-        ReviewDto reviewDto2 = new ReviewDto(2L, null, new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate), new UserDto(2L, "Jane Doe", "jane.doe@example.com", null, null, nowDate, nowDate,null), 4, "Great dog breed!", nowDate, nowDate);
+        ReviewDto reviewDto2 = new ReviewDto(2L, null, new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active, Outgoing", "One of the most popular breeds in the world.", nowDate, nowDate,null,null,null,null,null,null,null,null,null,null,null,null), new UserDto(2L, "Jane Doe", "jane.doe@example.com", null, null, nowDate, nowDate,null), 4, "Great dog breed!", nowDate, nowDate);
 
         assertNotEquals(reviewDto1, reviewDto2);
         assertNotEquals(reviewDto1.hashCode(), reviewDto2.hashCode());
