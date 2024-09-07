@@ -25,18 +25,6 @@ type AdoptionCenterDto{
     createDate: LocalDate
     lastUpdate: LocalDate
 }
-
-type CatBreedDto{
-    id: ID
-    name: String!
-    origin: String
-    size: Int
-    coat: String
-    color: String
-    lifeSpan: String
-    temperament: String
-    description: String
-}
 type AdoptionCenterResponse {
     adoptionCenters: [AdoptionCenterDto]
     totalPages: Int

@@ -106,16 +106,6 @@ public class CatBreedServiceImplementationTest {
         assertEquals(1L, result.getId());
     }
 
-    @Test
-    public void getAllBreedsTest() {
-        when(catBreedMapper.convertToDTO(Mockito.any(CatBreed.class))).thenReturn(catBreedDto);
-        when(catBreedRepository.findAll()).thenReturn(Arrays.asList(catBreed));
-
-        List<CatBreedDto> result = catBreedServiceImplementation.getAllBreeds();
-
-        assertNotNull(result);
-        assertEquals(1L, result.get(0).getId());
-    }
 
     @Test
     public void deleteCatBreedTest() {
