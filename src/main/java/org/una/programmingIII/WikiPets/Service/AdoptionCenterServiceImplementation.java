@@ -1,5 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -66,7 +67,7 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
     }
 
     @Override
-    public AdoptionCenterDto createAdoptionCenter(AdoptionCenterDto adoptionCenterDto) {
+    public AdoptionCenterDto createAdoptionCenter(@NotNull AdoptionCenterDto adoptionCenterDto) {
         adoptionCenterDto.setLastUpdate(LocalDate.now());
         adoptionCenterDto.setCreateDate(LocalDate.now());
         AdoptionCenter adoptionCenter = adoptionCenterMapper.convertToEntity(adoptionCenterDto);
@@ -74,7 +75,7 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
     }
 
     @Override
-    public AdoptionCenterDto updateAdoptionCenter(AdoptionCenterDto adoptionCenterDto) {
+    public AdoptionCenterDto updateAdoptionCenter(@NotNull AdoptionCenterDto adoptionCenterDto) {
         AdoptionCenter oldCenter = adoptionCenterRepository.findById(adoptionCenterDto.getId())
                 .orElseThrow(() -> new CustomException("Adoption center with id " + adoptionCenterDto.getId() + " not found"));
 

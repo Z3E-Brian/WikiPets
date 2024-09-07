@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -20,6 +21,10 @@ public class HealthIssue {
     private String name;
     @Column(length = 2000, nullable = false)
     private String description;
+    @Column(nullable = false)
+    private LocalDate createdDate;
+    @Column(nullable = false)
+    private LocalDate modifiedDate;
     @ManyToMany
     @JoinTable(
             name = "health_issue_dog_breeds",
