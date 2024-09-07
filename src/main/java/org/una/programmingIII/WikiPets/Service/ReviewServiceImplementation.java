@@ -1,6 +1,8 @@
 package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
@@ -41,6 +43,12 @@ public class ReviewServiceImplementation implements ReviewService {
 
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<ReviewDto> getAllReviews(Pageable pageable) {
+        Page<Review> review = reviewRepository.findAll(pageable);
+        return review.map(reviewMapper::convertToDTO);
     }
 
     public ReviewDto updateReview(ReviewDto reviewDto) {

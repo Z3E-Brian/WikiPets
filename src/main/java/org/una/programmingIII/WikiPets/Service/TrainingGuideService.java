@@ -1,5 +1,8 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 
 import java.util.List;
@@ -8,6 +11,8 @@ import java.util.List;
 public interface TrainingGuideService {
     List<TrainingGuideDto> getAllTrainingGuides();
 
+    Page<TrainingGuideDto> getAllTrainingGuides(Pageable pageable);
+
     TrainingGuideDto getTrainingGuideById(Long id);
 
     TrainingGuideDto getTrainingGuideByTitle(String title);
@@ -15,6 +20,7 @@ public interface TrainingGuideService {
     TrainingGuideDto createTrainingGuide(TrainingGuideDto trainingGuideDto);
 
     TrainingGuideDto updateTrainingGuide(TrainingGuideDto trainingGuideDto);
+
     List<TrainingGuideDto> searchByTitle(String title);
 
     void deleteTrainingGuide(Long id);

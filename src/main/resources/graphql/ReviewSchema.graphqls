@@ -1,0 +1,33 @@
+input ReviewInput {
+    id: ID
+    rating: Int!
+    comment: String!
+}
+
+extend type Mutation {
+    createReview(input:ReviewInput): ReviewDto
+    updateReview(input:ReviewInput): ReviewDto
+    deleteReview(id: ID!): Boolean
+}
+extend type Query {
+    getReviews(page:Int!,size:Int! ): ReviewResponse
+    getReviewById(id: ID!): ReviewDto
+}
+
+type ReviewDto{
+    id: ID
+    comment: String
+    rating: Int
+    catBreedDto: [CatBreedDto]
+    dogBreedDto: [DogBreedDto]
+    userDto: UserDto
+    createDate: LocalDate
+    lastUpdate: LocalDate
+}
+
+
+type ReviewResponse {
+    reviews: [ReviewDto]
+    totalPages: Int
+    totalElements: Int
+}

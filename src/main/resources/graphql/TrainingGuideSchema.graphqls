@@ -1,0 +1,31 @@
+input TrainingGuideInput {
+    id: ID
+    title: String!
+    content: String!
+}
+
+extend type Mutation {
+    createTrainingGuide(input:TrainingGuideInput): TrainingGuideDto
+    updateTrainingGuide(input:TrainingGuideInput): TrainingGuideDto
+    deleteTrainingGuide(id: ID!): Boolean
+}
+extend type Query {
+    getTrainingGuides(page:Int!,size:Int! ): TrainingGuideResponse
+    getTrainingGuideById(id: ID!): TrainingGuideDto
+}
+
+type TrainingGuideDto{
+    id: ID
+    title: String
+    content: String
+    catsBreedDto: [CatBreedDto]
+    dogsBreedDto: [DogBreedDto]
+    createDate: LocalDate
+    lastUpdate: LocalDate
+}
+
+type TrainingGuideResponse {
+    trainingGuides: [TrainingGuideDto]
+    totalPages: Int
+    totalElements: Int
+}

@@ -118,10 +118,11 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
                 .collect(Collectors.toList());
     }
 
-    @Override 
+    @Override
     public void deleteAdoptionCenter(Long id) {
         adoptionCenterRepository.deleteById(id);
     }
+
     @Override
     public Page<AdoptionCenterDto> getAllAdoptionCenters(Pageable pageable) {
         Page<AdoptionCenter> adoptionCenters = adoptionCenterRepository.findAll(pageable);
