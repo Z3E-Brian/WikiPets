@@ -2,6 +2,9 @@ package org.una.programmingIII.WikiPets.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -17,7 +20,9 @@ import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Service.DogBreedService;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,35 +37,53 @@ public class DogBreedController {
     }
 
     @QueryMapping
-    public List<DogBreedDto> getDogBreeds() {
+    public Map<String, Object> getDogBreeds(@Argument int page, @Argument int size) {
         try {
-            return dogBreedService.getAllBreeds();
+            Pageable pageable = PageRequest.of(page, size);
+            Page<DogBreedDto> dogBreedPage = dogBreedService.getAllDogBreeds(pageable);
+            Map<String, Object> response = new HashMap<>();
+            response.put("dogBreeds", dogBreedPage.getContent());
+            response.put("totalPages", dogBreedPage.getTotalPages());
+            response.put("totalElements", dogBreedPage.getTotalElements());
+            return response;
         } catch (Exception e) {
-            throw new CustomException("Could not find dog breeds"+e.getMessage());
+            throw new CustomException("Could not find dog breeds" + e.getMessage());
+        }
+    }
+    @QueryMapping
+    public DogBreedDto getDogBreedById(@Argument Long id) {
+        try {
+            return dogBreedService.getBreedById(id);
+        } catch (Exception e) {
+            throw new CustomException("Could not find dog breed " +id+". "+ e.getMessage());
         }
     }
 
     @MutationMapping
+    public DogBreedDto updateDogBreed(@Argument DogBreedInput input) {
+        try {
+            DogBreedDto dogBreedDto = dogBreedMapper.convertToDTO(input);
+            return dogBreedService.updateDogBreed(dogBreedDto);
+        } catch (Exception e) {
+            throw new CustomException("Could not update dog breed "+ e.getMessage());
+        }
+    }
+    @MutationMapping
     public DogBreedDto createDogBreed(@Argument DogBreedInput input) {
         try {
             DogBreedDto dogBreedDto = dogBreedMapper.convertToDTO(input);
-            dogBreedDto.setCreatedDate(LocalDate.now());
-            dogBreedDto.setModifiedDate(LocalDate.now());
-            dogBreedDto.setAdoptionCenters(null);
-            dogBreedDto.setHealthIssues(null);
-            dogBreedDto.setNutritionGuides(null);
-            dogBreedDto.setUsers(null);
-            dogBreedDto.setTrainingGuides(null);
-            dogBreedDto.setBehaviorGuides(null);
-            dogBreedDto.setCareTips(null);
-            dogBreedDto.setGroomingGuides(null);
-            dogBreedDto.setFeedingSchedules(null);
-            dogBreedDto.setImages(null);
-            dogBreedDto.setVideos(null);
-            dogBreedDto.setReviews(null);
             return dogBreedService.createDogBreed(dogBreedDto);
         } catch (Exception e) {
-            throw new CustomException("Could not create dog breed"+e.getMessage());
+            throw new CustomException("Could not create dog breed" + e.getMessage());
+        }
+    }
+    @MutationMapping
+    public boolean deleteDogBreed(@Argument Long id) {
+        try {
+            dogBreedService.deleteDogBreed(id);
+            return true;
+        } catch (Exception e) {
+            throw new CustomException("Could not delete dog breed "+id+". " + e.getMessage());
         }
     }
 }

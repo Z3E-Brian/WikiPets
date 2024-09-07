@@ -17,12 +17,12 @@ extend type Mutation {
     deleteDogBreed(id: ID!): Boolean
 }
 extend type Query {
-    getDogBreeds: [DogBreedDto]
+    getDogBreeds(page:Int!,size:Int! ): DogBreedResponse
     getDogBreedById(id: ID!): DogBreedDto
 }
 type DogBreedDto{
     id: ID
-    name: String!
+    name: String
     origin: String
     size: Int
     coat: String
@@ -32,5 +32,10 @@ type DogBreedDto{
     description: String
     createdDate: LocalDate
     modifiedDate: LocalDate
-    adoptionCenter: [AdoptionCenterDto]
+    adoptionCenters: [AdoptionCenterDto]
+}
+type DogBreedResponse {
+    dogBreeds: [DogBreedDto]
+    totalPages: Int
+    totalElements: Int
 }

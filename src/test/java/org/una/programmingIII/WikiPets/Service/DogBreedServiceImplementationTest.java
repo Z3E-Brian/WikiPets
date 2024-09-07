@@ -97,17 +97,6 @@ public class DogBreedServiceImplementationTest {
     }
 
     @Test
-    public void getAllBreedsTest() {
-        when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenReturn(dogBreedDto);
-        when(dogBreedRepository.findAll()).thenReturn(Arrays.asList(dogBreed));
-
-        List<DogBreedDto> result = dogBreedServiceImplementation.getAllBreeds();
-
-        assertNotNull(result);
-        assertEquals(1L, result.getFirst().getId());
-    }
-
-    @Test
     public void deleteDogBreedTest() {
         dogBreedServiceImplementation.deleteDogBreed(1L);
     }

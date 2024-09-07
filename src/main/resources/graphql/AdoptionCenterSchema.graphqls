@@ -4,18 +4,6 @@ input AdoptionCenterInput{
     location: String!
 }
 
-input CatBreedInput {
-    id: ID
-    name: String!
-    origin: String
-    size: Int
-    coat: String
-    color: String
-    lifeSpan: String
-    temperament: String
-    description: String
-}
-
 extend type Query {
     #getAdoptionCenters: [AdoptionCenterDto]
     getAdoptionCenterById(id: ID!): AdoptionCenterDto
