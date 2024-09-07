@@ -28,16 +28,12 @@ import java.util.Map;
 @Controller
 public class AdoptionCenterController {
     private final AdoptionCenterService adoptionCenterService;
-    private final DogBreedService dogBreedService;
     private final GenericMapper<AdoptionCenterInput, AdoptionCenterDto> adoptionCenterMapper;
-    private final GenericMapper<DogBreedInput, DogBreedDto> dogBreedMapper;
 
     @Autowired
-    AdoptionCenterController(AdoptionCenterService adoptionCenterService, GenericMapperFactory mapperFactory, DogBreedService dogBreedService) {
+    AdoptionCenterController(AdoptionCenterService adoptionCenterService, GenericMapperFactory mapperFactory) {
         this.adoptionCenterService = adoptionCenterService;
-        this.dogBreedService = dogBreedService;
         this.adoptionCenterMapper = mapperFactory.createMapper(AdoptionCenterInput.class, AdoptionCenterDto.class);
-        this.dogBreedMapper = mapperFactory.createMapper(DogBreedInput.class, DogBreedDto.class);
     }
 
     /*    @QueryMapping
