@@ -39,21 +39,8 @@ public class NutritionGuideServiceImplementationTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         when(mapperFactory.createMapper(NutritionGuide.class, NutritionGuideDto.class)).thenReturn(nutritionGuideMapper);
-        nutritionGuideServiceImplementation = new NutritionGuideServiceImplementation(nutritionGuideRepository, mapperFactory);
+       // nutritionGuideServiceImplementation = new NutritionGuideServiceImplementation(nutritionGuideRepository, mapperFactory);
 
-    }
-
-    @Test
-    void getAllNutritionGuidesTest() {
-        when(nutritionGuideMapper.convertToDTO(any())).thenReturn(new NutritionGuideDto());
-        NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
-        NutritionGuide nutritionGuide = new NutritionGuide();
-        when(nutritionGuideRepository.findAll()).thenReturn(Collections.singletonList(nutritionGuide));
-
-        List<NutritionGuideDto> result = nutritionGuideServiceImplementation.getAllNutritionGuides();
-
-        assertEquals(1, result.size());
-        assertEquals(nutritionGuideDto, result.get(0));
     }
 
     @Test

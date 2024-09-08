@@ -4,13 +4,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"recommendedDogBreeds", "recommendedCatBreeds"})
 @Table(name = "nutrition_guides")
 public class NutritionGuide {
     @Id
@@ -22,6 +25,15 @@ public class NutritionGuide {
 
     @Column(length = 2000, nullable = false)
     private String content;
+
+    @Column(length = 50, nullable = false)
+    private String dietaryRequirements;
+
+    @Column(nullable = false)
+    private LocalDate createdDate;
+
+    @Column(nullable = false)
+    private LocalDate modifiedDate;
 
     @ManyToMany
     @JoinTable(
@@ -38,7 +50,4 @@ public class NutritionGuide {
             inverseJoinColumns = @JoinColumn(name = "cat_breed_id")
     )
     private List<CatBreed> recommendedCatBreeds;
-
-    @Column(length = 50, nullable = false)
-    private String dietaryRequirements;
 }

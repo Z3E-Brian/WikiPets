@@ -17,7 +17,6 @@ import org.una.programmingIII.WikiPets.Repository.HealthIssueRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 @Service
 public class HealthIssueServiceImplementation implements HealthIssueService {
