@@ -54,15 +54,6 @@ public class ReviewController {
         }
     }
 
-//    @QueryMapping
-//    public List<DogBreedDto> getAvailableDogBreeds(@Argument Long id) {
-//        try {
-//            return adoptionCenterService.getAvailableDogBreeds(id);
-//        } catch (Exception e) {
-//            throw new CustomException("Could not find adoption center" + e.getMessage());
-//        }
-//    }
-
     @MutationMapping
     public ReviewDto createReview(@Argument ReviewInput input) {
         try {

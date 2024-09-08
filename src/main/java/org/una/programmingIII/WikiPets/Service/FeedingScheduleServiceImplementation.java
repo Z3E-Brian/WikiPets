@@ -1,9 +1,13 @@
 package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.AdoptionCenter;
 import org.una.programmingIII.WikiPets.Model.FeedingSchedule;
 import org.una.programmingIII.WikiPets.Dto.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Repository.FeedingScheduleRepository;
@@ -27,6 +31,12 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
     public List<FeedingScheduleDto> getAllFeedingSchedules() {
         List<FeedingSchedule> feedingSchedules = feedingScheduleRepository.findAll();
         return feedingSchedules.stream().map(this.feedingScheduleMapper::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<FeedingScheduleDto> getAllFeedingSchedules(Pageable pageable) {
+        Page<FeedingSchedule> feedingScheduleDtos = feedingScheduleRepository.findAll(pageable);
+        return feedingScheduleDtos.map(feedingScheduleMapper::convertToDTO);
     }
 
     @Override

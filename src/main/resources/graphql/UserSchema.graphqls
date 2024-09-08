@@ -1,5 +1,6 @@
 type Query {
-    getUsers: [UserDto]
+    getUsers(page: Int!, size: Int!): UserResponse
+    getAllUsers: [UserDto]
     getUserById(id: ID!): UserDto
 }
 
@@ -13,5 +14,12 @@ type UserDto {
     name: String
     email: String
 }
+
+type UserResponse {
+    users: [UserDto]
+    totalPages: Int
+    totalElements: Int
+}
+
 
 

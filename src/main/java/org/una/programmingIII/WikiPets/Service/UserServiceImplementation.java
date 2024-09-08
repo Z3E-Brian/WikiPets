@@ -1,9 +1,13 @@
 package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.Review;
 import org.una.programmingIII.WikiPets.Model.User;
 import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
@@ -18,7 +22,7 @@ public class UserServiceImplementation implements UserService {
     private final GenericMapper<User, UserDto> userMapper;
 
     @Autowired
-    public UserServiceImplementation(UserRepository userRepository,GenericMapperFactory mapperFactory) {
+    public UserServiceImplementation(UserRepository userRepository, GenericMapperFactory mapperFactory) {
         this.userRepository = userRepository;
         this.userMapper = mapperFactory.createMapper(User.class, UserDto.class);
     }
@@ -53,5 +57,11 @@ public class UserServiceImplementation implements UserService {
         User user = userMapper.convertToEntity(userDto);
         User updatedUser = userRepository.save(user);
         return userMapper.convertToDTO(updatedUser);
+    }
+
+    @Override
+    public Page<UserDto> getUsers(Pageable pageable) {
+        Page<User> user = userRepository.findAll(pageable);
+        return user.map(userMapper::convertToDTO);
     }
 }

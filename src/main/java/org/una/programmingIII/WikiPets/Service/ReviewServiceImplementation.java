@@ -1,5 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.ReviewRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,10 +37,12 @@ public class ReviewServiceImplementation implements ReviewService {
         return reviewMapper.convertToDTO(review);
     }
 
-    public ReviewDto createReview(ReviewDto reviewDto) {
+    @Override
+    public ReviewDto createReview(@NotNull ReviewDto reviewDto) {
+        reviewDto.setLastUpdate(LocalDate.now());
+        reviewDto.setCreateDate(LocalDate.now());
         Review review = reviewMapper.convertToEntity(reviewDto);
-        Review savedReview = reviewRepository.save(review);
-        return reviewMapper.convertToDTO(savedReview);
+        return reviewMapper.convertToDTO(reviewRepository.save(review));
     }
 
     public void deleteReview(Long id) {
