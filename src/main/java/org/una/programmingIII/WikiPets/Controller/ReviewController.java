@@ -17,6 +17,7 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.ReviewService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -36,13 +37,21 @@ public class ReviewController {
     public Map<String, Object> getReviews(@Argument int page, @Argument int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ReviewDto> reviewDtoPage = reviewService.getAllReviews(pageable);
-
         Map<String, Object> response = new HashMap<>();
         response.put("reviews", reviewDtoPage.getContent());
         response.put("totalPages", reviewDtoPage.getTotalPages());
         response.put("totalElements", reviewDtoPage.getTotalElements());
 
         return response;
+    }
+
+    @QueryMapping
+    public List<ReviewDto> getAllReviews() {
+        try {
+            return reviewService.getAllReviews();
+        } catch (Exception e) {
+            throw new CustomException("Could not find any review" + e.getMessage());
+        }
     }
 
     @QueryMapping

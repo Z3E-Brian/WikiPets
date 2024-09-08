@@ -9,18 +9,16 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
-import org.una.programmingIII.WikiPets.Input.ReviewInput;
 import org.una.programmingIII.WikiPets.Input.TrainingGuideInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
-import org.una.programmingIII.WikiPets.Model.TrainingGuide;
 import org.una.programmingIII.WikiPets.Service.TrainingGuideService;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -40,13 +38,21 @@ public class TrainingGuideController {
     public Map<String, Object> getTrainingGuides(@Argument int page, @Argument int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<TrainingGuideDto> trainingGuideDtoPage = trainingGuideService.getAllTrainingGuides(pageable);
-
         Map<String, Object> response = new HashMap<>();
         response.put("trainingGuides", trainingGuideDtoPage.getContent());
         response.put("totalPages", trainingGuideDtoPage.getTotalPages());
         response.put("totalElements", trainingGuideDtoPage.getTotalElements());
 
         return response;
+    }
+
+    @QueryMapping
+    public List<TrainingGuideDto> getAllTrainingGuides() {
+        try {
+            return trainingGuideService.getAllTrainingGuides();
+        } catch (Exception e) {
+            throw new CustomException("Could not find adoption center" + e.getMessage());
+        }
     }
 
     @QueryMapping

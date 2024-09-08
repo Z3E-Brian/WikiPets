@@ -10,6 +10,7 @@ extend type Mutation {
     deleteReview(id: ID!): Boolean
 }
 extend type Query {
+    getAllReviews: [ReviewDto]
     getReviews(page:Int!,size:Int! ): ReviewResponse
     getReviewById(id: ID!): ReviewDto
 }

@@ -35,12 +35,11 @@ public class FeedingScheduleController {
     @QueryMapping
     public Map<String, Object> getFeedingSchedules(@Argument int page, @Argument int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<FeedingScheduleDto> feedingScheduleDtoPage = feedingScheduleService.getAllFeedingSchedules(pageable);
+        Page<FeedingScheduleDto> feedingScheduleDtoPage = feedingScheduleService.getFeedingSchedules(pageable);
         Map<String, Object> response = new HashMap<>();
         response.put("feeding schedules", feedingScheduleDtoPage.getContent());
         response.put("totalPages", feedingScheduleDtoPage.getTotalPages());
         response.put("totalElements", feedingScheduleDtoPage.getTotalElements());
-
         return response;
     }
 
@@ -64,7 +63,7 @@ public class FeedingScheduleController {
             FeedingScheduleDto feedingScheduleDto = convertToDto(input);
             return feedingScheduleService.createFeedingSchedule(feedingScheduleDto);
         } catch (Exception e) {
-            throw new CustomException("Could not create adoption center" + e.getMessage());
+            throw new CustomException("Could not create a feeding schedule" + e.getMessage());
         }
     }
 

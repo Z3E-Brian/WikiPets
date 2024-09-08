@@ -11,7 +11,7 @@ import java.util.List;
 public interface FeedingScheduleService {
     List<FeedingScheduleDto> getAllFeedingSchedules();
 
-    Page<FeedingScheduleDto> getAllFeedingSchedules(Pageable pageable);
+    Page<FeedingScheduleDto> getFeedingSchedules(Pageable pageable);
 
     FeedingScheduleDto getFeedingScheduleById(Long id);
 

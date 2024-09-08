@@ -10,8 +10,9 @@ extend type Mutation {
     deleteTrainingGuide(id: ID!): Boolean
 }
 extend type Query {
-    getTrainingGuides(page:Int!,size:Int! ): TrainingGuideResponse
     getTrainingGuideById(id: ID!): TrainingGuideDto
+    getAllTrainingGuides: [TrainingGuideDto]
+    getTrainingGuides(page:Int!,size:Int!): TrainingGuideResponse
 }
 
 type TrainingGuideDto{

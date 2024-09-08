@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
+import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
@@ -28,7 +30,7 @@ public class ReviewServiceImplementation implements ReviewService {
 
     public List<ReviewDto> getAllReviews() {
         List<Review> reviews = reviewRepository.findAll();
-        return reviews.stream().map(this.reviewMapper::convertToDTO).collect(Collectors.toList());
+        return reviewMapper.convertToDTOList(reviews);
     }
 
     public ReviewDto getReviewById(Long id) {
@@ -55,9 +57,17 @@ public class ReviewServiceImplementation implements ReviewService {
         return review.map(reviewMapper::convertToDTO);
     }
 
-    public ReviewDto updateReview(ReviewDto reviewDto) {
-        Review review = reviewMapper.convertToEntity(reviewDto);
-        Review updatedReview = reviewRepository.save(review);
-        return reviewMapper.convertToDTO(updatedReview);
+    @Override
+    public ReviewDto updateReview(@NotNull ReviewDto reviewDto) {
+        Review oldReview = reviewRepository.findById(reviewDto.getId())
+                .orElseThrow(() -> new CustomException("Review with id " + reviewDto.getId() + " not found"));
+
+        Review newReview = reviewMapper.convertToEntity(reviewDto);
+        newReview.setCreateDate(oldReview.getCreateDate());
+        newReview.setLastUpdate(LocalDate.now());
+
+        //revisar las otras entidades relacionas
+
+        return reviewMapper.convertToDTO(reviewRepository.save(newReview));
     }
 }

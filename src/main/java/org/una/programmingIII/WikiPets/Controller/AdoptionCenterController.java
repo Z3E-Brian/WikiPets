@@ -49,12 +49,10 @@ public class AdoptionCenterController {
     public Map<String, Object> getAdoptionCenters(@Argument int page, @Argument int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<AdoptionCenterDto> adoptionCenterPage = adoptionCenterService.getAllAdoptionCenters(pageable);
-
         Map<String, Object> response = new HashMap<>();
         response.put("adoptionCenters", adoptionCenterPage.getContent());
         response.put("totalPages", adoptionCenterPage.getTotalPages());
         response.put("totalElements", adoptionCenterPage.getTotalElements());
-
         return response;
     }
 

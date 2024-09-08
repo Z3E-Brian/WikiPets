@@ -61,7 +61,6 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
                         .map(dogBreedMapper::convertToDTO)
                         .collect(Collectors.toList()));
             }
-            System.out.println(adoptionCenterDto.getAvailableDogBreeds());
         }
         return adoptionCenterDtos;
     }

@@ -5,23 +5,22 @@ input FeedingScheduleInput{
 }
 extend type Query {
     getFeedingSchedules(page: Int!, size: Int!): FeedingScheduleResponse
-    getFeedingScheduleById(id: ID!): FeedingScheduleResponse
+    getFeedingScheduleById(id: ID!): FeedingScheduleDto
     getAllFeedingSchedules: [FeedingScheduleDto]
 }
 extend type Mutation{
-    createFeedingSchedule(input:FeedingScheduleInput): CareTipDto
-    updateFeedingSchedule(input:FeedingScheduleInput): CareTipDto
+    createFeedingSchedule(input:FeedingScheduleInput): FeedingScheduleDto
+    updateFeedingSchedule(input:FeedingScheduleInput): FeedingScheduleDto
     deleteFeedingSchedule(id: ID!): Boolean
 }
 type FeedingScheduleDto{
     id: ID
-    title: String
     ageGroup: String
     feedingTimes: String
-    createdDate: LocalDate
-    modifiedDate: LocalDate
     dogBreedDto: DogBreedDto
     catBreedDto: CatBreedDto
+    createDate: LocalDate
+    lastUpdate: LocalDate
 }
 type FeedingScheduleResponse {
     feedingSchedules: [FeedingScheduleDto]
