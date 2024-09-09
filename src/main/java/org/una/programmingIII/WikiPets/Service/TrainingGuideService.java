@@ -23,5 +23,7 @@ public interface TrainingGuideService {
 
     List<TrainingGuideDto> searchByTitle(String title);
 
+    TrainingGuideDto addDogBreedInTrainingGuide(Long id, Long idDogBreed);
+
     void deleteTrainingGuide(Long id);
 }

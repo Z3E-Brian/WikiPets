@@ -9,11 +9,14 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
+import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Dto.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Mapper.MapperConfig;
 import org.una.programmingIII.WikiPets.Model.AdoptionCenter;
+import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Model.FeedingSchedule;
 import org.una.programmingIII.WikiPets.Model.TrainingGuide;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
@@ -30,11 +33,16 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
 
     private final TrainingGuideRepository trainingGuideRepository;
     private final GenericMapper<TrainingGuide, TrainingGuideDto> trainingGuideMapper;
+    private final GenericMapper<DogBreed, DogBreedDto> dogBreedMapper;
+    private final DogBreedService dogBreedService;
+
 
     @Autowired
-    public TrainingGuideServiceImplementation(TrainingGuideRepository trainingGuideRepository, GenericMapperFactory mapperFactory) {
+    public TrainingGuideServiceImplementation(TrainingGuideRepository trainingGuideRepository, GenericMapperFactory mapperFactory, DogBreedService dogBreedService, GenericMapperFactory genericMapperFactory) {
         this.trainingGuideRepository = trainingGuideRepository;
         this.trainingGuideMapper = mapperFactory.createMapper(TrainingGuide.class, TrainingGuideDto.class);
+        this.dogBreedMapper = mapperFactory.createMapper(DogBreed.class, DogBreedDto.class);
+        this.dogBreedService = dogBreedService;
     }
 
     @Override
@@ -104,6 +112,19 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     public List<TrainingGuideDto> searchByTitle(String title) {
         List<TrainingGuide> trainingGuides = trainingGuideRepository.findByTitleContainingIgnoreCase(title);
         return trainingGuides.stream().map(this.trainingGuideMapper::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public TrainingGuideDto addDogBreedInTrainingGuide(Long id, Long idDogBreed) {
+        TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
+                .orElseThrow(() -> new CustomException("TrainingGuide not found"));
+
+        DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+        if (!trainingGuide.getDogBreeds().contains(dogBreed)) {
+            trainingGuide.getDogBreeds().add(dogBreed);
+        }
+
+        return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(trainingGuide));
     }
 
 

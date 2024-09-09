@@ -9,6 +9,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Input.TrainingGuideInput;
@@ -92,6 +93,16 @@ public class TrainingGuideController {
             throw new CustomException("Could not delete the trainingGuide");
         }
     }
+
+    @MutationMapping
+    public TrainingGuideDto addDogBreedInTrainingGuide(@Argument Long id, @Argument Long idDogBreed) {
+        try {
+            return trainingGuideService.addDogBreedInTrainingGuide(id, idDogBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not update Training Guide with id: " + id + ". " + e.getMessage(), e);
+        }
+    }
+
 
     private TrainingGuideDto convertToDto(TrainingGuideInput traininigGuideInput) {
         return trainingGuideMapper.convertToDTO(traininigGuideInput);
