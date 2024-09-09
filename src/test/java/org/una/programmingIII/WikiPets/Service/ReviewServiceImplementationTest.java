@@ -64,7 +64,7 @@ public class ReviewServiceImplementationTest {
         when(mapperFactory.createMapper(Review.class, ReviewDto.class)).thenReturn(reviewMapper);
         when(reviewMapper.convertToDTO(review)).thenReturn(reviewDto);
         when(reviewMapper.convertToEntity(reviewDto)).thenReturn(review);
-        reviewServiceImplementation = new ReviewServiceImplementation(reviewRepository, mapperFactory);
+        // reviewServiceImplementation = new ReviewServiceImplementation(reviewRepository, mapperFactory);
     }
 
     @Test

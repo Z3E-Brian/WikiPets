@@ -10,6 +10,7 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Input.ReviewInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
@@ -91,6 +92,16 @@ public class ReviewController {
             throw new CustomException("Could not delete the review");
         }
     }
+
+    @MutationMapping
+    public ReviewDto addReviewToUser(@Argument Long userId, @Argument Long reviewId) {
+        try {
+            return reviewService.addReviewToUser(userId, reviewId);
+        } catch (Exception e) {
+            throw new CustomException("Could not create a review: " + e.getMessage());
+        }
+    }
+
 
     private ReviewDto convertToDto(ReviewInput reviewInput) {
         return reviewDtoGenericMapper.convertToDTO(reviewInput);

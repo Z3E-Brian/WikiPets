@@ -12,6 +12,7 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.Review;
 import org.una.programmingIII.WikiPets.Model.User;
+import org.una.programmingIII.WikiPets.Repository.ReviewRepository;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
 
 import java.time.LocalDate;
@@ -86,4 +87,5 @@ public class UserServiceImplementation implements UserService {
         Page<User> user = userRepository.findAll(pageable);
         return user.map(userMapper::convertToDTO);
     }
+
 }

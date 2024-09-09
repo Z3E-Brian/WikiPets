@@ -9,8 +9,10 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Input.ReviewInput;
 import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -25,6 +27,7 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
     private final GenericMapper<UserInput, UserDto> userMapper;
+    private ReviewController reviewController;
 
 
     @Autowired
@@ -88,7 +91,6 @@ public class UserController {
             throw new CustomException("Could not update user: " + e.getMessage());
         }
     }
-
 
     private UserDto convertToDto(UserInput userInput) {
         return userMapper.convertToDTO(userInput);

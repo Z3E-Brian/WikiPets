@@ -53,7 +53,7 @@ public class UserServiceImplementationTest {
         when(userMapper.convertToDTO(user)).thenReturn(userDto);
         when(userMapper.convertToEntity(userDto)).thenReturn(user);
 
-        userServiceImplementation = new UserServiceImplementation(userRepository, mapperFactory);
+     //   userServiceImplementation = new UserServiceImplementation(userRepository, mapperFactory);
     }
 
     @Test

@@ -8,6 +8,7 @@ extend type Mutation {
     createReview(input:ReviewInput): ReviewDto
     updateReview(input:ReviewInput): ReviewDto
     deleteReview(id: ID!): Boolean
+    addReviewToUser(userId:ID!,reviewId:ID!):ReviewDto
 }
 extend type Query {
     getAllReviews: [ReviewDto]
