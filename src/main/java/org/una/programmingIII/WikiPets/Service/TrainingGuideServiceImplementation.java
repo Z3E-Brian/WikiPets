@@ -3,29 +3,20 @@ package org.una.programmingIII.WikiPets.Service;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.graphql.data.method.annotation.Argument;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
-import org.una.programmingIII.WikiPets.Dto.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
-import org.una.programmingIII.WikiPets.Mapper.MapperConfig;
-import org.una.programmingIII.WikiPets.Model.AdoptionCenter;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
-import org.una.programmingIII.WikiPets.Model.FeedingSchedule;
 import org.una.programmingIII.WikiPets.Model.TrainingGuide;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,7 +39,21 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     @Override
     public List<TrainingGuideDto> getAllTrainingGuides() {
         List<TrainingGuide> trainingGuides = trainingGuideRepository.findAll();
-        return trainingGuides.stream().map(this.trainingGuideMapper::convertToDTO).collect(Collectors.toList());
+        List<TrainingGuideDto> trainingGuideDtos = trainingGuideMapper.convertToDTOList(trainingGuides);
+
+        for (TrainingGuideDto trainingGuideDto : trainingGuideDtos) {
+            TrainingGuide adoptionCenter = trainingGuides.stream()
+                    .filter(ac -> ac.getId().equals(trainingGuideDto.getId()))
+                    .findFirst()
+                    .orElse(null);
+
+            if (adoptionCenter != null && adoptionCenter.getDogBreeds() != null) {
+                trainingGuideDto.setDogsBreedDto(adoptionCenter.getDogBreeds().stream()
+                        .map(dogBreedMapper::convertToDTO)
+                        .collect(Collectors.toList()));
+            }
+        }
+        return trainingGuideDtos;
     }
 
     @Override
@@ -119,10 +124,29 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
                 .orElseThrow(() -> new CustomException("TrainingGuide not found"));
 
-        DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
-        if (!trainingGuide.getDogBreeds().contains(dogBreed)) {
-            trainingGuide.getDogBreeds().add(dogBreed);
+        List<DogBreedDto> dogd = dogBreedMapper.convertToDTOList(trainingGuide.getDogBreeds());
+        List<Long> dogsBreedId = new ArrayList<>();
+
+        for (DogBreedDto dogBreed : dogd) {
+            dogsBreedId.add(dogBreed.getId());
         }
+
+        if (!(dogsBreedId.contains(idDogBreed))) {
+            DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+            trainingGuide.getDogBreeds().add(dogBreed);
+            trainingGuide.setLastUpdate(LocalDate.now());
+        }
+
+        return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(trainingGuide));
+    }
+
+    @Override
+    public TrainingGuideDto deleteDogBreedInTrainingGuide(Long id, Long idDogBreed) {
+        TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
+                .orElseThrow(() -> new CustomException("TrainingGuide not found"));
+        DogBreed dogBreed = dogBreedService.getBreedEntityById(idDogBreed);
+        trainingGuide.getDogBreeds().remove(dogBreed);
+        trainingGuide.setLastUpdate(LocalDate.now());
 
         return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(trainingGuide));
     }

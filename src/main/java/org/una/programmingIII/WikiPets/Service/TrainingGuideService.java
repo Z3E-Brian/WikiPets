@@ -25,5 +25,7 @@ public interface TrainingGuideService {
 
     TrainingGuideDto addDogBreedInTrainingGuide(Long id, Long idDogBreed);
 
+    TrainingGuideDto deleteDogBreedInTrainingGuide(Long id, Long idDogBreed);
+
     void deleteTrainingGuide(Long id);
 }

@@ -37,6 +37,12 @@ public class DogBreedServiceImplementation implements DogBreedService {
     }
 
     @Override
+    public DogBreed getBreedEntityById(Long id) {
+        return dogBreedRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Dog Breed Not Found with id: " + id));
+    }
+
+    @Override
     public DogBreedDto createDogBreed(DogBreedDto dogBreedDto) {
         dogBreedDto.setCreatedDate(LocalDate.now());
         dogBreedDto.setModifiedDate(LocalDate.now());

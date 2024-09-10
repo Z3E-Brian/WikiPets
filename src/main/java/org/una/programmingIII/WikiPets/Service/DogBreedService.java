@@ -4,11 +4,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Model.DogBreed;
 
 import java.util.List;
 
 public interface DogBreedService {
     DogBreedDto getBreedById(Long id);
+
+    DogBreed getBreedEntityById(Long id);
 
     DogBreedDto createDogBreed(DogBreedDto dogBreedDto);
 

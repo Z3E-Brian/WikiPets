@@ -9,6 +9,7 @@ extend type Mutation {
     updateTrainingGuide(input:TrainingGuideInput): TrainingGuideDto
     deleteTrainingGuide(id: ID!): Boolean
     addDogBreedInTrainingGuide(id: ID!, idDogBreed: ID!): TrainingGuideDto
+    deleteDogBreedInTrainingGuide(id: ID!, idDogBreed: ID!): TrainingGuideDto
 }
 extend type Query {
     getTrainingGuideById(id: ID!): TrainingGuideDto
