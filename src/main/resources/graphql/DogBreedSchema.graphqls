@@ -33,6 +33,13 @@ type DogBreedDto{
     createdDate: LocalDate
     modifiedDate: LocalDate
     adoptionCenters: [AdoptionCenterDto]
+    careTips: [CareTipDto]
+    feedingSchedules: [FeedingScheduleDto]
+    groomingGuides: [GroomingGuideDto]
+    healthIssues: [HealthIssueDto]
+    nutritionGuides: [NutritionGuideDto]
+    trainingGuides: [TrainingGuideDto]
+    reviews: [ReviewDto]
 }
 type DogBreedResponse {
     dogBreeds: [DogBreedDto]
