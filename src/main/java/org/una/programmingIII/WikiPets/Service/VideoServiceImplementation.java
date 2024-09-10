@@ -10,6 +10,7 @@ import org.una.programmingIII.WikiPets.Model.Video;
 import org.una.programmingIII.WikiPets.Repository.VideoRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VideoServiceImplementation implements VideoService {
@@ -25,8 +26,9 @@ public class VideoServiceImplementation implements VideoService {
 
     @Override
     public List<VideoDto> getAllVideos() {
-        List<Video> videos = videoRepository.findAll();
-        return videoMapper.convertToDTOList(videos);
+        return videoRepository.findAll().stream()
+                .map(videoMapper::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
