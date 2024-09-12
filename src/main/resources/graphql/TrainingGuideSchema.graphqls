@@ -13,7 +13,6 @@ extend type Mutation {
 }
 extend type Query {
     getTrainingGuideById(id: ID!): TrainingGuideDto
-    getAllTrainingGuides: [TrainingGuideDto]
     getTrainingGuides(page:Int!,size:Int!): TrainingGuideResponse
 }
 
@@ -21,8 +20,8 @@ type TrainingGuideDto{
     id: ID
     title: String
     content: String
-    catsBreedDto: [CatBreedDto]
-    dogsBreedDto: [DogBreedDto]
+    catBreeds: [CatBreedDto]
+    dogBreeds: [DogBreedDto]
     createDate: LocalDate
     lastUpdate: LocalDate
 }

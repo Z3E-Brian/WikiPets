@@ -47,15 +47,6 @@ public class TrainingGuideController {
     }
 
     @QueryMapping
-    public List<TrainingGuideDto> getAllTrainingGuides() {
-        try {
-            return trainingGuideService.getAllTrainingGuides();
-        } catch (Exception e) {
-            throw new CustomException("Could not find adoption center" + e.getMessage());
-        }
-    }
-
-    @QueryMapping
     public TrainingGuideDto getTrainingGuideById(@Argument Long id) {
         try {
             return trainingGuideService.getTrainingGuideById(id);

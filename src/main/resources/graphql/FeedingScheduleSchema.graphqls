@@ -6,7 +6,6 @@ input FeedingScheduleInput{
 extend type Query {
     getFeedingSchedules(page: Int!, size: Int!): FeedingScheduleResponse
     getFeedingScheduleById(id: ID!): FeedingScheduleDto
-    getAllFeedingSchedules: [FeedingScheduleDto]
 }
 extend type Mutation{
     createFeedingSchedule(input:FeedingScheduleInput): FeedingScheduleDto

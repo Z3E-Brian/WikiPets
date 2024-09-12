@@ -11,14 +11,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"catsBreedDto", "dogsBreedDto"})
+@ToString(exclude = {"catBreeds", "dogBreeds"})
 public class TrainingGuideDto {
 
     private Long id;
     private String title;
     private String content;
-    private List<CatBreedDto> catsBreedDto; // DTO para CatBreed, puede ser null si la guia de entreno es para un perro
-    private List<DogBreedDto> dogsBreedDto; // DTO para DogBreed, puede ser null si la guia de entreno es para un gato
+    private List<CatBreedDto> catBreeds;
+    private List<DogBreedDto> dogBreeds;
     private LocalDate createDate;
     private LocalDate lastUpdate;
 

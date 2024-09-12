@@ -9,7 +9,6 @@ import java.util.List;
 
 
 public interface TrainingGuideService {
-    List<TrainingGuideDto> getAllTrainingGuides();
 
     Page<TrainingGuideDto> getAllTrainingGuides(Pageable pageable);
 

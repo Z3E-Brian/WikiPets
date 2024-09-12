@@ -1,3 +1,5 @@
+
+
 package org.una.programmingIII.WikiPets.Service;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,31 +31,11 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
 
 
     @Autowired
-    public TrainingGuideServiceImplementation(TrainingGuideRepository trainingGuideRepository, GenericMapperFactory mapperFactory, DogBreedService dogBreedService, GenericMapperFactory genericMapperFactory) {
+    public TrainingGuideServiceImplementation(TrainingGuideRepository trainingGuideRepository, GenericMapperFactory mapperFactory, DogBreedService dogBreedService) {
         this.trainingGuideRepository = trainingGuideRepository;
         this.trainingGuideMapper = mapperFactory.createMapper(TrainingGuide.class, TrainingGuideDto.class);
         this.dogBreedMapper = mapperFactory.createMapper(DogBreed.class, DogBreedDto.class);
         this.dogBreedService = dogBreedService;
-    }
-
-    @Override
-    public List<TrainingGuideDto> getAllTrainingGuides() {
-        List<TrainingGuide> trainingGuides = trainingGuideRepository.findAll();
-        List<TrainingGuideDto> trainingGuideDtos = trainingGuideMapper.convertToDTOList(trainingGuides);
-
-        for (TrainingGuideDto trainingGuideDto : trainingGuideDtos) {
-            TrainingGuide adoptionCenter = trainingGuides.stream()
-                    .filter(ac -> ac.getId().equals(trainingGuideDto.getId()))
-                    .findFirst()
-                    .orElse(null);
-
-            if (adoptionCenter != null && adoptionCenter.getDogBreeds() != null) {
-                trainingGuideDto.setDogsBreedDto(adoptionCenter.getDogBreeds().stream()
-                        .map(dogBreedMapper::convertToDTO)
-                        .collect(Collectors.toList()));
-            }
-        }
-        return trainingGuideDtos;
     }
 
     @Override
@@ -124,10 +106,10 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
                 .orElseThrow(() -> new CustomException("TrainingGuide not found"));
 
-        List<DogBreedDto> dogd = dogBreedMapper.convertToDTOList(trainingGuide.getDogBreeds());
+        List<DogBreedDto> dog = dogBreedMapper.convertToDTOList(trainingGuide.getDogBreeds());
         List<Long> dogsBreedId = new ArrayList<>();
 
-        for (DogBreedDto dogBreed : dogd) {
+        for (DogBreedDto dogBreed : dog) {
             dogsBreedId.add(dogBreed.getId());
         }
 
