@@ -6,15 +6,16 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"catBreedDto", "dogBreedDto"})
+@ToString(exclude = {"catBreeds", "dogBreeds"})
 public class FeedingScheduleDto {
     Long id;
-    CatBreedDto catBreedDto;
-    DogBreedDto dogBreedDto;
+    List<CatBreedDto> catBreeds;
+    List<DogBreedDto> dogBreeds;
     private String ageGroup;
     private String feedingTimes;
     private LocalDate createDate;

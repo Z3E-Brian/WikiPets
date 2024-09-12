@@ -52,11 +52,12 @@ public class CatBreed {
     @ManyToMany(mappedBy = "suitableCatBreeds")
     private List<GroomingGuide> groomingGuides;
     @OneToMany(mappedBy = "catBreed")
-    private List<FeedingSchedule> feedingSchedules;
-    @OneToMany(mappedBy = "catBreed")
     private List<Image> images;
     @OneToMany(mappedBy = "catBreed")
     private List<Video> videos;
     @OneToMany(mappedBy = "catBreed")
     private List<Review> reviews;
+    @ManyToOne
+    @JoinColumn(name = "feeding_schedule_id")
+    private FeedingSchedule feedingSchedule;
 }

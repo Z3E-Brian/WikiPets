@@ -98,7 +98,7 @@ public void deleteDogBreed(Long id) {
         newDogBreed.setBehaviorGuides(oldDogBreed.getBehaviorGuides());
         newDogBreed.setCareTips(oldDogBreed.getCareTips());
         newDogBreed.setGroomingGuides(oldDogBreed.getGroomingGuides());
-        newDogBreed.setFeedingSchedules(oldDogBreed.getFeedingSchedules());
+        newDogBreed.setFeedingSchedule(oldDogBreed.getFeedingSchedule());
         newDogBreed.setImages(oldDogBreed.getImages());
         newDogBreed.setVideos(oldDogBreed.getVideos());
         newDogBreed.setReviews(oldDogBreed.getReviews());

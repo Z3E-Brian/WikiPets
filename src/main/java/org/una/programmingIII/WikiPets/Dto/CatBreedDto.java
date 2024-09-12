@@ -32,7 +32,7 @@ public class CatBreedDto {
     private List<BehaviorGuideDto> behaviorGuides;
     private List<CareTipDto> careTips;
     private List<GroomingGuideDto> groomingGuides;
-    private List<FeedingScheduleDto> feedingSchedules;
+    private FeedingScheduleDto feedingSchedule;
     private List<ImageDto> images;
     private List<VideoDto> videos;
     private List<ReviewDto> reviews;

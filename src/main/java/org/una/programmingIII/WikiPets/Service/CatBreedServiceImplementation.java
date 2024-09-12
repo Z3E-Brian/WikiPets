@@ -17,7 +17,7 @@ import java.time.LocalDate;
 @Service
 public class CatBreedServiceImplementation implements CatBreedService {
     private final CatBreedRepository catBreedRepository;
-    private final GenericMapper<CatBreed,CatBreedDto> catBreedMapper;
+    private final GenericMapper<CatBreed, CatBreedDto> catBreedMapper;
 
     @Autowired
     public CatBreedServiceImplementation(CatBreedRepository catBreedRepository, GenericMapperFactory mapperFactory) {
@@ -70,11 +70,14 @@ public class CatBreedServiceImplementation implements CatBreedService {
         return convertToDto(catBreedRepository.save(newCatBreed));
     }
 
-    private CatBreedDto convertToDto(CatBreed catBreed) {return catBreedMapper.convertToDTO(catBreed);
+    private CatBreedDto convertToDto(CatBreed catBreed) {
+        return catBreedMapper.convertToDTO(catBreed);
     }
 
-    private CatBreed convertToEntity(CatBreedDto catBreedDto) {return catBreedMapper.convertToEntity(catBreedDto);
+    private CatBreed convertToEntity(CatBreedDto catBreedDto) {
+        return catBreedMapper.convertToEntity(catBreedDto);
     }
+
     private void copyCollections(CatBreed oldCatBreed, CatBreed newCatBreed) {
         newCatBreed.setAdoptionCenters(oldCatBreed.getAdoptionCenters());
         newCatBreed.setHealthIssues(oldCatBreed.getHealthIssues());
@@ -84,7 +87,7 @@ public class CatBreedServiceImplementation implements CatBreedService {
         newCatBreed.setBehaviorGuides(oldCatBreed.getBehaviorGuides());
         newCatBreed.setCareTips(oldCatBreed.getCareTips());
         newCatBreed.setGroomingGuides(oldCatBreed.getGroomingGuides());
-        newCatBreed.setFeedingSchedules(oldCatBreed.getFeedingSchedules());
+        newCatBreed.setFeedingSchedule(oldCatBreed.getFeedingSchedule());
         newCatBreed.setImages(oldCatBreed.getImages());
         newCatBreed.setVideos(oldCatBreed.getVideos());
         newCatBreed.setReviews(oldCatBreed.getReviews());

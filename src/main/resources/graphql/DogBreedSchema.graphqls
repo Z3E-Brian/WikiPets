@@ -32,9 +32,9 @@ type DogBreedDto{
     description: String
     createdDate: LocalDate
     modifiedDate: LocalDate
+    feedingSchedule : FeedingScheduleDto
     adoptionCenters: [AdoptionCenterDto]
     careTips: [CareTipDto]
-    feedingSchedules: [FeedingScheduleDto]
     groomingGuides: [GroomingGuideDto]
     healthIssues: [HealthIssueDto]
     nutritionGuides: [NutritionGuideDto]

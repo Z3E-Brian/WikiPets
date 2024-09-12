@@ -44,11 +44,6 @@ public class FeedingScheduleController {
     }
 
     @QueryMapping
-    public List<FeedingScheduleDto> getAllFeedingSchedules() {
-        return feedingScheduleService.getAllFeedingSchedules();
-    }
-
-    @QueryMapping
     public FeedingScheduleDto getFeedingScheduleById(@Argument Long id) {
         try {
             return feedingScheduleService.getFeedingScheduleById(id);
@@ -85,6 +80,26 @@ public class FeedingScheduleController {
             throw new CustomException("Could not delete feeding schedule" + e.getMessage());
         }
     }
+
+
+    @MutationMapping
+    public FeedingScheduleDto addDogBreedInFeedingSchedule(@Argument Long id, @Argument Long idDogBreed) {
+        try {
+            return feedingScheduleService.addDogBreedInFeedingSchedule(id, idDogBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add the dog in the Feeding Scheulewith id: " + id + ". " + e.getMessage(), e);
+        }
+    }
+
+    @MutationMapping
+    public FeedingScheduleDto deleteDogBreedInFeedingSchedule(@Argument Long id, @Argument Long idDogBreed) {
+        try {
+            return feedingScheduleService.deleteDogBreedInFeedingSchedule(id, idDogBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not delete the dog in the Feeding Scheule with id: " + id + ". " + e.getMessage(), e);
+        }
+    }
+
 
     private FeedingScheduleDto convertToDto(FeedingScheduleInput feedingScheduleInput) {
         return feedingScheduleMapper.convertToDTO(feedingScheduleInput);

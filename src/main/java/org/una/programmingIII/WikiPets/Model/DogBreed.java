@@ -52,11 +52,12 @@ public class DogBreed {
     @ManyToMany(mappedBy = "suitableDogBreeds")
     private List<GroomingGuide> groomingGuides;
     @OneToMany(mappedBy = "dogBreed")
-    private List<FeedingSchedule> feedingSchedules;
-    @OneToMany(mappedBy = "dogBreed")
     private List<Image> images;
     @OneToMany(mappedBy = "dogBreed")
     private List<Video> videos;
     @OneToMany(mappedBy = "dogBreed")
     private List<Review> reviews;
+    @ManyToOne
+    @JoinColumn(name = "feeding_schedule_id")
+    private FeedingSchedule feedingSchedule;
 }
