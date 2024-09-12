@@ -1,0 +1,35 @@
+input VideoInput {
+    id: ID
+    url: String
+    title: String
+}
+
+extend type Query {
+    getVideoById(id: ID!): VideoDto
+    getVideos(page: Int!, size: Int!): VideoResponse
+
+}
+
+extend type Mutation {
+    createVideo(input: VideoInput): VideoDto
+    updateVideo(input: VideoInput): VideoDto
+    addDogBreedToVideo(id: ID!, idDogBreed: ID!): VideoDto
+    addCatBreedToVideo(id: ID!, idCatBreed: ID!): VideoDto
+    deleteVideo(id: ID!): Boolean
+}
+
+type VideoDto {
+    id: ID
+    url: String
+    title: String
+    dogBreed: DogBreedDto
+    catBreed: CatBreedDto
+    createDate: LocalDate
+    lastUpdate: LocalDate
+}
+
+type VideoResponse {
+    videos: [VideoDto]
+    totalPages: Int
+    totalElements: Int
+}

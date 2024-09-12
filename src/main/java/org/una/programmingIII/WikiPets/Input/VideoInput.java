@@ -1,4 +1,4 @@
-package org.una.programmingIII.WikiPets.Dto;
+package org.una.programmingIII.WikiPets.Input;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,17 +6,11 @@ import lombok.NoArgsConstructor;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoDto {
+public class VideoInput {
     private Long id;
     private String url;
     private String title;
-    private DogBreed dogBreed;
-    private CatBreed catBreed;
-    private LocalDate createDate;
-    private LocalDate lastUpdate;
 }

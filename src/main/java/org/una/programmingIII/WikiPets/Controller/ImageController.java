@@ -38,7 +38,7 @@ public class ImageController {
             Pageable pageable = PageRequest.of(page, size);
             Page<ImageDto> imagePage = imageService.getAllImages(pageable);
             Map<String, Object> response = new HashMap<>();
-            response.put("image", imagePage.getContent());
+            response.put("images", imagePage.getContent());
             response.put("totalPages", imagePage.getTotalPages());
             response.put("totalElements", imagePage.getTotalElements());
             return response;
