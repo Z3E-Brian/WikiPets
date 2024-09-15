@@ -2,7 +2,6 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
@@ -12,7 +11,6 @@ import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
 
 import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,12 +81,24 @@ public void deleteDogBreed(Long id) {
         return dogBreedMapper.convertToEntity(dogBreedDto);
     }
 
-    @Override
-    public Page<DogBreedDto> getAllDogBreeds(Pageable pageable) {
-        Page<DogBreed> dogBreedPage = dogBreedRepository.findAll(pageable);
-        return dogBreedPage.map(this::convertToDto);
-    }
-
+   @Override
+public Page<DogBreedDto> getAllDogBreeds(Pageable pageable) {
+    Page<DogBreed> dogBreedPage = dogBreedRepository.findAll(pageable);
+    dogBreedPage.forEach(dogBreed -> {
+        dogBreed.setAdoptionCenters(limitList(dogBreed.getAdoptionCenters()));
+        dogBreed.setHealthIssues(limitList(dogBreed.getHealthIssues()));
+        dogBreed.setNutritionGuides(limitList(dogBreed.getNutritionGuides()));
+        dogBreed.setUsers(limitList(dogBreed.getUsers()));
+        dogBreed.setTrainingGuides(limitList(dogBreed.getTrainingGuides()));
+        dogBreed.setBehaviorGuides(limitList(dogBreed.getBehaviorGuides()));
+        dogBreed.setCareTips(limitList(dogBreed.getCareTips()));
+        dogBreed.setGroomingGuides(limitList(dogBreed.getGroomingGuides()));
+    });
+    return dogBreedPage.map(this::convertToDto);
+}
+private <T> List<T> limitList(List<T> list) {
+    return list.stream().limit(10).collect(Collectors.toList());
+}
     private void copyCollections(DogBreed oldDogBreed, DogBreed newDogBreed) {
         newDogBreed.setAdoptionCenters(oldDogBreed.getAdoptionCenters());
         newDogBreed.setHealthIssues(oldDogBreed.getHealthIssues());

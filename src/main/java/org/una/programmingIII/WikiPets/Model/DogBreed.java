@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,7 +36,8 @@ public class DogBreed {
     private LocalDate createdDate;
     @Column(nullable = false)
     private LocalDate modifiedDate;
-    @ManyToMany(mappedBy = "availableDogBreeds", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "availableDogBreeds", cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+    @BatchSize(size = 10)
     private List<AdoptionCenter> adoptionCenters;
     @ManyToMany(mappedBy = "recommendedDogBreeds")
     private List<NutritionGuide> nutritionGuides;

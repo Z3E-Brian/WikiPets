@@ -9,10 +9,11 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 
-import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CatBreedServiceImplementation implements CatBreedService {
@@ -25,11 +26,25 @@ public class CatBreedServiceImplementation implements CatBreedService {
         this.catBreedMapper = mapperFactory.createMapper(CatBreed.class, CatBreedDto.class);
     }
 
-    @Override
-    public Page<CatBreedDto> getAllCatBreeds(Pageable pageable) {
-        Page<CatBreed> catBreedPage = catBreedRepository.findAll(pageable);
-        return catBreedPage.map(this::convertToDto);
-    }
+@Override
+public Page<CatBreedDto> getAllCatBreeds(Pageable pageable) {
+    Page<CatBreed> catBreedPage = catBreedRepository.findAll(pageable);
+    catBreedPage.forEach(catBreed -> {
+        catBreed.setAdoptionCenters(limitList(catBreed.getAdoptionCenters()));
+        catBreed.setHealthIssues(limitList(catBreed.getHealthIssues()));
+        catBreed.setNutritionGuides(limitList(catBreed.getNutritionGuides()));
+        catBreed.setUsers(limitList(catBreed.getUsers()));
+        catBreed.setTrainingGuides(limitList(catBreed.getTrainingGuides()));
+        catBreed.setBehaviorGuides(limitList(catBreed.getBehaviorGuides()));
+        catBreed.setCareTips(limitList(catBreed.getCareTips()));
+        catBreed.setGroomingGuides(limitList(catBreed.getGroomingGuides()));
+    });
+    return catBreedPage.map(this::convertToDto);
+}
+
+private <T> List<T> limitList(List<T> list) {
+    return list.stream().limit(10).collect(Collectors.toList());
+}
 
 
     @Override

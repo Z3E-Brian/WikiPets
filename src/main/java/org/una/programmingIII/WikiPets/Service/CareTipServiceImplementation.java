@@ -16,6 +16,7 @@ import org.una.programmingIII.WikiPets.Repository.CareTipRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class CareTipServiceImplementation implements CareTipService {
@@ -39,6 +40,10 @@ public class CareTipServiceImplementation implements CareTipService {
     @Override
     public Page<CareTipDto> getAllCareTips(Pageable pageable) {
         Page<CareTip> careTips = careTipRepository.findAll(pageable);
+        careTips.forEach(careTip -> {
+            careTip.setRelevantCatBreeds(careTip.getRelevantCatBreeds().stream().limit(10).collect(Collectors.toList()));
+            careTip.setRelevantDogBreeds(careTip.getRelevantDogBreeds().stream().limit(10).collect(Collectors.toList()));
+        });
         return careTips.map(careTipMapper::convertToDTO);
     }
 

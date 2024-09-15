@@ -41,6 +41,10 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
     @Override
     public Page<NutritionGuideDto> getAllNutritionGuides(Pageable pageable) {
         Page<NutritionGuide> nutritionGuides = nutritionGuideRepository.findAll(pageable);
+        nutritionGuides.forEach(nutritionGuide -> {
+            nutritionGuide.setRecommendedCatBreeds(nutritionGuide.getRecommendedCatBreeds().stream().limit(10).collect(Collectors.toList()));
+            nutritionGuide.setRecommendedDogBreeds(nutritionGuide.getRecommendedDogBreeds().stream().limit(10).collect(Collectors.toList()));
+        });
         return nutritionGuides.map(nutritionGuideMapper::convertToDTO);
     }
 

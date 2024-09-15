@@ -17,6 +17,7 @@ import org.una.programmingIII.WikiPets.Repository.HealthIssueRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Service
 public class HealthIssueServiceImplementation implements HealthIssueService {
@@ -40,6 +41,9 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
     @Override
     public Page<HealthIssueDto> getAllHealthIssues(Pageable pageable) {
         Page<HealthIssue> healthIssues = healthIssueRepository.findAll(pageable);
+        healthIssues.forEach(healthIssue -> {
+            healthIssue.setSuitableCatBreeds(healthIssue.getSuitableCatBreeds().stream().limit(10).collect(Collectors.toList()));
+            healthIssue.setSuitableDogBreeds(healthIssue.getSuitableDogBreeds().stream().limit(10).collect(Collectors.toList()));});
         return healthIssues.map(this::convertToDto);
     }
 
