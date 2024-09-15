@@ -62,14 +62,14 @@ public class UserController {
         }
     }
 
-    @MutationMapping
-    public UserDto createUser(@Argument String name, @Argument String email) {
+    /*@MutationMapping
+    public UserDto createUser(@Argument UserInput input) {
         try {
-            return userService.createUser(new UserDto(name, email));
+            return userService.createUser(input);
         } catch (Exception e) {
             throw new CustomException("Could not create user");
         }
-    }
+    }*/
 
     @MutationMapping
     public void deleteUser(@Argument Long id) {

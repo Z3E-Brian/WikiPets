@@ -25,6 +25,9 @@ public class User {
     @Column(length = 80, nullable = false, unique = true)
     private String email;
 
+    @Column(length = 100, nullable = false)
+    private String password;
+
     @ManyToMany
     @JoinTable(
             name = "user_favorite_cat_breeds",

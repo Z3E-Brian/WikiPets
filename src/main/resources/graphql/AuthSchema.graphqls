@@ -1,0 +1,24 @@
+input ChangePasswordInput{
+    email: String!
+    password: String!
+    newPassword: String!
+}
+input LogInInput{
+    email: String!
+    password: String!
+}
+
+extend type Mutation{
+    changePassword(input: ChangePasswordInput): Boolean
+    createUser(input:UserInput): UserDto
+    login(input: LogInInput): LoginResponse
+    refreshToken(refreshToken:String!): RefreshTokenDto
+}
+type LoginResponse{
+    user: UserDto
+    token: String
+    refreshToken: String
+}
+type RefreshTokenDto{
+    token: String
+}
