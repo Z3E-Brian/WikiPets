@@ -33,15 +33,11 @@ public class HealthIssueController {
 
     @QueryMapping
     public Map<String, Object> getHealthIssues(@Argument int page, @Argument int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<HealthIssueDto> healthIssuePage = healthIssueService.getAllHealthIssues(pageable);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("healthIssues", healthIssuePage.getContent());
-        response.put("totalPages", healthIssuePage.getTotalPages());
-        response.put("totalElements", healthIssuePage.getTotalElements());
-
-        return response;
+        try {
+            return healthIssueService.getAllHealthIssues(page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not retrieve health issues" + e.getMessage());
+        }
     }
 
     @QueryMapping

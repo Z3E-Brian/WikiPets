@@ -5,9 +5,11 @@ import org.una.programmingIII.WikiPets.Dto.HealthIssueDto;
 
 import org.springframework.data.domain.Pageable;
 
+import java.util.Map;
+
 
 public interface HealthIssueService {
-    Page<HealthIssueDto> getAllHealthIssues(Pageable pageable);
+    Map<String, Object> getAllHealthIssues(  int page,  int size);
 
     HealthIssueDto getHealthIssueById(Long id);
 

@@ -24,83 +24,87 @@ import java.util.Map;
 public class CareTipController {
     private final CareTipService careTipService;
     private final GenericMapper<CareTipInput, CareTipDto> careTipMapper;
-  @Autowired
+
+    @Autowired
     public CareTipController(CareTipService service, GenericMapperFactory mapperFactory) {
         this.careTipService = service;
         this.careTipMapper = mapperFactory.createMapper(CareTipInput.class, CareTipDto.class);
     }
 
     @QueryMapping
-    public Map<String, Object> getCareTips(@Argument int page, @Argument int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<CareTipDto> careTipPage = careTipService.getAllCareTips(pageable);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("careTips", careTipPage.getContent());
-        response.put("totalPages", careTipPage.getTotalPages());
-        response.put("totalElements", careTipPage.getTotalElements());
-
-        return response;
+    public Map<String, Object> getAllCareTips(@Argument int page, @Argument int size) {
+        try {
+            return careTipService.getAllCareTips(page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not retrieve care tips" + e.getMessage());
+        }
     }
+
     @QueryMapping
     public CareTipDto getCareTipById(@Argument Long id) {
-      try {
-        return careTipService.getCareTipById(id);
-      } catch (Exception e) {
-        throw new CustomException("Could not find care tip" + e.getMessage());
-      }
+        try {
+            return careTipService.getCareTipById(id);
+        } catch (Exception e) {
+            throw new CustomException("Could not find care tip" + e.getMessage());
+        }
     }
+
     @QueryMapping
     public CareTipDto getCareTipByTitle(@Argument String title) {
-      try {
-        return careTipService.getCareTipByTitle(title);
-      } catch (Exception e) {
-        throw new CustomException("Could not find care tip" + e.getMessage());
-      }
+        try {
+            return careTipService.getCareTipByTitle(title);
+        } catch (Exception e) {
+            throw new CustomException("Could not find care tip" + e.getMessage());
+        }
     }
 
     @MutationMapping
     public CareTipDto createCareTip(@Argument CareTipInput input) {
-      try {
-          CareTipDto careTipDto = convertToDto(input);
-        return careTipService.createCareTip(careTipDto);
-      } catch (Exception e) {
-        throw new CustomException("Could not create care tip" + e.getMessage());
-      }
+        try {
+            CareTipDto careTipDto = convertToDto(input);
+            return careTipService.createCareTip(careTipDto);
+        } catch (Exception e) {
+            throw new CustomException("Could not create care tip" + e.getMessage());
+        }
     }
+
     @MutationMapping
     public CareTipDto updateCareTip(@Argument CareTipInput input) {
-      try {
-          CareTipDto careTipDto = convertToDto(input);
-        return careTipService.updateCareTip(careTipDto);
-      } catch (Exception e) {
-        throw new CustomException("Could not update care tip" + e.getMessage());
-      }
+        try {
+            CareTipDto careTipDto = convertToDto(input);
+            return careTipService.updateCareTip(careTipDto);
+        } catch (Exception e) {
+            throw new CustomException("Could not update care tip" + e.getMessage());
+        }
     }
+
     @MutationMapping
     public void deleteCareTip(@Argument Long id) {
-      try {
-        careTipService.deleteCareTip(id);
-      } catch (Exception e) {
-        throw new CustomException("Could not delete care tip" + e.getMessage());
-      }
+        try {
+            careTipService.deleteCareTip(id);
+        } catch (Exception e) {
+            throw new CustomException("Could not delete care tip" + e.getMessage());
+        }
     }
+
     @MutationMapping
     public CareTipDto addDogBreedInCareTip(@Argument Long id, @Argument Long idDogBreed) {
-      try {
-        return careTipService.addDogBreedInCareTip(id, idDogBreed);
-      } catch (Exception e) {
-        throw new CustomException("Could not add dog breed in care tip" + e.getMessage());
-      }
+        try {
+            return careTipService.addDogBreedInCareTip(id, idDogBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add dog breed in care tip" + e.getMessage());
+        }
     }
+
     @MutationMapping
     public CareTipDto addCatBreedInCareTip(@Argument Long id, @Argument Long idCatBreed) {
-      try {
-        return careTipService.addCatBreedInCareTip(id, idCatBreed);
-      } catch (Exception e) {
-        throw new CustomException("Could not add cat breed in care tip" + e.getMessage());
-      }
+        try {
+            return careTipService.addCatBreedInCareTip(id, idCatBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add cat breed in care tip" + e.getMessage());
+        }
     }
+
     private CareTipDto convertToDto(CareTipInput careTipInput) {
         return careTipMapper.convertToDTO(careTipInput);
     }

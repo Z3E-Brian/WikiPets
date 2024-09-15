@@ -4,7 +4,7 @@ input CareTipInput{
     content: String!
 }
 extend type Query {
-    getCareTips(page: Int!, size: Int!): CareTipResponse
+    getAllCareTips(page: Int!, size: Int!): CareTipResponse
     getCareTipById(id: ID!): CareTipDto
     getCareTipByTitle(title: String!): CareTipDto
 }

@@ -2,7 +2,9 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
@@ -16,6 +18,7 @@ import org.una.programmingIII.WikiPets.Repository.CareTipRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,13 +41,13 @@ public class CareTipServiceImplementation implements CareTipService {
     }
 
     @Override
-    public Page<CareTipDto> getAllCareTips(Pageable pageable) {
-        Page<CareTip> careTips = careTipRepository.findAll(pageable);
+    public Map<String, Object> getAllCareTips( int page, int size) {
+        Page<CareTip> careTips = careTipRepository.findAll(PageRequest.of(page, size));
         careTips.forEach(careTip -> {
             careTip.setRelevantCatBreeds(careTip.getRelevantCatBreeds().stream().limit(10).collect(Collectors.toList()));
             careTip.setRelevantDogBreeds(careTip.getRelevantDogBreeds().stream().limit(10).collect(Collectors.toList()));
         });
-        return careTips.map(careTipMapper::convertToDTO);
+        return Map.of("careTips", careTips.map(this::convertToDto).getContent(), "totalPages", careTips.getTotalPages(), "totalElements", careTips.getTotalElements());
     }
 
     @Override

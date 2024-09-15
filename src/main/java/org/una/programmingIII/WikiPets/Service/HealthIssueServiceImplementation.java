@@ -3,7 +3,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
@@ -17,6 +17,8 @@ import org.una.programmingIII.WikiPets.Repository.HealthIssueRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,12 +41,17 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
     }
 
     @Override
-    public Page<HealthIssueDto> getAllHealthIssues(Pageable pageable) {
-        Page<HealthIssue> healthIssues = healthIssueRepository.findAll(pageable);
+    public Map<String, Object> getAllHealthIssues(int page, int size) {
+        Page<HealthIssue> healthIssues = healthIssueRepository.findAll(PageRequest.of(page, size));
         healthIssues.forEach(healthIssue -> {
             healthIssue.setSuitableCatBreeds(healthIssue.getSuitableCatBreeds().stream().limit(10).collect(Collectors.toList()));
-            healthIssue.setSuitableDogBreeds(healthIssue.getSuitableDogBreeds().stream().limit(10).collect(Collectors.toList()));});
-        return healthIssues.map(this::convertToDto);
+            healthIssue.setSuitableDogBreeds(healthIssue.getSuitableDogBreeds().stream().limit(10).collect(Collectors.toList()));
+        });
+        Map<String, Object> response = new HashMap<>();
+        response.put("healthIssues", healthIssues.map(this::convertToDto).getContent());
+        response.put("totalPages", healthIssues.getTotalPages());
+        response.put("totalElements", healthIssues.getTotalElements());
+        return response;
     }
 
     @Override
@@ -112,6 +119,7 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
         }
         return convertToDto(healthIssueRepository.save(healthIssue));
     }
+
     private HealthIssueDto convertToDto(HealthIssue healthIssue) {
         return healthIssueMapper.convertToDTO(healthIssue);
 

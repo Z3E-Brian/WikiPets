@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
@@ -17,6 +18,7 @@ import org.una.programmingIII.WikiPets.Repository.NutritionGuideRepository;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,13 +41,13 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
     }
 
     @Override
-    public Page<NutritionGuideDto> getAllNutritionGuides(Pageable pageable) {
-        Page<NutritionGuide> nutritionGuides = nutritionGuideRepository.findAll(pageable);
+    public Map<String, Object> getAllNutritionGuides( int page, int size) {
+        Page<NutritionGuide> nutritionGuides = nutritionGuideRepository.findAll(PageRequest.of(page, size));
         nutritionGuides.forEach(nutritionGuide -> {
             nutritionGuide.setRecommendedCatBreeds(nutritionGuide.getRecommendedCatBreeds().stream().limit(10).collect(Collectors.toList()));
             nutritionGuide.setRecommendedDogBreeds(nutritionGuide.getRecommendedDogBreeds().stream().limit(10).collect(Collectors.toList()));
         });
-        return nutritionGuides.map(nutritionGuideMapper::convertToDTO);
+        return Map.of("nutritionGuides", nutritionGuides.map(nutritionGuideMapper::convertToDTO).getContent(), "totalPages", nutritionGuides.getTotalPages(), "totalElements", nutritionGuides.getTotalElements());
     }
 
     @Override

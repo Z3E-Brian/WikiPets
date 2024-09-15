@@ -9,19 +9,13 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
-import org.una.programmingIII.WikiPets.Input.AdoptionCenterInput;
 import org.una.programmingIII.WikiPets.Input.DogBreedInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
-import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Service.DogBreedService;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -39,13 +33,7 @@ public class DogBreedController {
     @QueryMapping
     public Map<String, Object> getDogBreeds(@Argument int page, @Argument int size) {
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<DogBreedDto> dogBreedPage = dogBreedService.getAllDogBreeds(pageable);
-            Map<String, Object> response = new HashMap<>();
-            response.put("dogBreeds", dogBreedPage.getContent());
-            response.put("totalPages", dogBreedPage.getTotalPages());
-            response.put("totalElements", dogBreedPage.getTotalElements());
-            return response;
+            return dogBreedService.getAllDogBreeds(page, size);
         } catch (Exception e) {
             throw new CustomException("Could not find dog breeds" + e.getMessage());
         }

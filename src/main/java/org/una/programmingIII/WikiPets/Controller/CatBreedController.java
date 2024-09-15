@@ -34,13 +34,7 @@ public class CatBreedController {
     @QueryMapping
     public Map<String, Object> getCatBreeds(@Argument int page, @Argument int size) {
         try {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<CatBreedDto> catBreedPage = catBreedService.getAllCatBreeds(pageable);
-            Map<String, Object> response = new HashMap<>();
-            response.put("catBreeds", catBreedPage.getContent());
-            response.put("totalPages", catBreedPage.getTotalPages());
-            response.put("totalElements", catBreedPage.getTotalElements());
-            return response;
+            return catBreedService.getAllCatBreeds(page, size);
         } catch (Exception e) {
             throw new CustomException("Could not find cat breeds" + e.getMessage());
         }

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CatBreedService {
 
@@ -16,5 +17,5 @@ public interface CatBreedService {
 
     CatBreedDto updateCatBreed(CatBreedDto catBreedDto);
 
-    Page<CatBreedDto> getAllCatBreeds(Pageable pageable);
+    Map<String, Object> getAllCatBreeds(int page, int size);
 }

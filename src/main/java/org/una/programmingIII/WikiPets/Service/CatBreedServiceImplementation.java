@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
@@ -12,7 +13,9 @@ import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,8 +30,8 @@ public class CatBreedServiceImplementation implements CatBreedService {
     }
 
 @Override
-public Page<CatBreedDto> getAllCatBreeds(Pageable pageable) {
-    Page<CatBreed> catBreedPage = catBreedRepository.findAll(pageable);
+public Map<String, Object> getAllCatBreeds(int page, int size) {
+    Page<CatBreed> catBreedPage = catBreedRepository.findAll(PageRequest.of(page, size));
     catBreedPage.forEach(catBreed -> {
         catBreed.setAdoptionCenters(limitList(catBreed.getAdoptionCenters()));
         catBreed.setHealthIssues(limitList(catBreed.getHealthIssues()));
@@ -39,7 +42,11 @@ public Page<CatBreedDto> getAllCatBreeds(Pageable pageable) {
         catBreed.setCareTips(limitList(catBreed.getCareTips()));
         catBreed.setGroomingGuides(limitList(catBreed.getGroomingGuides()));
     });
-    return catBreedPage.map(this::convertToDto);
+    return Map.of(
+        "catBreeds", catBreedPage.map(this::convertToDto).getContent(),
+        "totalPages", catBreedPage.getTotalPages(),
+        "totalElements", catBreedPage.getTotalElements()
+    );
 }
 
 private <T> List<T> limitList(List<T> list) {

@@ -48,15 +48,16 @@ public class NutritionGuideController {
             throw new CustomException("Could not find nutrition guide" + e.getMessage());
         }
     }
+
     @QueryMapping
     public Map<String, Object> getNutritionGuides(@Argument int page, @Argument int size) {
-        Page<NutritionGuideDto> nutritionGuidePage = nutritionGuideService.getAllNutritionGuides(PageRequest.of(page, size));
-        Map<String, Object> response = new HashMap<>();
-        response.put("nutritionGuides", nutritionGuidePage.getContent());
-        response.put("totalPages", nutritionGuidePage.getTotalPages());
-        response.put("totalElements", nutritionGuidePage.getTotalElements());
-        return response;
+        try {
+            return nutritionGuideService.getAllNutritionGuides(page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not find nutrition guides" + e.getMessage());
+        }
     }
+
     @MutationMapping
     public NutritionGuideDto createNutritionGuide(@Argument NutritionGuideInput input) {
         try {
@@ -66,6 +67,7 @@ public class NutritionGuideController {
             throw new CustomException("Could not create nutrition guide" + e.getMessage());
         }
     }
+
     @MutationMapping
     public NutritionGuideDto updateNutritionGuide(@Argument NutritionGuideInput input) {
         try {
@@ -75,6 +77,7 @@ public class NutritionGuideController {
             throw new CustomException("Could not update nutrition guide" + e.getMessage());
         }
     }
+
     @MutationMapping
     public boolean deleteNutritionGuide(@Argument Long id) {
         try {

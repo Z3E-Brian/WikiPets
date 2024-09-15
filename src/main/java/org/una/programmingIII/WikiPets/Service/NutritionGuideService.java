@@ -5,9 +5,10 @@ import org.springframework.data.domain.Pageable;
 import org.una.programmingIII.WikiPets.Dto.NutritionGuideDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface NutritionGuideService {
-    Page<NutritionGuideDto> getAllNutritionGuides(Pageable pageable);
+    Map<String, Object> getAllNutritionGuides(int page, int size);
 
     NutritionGuideDto getNutritionGuideById(Long id);
 

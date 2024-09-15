@@ -2,6 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
@@ -11,7 +12,9 @@ import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -49,18 +52,18 @@ public class DogBreedServiceImplementation implements DogBreedService {
         return convertToDto(savedDogBreed);
     }
 
-@Override
-public void deleteDogBreed(Long id) {
-    DogBreed dogBreed = dogBreedRepository.findById(id).orElseThrow(() -> new RuntimeException("Dog Breed Not Found with id: " + id));
-    dogBreed.getAdoptionCenters().stream().map(adoptionCenter -> adoptionCenter.getAvailableDogBreeds().iterator()).forEach(iterator -> {
-        while (iterator.hasNext()) {
-            if (iterator.next().equals(dogBreed)) {
-                iterator.remove();
+    @Override
+    public void deleteDogBreed(Long id) {
+        DogBreed dogBreed = dogBreedRepository.findById(id).orElseThrow(() -> new RuntimeException("Dog Breed Not Found with id: " + id));
+        dogBreed.getAdoptionCenters().stream().map(adoptionCenter -> adoptionCenter.getAvailableDogBreeds().iterator()).forEach(iterator -> {
+            while (iterator.hasNext()) {
+                if (iterator.next().equals(dogBreed)) {
+                    iterator.remove();
+                }
             }
-        }
-    });
-    dogBreedRepository.deleteById(id);
-}
+        });
+        dogBreedRepository.deleteById(id);
+    }
 
     @Override
     public DogBreedDto updateDogBreed(DogBreedDto dogBreedDto) {
@@ -81,9 +84,9 @@ public void deleteDogBreed(Long id) {
         return dogBreedMapper.convertToEntity(dogBreedDto);
     }
 
-   @Override
-public Page<DogBreedDto> getAllDogBreeds(Pageable pageable) {
-    Page<DogBreed> dogBreedPage = dogBreedRepository.findAll(pageable);
+@Override
+public Map<String, Object> getAllDogBreeds(int page, int size) {
+    Page<DogBreed> dogBreedPage = dogBreedRepository.findAll(PageRequest.of(page, size));
     dogBreedPage.forEach(dogBreed -> {
         dogBreed.setAdoptionCenters(limitList(dogBreed.getAdoptionCenters()));
         dogBreed.setHealthIssues(limitList(dogBreed.getHealthIssues()));
@@ -94,11 +97,16 @@ public Page<DogBreedDto> getAllDogBreeds(Pageable pageable) {
         dogBreed.setCareTips(limitList(dogBreed.getCareTips()));
         dogBreed.setGroomingGuides(limitList(dogBreed.getGroomingGuides()));
     });
-    return dogBreedPage.map(this::convertToDto);
+    Map<String, Object> response = new HashMap<>();
+    response.put("dogBreeds", dogBreedPage.map(this::convertToDto).getContent());
+    response.put("totalPages", dogBreedPage.getTotalPages());
+    response.put("totalElements", dogBreedPage.getTotalElements());
+    return response;
 }
-private <T> List<T> limitList(List<T> list) {
-    return list.stream().limit(10).collect(Collectors.toList());
-}
+    private <T> List<T> limitList(List<T> list) {
+        return list.stream().limit(10).collect(Collectors.toList());
+    }
+
     private void copyCollections(DogBreed oldDogBreed, DogBreed newDogBreed) {
         newDogBreed.setAdoptionCenters(oldDogBreed.getAdoptionCenters());
         newDogBreed.setHealthIssues(oldDogBreed.getHealthIssues());
