@@ -23,8 +23,8 @@ public class UserDtoTest {
         userDto.setId(1L);
         userDto.setName("John Doe");
         userDto.setEmail("john.doe@example.com");
-        userDto.setFavoriteDogBreedsDto(favoriteDogBreeds);
-        userDto.setFavoriteCatBreedsDto(favoriteCatBreeds);
+        userDto.setFavoriteDogBreeds(favoriteDogBreeds);
+        userDto.setFavoriteCatBreeds(favoriteCatBreeds);
         userDto.setCreateDate(now);
         userDto.setLastUpdate(now);
     }
@@ -38,8 +38,8 @@ public class UserDtoTest {
         assertEquals(1L, userDto.getId());
         assertEquals("John Doe", userDto.getName());
         assertEquals("john.doe@example.com", userDto.getEmail());
-        assertEquals(emptyCatBreeds, userDto.getFavoriteCatBreedsDto());
-        assertEquals(emptyDogBreeds, userDto.getFavoriteDogBreedsDto());
+        assertEquals(emptyCatBreeds, userDto.getFavoriteCatBreeds());
+        assertEquals(emptyDogBreeds, userDto.getFavoriteDogBreeds());
         assertEquals(now, userDto.getCreateDate());
         assertEquals(now, userDto.getLastUpdate());
     }
@@ -54,16 +54,16 @@ public class UserDtoTest {
         userDto.setId(2L);
         userDto.setName("Jane Smith");
         userDto.setEmail("jane.smith@example.com");
-        userDto.setFavoriteCatBreedsDto(favoriteCatBreeds);
-        userDto.setFavoriteDogBreedsDto(favoriteDogBreeds);
+        userDto.setFavoriteCatBreeds(favoriteCatBreeds);
+        userDto.setFavoriteDogBreeds(favoriteDogBreeds);
         userDto.setCreateDate(now);
         userDto.setLastUpdate(later);
 
         assertEquals(2L, userDto.getId());
         assertEquals("Jane Smith", userDto.getName());
         assertEquals("jane.smith@example.com", userDto.getEmail());
-        assertEquals(favoriteCatBreeds, userDto.getFavoriteCatBreedsDto());
-        assertEquals(favoriteDogBreeds, userDto.getFavoriteDogBreedsDto());
+        assertEquals(favoriteCatBreeds, userDto.getFavoriteCatBreeds());
+        assertEquals(favoriteDogBreeds, userDto.getFavoriteDogBreeds());
         assertEquals(now, userDto.getCreateDate());
         assertEquals(later, userDto.getLastUpdate());
     }

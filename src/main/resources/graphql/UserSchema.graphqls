@@ -15,12 +15,21 @@ type Mutation {
     #createUser(input:UserInput): UserDto
     deleteUser(id: ID!): Boolean
     updateUser (input:UserInput): UserDto
+    addDogBreedInUser(id:ID!,idDogBreed:ID!):UserDto
+    deleteDogBreedInUser(id:ID!,idDogBreed:ID!):UserDto
+    addCatBreedInUser(id:ID!,idCatBreed:ID!):UserDto
+    deleteCatBreedInUser(id:ID!,idCatBreed:ID!):UserDto
+    addReviewInUser(id:ID!,idReview:ID!):UserDto
+    deleteReviewInUser(id:ID!,idReview:ID!):UserDto
 }
 
 type UserDto {
     id: ID
     name: String
     email: String
+    reviews:[ReviewDto]
+    favoriteDogBreeds:[DogBreedDto]
+    favoriteCatBreeds:[CatBreedDto]
 }
 
 type UserResponse {

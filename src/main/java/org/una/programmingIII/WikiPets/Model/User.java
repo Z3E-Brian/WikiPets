@@ -52,4 +52,5 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<Review> reviews;
+
 }

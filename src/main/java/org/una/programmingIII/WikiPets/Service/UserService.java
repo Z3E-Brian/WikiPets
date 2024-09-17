@@ -8,21 +8,34 @@ import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Model.User;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
-    public List<UserDto> getAllUsers();
+    List<UserDto> getAllUsers();
 
-    public UserDto getUserById(Long id);
+    UserDto getUserById(Long id);
 
-    public UserDto createUser(UserInput input);
+    UserDto createUser(UserInput input);
 
-    public void deleteUser(Long id);
+    void deleteUser(Long id);
 
-    public UserDto updateUser(UserDto userDto);
+    UserDto updateUser(UserDto userDto);
 
-    Page<UserDto> getUsers(Pageable pageable);
+    Map<String, Object> getUsers(int page, int size);
 
     void updateUser(User user);
 
     User findByEmail(String email);
+
+    UserDto addDogBreedInUser(Long id, Long idDogBreed);
+
+    UserDto addCatBreedInUser(Long id, Long idCatBreed);
+
+    UserDto deleteDogBreedInUser(Long id, Long idDogBreed);
+
+    UserDto deleteCatBreedInUser(Long id, Long idCatBreed);
+
+    UserDto addReviewInUser(Long id, Long idReview);
+
+    UserDto deleteReviewInUser(Long id, Long idReview);
 }

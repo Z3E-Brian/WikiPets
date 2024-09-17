@@ -12,9 +12,6 @@ public class ReviewInput {
     private Long id;
     private Integer rating;
     private String comment;
-//    private LocalDate createDate;
-//    private LocalDate lastUpdate;
-//    private CatBreedDto catBreedDto;
-//    private DogBreedDto dogBreedDto;
-//    private UserDto userDto;
+    private Long idDogBreed;
+    private Long idCatBreed;
 }

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -60,4 +61,17 @@ public class CatBreed {
     @ManyToOne
     @JoinColumn(name = "feeding_schedule_id")
     private FeedingSchedule feedingSchedule;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CatBreed catBreed = (CatBreed) o;
+        return Objects.equals(id, catBreed.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

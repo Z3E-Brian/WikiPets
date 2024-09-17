@@ -10,13 +10,13 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = {"catBreedDto", "dogBreedDto"})
+@ToString(exclude = {"catBreed", "dogBreed"})
 public class ReviewDto {
 
     private Long id;
-    private CatBreedDto catBreedDto; // DTO para CatBreed, puede ser null si la reseña es para un perro
-    private DogBreedDto dogBreedDto; // DTO para DogBreed, puede ser null si la reseña es para un gato
-    private UserDto userDto;
+    private CatBreedDto catBreed;
+    private DogBreedDto dogBreed;
+    private UserDto user;
     private Integer rating;
     private String comment;
     private LocalDate createDate;

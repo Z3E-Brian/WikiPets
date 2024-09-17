@@ -2,16 +2,16 @@ input ReviewInput {
     id: ID
     rating: Int!
     comment: String!
+    idDogBreed: ID
+    idCatBreed: ID
 }
 
 extend type Mutation {
     createReview(input:ReviewInput): ReviewDto
     updateReview(input:ReviewInput): ReviewDto
     deleteReview(id: ID!): Boolean
-    addReviewToUser(userId:ID!,reviewId:ID!):ReviewDto
 }
 extend type Query {
-    getAllReviews: [ReviewDto]
     getReviews(page:Int!,size:Int! ): ReviewResponse
     getReviewById(id: ID!): ReviewDto
 }
@@ -22,7 +22,7 @@ type ReviewDto{
     rating: Int
     catBreedDto: [CatBreedDto]
     dogBreedDto: [DogBreedDto]
-    userDto: UserDto
+    user: UserDto
     createDate: LocalDate
     lastUpdate: LocalDate
 }

@@ -59,7 +59,7 @@ public class ReviewServiceImplementationTest {
         reviewDto.setId(1L);
         reviewDto.setRating(5);
         reviewDto.setComment("Great breed!");
-        reviewDto.setUserDto(userMapper.convertToDTO(user));
+        reviewDto.setUser(userMapper.convertToDTO(user));
 
         when(mapperFactory.createMapper(Review.class, ReviewDto.class)).thenReturn(reviewMapper);
         when(reviewMapper.convertToDTO(review)).thenReturn(reviewDto);

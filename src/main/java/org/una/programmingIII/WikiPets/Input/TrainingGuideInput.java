@@ -11,8 +11,4 @@ public class TrainingGuideInput {
     private Long id;
     private String title;
     private String content;
-//    private List<CatBreedDto> catsBreedDto;
-//    private List<DogBreedDto> dogsBreedDto;
-//    private LocalDate createDate;
-//    private LocalDate lastUpdate;
 }

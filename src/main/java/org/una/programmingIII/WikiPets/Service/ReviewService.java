@@ -1,14 +1,10 @@
 package org.una.programmingIII.WikiPets.Service;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
-import org.una.programmingIII.WikiPets.Dto.UserDto;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ReviewService {
-    List<ReviewDto> getAllReviews();
+    Map<String, Object> getReviews(int page, int size);
 
     ReviewDto getReviewById(Long id);
 
@@ -18,7 +14,4 @@ public interface ReviewService {
 
     void deleteReview(Long id);
 
-    Page<ReviewDto> getAllReviews(Pageable pageable);
-
-    ReviewDto addReviewToUser(Long userId, Long reviewId);
 }

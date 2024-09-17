@@ -6,6 +6,7 @@ import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -62,4 +63,18 @@ public class DogBreed {
     @ManyToOne
     @JoinColumn(name = "feeding_schedule_id")
     private FeedingSchedule feedingSchedule;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DogBreed dogBreed = (DogBreed) o;
+        return Objects.equals(id, dogBreed.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

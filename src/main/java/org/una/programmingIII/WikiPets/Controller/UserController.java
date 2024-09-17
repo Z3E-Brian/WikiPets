@@ -9,6 +9,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import org.una.programmingIII.WikiPets.Dto.CareTipDto;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
@@ -43,14 +44,11 @@ public class UserController {
 
     @QueryMapping
     public Map<String, Object> getUsers(@Argument int page, @Argument int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<UserDto> userDto = userService.getUsers(pageable);
-        Map<String, Object> response = new HashMap<>();
-        response.put("userDto", userDto.getContent());
-        response.put("totalPages", userDto.getTotalPages());
-        response.put("totalElements", userDto.getTotalElements());
-
-        return response;
+        try {
+            return userService.getUsers(page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not retrieve users" + e.getMessage());
+        }
     }
 
     @QueryMapping
@@ -79,8 +77,6 @@ public class UserController {
             throw new CustomException("Could not delete user");
         }
     }
-    //add reviews,catbreed,doogbreed
-    // delete review,catbreed,doogbreed
 
     @MutationMapping
     public UserDto updateUser(@Argument UserInput input) {
@@ -89,6 +85,60 @@ public class UserController {
             return userService.updateUser(userDto);
         } catch (Exception e) {
             throw new CustomException("Could not update user: " + e.getMessage());
+        }
+    }
+
+    @MutationMapping
+    public UserDto addDogBreedInUser(@Argument Long id, @Argument Long idDogBreed) {
+        try {
+            return userService.addDogBreedInUser(id, idDogBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add dog breed in user" + e.getMessage());
+        }
+    }
+
+    @MutationMapping
+    public UserDto addCatBreedInUser(@Argument Long id, @Argument Long idCatBreed) {
+        try {
+            return userService.addCatBreedInUser(id, idCatBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add cat breed in user" + e.getMessage());
+        }
+    }
+
+    @MutationMapping
+    public UserDto deleteDogBreedInUser(@Argument Long id, @Argument Long idDogBreed) {
+        try {
+            return userService.deleteDogBreedInUser(id, idDogBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add dog breed in user" + e.getMessage());
+        }
+    }
+
+    @MutationMapping
+    public UserDto deleteCatBreedInUser(@Argument Long id, @Argument Long idCatBreed) {
+        try {
+            return userService.deleteCatBreedInUser(id, idCatBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add cat breed in user" + e.getMessage());
+        }
+    }
+
+    @MutationMapping
+    public UserDto addReviewInUser(@Argument Long id, @Argument Long idReview) {
+        try {
+            return userService.addReviewInUser(id, idReview);
+        } catch (Exception e) {
+            throw new CustomException("Could not add cat breed in user" + e.getMessage());
+        }
+    }
+
+    @MutationMapping
+    public UserDto deleteReviewInUser(@Argument Long id, @Argument Long idReview) {
+        try {
+            return userService.deleteReviewInUser(id, idReview);
+        } catch (Exception e) {
+            throw new CustomException("Could not add cat breed in user" + e.getMessage());
         }
     }
 

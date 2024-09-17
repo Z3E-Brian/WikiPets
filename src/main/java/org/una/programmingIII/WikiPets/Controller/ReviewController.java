@@ -36,22 +36,10 @@ public class ReviewController {
 
     @QueryMapping
     public Map<String, Object> getReviews(@Argument int page, @Argument int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<ReviewDto> reviewDtoPage = reviewService.getAllReviews(pageable);
-        Map<String, Object> response = new HashMap<>();
-        response.put("reviews", reviewDtoPage.getContent());
-        response.put("totalPages", reviewDtoPage.getTotalPages());
-        response.put("totalElements", reviewDtoPage.getTotalElements());
-
-        return response;
-    }
-
-    @QueryMapping
-    public List<ReviewDto> getAllReviews() {
         try {
-            return reviewService.getAllReviews();
+            return reviewService.getReviews(page, size);
         } catch (Exception e) {
-            throw new CustomException("Could not find any review" + e.getMessage());
+            throw new CustomException("Could not retrieve reviews" + e.getMessage());
         }
     }
 
@@ -92,16 +80,6 @@ public class ReviewController {
             throw new CustomException("Could not delete the review");
         }
     }
-
-    @MutationMapping
-    public ReviewDto addReviewToUser(@Argument Long userId, @Argument Long reviewId) {
-        try {
-            return reviewService.addReviewToUser(userId, reviewId);
-        } catch (Exception e) {
-            throw new CustomException("Could not create a review: " + e.getMessage());
-        }
-    }
-
 
     private ReviewDto convertToDto(ReviewInput reviewInput) {
         return reviewDtoGenericMapper.convertToDTO(reviewInput);
