@@ -1,0 +1,11 @@
+extend type Query {
+    getCatsBreedComparation(idCatBreed1:ID!,idCatBreed2:ID!): BreedComparisonResult
+    getDogsBreedComparation(idDogBreed1:ID!,idDogBreed2:ID!): BreedComparisonResult
+    getMixedBreedsComparation(idDogBreed:ID!,idCatBreed:ID!): BreedComparisonResult
+}
+
+
+type BreedComparisonResult {
+    similarities: [String]
+    differences: [String]
+}
