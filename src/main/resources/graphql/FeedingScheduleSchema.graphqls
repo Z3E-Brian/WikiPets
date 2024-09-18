@@ -13,6 +13,8 @@ extend type Mutation{
     deleteFeedingSchedule(id: ID!): Boolean
     addDogBreedInFeedingSchedule(id: ID!, idDogBreed: ID!): FeedingScheduleDto
     deleteDogBreedInFeedingSchedule(id: ID!, idDogBreed: ID!): FeedingScheduleDto
+    addCatBreedInFeedingSchedule(id: ID!, idCatBreed: ID!): FeedingScheduleDto
+    deleteCatBreedInFeedingSchedule(id: ID!, idCatBreed: ID!): FeedingScheduleDto
 }
 type FeedingScheduleDto{
     id: ID

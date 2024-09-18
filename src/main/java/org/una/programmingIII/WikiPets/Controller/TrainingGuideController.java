@@ -2,9 +2,6 @@ package org.una.programmingIII.WikiPets.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -17,8 +14,6 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.TrainingGuideService;
 
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -36,14 +31,11 @@ public class TrainingGuideController {
 
     @QueryMapping
     public Map<String, Object> getTrainingGuides(@Argument int page, @Argument int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<TrainingGuideDto> trainingGuideDtoPage = trainingGuideService.getAllTrainingGuides(pageable);
-        Map<String, Object> response = new HashMap<>();
-        response.put("trainingGuides", trainingGuideDtoPage.getContent());
-        response.put("totalPages", trainingGuideDtoPage.getTotalPages());
-        response.put("totalElements", trainingGuideDtoPage.getTotalElements());
-
-        return response;
+        try {
+            return trainingGuideService.getAllTrainingGuides(page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not retrieve feeding schedules" + e.getMessage());
+        }
     }
 
     @QueryMapping
@@ -103,9 +95,26 @@ public class TrainingGuideController {
     }
 
 
-    private TrainingGuideDto convertToDto(TrainingGuideInput traininigGuideInput) {
-        return trainingGuideMapper.convertToDTO(traininigGuideInput);
+    @MutationMapping
+    public TrainingGuideDto addCatBreedInTrainingGuide(@Argument Long id, @Argument Long idCatBreed) {
+        try {
+            return trainingGuideService.addCatBreedInTrainingGuide(id, idCatBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add cat in Training Guide with id: " + id + ". " + e.getMessage(), e);
+        }
+    }
+
+    @MutationMapping
+    public TrainingGuideDto deleteCatBreedInTrainingGuide(@Argument Long id, @Argument Long idCatBreed) {
+        try {
+            return trainingGuideService.deleteCatBreedInTrainingGuide(id, idCatBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not delete cat in Training Guide with id: " + id + ". " + e.getMessage(), e);
+        }
     }
 
 
+    private TrainingGuideDto convertToDto(TrainingGuideInput traininigGuideInput) {
+        return trainingGuideMapper.convertToDTO(traininigGuideInput);
+    }
 }

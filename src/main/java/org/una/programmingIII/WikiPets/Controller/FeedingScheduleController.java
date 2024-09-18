@@ -2,9 +2,6 @@ package org.una.programmingIII.WikiPets.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -16,8 +13,6 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.FeedingScheduleService;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -34,13 +29,11 @@ public class FeedingScheduleController {
 
     @QueryMapping
     public Map<String, Object> getFeedingSchedules(@Argument int page, @Argument int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<FeedingScheduleDto> feedingScheduleDtoPage = feedingScheduleService.getFeedingSchedules(pageable);
-        Map<String, Object> response = new HashMap<>();
-        response.put("feeding schedules", feedingScheduleDtoPage.getContent());
-        response.put("totalPages", feedingScheduleDtoPage.getTotalPages());
-        response.put("totalElements", feedingScheduleDtoPage.getTotalElements());
-        return response;
+        try {
+            return feedingScheduleService.getFeedingSchedules(page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not retrieve care tips" + e.getMessage());
+        }
     }
 
     @QueryMapping
@@ -97,6 +90,25 @@ public class FeedingScheduleController {
             return feedingScheduleService.deleteDogBreedInFeedingSchedule(id, idDogBreed);
         } catch (Exception e) {
             throw new CustomException("Could not delete the dog in the Feeding Scheule with id: " + id + ". " + e.getMessage(), e);
+        }
+    }
+
+
+    @MutationMapping
+    public FeedingScheduleDto addCatBreedInFeedingSchedule(@Argument Long id, @Argument Long idCatBreed) {
+        try {
+            return feedingScheduleService.addCatBreedInInFeedingSchedule(id, idCatBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not add the cat in the Feeding Schedule with  id: " + id + ". " + e.getMessage(), e);
+        }
+    }
+
+    @MutationMapping
+    public FeedingScheduleDto deleteCatBreedInFeedingSchedule(@Argument Long id, @Argument Long idCatBreed) {
+        try {
+            return feedingScheduleService.deleteCatBreedInFeedingSchedule(id, idCatBreed);
+        } catch (Exception e) {
+            throw new CustomException("Could not delete the cat in the Feeding Schedule with id: " + id + ". " + e.getMessage(), e);
         }
     }
 

@@ -5,20 +5,23 @@ package org.una.programmingIII.WikiPets.Service;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Dto.*;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
-import org.una.programmingIII.WikiPets.Model.DogBreed;
-import org.una.programmingIII.WikiPets.Model.TrainingGuide;
-import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
+import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
+import org.una.programmingIII.WikiPets.Repository.UserRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,22 +29,31 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
 
     private final TrainingGuideRepository trainingGuideRepository;
     private final GenericMapper<TrainingGuide, TrainingGuideDto> trainingGuideMapper;
+    private final GenericMapper<CatBreed, CatBreedDto> catBreedMapper;
     private final GenericMapper<DogBreed, DogBreedDto> dogBreedMapper;
     private final DogBreedService dogBreedService;
-
+    private final CatBreedService catBreedService;
 
     @Autowired
-    public TrainingGuideServiceImplementation(TrainingGuideRepository trainingGuideRepository, GenericMapperFactory mapperFactory, DogBreedService dogBreedService) {
+    public TrainingGuideServiceImplementation(TrainingGuideRepository trainingGuideRepository, GenericMapperFactory mapperFactory, DogBreedService dogBreedService, CatBreedService catBreedService) {
         this.trainingGuideRepository = trainingGuideRepository;
         this.trainingGuideMapper = mapperFactory.createMapper(TrainingGuide.class, TrainingGuideDto.class);
         this.dogBreedMapper = mapperFactory.createMapper(DogBreed.class, DogBreedDto.class);
+        this.catBreedMapper = mapperFactory.createMapper(CatBreed.class, CatBreedDto.class);
         this.dogBreedService = dogBreedService;
+        this.catBreedService = catBreedService;
     }
 
+
     @Override
-    public Page<TrainingGuideDto> getAllTrainingGuides(Pageable pageable) {
-        Page<TrainingGuide> trainingGuides = trainingGuideRepository.findAll(pageable);
-        return trainingGuides.map(trainingGuideMapper::convertToDTO);
+    public Map<String, Object> getAllTrainingGuides(int page, int size) {
+        Page<TrainingGuide> trainingGuides = trainingGuideRepository.findAll(PageRequest.of(page, size));
+        trainingGuides.forEach(trainingGuide -> {
+            trainingGuide.setCatBreeds(trainingGuide.getCatBreeds().stream().limit(10).collect(Collectors.toList()));
+            trainingGuide.setDogBreeds(trainingGuide.getDogBreeds().stream().limit(10).collect(Collectors.toList()));
+        });
+        return Map.of("trainingGuides", trainingGuides.map(this::convertToDto).getContent(), "totalPages", trainingGuides.getTotalPages(), "totalElements", trainingGuides.getTotalElements());
+
     }
 
     @Override
@@ -79,19 +91,8 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
         TrainingGuide newTrainingGuide = trainingGuideMapper.convertToEntity(trainingGuideDto);
         newTrainingGuide.setCreateDate(oldTrainingGuide.getCreateDate());
         newTrainingGuide.setLastUpdate(LocalDate.now());
-
-        oldTrainingGuide.getCatBreeds().forEach(catBreed -> {
-            if (!newTrainingGuide.getCatBreeds().contains(catBreed)) {
-                newTrainingGuide.getCatBreeds().add(catBreed);
-            }
-        });
-
-        oldTrainingGuide.getDogBreeds().forEach(dogBreed -> {
-            if (!newTrainingGuide.getDogBreeds().contains(dogBreed)) {
-                newTrainingGuide.getDogBreeds().add(dogBreed);
-            }
-        });
-
+        newTrainingGuide.setCatBreeds(oldTrainingGuide.getCatBreeds());
+        newTrainingGuide.setDogBreeds(oldTrainingGuide.getDogBreeds());
         return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(newTrainingGuide));
     }
 
@@ -104,23 +105,25 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     @Override
     public TrainingGuideDto addDogBreedInTrainingGuide(Long id, Long idDogBreed) {
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
-                .orElseThrow(() -> new CustomException("TrainingGuide not found"));
-
-        List<DogBreedDto> dog = dogBreedMapper.convertToDTOList(trainingGuide.getDogBreeds());
-        List<Long> dogsBreedId = new ArrayList<>();
-
-        for (DogBreedDto dogBreed : dog) {
-            dogsBreedId.add(dogBreed.getId());
-        }
-
-        if (!(dogsBreedId.contains(idDogBreed))) {
-            DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+                .orElseThrow(() -> new RuntimeException("TraningGuide not found"));
+        DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+        if (!trainingGuide.getDogBreeds().contains(dogBreed)) {
             trainingGuide.getDogBreeds().add(dogBreed);
-            trainingGuide.setLastUpdate(LocalDate.now());
         }
-
         return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(trainingGuide));
     }
+
+    @Override
+    public TrainingGuideDto addCatBreedInTrainingGuide(Long id, Long idCatBreed) {
+        TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("TraningGuide not found"));
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
+        if (!trainingGuide.getCatBreeds().contains(catBreed)) {
+            trainingGuide.getCatBreeds().add(catBreed);
+        }
+        return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(trainingGuide));
+    }
+
 
     @Override
     public TrainingGuideDto deleteDogBreedInTrainingGuide(Long id, Long idDogBreed) {
@@ -129,8 +132,21 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
         DogBreed dogBreed = dogBreedService.getBreedEntityById(idDogBreed);
         trainingGuide.getDogBreeds().remove(dogBreed);
         trainingGuide.setLastUpdate(LocalDate.now());
-
         return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(trainingGuide));
+    }
+
+    @Override
+    public TrainingGuideDto deleteCatBreedInTrainingGuide(Long id, Long idCatBreed) {
+        TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("TrainingGuide not found"));
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
+        trainingGuide.getCatBreeds().remove(catBreed);
+        trainingGuide.setLastUpdate(LocalDate.now());
+        return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(trainingGuide));
+    }
+
+    private TrainingGuideDto convertToDto(TrainingGuide trainingGuide) {
+        return trainingGuideMapper.convertToDTO(trainingGuide);
     }
 
 

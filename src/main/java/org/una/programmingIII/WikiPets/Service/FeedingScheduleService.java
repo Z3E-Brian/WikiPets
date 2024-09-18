@@ -8,9 +8,11 @@ import org.una.programmingIII.WikiPets.Dto.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 
 import java.util.List;
+import java.util.Map;
 
 public interface FeedingScheduleService {
-    Page<FeedingScheduleDto> getFeedingSchedules(Pageable pageable);
+
+    Map<String, Object> getFeedingSchedules(int page, int size);
 
     FeedingScheduleDto getFeedingScheduleById(Long id);
 
@@ -23,5 +25,10 @@ public interface FeedingScheduleService {
     FeedingScheduleDto addDogBreedInFeedingSchedule(Long id, Long idDogBreed);
 
     FeedingScheduleDto deleteDogBreedInFeedingSchedule(Long id, Long idDogBreed);
+
+    FeedingScheduleDto deleteCatBreedInFeedingSchedule(Long id, Long idCatBreed);
+
+    FeedingScheduleDto addCatBreedInInFeedingSchedule(Long id, Long idCatBreed);
+
 
 }
