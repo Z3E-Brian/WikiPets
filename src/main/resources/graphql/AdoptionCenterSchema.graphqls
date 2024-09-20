@@ -9,12 +9,16 @@ extend type Query {
     getAdoptionCenterById(id: ID!): AdoptionCenterDto
     getAvailableDogBreeds(id: ID!): [DogBreedDto]
     getAdoptionCenters(page: Int!, size: Int!): AdoptionCenterResponse
+    getAvailableCatBreeds(id: ID!): [DogBreedDto]
 }
 extend type Mutation{
     createAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
     updateAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
     deleteAdoptionCenter(id: ID!): Boolean
+    removeCatBreedFromAdoptionCenter(id:ID!,catBreedId: ID!): AdoptionCenterDto
+    removeDogBreedFromAdoptionCenter(id:ID!,dogBreedId: ID!): AdoptionCenterDto
     addDogBreedInAdoptionCenter(id: ID!, idDogBreed: ID!): AdoptionCenterDto
+    addCatBreedInAdoptionCenter(id: ID!, idCatBreed: ID!): AdoptionCenterDto
 }
 type AdoptionCenterDto{
     id: ID
