@@ -7,7 +7,8 @@ input ImageInput {
 extend type Query {
     getImageById(id: ID!): ImageDto
     getImages(page: Int!, size: Int!): ImageResponse
-
+    getImagesByDogBreed(id: ID!, page: Int!, size: Int!): ImageResponse
+    getImagesByCatBreed(id: ID!, page: Int!, size: Int!): ImageResponse
 }
 
 extend type Mutation {

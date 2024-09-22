@@ -7,7 +7,8 @@ input VideoInput {
 extend type Query {
     getVideoById(id: ID!): VideoDto
     getVideos(page: Int!, size: Int!): VideoResponse
-
+    getVideosByDogBreed(id: ID!, page: Int!, size: Int!): VideoResponse
+    getVideosByCatBreed(id: ID!, page: Int!, size: Int!): VideoResponse
 }
 
 extend type Mutation {

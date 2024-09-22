@@ -2,7 +2,7 @@ package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
 import org.una.programmingIII.WikiPets.Dto.VideoDto;
@@ -11,12 +11,11 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Model.Video;
-import org.una.programmingIII.WikiPets.Dto.VideoDto;
 import org.una.programmingIII.WikiPets.Repository.VideoRepository;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class VideoServiceImplementation implements VideoService {
@@ -41,9 +40,13 @@ public class VideoServiceImplementation implements VideoService {
     }
 
     @Override
-    public Page<VideoDto> getAllVideos(Pageable pageable) {
-        Page<Video> videoPage = videoRepository.findAll(pageable);
-        return videoPage.map(this::convertToDto);
+    public Map<String, Object> getAllVideos(int page, int size) {
+        Page<Video> videos = videoRepository.findAll(PageRequest.of(page, size));
+        Map<String, Object> response = new HashMap<>();
+        response.put("videos", videos.map(this::convertToDto).getContent());
+        response.put("totalPages", videos.getTotalPages());
+        response.put("totalElements", videos.getTotalElements());
+        return response;
     }
 
     @Override
@@ -51,6 +54,28 @@ public class VideoServiceImplementation implements VideoService {
         Video video = videoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Video Not Found with id: " + id));
         return videoMapper.convertToDTO(video);
+    }
+
+    @Override
+    public Map<String, Object> getVideosByDogBreed(Long id, int page, int size) {
+        DogBreed dogBreed = dogBreedService.getBreedEntityById(id);
+        Page<Video> videos = videoRepository.findVideosByDogBreed(dogBreed, PageRequest.of(page, size));
+        Map<String, Object> response = new HashMap<>();
+        response.put("videos", videos.map(this::convertToDto).getContent());
+        response.put("totalPages", videos.getTotalPages());
+        response.put("totalElements", videos.getTotalElements());
+        return response;
+    }
+
+    @Override
+    public Map<String, Object> getVideosByCatBreed(Long id, int page, int size) {
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(id));
+        Page<Video> videos = videoRepository.findVideosByCatBreed(catBreed, PageRequest.of(page, size));
+        Map<String, Object> response = new HashMap<>();
+        response.put("videos", videos.map(this::convertToDto).getContent());
+        response.put("totalPages", videos.getTotalPages());
+        response.put("totalElements", videos.getTotalElements());
+        return response;
     }
 
     @Override
@@ -73,7 +98,6 @@ public class VideoServiceImplementation implements VideoService {
     public VideoDto addDogBreedToVideo(Long id, Long idDogBreed) {
         Video video = videoRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Video not found"));
-
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
         video.setDogBreed(dogBreed);
         video.setCatBreed(null);
@@ -83,7 +107,6 @@ public class VideoServiceImplementation implements VideoService {
     public VideoDto addCatBreedToVideo(Long id, Long idCatBreed) {
         Video video = videoRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Video not found"));
-
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         video.setCatBreed(catBreed);
         video.setDogBreed(null);
@@ -94,4 +117,30 @@ public class VideoServiceImplementation implements VideoService {
     public void deleteVideo(Long id) {
         videoRepository.deleteById(id);
     }
+
+    /*@Override
+    public VideoDto removeDogBreedFromVideo(Long id, Long idDogBreed) {
+        Video video = videoRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Video not found"));
+        DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+        if (video.getDogBreed() != null && video.getDogBreed().equals(dogBreed)) {
+            video.setDogBreed(null);
+        } else {
+            throw new CustomException("Dog breed not found in video");
+        }
+        return videoMapper.convertToDTO(videoRepository.save(video));
+    }
+
+    @Override
+    public VideoDto removeCatBreedFromVideo(Long id, Long idCatBreed) {
+        Video video = videoRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Video not found"));
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
+        if (video.getCatBreed() != null && video.getCatBreed().equals(catBreed)) {
+            video.setCatBreed(null);
+        } else {
+            throw new CustomException("Cat breed not found in video");
+        }
+        return videoMapper.convertToDTO(videoRepository.save(video));
+    }*/
 }

@@ -7,6 +7,7 @@ import org.una.programmingIII.WikiPets.Dto.VideoDto;
 import org.una.programmingIII.WikiPets.Model.Video;
 
 import java.util.List;
+import java.util.Map;
 
 public interface VideoService {
 
@@ -22,6 +23,14 @@ public interface VideoService {
 
     void deleteVideo(Long id);
 
-    Page<VideoDto> getAllVideos(Pageable pageable);
+    Map<String, Object> getAllVideos(int page, int size);
+
+    Map<String, Object> getVideosByDogBreed(Long id, int page, int size);
+
+    Map<String, Object> getVideosByCatBreed(Long id, int page, int size);
+
+    /*VideoDto removeDogBreedFromVideo(Long id, Long idDogBreed);
+
+    VideoDto removeCatBreedFromVideo(Long id, Long idCatBreed);*/
 
 }

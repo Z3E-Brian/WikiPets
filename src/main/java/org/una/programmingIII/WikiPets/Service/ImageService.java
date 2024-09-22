@@ -1,9 +1,8 @@
 package org.una.programmingIII.WikiPets.Service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.una.programmingIII.WikiPets.Dto.GroomingGuideDto;
 import org.una.programmingIII.WikiPets.Dto.ImageDto;
+
+import java.util.Map;
 
 public interface ImageService {
 
@@ -19,6 +18,14 @@ public interface ImageService {
 
     void deleteImage(Long id);
 
-    Page<ImageDto> getAllImages(Pageable pageable);
+    Map<String, Object> getAllImages(int page, int size);
 
+    Map<String, Object> getImagesByDogBreed(Long id, int page, int size);
+
+    Map<String, Object> getImagesByCatBreed(Long id, int page, int size);
+
+
+    /*ImageDto removeDogBreedFromImage(Long id, Long idDogBreed);
+
+    ImageDto removeCatBreedFromImage(Long id, Long idCatBreed);*/
 }
