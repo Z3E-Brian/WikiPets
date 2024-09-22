@@ -16,11 +16,11 @@ public interface CareTipService {
 
     CareTipDto createCareTip(CareTipDto careTipDto);
 
-    void deleteCareTip(Long id);
+    Boolean deleteCareTip(Long id);
 
     CareTipDto updateCareTip(CareTipDto careTipDto);
 
-    Map<String, Object> getAllCareTips( int page,  int size);
+    Map<String, Object> getAllCareTips(int page, int size);
 
     CareTipDto addDogBreedInCareTip(Long id, Long idDogBreed);
 

@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
@@ -56,7 +57,7 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
     @Override
     public FeedingScheduleDto getFeedingScheduleById(Long id) {
         if (id == null || id <= 0) {
-            throw new InvalidInputException("Invalid user ID");
+            throw new InvalidInputException("Invalid Feeding Schedule ID");
         }
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id)
                 .orElseThrow(() -> new NotFoundElementException("Feeding Schedule Not Found with id: " + id));
@@ -66,7 +67,7 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
     @Override
     public FeedingScheduleDto createFeedingSchedule(@NotNull FeedingScheduleDto feedingScheduleDto) {
         if (feedingScheduleDto.getFeedingTimes().isBlank() || feedingScheduleDto.getAgeGroup().isBlank()) {
-            throw new InvalidInputException("Can't accept spaces in blank");
+            throw new BlankInputException("Can't accept spaces in blank");
         }
         feedingScheduleDto.setLastUpdate(LocalDate.now());
         feedingScheduleDto.setCreateDate(LocalDate.now());
@@ -85,6 +86,15 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
 
     @Override
     public FeedingScheduleDto updateFeedingSchedule(@NotNull FeedingScheduleDto feedingScheduleDto) {
+
+        if (feedingScheduleDto.getId() <= 0) {
+            throw new InvalidInputException("Invalid user ID");
+        }
+
+        if (feedingScheduleDto.getFeedingTimes().isBlank() || feedingScheduleDto.getAgeGroup().isBlank()) {
+            throw new BlankInputException("Can't accept spaces in blank");
+        }
+
         FeedingSchedule oldFeedingSchedule = feedingScheduleRepository.findById(feedingScheduleDto.getId())
                 .orElseThrow(() -> new NotFoundElementException("Feeding Schedule with id " + feedingScheduleDto.getId() + " not found"));
 

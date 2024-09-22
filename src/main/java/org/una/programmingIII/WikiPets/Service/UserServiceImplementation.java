@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
@@ -136,7 +137,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto createUser(UserInput input) {
         if (input.getEmail().isBlank() || input.getPassword().isBlank() || input.getName().isBlank()) {
-            throw new InvalidInputException("Can't accept space(s) in blank");
+            throw new BlankInputException("Can't accept space(s) in blank");
         }
         User user = userMapperInput.convertToEntity(input);
         String encodedPassword = passwordEncoder.encode(user.getPassword());
@@ -158,6 +159,9 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public UserDto updateUser(@NotNull UserDto userDto) {
+        if (userDto.getEmail().isBlank() || userDto.getName().isBlank()) {
+            throw new BlankInputException("Can't accept space(s) in blank");
+        }
         User oldUser = userRepository.findById(userDto.getId())
                 .orElseThrow(() -> new NotFoundElementException("User with the ID: " + userDto.getId() + " not found"));
 

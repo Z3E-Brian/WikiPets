@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
@@ -45,7 +46,11 @@ public class ReviewServiceImplementation implements ReviewService {
     @Override
     public ReviewDto createReview(@NotNull ReviewDto reviewDto) {
         if (reviewDto.getComment().isBlank()) {
-            throw new InvalidInputException("Comment cannot be empty");
+            throw new BlankInputException("Comment cannot be empty");
+        }
+
+        if (reviewDto.getRating() > 10 || reviewDto.getRating() < 1) {
+            throw new BlankInputException("Review only accept 1-10 rating");
         }
         reviewDto.setLastUpdate(LocalDate.now());
         reviewDto.setCreateDate(LocalDate.now());
@@ -68,6 +73,13 @@ public class ReviewServiceImplementation implements ReviewService {
 
     @Override
     public ReviewDto updateReview(@NotNull ReviewDto reviewDto) {
+        if (reviewDto.getComment().isBlank()) {
+            throw new BlankInputException("Comment cannot be empty");
+        }
+
+        if (reviewDto.getRating() > 10 || reviewDto.getRating() < 1) {
+            throw new BlankInputException("Review only accept 1-10 rating");
+        }
         Review oldReview = reviewRepository.findById(reviewDto.getId())
                 .orElseThrow(() -> new NotFoundElementException("Review with id " + reviewDto.getId() + " not found"));
 

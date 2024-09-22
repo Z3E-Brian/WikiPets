@@ -8,6 +8,9 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CareTip;
@@ -41,7 +44,7 @@ public class CareTipServiceImplementation implements CareTipService {
     }
 
     @Override
-    public Map<String, Object> getAllCareTips( int page, int size) {
+    public Map<String, Object> getAllCareTips(int page, int size) {
         Page<CareTip> careTips = careTipRepository.findAll(PageRequest.of(page, size));
         careTips.forEach(careTip -> {
             careTip.setRelevantCatBreeds(careTip.getRelevantCatBreeds().stream().limit(10).collect(Collectors.toList()));
@@ -60,13 +63,16 @@ public class CareTipServiceImplementation implements CareTipService {
     public CareTipDto getCareTipByTitle(String title) {
         CareTip careTip = careTipRepository.findByTitle(title);
         if (careTip == null) {
-            throw new RuntimeException("Care Tip not found");
+            throw new NotFoundElementException("Care Tip not found");
         }
         return careTipMapper.convertToDTO(careTip);
     }
 
     @Override
     public CareTipDto createCareTip(CareTipDto careTipDto) {
+        if (careTipDto.getContent().isEmpty() || careTipDto.getTitle().isBlank()) {
+            throw new BlankInputException("Cant' leave spaces in blank");
+        }
         careTipDto.setCreatedDate(LocalDate.now());
         careTipDto.setModifiedDate(LocalDate.now());
         CareTip careTip = careTipMapper.convertToEntity(careTipDto);
@@ -74,8 +80,9 @@ public class CareTipServiceImplementation implements CareTipService {
     }
 
     @Override
-    public void deleteCareTip(Long id) {
-        CareTip careTip = careTipRepository.findById(id).orElseThrow(() -> new RuntimeException("Care Tip not found"));
+    public Boolean deleteCareTip(Long id) {
+        CareTip careTip = careTipRepository.findById(id)
+                .orElseThrow(() -> new NotFoundElementException("Care Tip not found"));
         careTip.getRelevantCatBreeds().stream().map(catBreed -> catBreed.getCareTips().iterator()).forEach(iterator -> {
             while (iterator.hasNext()) {
                 if (iterator.next().equals(careTip)) {
@@ -91,10 +98,18 @@ public class CareTipServiceImplementation implements CareTipService {
             }
         });
         careTipRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public CareTipDto updateCareTip(CareTipDto careTipDto) {
+        if (careTipDto.getId() <= 0) {
+            throw new InvalidInputException("Invalid careTip ID");
+        }
+
+        if (careTipDto.getTitle().isBlank() || careTipDto.getContent().isBlank()) {
+            throw new BlankInputException("Cant' leave spaces in blank");
+        }
         CareTip oldCareTip = careTipRepository.findById(careTipDto.getId()).orElseThrow(() -> new RuntimeException("Care Tip not found"));
         CareTip newCareTip = careTipMapper.convertToEntity(careTipDto);
         newCareTip.setCreatedDate(oldCareTip.getCreatedDate());
@@ -115,7 +130,7 @@ public class CareTipServiceImplementation implements CareTipService {
     @Override
     public CareTipDto addDogBreedInCareTip(Long id, Long idDogBreed) {
         CareTip careTip = careTipRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Care Tip not found"));
+                .orElseThrow(() -> new NotFoundElementException("Care Tip not found"));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
         if (!careTip.getRelevantDogBreeds().contains(dogBreed)) {
             careTip.getRelevantDogBreeds().add(dogBreed);
@@ -126,7 +141,7 @@ public class CareTipServiceImplementation implements CareTipService {
     @Override
     public CareTipDto addCatBreedInCareTip(Long id, Long idCatBreed) {
         CareTip careTip = careTipRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Care Tip not found"));
+                .orElseThrow(() -> new NotFoundElementException("Care Tip not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         if (!careTip.getRelevantCatBreeds().contains(catBreed)) {
             careTip.getRelevantCatBreeds().add(catBreed);

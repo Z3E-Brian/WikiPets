@@ -17,9 +17,9 @@ public interface DogBreedService {
 
     DogBreedDto createDogBreed(DogBreedDto dogBreedDto);
 
-    void deleteDogBreed(Long id);
+    Boolean deleteDogBreed(Long id);
 
     DogBreedDto updateDogBreed(DogBreedDto dogBreedDto);
 
-    Map<String, Object> getAllDogBreeds( int page, int size);
+    Map<String, Object> getAllDogBreeds(int page, int size);
 }

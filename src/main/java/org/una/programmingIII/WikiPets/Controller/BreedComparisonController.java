@@ -21,30 +21,18 @@ public class BreedComparisonController {
 
     @QueryMapping
     public BreedComparisonResult getCatsBreedComparation(@Argument Long idCatBreed1, @Argument Long idCatBreed2) {
-        try {
-            return breedComparisonService.compareCats(idCatBreed1, idCatBreed2);
-        } catch (Exception e) {
-            throw new CustomException("Could not compare cats" + e.getMessage());
-        }
+        return breedComparisonService.compareCats(idCatBreed1, idCatBreed2);
     }
 
     @QueryMapping
     public BreedComparisonResult getDogsBreedComparation(@Argument Long idDogBreed1, @Argument Long idDogBreed2) {
-        try {
-            return breedComparisonService.compareDogs(idDogBreed1, idDogBreed2);
-        } catch (Exception e) {
-            throw new CustomException("Could not compare dogs" + e.getMessage());
-        }
+        return breedComparisonService.compareDogs(idDogBreed1, idDogBreed2);
     }
 
     @QueryMapping
     public BreedComparisonResult getMixedBreedsComparation(@Argument Long idDogBreed, @Argument Long idCatBreed) {
-        try {
-            return breedComparisonService.compareMixedBreeds(idDogBreed, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not compared mixed breeds" + e.getMessage());
-        }
-    }
 
+        return breedComparisonService.compareMixedBreeds(idDogBreed, idCatBreed);
+    }
 
 }

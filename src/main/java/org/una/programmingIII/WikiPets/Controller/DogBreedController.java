@@ -11,6 +11,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.DogBreedInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -35,43 +36,29 @@ public class DogBreedController {
         try {
             return dogBreedService.getAllDogBreeds(page, size);
         } catch (Exception e) {
-            throw new CustomException("Could not find dog breeds" + e.getMessage());
+            throw new NotFoundElementException("Could not find dog breeds" + e.getMessage());
         }
     }
+
     @QueryMapping
     public DogBreedDto getDogBreedById(@Argument Long id) {
-        try {
-            return dogBreedService.getBreedById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find dog breed " +id+". "+ e.getMessage());
-        }
+        return dogBreedService.getBreedById(id);
     }
 
     @MutationMapping
     public DogBreedDto updateDogBreed(@Argument DogBreedInput input) {
-        try {
-            DogBreedDto dogBreedDto = dogBreedMapper.convertToDTO(input);
-            return dogBreedService.updateDogBreed(dogBreedDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update dog breed "+ e.getMessage());
-        }
+        DogBreedDto dogBreedDto = dogBreedMapper.convertToDTO(input);
+        return dogBreedService.updateDogBreed(dogBreedDto);
     }
+
     @MutationMapping
     public DogBreedDto createDogBreed(@Argument DogBreedInput input) {
-        try {
-            DogBreedDto dogBreedDto = dogBreedMapper.convertToDTO(input);
-            return dogBreedService.createDogBreed(dogBreedDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create dog breed" + e.getMessage());
-        }
+        DogBreedDto dogBreedDto = dogBreedMapper.convertToDTO(input);
+        return dogBreedService.createDogBreed(dogBreedDto);
     }
+
     @MutationMapping
-    public boolean deleteDogBreed(@Argument Long id) {
-        try {
-            dogBreedService.deleteDogBreed(id);
-            return true;
-        } catch (Exception e) {
-            throw new CustomException("Could not delete dog breed "+id+". " + e.getMessage());
-        }
+    public Boolean deleteDogBreed(@Argument Long id) {
+        return dogBreedService.deleteDogBreed(id);
     }
 }

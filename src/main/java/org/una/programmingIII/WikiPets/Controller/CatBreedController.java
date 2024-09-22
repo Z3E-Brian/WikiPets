@@ -11,6 +11,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.CatBreedInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -36,43 +37,29 @@ public class CatBreedController {
         try {
             return catBreedService.getAllCatBreeds(page, size);
         } catch (Exception e) {
-            throw new CustomException("Could not find cat breeds" + e.getMessage());
+            throw new NotFoundElementException("Could not find cat breeds" + e.getMessage());
         }
     }
+
     @QueryMapping
     public CatBreedDto getCatBreedById(@Argument Long id) {
-        try {
-            return catBreedService.getBreedById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find cat breed " +id+". "+ e.getMessage());
-        }
+        return catBreedService.getBreedById(id);
     }
 
     @MutationMapping
     public CatBreedDto updateCatBreed(@Argument CatBreedInput input) {
-        try {
-            CatBreedDto catBreedDto = catBreedMapper.convertToDTO(input);
-            return catBreedService.updateCatBreed(catBreedDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update cat breed "+ e.getMessage());
-        }
+        CatBreedDto catBreedDto = catBreedMapper.convertToDTO(input);
+        return catBreedService.updateCatBreed(catBreedDto);
     }
+
     @MutationMapping
     public CatBreedDto createCatBreed(@Argument CatBreedInput input) {
-        try {
-            CatBreedDto catBreedDto = catBreedMapper.convertToDTO(input);
-            return catBreedService.createCatBreed(catBreedDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create cat breed" + e.getMessage());
-        }
+        CatBreedDto catBreedDto = catBreedMapper.convertToDTO(input);
+        return catBreedService.createCatBreed(catBreedDto);
     }
+
     @MutationMapping
-    public boolean deleteCatBreed(@Argument Long id) {
-        try {
-            catBreedService.deleteCatBreed(id);
-            return true;
-        } catch (Exception e) {
-            throw new CustomException("Could not delete cat breed "+id+". " + e.getMessage());
-        }
+    public Boolean deleteCatBreed(@Argument Long id) {
+        return catBreedService.deleteCatBreed(id);
     }
 }

@@ -13,7 +13,7 @@ public interface CatBreedService {
 
     CatBreedDto createCatBreed(CatBreedDto catBreedDto);
 
-    void deleteCatBreed(Long id);
+    Boolean deleteCatBreed(Long id);
 
     CatBreedDto updateCatBreed(CatBreedDto catBreedDto);
 

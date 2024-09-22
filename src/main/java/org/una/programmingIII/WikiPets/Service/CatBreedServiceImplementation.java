@@ -6,6 +6,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
@@ -29,38 +32,45 @@ public class CatBreedServiceImplementation implements CatBreedService {
         this.catBreedMapper = mapperFactory.createMapper(CatBreed.class, CatBreedDto.class);
     }
 
-@Override
-public Map<String, Object> getAllCatBreeds(int page, int size) {
-    Page<CatBreed> catBreedPage = catBreedRepository.findAll(PageRequest.of(page, size));
-    catBreedPage.forEach(catBreed -> {
-        catBreed.setAdoptionCenters(limitList(catBreed.getAdoptionCenters()));
-        catBreed.setHealthIssues(limitList(catBreed.getHealthIssues()));
-        catBreed.setNutritionGuides(limitList(catBreed.getNutritionGuides()));
-        catBreed.setUsers(limitList(catBreed.getUsers()));
-        catBreed.setTrainingGuides(limitList(catBreed.getTrainingGuides()));
-        catBreed.setBehaviorGuides(limitList(catBreed.getBehaviorGuides()));
-        catBreed.setCareTips(limitList(catBreed.getCareTips()));
-        catBreed.setGroomingGuides(limitList(catBreed.getGroomingGuides()));
-    });
-    return Map.of(
-        "catBreeds", catBreedPage.map(this::convertToDto).getContent(),
-        "totalPages", catBreedPage.getTotalPages(),
-        "totalElements", catBreedPage.getTotalElements()
-    );
-}
+    @Override
+    public Map<String, Object> getAllCatBreeds(int page, int size) {
+        Page<CatBreed> catBreedPage = catBreedRepository.findAll(PageRequest.of(page, size));
+        catBreedPage.forEach(catBreed -> {
+            catBreed.setAdoptionCenters(limitList(catBreed.getAdoptionCenters()));
+            catBreed.setHealthIssues(limitList(catBreed.getHealthIssues()));
+            catBreed.setNutritionGuides(limitList(catBreed.getNutritionGuides()));
+            catBreed.setUsers(limitList(catBreed.getUsers()));
+            catBreed.setTrainingGuides(limitList(catBreed.getTrainingGuides()));
+            catBreed.setBehaviorGuides(limitList(catBreed.getBehaviorGuides()));
+            catBreed.setCareTips(limitList(catBreed.getCareTips()));
+            catBreed.setGroomingGuides(limitList(catBreed.getGroomingGuides()));
+        });
+        return Map.of(
+                "catBreeds", catBreedPage.map(this::convertToDto).getContent(),
+                "totalPages", catBreedPage.getTotalPages(),
+                "totalElements", catBreedPage.getTotalElements()
+        );
+    }
 
-private <T> List<T> limitList(List<T> list) {
-    return list.stream().limit(10).collect(Collectors.toList());
-}
-
+    private <T> List<T> limitList(List<T> list) {
+        return list.stream().limit(10).collect(Collectors.toList());
+    }
 
     @Override
     public CatBreedDto getBreedById(Long id) {
-        return catBreedRepository.findById(id).map(this::convertToDto).orElseThrow(() -> new RuntimeException("Cat Breed Not Found with id: " + id));
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid CatBreed ID");
+        }
+        return catBreedRepository.findById(id).map(this::convertToDto).orElseThrow(()
+                -> new NotFoundElementException("Cat Breed Not Found with id: " + id));
     }
 
     @Override
     public CatBreedDto createCatBreed(CatBreedDto catBreedDto) {
+
+        if (catBreedDto.getName().isBlank()) {
+            throw new BlankInputException("Cannot create CatBreed with empty name");
+        }
         catBreedDto.setCreatedDate(LocalDate.now());
         catBreedDto.setModifiedDate(LocalDate.now());
         CatBreed catBreed = convertToEntity(catBreedDto);
@@ -69,8 +79,8 @@ private <T> List<T> limitList(List<T> list) {
     }
 
     @Override
-    public void deleteCatBreed(Long id) {
-        CatBreed catBreed = catBreedRepository.findById(id).orElseThrow(() -> new RuntimeException("Dog Breed Not Found with id: " + id));
+    public Boolean deleteCatBreed(Long id) {
+        CatBreed catBreed = catBreedRepository.findById(id).orElseThrow(() -> new NotFoundElementException("Dog Breed Not Found with id: " + id));
         catBreed.getAdoptionCenters().stream().map(adoptionCenter -> adoptionCenter.getAvailableCatBreeds().iterator()).forEach(iterator -> {
             while (iterator.hasNext()) {
                 if (iterator.next().equals(catBreed)) {
@@ -79,11 +89,21 @@ private <T> List<T> limitList(List<T> list) {
             }
         });
         catBreedRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public CatBreedDto updateCatBreed(CatBreedDto catBreedDto) {
-        CatBreed oldCatBreed = catBreedRepository.findById(catBreedDto.getId()).orElseThrow(() -> new RuntimeException("Dog Breed Not Found with id: " + catBreedDto.getId()));
+
+        if (catBreedDto.getId() <= 0) {
+            throw new InvalidInputException("Invalid catBreed ID");
+        }
+
+        if (catBreedDto.getName().isBlank()) {
+            throw new BlankInputException("Cannot create CatBreed with empty name");
+        }
+
+        CatBreed oldCatBreed = catBreedRepository.findById(catBreedDto.getId()).orElseThrow(() -> new NotFoundElementException("Dog Breed Not Found with id: " + catBreedDto.getId()));
         CatBreed newCatBreed = convertToEntity(catBreedDto);
         newCatBreed.setCreatedDate(oldCatBreed.getCreatedDate());
         newCatBreed.setModifiedDate(LocalDate.now());

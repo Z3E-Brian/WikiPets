@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -51,6 +53,9 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
 
     @Override
     public TrainingGuideDto getTrainingGuideById(Long id) {
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid Training Guide Schedule ID");
+        }
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
                 .orElseThrow(() -> new NotFoundElementException("Training Guide Not Found with id: " + id));
         return trainingGuideMapper.convertToDTO(trainingGuide);
@@ -58,7 +63,9 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
 
     @Override
     public TrainingGuideDto createTrainingGuide(@NotNull TrainingGuideDto trainingGuideDto) {
-
+        if (trainingGuideDto.getContent().isBlank() || trainingGuideDto.getTitle().isBlank()) {
+            throw new BlankInputException("Can't leave spaces in blank");
+        }
         trainingGuideDto.setLastUpdate(LocalDate.now());
         trainingGuideDto.setCreateDate(LocalDate.now());
         TrainingGuide trainingGuide = trainingGuideMapper.convertToEntity(trainingGuideDto);
@@ -72,14 +79,19 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
             throw new NotFoundElementException("Training Guide not found with id: " + id);
         }
         trainingGuideRepository.deleteById(id);
-        return  true;
+        return true;
     }
 
     @Override
     public TrainingGuideDto updateTrainingGuide(@NotNull TrainingGuideDto trainingGuideDto) {
         if (trainingGuideDto == null || trainingGuideDto.getId() == null) {
-            throw new IllegalArgumentException("Invalid Training Guide data.");
+            throw new InvalidInputException("Invalid Training Guide data.");
         }
+
+        if (trainingGuideDto.getContent().isBlank() || trainingGuideDto.getTitle().isBlank()) {
+            throw new BlankInputException("Can't leave spaces in blank");
+        }
+
         TrainingGuide oldTrainingGuide = trainingGuideRepository.findById(trainingGuideDto.getId())
                 .orElseThrow(() -> new NotFoundElementException("Training Guide with ID: " + trainingGuideDto.getId() + " not found"));
 

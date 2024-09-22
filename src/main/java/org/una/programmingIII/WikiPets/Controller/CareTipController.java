@@ -11,6 +11,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.CareTipDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.CareTipInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -35,18 +36,14 @@ public class CareTipController {
     public Map<String, Object> getAllCareTips(@Argument int page, @Argument int size) {
         try {
             return careTipService.getAllCareTips(page, size);
-        } catch (Exception e) {
-            throw new CustomException("Could not retrieve care tips" + e.getMessage());
+        } catch (NotFoundElementException e) {
+            throw new NotFoundElementException("Could not retrieve care tips" + e.getMessage());
         }
     }
 
     @QueryMapping
     public CareTipDto getCareTipById(@Argument Long id) {
-        try {
-            return careTipService.getCareTipById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find care tip" + e.getMessage());
-        }
+        return careTipService.getCareTipById(id);
     }
 
     @QueryMapping
@@ -79,12 +76,8 @@ public class CareTipController {
     }
 
     @MutationMapping
-    public void deleteCareTip(@Argument Long id) {
-        try {
-            careTipService.deleteCareTip(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete care tip" + e.getMessage());
-        }
+    public Boolean deleteCareTip(@Argument Long id) {
+        return careTipService.deleteCareTip(id);
     }
 
     @MutationMapping

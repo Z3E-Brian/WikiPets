@@ -13,7 +13,6 @@ import java.util.List;
 public class BreedComparisonServiceImplementation implements BreedComparisonService {
 
     private final DogBreedService dogBreedService;
-
     private final CatBreedService catBreedService;
 
 

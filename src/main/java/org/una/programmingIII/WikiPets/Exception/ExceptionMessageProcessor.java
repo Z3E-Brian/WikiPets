@@ -14,6 +14,8 @@ public class ExceptionMessageProcessor {
             return buildError("Not Found: " + ex.getMessage(), ErrorType.DataFetchingException, env);
         } else if (ex instanceof InvalidInputException) {
             return buildError("Invalid input: " + ex.getMessage(), ErrorType.ValidationError, env);
+        } else if (ex instanceof BlankInputException) {
+            return buildError("Blank input: " + ex.getMessage(), ErrorType.InvalidSyntax, env);
         } else {
             return buildError("Internal Server Error: " + ex.getMessage(), ErrorType.DataFetchingException, env);
         }
@@ -21,7 +23,7 @@ public class ExceptionMessageProcessor {
 
     private GraphQLError buildError(String message, ErrorType errorType, DataFetchingEnvironment env) {
         return GraphqlErrorBuilder.newError(env)
-                .message(message )
+                .message(message)
                 .errorType(errorType)
                 .build();
     }
