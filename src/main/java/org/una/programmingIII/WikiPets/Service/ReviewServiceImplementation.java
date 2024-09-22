@@ -7,6 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
@@ -27,7 +29,7 @@ public class ReviewServiceImplementation implements ReviewService {
     }
 
     @Override
-    public Map<String, Object> getReviews( int page, int size) {
+    public Map<String, Object> getReviews(int page, int size) {
         Page<Review> reviews = reviewRepository.findAll(PageRequest.of(page, size));
         return Map.of("reviews", reviews.map(this::convertToDto).getContent(), "totalPages", reviews.getTotalPages(), "totalElements", reviews.getTotalElements());
     }
@@ -36,34 +38,42 @@ public class ReviewServiceImplementation implements ReviewService {
     @Override
     public ReviewDto getReviewById(Long id) {
         Review review = reviewRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Review Not Found with id: " + id));
+                .orElseThrow(() -> new NotFoundElementException("Review Not Found with id: " + id));
         return reviewMapper.convertToDTO(review);
     }
 
     @Override
     public ReviewDto createReview(@NotNull ReviewDto reviewDto) {
+        if (reviewDto.getComment().isBlank()) {
+            throw new InvalidInputException("Comment cannot be empty");
+        }
         reviewDto.setLastUpdate(LocalDate.now());
         reviewDto.setCreateDate(LocalDate.now());
         Review review = reviewMapper.convertToEntity(reviewDto);
         return reviewMapper.convertToDTO(reviewRepository.save(review));
     }
 
-    public void deleteReview(Long id) {
-        reviewRepository.deleteById(id);
-    }
+    @Override
+    public boolean deleteReview(Long id) {
+        if (id == null || id <= 0) {
+            return false;
+        }
 
+        if (reviewRepository.existsById(id)) {
+            reviewRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public ReviewDto updateReview(@NotNull ReviewDto reviewDto) {
         Review oldReview = reviewRepository.findById(reviewDto.getId())
-                .orElseThrow(() -> new CustomException("Review with id " + reviewDto.getId() + " not found"));
+                .orElseThrow(() -> new NotFoundElementException("Review with id " + reviewDto.getId() + " not found"));
 
         Review newReview = reviewMapper.convertToEntity(reviewDto);
         newReview.setCreateDate(oldReview.getCreateDate());
         newReview.setLastUpdate(LocalDate.now());
-
-        //revisar las otras entidades relacionas
-
         return reviewMapper.convertToDTO(reviewRepository.save(newReview));
     }
 

@@ -1,17 +1,20 @@
 package org.una.programmingIII.WikiPets.Exception;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.time.LocalDateTime;
+import graphql.schema.DataFetchingEnvironment;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
+import org.springframework.stereotype.Component;
+import graphql.GraphQLError;
 
-@ControllerAdvice
-public class GlobalExceptionHandler {
-    @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<CustomErrorResponse> handleAuthenticationException(AuthenticationException ex) {
-        CustomErrorResponse response = new CustomErrorResponse("Authentication Error", ex.getMessage(), HttpStatus.UNAUTHORIZED.value(), LocalDateTime.now());
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+@Component
+public class GlobalExceptionHandler extends DataFetcherExceptionResolverAdapter {
+
+    @Autowired
+    private ExceptionMessageProcessor exceptionMessageProcessor;
+
+    @Override
+    protected GraphQLError resolveToSingleError(@NotNull Throwable ex, DataFetchingEnvironment env) {
+        return exceptionMessageProcessor.processErrorMessage(ex, env);
     }
 }

@@ -11,13 +11,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-    List<UserDto> getAllUsers();
 
     UserDto getUserById(Long id);
 
     UserDto createUser(UserInput input);
 
-    void deleteUser(Long id);
+    Boolean deleteUser(Long id);
 
     UserDto updateUser(UserDto userDto);
 

@@ -16,13 +16,9 @@ public interface TrainingGuideService {
 
     TrainingGuideDto getTrainingGuideById(Long id);
 
-    TrainingGuideDto getTrainingGuideByTitle(String title);
-
     TrainingGuideDto createTrainingGuide(TrainingGuideDto trainingGuideDto);
 
     TrainingGuideDto updateTrainingGuide(TrainingGuideDto trainingGuideDto);
-
-    List<TrainingGuideDto> searchByTitle(String title);
 
     TrainingGuideDto addDogBreedInTrainingGuide(Long id, Long idDogBreed);
 
@@ -32,5 +28,5 @@ public interface TrainingGuideService {
 
     TrainingGuideDto deleteCatBreedInTrainingGuide(Long id, Long idCatBreed);
 
-    void deleteTrainingGuide(Long id);
+    Boolean deleteTrainingGuide(Long id);
 }

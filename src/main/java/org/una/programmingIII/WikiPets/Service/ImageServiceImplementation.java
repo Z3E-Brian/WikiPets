@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
 import org.una.programmingIII.WikiPets.Dto.ImageDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
@@ -37,7 +38,9 @@ public class ImageServiceImplementation implements ImageService {
         this.dogBreedService = dogBreedService;
         this.catBreedService = catBreedService;
     }
-    private ImageDto convertToDto(Image image) {return imageMapper.convertToDTO(image);
+
+    private ImageDto convertToDto(Image image) {
+        return imageMapper.convertToDTO(image);
     }
 
     @Override
@@ -49,7 +52,7 @@ public class ImageServiceImplementation implements ImageService {
     @Override
     public ImageDto getImageByid(Long id) {
         Image image = imageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Video Not Found with id: " + id));
+                .orElseThrow(() -> new NotFoundElementException("Video Not Found with id: " + id));
         return imageMapper.convertToDTO(image);
     }
 
@@ -79,6 +82,7 @@ public class ImageServiceImplementation implements ImageService {
         image.setCatBreed(null);
         return imageMapper.convertToDTO(imageRepository.save(image));
     }
+
     @Override
     public ImageDto addCatBreedToImage(Long id, Long idCatBreed) {
         Image image = imageRepository.findById(id)

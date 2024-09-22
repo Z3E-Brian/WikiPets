@@ -40,77 +40,45 @@ public class TrainingGuideController {
 
     @QueryMapping
     public TrainingGuideDto getTrainingGuideById(@Argument Long id) {
-        try {
-            return trainingGuideService.getTrainingGuideById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find adoption center" + e.getMessage());
-        }
+        return trainingGuideService.getTrainingGuideById(id);
     }
 
     @MutationMapping
     public TrainingGuideDto createTrainingGuide(@Argument TrainingGuideInput input) {
-        try {
-            TrainingGuideDto trainingGuideDto = convertToDto(input);
-            return trainingGuideService.createTrainingGuide(trainingGuideDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create a trainingGuide" + e.getMessage());
-        }
+        TrainingGuideDto trainingGuideDto = convertToDto(input);
+        return trainingGuideService.createTrainingGuide(trainingGuideDto);
     }
 
     @MutationMapping
     public TrainingGuideDto updateTrainingGuide(@Argument TrainingGuideInput input) {
-        try {
-            TrainingGuideDto trainingGuideDto = convertToDto(input);
-            return trainingGuideService.updateTrainingGuide(trainingGuideDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update the trainingGuide" + e.getMessage());
-        }
+        TrainingGuideDto trainingGuideDto = convertToDto(input);
+        return trainingGuideService.updateTrainingGuide(trainingGuideDto);
     }
 
     @MutationMapping
-    public void deleteTrainingGuide(@Argument Long id) {
-        try {
-            trainingGuideService.deleteTrainingGuide(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete the trainingGuide");
-        }
+    public Boolean deleteTrainingGuide(@Argument Long id) {
+        return trainingGuideService.deleteTrainingGuide(id);
     }
 
     @MutationMapping
     public TrainingGuideDto addDogBreedInTrainingGuide(@Argument Long id, @Argument Long idDogBreed) {
-        try {
-            return trainingGuideService.addDogBreedInTrainingGuide(id, idDogBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not update Training Guide with id: " + id + ". " + e.getMessage(), e);
-        }
+        return trainingGuideService.addDogBreedInTrainingGuide(id, idDogBreed);
     }
 
     @MutationMapping
     public TrainingGuideDto deleteDogBreedInTrainingGuide(@Argument Long id, @Argument Long idDogBreed) {
-        try {
-            return trainingGuideService.deleteDogBreedInTrainingGuide(id, idDogBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not update Training Guide with id: " + id + ". " + e.getMessage(), e);
-        }
+        return trainingGuideService.deleteDogBreedInTrainingGuide(id, idDogBreed);
     }
 
 
     @MutationMapping
     public TrainingGuideDto addCatBreedInTrainingGuide(@Argument Long id, @Argument Long idCatBreed) {
-        try {
-            return trainingGuideService.addCatBreedInTrainingGuide(id, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not add cat in Training Guide with id: " + id + ". " + e.getMessage(), e);
-        }
+        return trainingGuideService.addCatBreedInTrainingGuide(id, idCatBreed);
     }
 
     @MutationMapping
     public TrainingGuideDto deleteCatBreedInTrainingGuide(@Argument Long id, @Argument Long idCatBreed) {
-        try {
-            return trainingGuideService.deleteCatBreedInTrainingGuide(id, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete cat in Training Guide with id: " + id + ". " + e.getMessage(), e);
-        }
+        return trainingGuideService.deleteCatBreedInTrainingGuide(id, idCatBreed);
     }
 
 

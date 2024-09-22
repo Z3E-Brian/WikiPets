@@ -17,6 +17,7 @@ import org.una.programmingIII.WikiPets.Service.JWTService;
 public class SecurityConfig {
 
     private final JWTService jwtService;
+
     @Autowired
     public SecurityConfig(JWTService jwtService) {
         this.jwtService = jwtService;
@@ -27,17 +28,27 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf(csrf -> csrf.disable())
+//                .authorizeHttpRequests(auth -> {
+//                    auth.requestMatchers("/graphql").permitAll();
+//                    auth.requestMatchers("/graphiql").permitAll();
+//                    auth.anyRequest().authenticated();
+//                })
+//              .addFilterBefore(new GraphQLRequestFilter(), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(new JWTAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable())  // Deshabilitar CSRF si no es necesario
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/graphql").permitAll();
-                    auth.requestMatchers("/graphiql").permitAll();
-                    auth.anyRequest().authenticated();
-                })
-              .addFilterBefore(new GraphQLRequestFilter(), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
-
+                    auth.anyRequest().permitAll();  // Permitir todas las solicitudes sin autenticación
+                });
         return http.build();
     }
+
 }

@@ -8,14 +8,4 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-
-    Review findByUserEmail(String email);
-
-    List<Review> findListByUserEmail(String email);
-
-    List<Review> findByRating(Integer rating);
-
-    List<Review> findByCatBreedId(Long catBreedId);
-
-    List<Review> findByDogBreedId(Long dogBreedId);
 }

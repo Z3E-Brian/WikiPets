@@ -54,31 +54,18 @@ public class ReviewController {
 
     @MutationMapping
     public ReviewDto createReview(@Argument ReviewInput input) {
-        try {
-            ReviewDto reviewDto = convertToDto(input);
-            return reviewService.createReview(reviewDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create a review" + e.getMessage());
-        }
+        return reviewService.createReview(convertToDto(input));
     }
 
     @MutationMapping
     public ReviewDto updateReview(@Argument ReviewInput input) {
-        try {
             ReviewDto reviewDto = convertToDto(input);
             return reviewService.updateReview(reviewDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update the review" + e.getMessage());
-        }
     }
 
     @MutationMapping
-    public void deleteReview(@Argument Long id) {
-        try {
-            reviewService.deleteReview(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete the review");
-        }
+    public boolean deleteReview(@Argument Long id) {
+        return reviewService.deleteReview(id);
     }
 
     private ReviewDto convertToDto(ReviewInput reviewInput) {

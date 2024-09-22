@@ -29,87 +29,51 @@ public class FeedingScheduleController {
 
     @QueryMapping
     public Map<String, Object> getFeedingSchedules(@Argument int page, @Argument int size) {
-        try {
             return feedingScheduleService.getFeedingSchedules(page, size);
-        } catch (Exception e) {
-            throw new CustomException("Could not retrieve care tips" + e.getMessage());
-        }
     }
 
     @QueryMapping
     public FeedingScheduleDto getFeedingScheduleById(@Argument Long id) {
-        try {
-            return feedingScheduleService.getFeedingScheduleById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find a feeding schedule" + e.getMessage());
-        }
+        return feedingScheduleService.getFeedingScheduleById(id);
     }
 
     @MutationMapping
     public FeedingScheduleDto createFeedingSchedule(@Argument FeedingScheduleInput input) {
-        try {
-            FeedingScheduleDto feedingScheduleDto = convertToDto(input);
-            return feedingScheduleService.createFeedingSchedule(feedingScheduleDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create a feeding schedule" + e.getMessage());
-        }
+        FeedingScheduleDto feedingScheduleDto = convertToDto(input);
+        return feedingScheduleService.createFeedingSchedule(feedingScheduleDto);
     }
 
     @MutationMapping
     public FeedingScheduleDto updateFeedingSchedule(@Argument FeedingScheduleInput input) {
-        try {
             FeedingScheduleDto feedingScheduleDto = convertToDto(input);
             return feedingScheduleService.updateFeedingSchedule(feedingScheduleDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update feeding schedule" + e.getMessage());
-        }
     }
 
     @MutationMapping
-    public void deleteFeedingSchedule(@Argument Long id) {
-        try {
-            feedingScheduleService.deleteFeedingSchedule(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete feeding schedule" + e.getMessage());
-        }
+    public Boolean deleteFeedingSchedule(@Argument Long id) {
+        return feedingScheduleService.deleteFeedingSchedule(id);
     }
 
 
     @MutationMapping
     public FeedingScheduleDto addDogBreedInFeedingSchedule(@Argument Long id, @Argument Long idDogBreed) {
-        try {
             return feedingScheduleService.addDogBreedInFeedingSchedule(id, idDogBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not add the dog in the Feeding Scheulewith id: " + id + ". " + e.getMessage(), e);
-        }
     }
 
     @MutationMapping
     public FeedingScheduleDto deleteDogBreedInFeedingSchedule(@Argument Long id, @Argument Long idDogBreed) {
-        try {
             return feedingScheduleService.deleteDogBreedInFeedingSchedule(id, idDogBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete the dog in the Feeding Scheule with id: " + id + ". " + e.getMessage(), e);
-        }
     }
 
 
     @MutationMapping
     public FeedingScheduleDto addCatBreedInFeedingSchedule(@Argument Long id, @Argument Long idCatBreed) {
-        try {
             return feedingScheduleService.addCatBreedInInFeedingSchedule(id, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not add the cat in the Feeding Schedule with  id: " + id + ". " + e.getMessage(), e);
-        }
     }
 
     @MutationMapping
     public FeedingScheduleDto deleteCatBreedInFeedingSchedule(@Argument Long id, @Argument Long idCatBreed) {
-        try {
             return feedingScheduleService.deleteCatBreedInFeedingSchedule(id, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete the cat in the Feeding Schedule with id: " + id + ". " + e.getMessage(), e);
-        }
     }
 
 

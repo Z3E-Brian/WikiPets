@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Mapper.MapperConfig;
@@ -53,13 +55,19 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
 
     @Override
     public FeedingScheduleDto getFeedingScheduleById(Long id) {
-        FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id).orElseThrow();
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid user ID");
+        }
+        FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id)
+                .orElseThrow(() -> new NotFoundElementException("Feeding Schedule Not Found with id: " + id));
         return feedingScheduleMapper.convertToDTO(feedingSchedule);
     }
 
-
     @Override
     public FeedingScheduleDto createFeedingSchedule(@NotNull FeedingScheduleDto feedingScheduleDto) {
+        if (feedingScheduleDto.getFeedingTimes().isBlank() || feedingScheduleDto.getAgeGroup().isBlank()) {
+            throw new InvalidInputException("Can't accept spaces in blank");
+        }
         feedingScheduleDto.setLastUpdate(LocalDate.now());
         feedingScheduleDto.setCreateDate(LocalDate.now());
         FeedingSchedule feedingSchedule = feedingScheduleMapper.convertToEntity(feedingScheduleDto);
@@ -68,16 +76,17 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
     }
 
     @Override
-    public void deleteFeedingSchedule(Long id) {
+    public Boolean deleteFeedingSchedule(Long id) {
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("FeedingSchedule not found with id: " + id));
+                .orElseThrow(() -> new NotFoundElementException("FeedingSchedule not found with id: " + id));
         feedingScheduleRepository.delete(feedingSchedule);
+        return true;
     }
 
     @Override
     public FeedingScheduleDto updateFeedingSchedule(@NotNull FeedingScheduleDto feedingScheduleDto) {
         FeedingSchedule oldFeedingSchedule = feedingScheduleRepository.findById(feedingScheduleDto.getId())
-                .orElseThrow(() -> new CustomException("Feeding Schedule with id " + feedingScheduleDto.getId() + " not found"));
+                .orElseThrow(() -> new NotFoundElementException("Feeding Schedule with id " + feedingScheduleDto.getId() + " not found"));
 
         FeedingSchedule newFeedingSchedule = feedingScheduleMapper.convertToEntity(feedingScheduleDto);
         newFeedingSchedule.setCreateDate(oldFeedingSchedule.getCreateDate());
@@ -87,11 +96,10 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
         return feedingScheduleMapper.convertToDTO(feedingScheduleRepository.save(newFeedingSchedule));
     }
 
-
     @Override
     public FeedingScheduleDto addDogBreedInFeedingSchedule(Long feedingScheduleId, Long idDogBreed) {
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(feedingScheduleId)
-                .orElseThrow(() -> new CustomException("FeedingSchedule not found with id: " + feedingScheduleId));
+                .orElseThrow(() -> new NotFoundElementException("FeedingSchedule not found with id: " + feedingScheduleId));
 
         DogBreed dogBreed = dogBreedService.getBreedEntityById(idDogBreed);
 
@@ -106,7 +114,7 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
     @Override
     public FeedingScheduleDto deleteDogBreedInFeedingSchedule(Long feedingScheduleId, Long idDogBreed) {
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(feedingScheduleId)
-                .orElseThrow(() -> new CustomException("FeedingSchedule not found with id: " + feedingScheduleId));
+                .orElseThrow(() -> new NotFoundElementException("FeedingSchedule not found with id: " + feedingScheduleId));
 
         DogBreed dogBreed = dogBreedService.getBreedEntityById(idDogBreed);
 
@@ -121,18 +129,17 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
     @Override
     public FeedingScheduleDto deleteCatBreedInFeedingSchedule(Long id, Long idCatBreed) {
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Feeding Schedule not found"));
+                .orElseThrow(() -> new NotFoundElementException("Feeding Schedule not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         feedingSchedule.getCatBreeds().remove(catBreed);
         feedingSchedule.setLastUpdate(LocalDate.now());
         return feedingScheduleMapper.convertToDTO(feedingScheduleRepository.save(feedingSchedule));
     }
 
-
     @Override
     public FeedingScheduleDto addCatBreedInInFeedingSchedule(Long id, Long idCatBreed) {
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Feeding Schedule not found"));
+                .orElseThrow(() -> new NotFoundElementException("Feeding Schedule not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         if (!feedingSchedule.getCatBreeds().contains(catBreed)) {
             feedingSchedule.getCatBreeds().add(catBreed);

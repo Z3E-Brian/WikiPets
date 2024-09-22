@@ -8,6 +8,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -64,7 +66,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto addDogBreedInUser(Long id, Long idDogBreed) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundElementException("User not found"));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
         if (!user.getFavoriteDogBreeds().contains(dogBreed)) {
             user.getFavoriteDogBreeds().add(dogBreed);
@@ -72,11 +74,10 @@ public class UserServiceImplementation implements UserService {
         return userMapper.convertToDTO(userRepository.save(user));
     }
 
-
     @Override
     public UserDto addCatBreedInUser(Long id, Long idCatBreed) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundElementException("User not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         if (!user.getFavoriteCatBreeds().contains(catBreed)) {
             user.getFavoriteCatBreeds().add(catBreed);
@@ -87,7 +88,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto deleteDogBreedInUser(Long id, Long idDogBreed) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundElementException("User not found"));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
         user.getFavoriteDogBreeds().remove(dogBreed);
         return userMapper.convertToDTO(userRepository.save(user));
@@ -96,7 +97,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto deleteCatBreedInUser(Long id, Long idCatBreed) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundElementException("User not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         user.getFavoriteCatBreeds().remove(catBreed);
         return userMapper.convertToDTO(userRepository.save(user));
@@ -105,7 +106,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto addReviewInUser(Long id, Long idReview) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundElementException("User not found"));
         Review review = reviewMapper.convertToEntity(reviewService.getReviewById(idReview));
         if (!user.getReviews().contains(review)) {
             user.getReviews().add(review);
@@ -116,28 +117,27 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto deleteReviewInUser(Long id, Long idReview) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new NotFoundElementException("User not found"));
         Review review = reviewMapper.convertToEntity(reviewService.getReviewById(idReview));
         user.getReviews().remove(review);
         return userMapper.convertToDTO(userRepository.save(user));
 
     }
 
-
-    @Override
-    public List<UserDto> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        return users.stream().map(this.userMapper::convertToDTO).collect(Collectors.toList());
-    }
-
     @Override
     public UserDto getUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User Not Found with id: " + id));
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid user ID");
+        }
+        User user = userRepository.findById(id).orElseThrow(() -> new NotFoundElementException("User Not Found with id: " + id));
         return userMapper.convertToDTO(user);
     }
 
     @Override
     public UserDto createUser(UserInput input) {
+        if (input.getEmail().isBlank() || input.getPassword().isBlank() || input.getName().isBlank()) {
+            throw new InvalidInputException("Can't accept space(s) in blank");
+        }
         User user = userMapperInput.convertToEntity(input);
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -148,14 +148,18 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public Boolean deleteUser(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundElementException("User not found with id: " + id);
+        }
         userRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public UserDto updateUser(@NotNull UserDto userDto) {
         User oldUser = userRepository.findById(userDto.getId())
-                .orElseThrow(() -> new CustomException("User with the ID: " + userDto.getId() + " not found"));
+                .orElseThrow(() -> new NotFoundElementException("User with the ID: " + userDto.getId() + " not found"));
 
         User newUser = userMapper.convertToEntity(userDto);
         newUser.setCreateDate(oldUser.getCreateDate());
@@ -189,7 +193,6 @@ public class UserServiceImplementation implements UserService {
     private UserDto convertToDto(User user) {
         return userMapper.convertToDTO(user);
     }
-
 
     @Override
     public void updateUser(User user) {

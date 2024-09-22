@@ -7,12 +7,10 @@ input UserInput {
 
 type Query {
     getUsers(page: Int!, size: Int!): UserResponse
-    getAllUsers: [UserDto]
     getUserById(id: ID!): UserDto
 }
 
 type Mutation {
-    #createUser(input:UserInput): UserDto
     deleteUser(id: ID!): Boolean
     updateUser (input:UserInput): UserDto
     addDogBreedInUser(id:ID!,idDogBreed:ID!):UserDto

@@ -18,7 +18,7 @@ public interface FeedingScheduleService {
 
     FeedingScheduleDto createFeedingSchedule(FeedingScheduleDto feedingScheduleDto);
 
-    void deleteFeedingSchedule(Long id);
+    Boolean deleteFeedingSchedule(Long id);
 
     FeedingScheduleDto updateFeedingSchedule(FeedingScheduleDto feedingScheduleDto);
 

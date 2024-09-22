@@ -1,26 +1,19 @@
-
-
 package org.una.programmingIII.WikiPets.Service;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.*;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
-import org.una.programmingIII.WikiPets.Input.UserInput;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.TrainingGuideRepository;
-import org.una.programmingIII.WikiPets.Repository.UserRepository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -59,18 +52,13 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     @Override
     public TrainingGuideDto getTrainingGuideById(Long id) {
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Training Guide Not Found with id: " + id));
-        return trainingGuideMapper.convertToDTO(trainingGuide);
-    }
-
-    @Override
-    public TrainingGuideDto getTrainingGuideByTitle(String title) {
-        TrainingGuide trainingGuide = trainingGuideRepository.findByTitle(title);
+                .orElseThrow(() -> new NotFoundElementException("Training Guide Not Found with id: " + id));
         return trainingGuideMapper.convertToDTO(trainingGuide);
     }
 
     @Override
     public TrainingGuideDto createTrainingGuide(@NotNull TrainingGuideDto trainingGuideDto) {
+
         trainingGuideDto.setLastUpdate(LocalDate.now());
         trainingGuideDto.setCreateDate(LocalDate.now());
         TrainingGuide trainingGuide = trainingGuideMapper.convertToEntity(trainingGuideDto);
@@ -79,14 +67,21 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     }
 
     @Override
-    public void deleteTrainingGuide(Long id) {
+    public Boolean deleteTrainingGuide(Long id) {
+        if (!trainingGuideRepository.existsById(id)) {
+            throw new NotFoundElementException("Training Guide not found with id: " + id);
+        }
         trainingGuideRepository.deleteById(id);
+        return  true;
     }
 
     @Override
     public TrainingGuideDto updateTrainingGuide(@NotNull TrainingGuideDto trainingGuideDto) {
+        if (trainingGuideDto == null || trainingGuideDto.getId() == null) {
+            throw new IllegalArgumentException("Invalid Training Guide data.");
+        }
         TrainingGuide oldTrainingGuide = trainingGuideRepository.findById(trainingGuideDto.getId())
-                .orElseThrow(() -> new CustomException("Training Guide  with the ID: " + trainingGuideDto.getId() + " not found"));
+                .orElseThrow(() -> new NotFoundElementException("Training Guide with ID: " + trainingGuideDto.getId() + " not found"));
 
         TrainingGuide newTrainingGuide = trainingGuideMapper.convertToEntity(trainingGuideDto);
         newTrainingGuide.setCreateDate(oldTrainingGuide.getCreateDate());
@@ -96,16 +91,11 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
         return trainingGuideMapper.convertToDTO(trainingGuideRepository.save(newTrainingGuide));
     }
 
-    @Override
-    public List<TrainingGuideDto> searchByTitle(String title) {
-        List<TrainingGuide> trainingGuides = trainingGuideRepository.findByTitleContainingIgnoreCase(title);
-        return trainingGuides.stream().map(this.trainingGuideMapper::convertToDTO).collect(Collectors.toList());
-    }
 
     @Override
     public TrainingGuideDto addDogBreedInTrainingGuide(Long id, Long idDogBreed) {
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("TraningGuide not found"));
+                .orElseThrow(() -> new NotFoundElementException("TraningGuide not found"));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
         if (!trainingGuide.getDogBreeds().contains(dogBreed)) {
             trainingGuide.getDogBreeds().add(dogBreed);
@@ -116,7 +106,7 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     @Override
     public TrainingGuideDto addCatBreedInTrainingGuide(Long id, Long idCatBreed) {
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("TraningGuide not found"));
+                .orElseThrow(() -> new NotFoundElementException("TraningGuide not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         if (!trainingGuide.getCatBreeds().contains(catBreed)) {
             trainingGuide.getCatBreeds().add(catBreed);
@@ -128,7 +118,7 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     @Override
     public TrainingGuideDto deleteDogBreedInTrainingGuide(Long id, Long idDogBreed) {
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
-                .orElseThrow(() -> new CustomException("TrainingGuide not found"));
+                .orElseThrow(() -> new NotFoundElementException("TrainingGuide not found"));
         DogBreed dogBreed = dogBreedService.getBreedEntityById(idDogBreed);
         trainingGuide.getDogBreeds().remove(dogBreed);
         trainingGuide.setLastUpdate(LocalDate.now());
@@ -138,7 +128,7 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
     @Override
     public TrainingGuideDto deleteCatBreedInTrainingGuide(Long id, Long idCatBreed) {
         TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("TrainingGuide not found"));
+                .orElseThrow(() -> new NotFoundElementException("TrainingGuide not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         trainingGuide.getCatBreeds().remove(catBreed);
         trainingGuide.setLastUpdate(LocalDate.now());
