@@ -9,7 +9,8 @@ input BehaviorGuideInput {
 extend type Query {
     getBehaviorGuideById(id: ID!): BehaviorGuideDto
     getBehaviorSuitableDogBreeds(id: ID!): [DogBreedDto]
-    getBehaviorGuides(page: Int!, size: Int!): BehaviorGuideResponse
+    getBehaviorSuitableCatBreeds(id: ID!): [CatBreedDto]
+    getAllBehaviorGuides(page: Int!, size: Int!): BehaviorGuideResponse
 }
 
 extend type Mutation {
@@ -17,7 +18,10 @@ extend type Mutation {
     updateBehaviorGuide(input: BehaviorGuideInput): BehaviorGuideDto
     addSuitableDogBreedToBehaviorGuide(id: ID!, idDogBreed: ID!): BehaviorGuideDto
     addSuitableCatBreedToBehaviorGuide(id: ID!, idCatBreed: ID!): BehaviorGuideDto
+    removeSuitableCatBreedFromBehaviorGuide(id:ID!,catBreedId: ID!): BehaviorGuideDto
+    removeSuitableDogBreedFromBehaviorGuide(id:ID!,dogBreedId: ID!): BehaviorGuideDto
     deleteBehaviorGuide(id: ID!): Boolean
+
 }
 
 type BehaviorGuideDto {

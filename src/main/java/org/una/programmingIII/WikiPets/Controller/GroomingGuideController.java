@@ -2,14 +2,11 @@ package org.una.programmingIII.WikiPets.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
+import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Dto.GroomingGuideDto;
 import org.una.programmingIII.WikiPets.Input.GroomingGuideInput;
@@ -18,33 +15,29 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.GroomingGuideService;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
 public class GroomingGuideController {
+
     private final GroomingGuideService groomingGuideService;
     private final GenericMapper<GroomingGuideInput, GroomingGuideDto> groomingGuideMapper;
 
     @Autowired
-    GroomingGuideController(GroomingGuideService groomingGuideService, GenericMapperFactory mapperFactory) {
+    public GroomingGuideController(GroomingGuideService groomingGuideService, GenericMapperFactory mapperFactory) {
         this.groomingGuideService = groomingGuideService;
         this.groomingGuideMapper = mapperFactory.createMapper(GroomingGuideInput.class, GroomingGuideDto.class);
     }
 
     @QueryMapping
-    public Map<String, Object> getGroomingGuides(@Argument int page, @Argument int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<GroomingGuideDto> groomingGuidePage = groomingGuideService.getAllGroomingGuides(pageable);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("groomingGuides", groomingGuidePage.getContent());
-        response.put("totalPages", groomingGuidePage.getTotalPages());
-        response.put("totalElements", groomingGuidePage.getTotalElements());
-
-        return response;
+    public Map<String, Object> getAllGroomingGuides(@Argument int page, @Argument int size) {
+        try {
+            return groomingGuideService.getAllGroomingGuides(page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not find grooming guides" + e.getMessage());
+        }
     }
 
     @QueryMapping
@@ -57,11 +50,20 @@ public class GroomingGuideController {
     }
 
     @QueryMapping
-    public List<DogBreedDto> getSuitableDogBreeds(@Argument Long id) {
+    public List<DogBreedDto> getGroomingSuitableDogBreeds(@Argument Long id) {
         try {
             return groomingGuideService.getSuitableDogBreeds(id);
         } catch (Exception e) {
-            throw new CustomException("Could not find adoption center" + e.getMessage());
+            throw new CustomException("Could not find grooming guide" + e.getMessage());
+        }
+    }
+
+    @QueryMapping
+    public List<CatBreedDto> getGroomingSuitableCatBreeds(@Argument Long id) {
+        try {
+            return groomingGuideService.getSuitableCatBreeds(id);
+        } catch (Exception e) {
+            throw new CustomException("Could not find grooming guide" + e.getMessage());
         }
     }
 
@@ -70,15 +72,16 @@ public class GroomingGuideController {
         try {
             return groomingGuideService.addSuitableDogBreedToGroomingGuide(id, idDogBreed);
         } catch (Exception e) {
-            throw new CustomException("Could not update adoption center with id: " + id + ". " + e.getMessage(), e);
+            throw new CustomException("Could not update grooming guide with id: " + id + ". " + e.getMessage(), e);
         }
     }
+
     @MutationMapping
     public GroomingGuideDto addSuitableCatBreedToGroomingGuide(@Argument Long id, @Argument Long idCatBreed) {
         try {
             return groomingGuideService.addSuitableCatBreedToGroomingGuide(id, idCatBreed);
         } catch (Exception e) {
-            throw new CustomException("Could not update adoption center with id: " + id + ". " + e.getMessage(), e);
+            throw new CustomException("Could not update grooming guide with id: " + id + ". " + e.getMessage(), e);
         }
     }
 
@@ -108,6 +111,24 @@ public class GroomingGuideController {
             groomingGuideService.deleteGroomingGuide(id);
         } catch (Exception e) {
             throw new CustomException("Could not delete grooming guide with id " + id + ". " + e.getMessage(), e);
+        }
+    }
+
+    @MutationMapping
+    public GroomingGuideDto removeSuitableCatBreedFromGroomingGuide(@Argument Long id, @Argument Long catBreedId) {
+        try {
+            return groomingGuideService.removeSuitableCatBreedFromGroomingGuide(id, catBreedId);
+        } catch (Exception e) {
+            throw new CustomException("Could not remove cat breed from grooming guide with id " + id + ". " + e.getMessage(), e);
+        }
+    }
+
+    @MutationMapping
+    public GroomingGuideDto removeSuitableDogBreedFromGroomingGuide(@Argument Long id, @Argument Long dogBreedId) {
+        try {
+            return groomingGuideService.removeSuitableDogBreedFromGroomingGuide(id, dogBreedId);
+        } catch (Exception e) {
+            throw new CustomException("Could not remove dog breed from grooming guide with id " + id + ". " + e.getMessage(), e);
         }
     }
 

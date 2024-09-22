@@ -7,8 +7,9 @@ input GroomingGuideInput {
 
 extend type Query {
     getGroomingGuideById(id: ID!): GroomingGuideDto
-    getSuitableDogBreeds(id: ID!): [DogBreedDto]
-    getGroomingGuides(page: Int!, size: Int!): GroomingGuideResponse
+    getGroomingSuitableDogBreeds(id: ID!): [DogBreedDto]
+    getGroomingSuitableCatBreeds(id: ID!): [DogBreedDto]
+    getAllGroomingGuides(page: Int!, size: Int!): GroomingGuideResponse
 }
 
 extend type Mutation {
@@ -16,7 +17,8 @@ extend type Mutation {
     updateGroomingGuide(input: GroomingGuideInput): GroomingGuideDto
     addSuitableDogBreedToGroomingGuide(id: ID!, idDogBreed: ID!): GroomingGuideDto
     addSuitableCatBreedToGroomingGuide(id: ID!, idCatBreed: ID!): GroomingGuideDto
-
+    removeSuitableCatBreedFromGroomingGuide(id:ID!,catBreedId: ID!): GroomingGuideDto
+    removeSuitableDogBreedFromGroomingGuide(id:ID!,dogBreedId: ID!): GroomingGuideDto
     deleteGroomingGuide(id: ID!): Boolean
 }
 
