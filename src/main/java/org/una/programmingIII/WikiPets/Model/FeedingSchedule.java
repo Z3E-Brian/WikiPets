@@ -38,4 +38,6 @@ public class FeedingSchedule {
     private LocalDate lastUpdate;
 
 
+    public void removeIf(Object o) {
+    }
 }

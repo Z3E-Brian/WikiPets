@@ -27,7 +27,7 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+//
 //    @Bean
 //    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //        http.csrf(csrf -> csrf.disable())
@@ -43,7 +43,7 @@ public class SecurityConfig {
 //    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())  // Deshabilitar CSRF si no es necesario
                 .authorizeHttpRequests(auth -> {
                     auth.anyRequest().permitAll();  // Permitir todas las solicitudes sin autenticación

@@ -22,5 +22,5 @@ public interface NutritionGuideService {
 
     NutritionGuideDto updateNutritionGuide(NutritionGuideDto nutritionGuideDto);
 
-    void deleteNutritionGuide(Long id);
+    Boolean deleteNutritionGuide(Long id);
 }

@@ -78,6 +78,15 @@ public class TrainingGuideServiceImplementation implements TrainingGuideService 
         if (!trainingGuideRepository.existsById(id)) {
             throw new NotFoundElementException("Training Guide not found with id: " + id);
         }
+        TrainingGuide trainingGuide = trainingGuideRepository.findById(id)
+                .orElseThrow(() -> new NotFoundElementException("Training Guide not found"));
+        trainingGuide.getCatBreeds().forEach(catBreed -> {
+            catBreed.getTrainingGuides().removeIf(guide -> guide.getId().equals(id));
+        });
+        trainingGuide.getDogBreeds().forEach(dogBreed -> {
+            dogBreed.getTrainingGuides().removeIf(guide -> guide.getId().equals(id));
+        });
+
         trainingGuideRepository.deleteById(id);
         return true;
     }

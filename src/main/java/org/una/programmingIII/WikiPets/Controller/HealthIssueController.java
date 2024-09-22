@@ -10,7 +10,10 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.HealthIssueDto;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.HealthIssueInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -36,37 +39,28 @@ public class HealthIssueController {
         try {
             return healthIssueService.getAllHealthIssues(page, size);
         } catch (Exception e) {
-            throw new CustomException("Could not retrieve health issues" + e.getMessage());
+            throw new NotFoundElementException("Could not retrieve health issues" + e.getMessage());
         }
     }
 
     @QueryMapping
     public HealthIssueDto getHealthIssueById(@Argument Long id) {
-        try {
-            return healthIssueService.getHealthIssueById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find health issue" + e.getMessage());
+        if (id <= 0) {
+            throw new InvalidInputException("Invalid Health Issue id. ");
         }
+        return healthIssueService.getHealthIssueById(id);
     }
 
     @MutationMapping
     public HealthIssueDto createHealthIssue(@Argument HealthIssueInput input) {
-        try {
-            HealthIssueDto healthIssueDto = healthIssueMapper.convertToDTO(input);
-            return healthIssueService.createHealthIssue(healthIssueDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create health issue" + e.getMessage());
-        }
+        HealthIssueDto healthIssueDto = healthIssueMapper.convertToDTO(input);
+        return healthIssueService.createHealthIssue(healthIssueDto);
     }
 
     @MutationMapping
     public HealthIssueDto updateHealthIssue(@Argument HealthIssueInput input) {
-        try {
-            HealthIssueDto healthIssueDto = healthIssueMapper.convertToDTO(input);
-            return healthIssueService.updateHealthIssue(healthIssueDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update health issue" + e.getMessage());
-        }
+        HealthIssueDto healthIssueDto = healthIssueMapper.convertToDTO(input);
+        return healthIssueService.updateHealthIssue(healthIssueDto);
     }
 
     @MutationMapping

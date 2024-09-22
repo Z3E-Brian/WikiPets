@@ -7,6 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
@@ -56,6 +59,9 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
 
     @Override
     public HealthIssueDto getHealthIssueById(Long id) {
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid HealthIssue Schedule ID");
+        }
         HealthIssue healthIssue = healthIssueRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Health Issue Not Found with id: " + id));
         return convertToDto(healthIssue);
@@ -63,6 +69,9 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
 
     @Override
     public HealthIssueDto createHealthIssue(HealthIssueDto healthIssueDto) {
+        if (healthIssueDto.getName().isBlank() || healthIssueDto.getDescription().isBlank()) {
+            throw new BlankInputException("Can't have important spaces in blank");
+        }
         healthIssueDto.setCreatedDate(LocalDate.now());
         healthIssueDto.setModifiedDate(LocalDate.now());
         HealthIssue healthIssue = convertToEntity(healthIssueDto);
@@ -71,8 +80,11 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
 
     @Override
     public void deleteHealthIssue(Long id) {
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid HealthIssue Schedule ID");
+        }
         HealthIssue healthIssue = healthIssueRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Health Issue Not Found with id: " + id));
+                .orElseThrow(() -> new NotFoundElementException("Health Issue Not Found with id: " + id));
         healthIssue.getSuitableCatBreeds().forEach(catBreed ->
                 catBreed.getHealthIssues().removeIf(issue -> issue.getId().equals(id))
         );
@@ -84,6 +96,13 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
 
     @Override
     public HealthIssueDto updateHealthIssue(HealthIssueDto healthIssueDto) {
+        if (healthIssueDto.getId() == null || healthIssueDto.getId() <= 0) {
+            throw new InvalidInputException("Invalid HealthIssue Schedule ID");
+        }
+
+        if (healthIssueDto.getName().isBlank() || healthIssueDto.getDescription().isBlank()) {
+            throw new BlankInputException("Can't have important spaces in blank");
+        }
         HealthIssue oldHealthIssue = healthIssueRepository.findById(healthIssueDto.getId())
                 .orElseThrow(() -> new RuntimeException("Health Issue Not Found with id: " + healthIssueDto.getId()));
         HealthIssue newHealthIssue = convertToEntity(healthIssueDto);
@@ -94,14 +113,13 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
                 new ArrayList<>(oldHealthIssue.getSuitableCatBreeds()) : new ArrayList<>());
         newHealthIssue.setSuitableDogBreeds(oldHealthIssue.getSuitableDogBreeds() != null ?
                 new ArrayList<>(oldHealthIssue.getSuitableDogBreeds()) : new ArrayList<>());
-
         return convertToDto(healthIssueRepository.save(newHealthIssue));
     }
 
     @Override
     public HealthIssueDto addSuitableDogBreed(Long IdIssue, Long dogBreedId) {
         HealthIssue healthIssue = healthIssueRepository.findById(IdIssue)
-                .orElseThrow(() -> new RuntimeException("Health Issue Not Found with id: " + IdIssue));
+                .orElseThrow(() -> new NotFoundElementException("Health Issue Not Found with id: " + IdIssue));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(dogBreedId));
         if (!healthIssue.getSuitableDogBreeds().contains(dogBreed)) {
             healthIssue.getSuitableDogBreeds().add(dogBreed);
@@ -112,7 +130,7 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
     @Override
     public HealthIssueDto addSuitableCatBreed(Long IdIssue, Long catBreedId) {
         HealthIssue healthIssue = healthIssueRepository.findById(IdIssue)
-                .orElseThrow(() -> new RuntimeException("Health Issue Not Found with id: " + IdIssue));
+                .orElseThrow(() -> new NotFoundElementException("Health Issue Not Found with id: " + IdIssue));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(catBreedId));
         if (!healthIssue.getSuitableCatBreeds().contains(catBreed)) {
             healthIssue.getSuitableCatBreeds().add(catBreed);

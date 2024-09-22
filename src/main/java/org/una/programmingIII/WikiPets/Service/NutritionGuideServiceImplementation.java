@@ -7,6 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
@@ -41,7 +44,7 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
     }
 
     @Override
-    public Map<String, Object> getAllNutritionGuides( int page, int size) {
+    public Map<String, Object> getAllNutritionGuides(int page, int size) {
         Page<NutritionGuide> nutritionGuides = nutritionGuideRepository.findAll(PageRequest.of(page, size));
         nutritionGuides.forEach(nutritionGuide -> {
             nutritionGuide.setRecommendedCatBreeds(nutritionGuide.getRecommendedCatBreeds().stream().limit(10).collect(Collectors.toList()));
@@ -52,8 +55,11 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
 
     @Override
     public NutritionGuideDto getNutritionGuideById(Long id) {
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid Nutrition Guide Schedule ID");
+        }
         NutritionGuide nutritionGuide = nutritionGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Nutrition Guide not found"));
+                .orElseThrow(() -> new NotFoundElementException("Nutrition Guide not found"));
         return nutritionGuideMapper.convertToDTO(nutritionGuide);
     }
 
@@ -61,13 +67,20 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
     public NutritionGuideDto getNutritionGuideByTitle(String title) {
         NutritionGuide nutritionGuide = nutritionGuideRepository.findByTitle(title);
         if (nutritionGuide == null) {
-            throw new RuntimeException("Nutrition Guide not found");
+            throw new NotFoundElementException("Nutrition Guide not found");
         }
         return nutritionGuideMapper.convertToDTO(nutritionGuide);
     }
 
     @Override
     public NutritionGuideDto createNutritionGuide(NutritionGuideDto nutritionGuideDto) {
+        if (nutritionGuideDto == null) {
+            throw new InvalidInputException("Nutrition Guide cannot be null");
+        }
+
+        if (nutritionGuideDto.getContent().isBlank() || nutritionGuideDto.getTitle().isBlank()) {
+            throw new BlankInputException("Nutrition Guide cannot be have spaces in blank");
+        }
         nutritionGuideDto.setCreatedDate(LocalDate.now());
         nutritionGuideDto.setModifiedDate(LocalDate.now());
         NutritionGuide nutritionGuide = nutritionGuideMapper.convertToEntity(nutritionGuideDto);
@@ -75,9 +88,9 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
     }
 
     @Override
-    public void deleteNutritionGuide(Long id) {
+    public Boolean deleteNutritionGuide(Long id) {
         NutritionGuide nutritionGuide = nutritionGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Nutrition Guide not found"));
+                .orElseThrow(() -> new NotFoundElementException("Nutrition Guide not found"));
         nutritionGuide.getRecommendedCatBreeds().forEach(catBreed -> {
             catBreed.getNutritionGuides().removeIf(guide -> guide.getId().equals(id));
         });
@@ -86,12 +99,21 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
         });
 
         nutritionGuideRepository.deleteById(id);
+        return true;
     }
 
     @Override
     public NutritionGuideDto updateNutritionGuide(NutritionGuideDto nutritionGuideDto) {
+
+        if (nutritionGuideDto.getId() <= 0) {
+            throw new InvalidInputException("Invalid careTip ID");
+        }
+
+        if (nutritionGuideDto.getTitle().isBlank() || nutritionGuideDto.getContent().isBlank()) {
+            throw new BlankInputException("Cant' leave spaces in blank");
+        }
         NutritionGuide oldNutritionGuide = nutritionGuideRepository.findById(nutritionGuideDto.getId())
-                .orElseThrow(() -> new RuntimeException("Nutrition Guide not found"));
+                .orElseThrow(() -> new NotFoundElementException("Nutrition Guide not found"));
         NutritionGuide newNutritionGuide = nutritionGuideMapper.convertToEntity(nutritionGuideDto);
         newNutritionGuide.setCreatedDate(oldNutritionGuide.getCreatedDate());
         newNutritionGuide.setModifiedDate(LocalDate.now());
@@ -106,8 +128,11 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
 
     @Override
     public NutritionGuideDto addRecommendedDogBreed(Long IdGuide, Long dogBreedId) {
+        if (IdGuide <= 0) {
+            throw new InvalidInputException("Invalid careTip ID");
+        }
         NutritionGuide nutritionGuide = nutritionGuideRepository.findById(IdGuide)
-                .orElseThrow(() -> new RuntimeException("Nutrition Guide not found"));
+                .orElseThrow(() -> new NotFoundElementException("Nutrition Guide not found"));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(dogBreedId));
         if (!nutritionGuide.getRecommendedDogBreeds().contains(dogBreed)) {
             nutritionGuide.getRecommendedDogBreeds().add(dogBreed);
@@ -117,6 +142,9 @@ public class NutritionGuideServiceImplementation implements NutritionGuideServic
 
     @Override
     public NutritionGuideDto addRecommendedCatBreed(Long IdGuide, Long catBreedId) {
+        if (IdGuide <= 0) {
+            throw new InvalidInputException("Invalid careTip ID");
+        }
         NutritionGuide nutritionGuide = nutritionGuideRepository.findById(IdGuide)
                 .orElseThrow(() -> new RuntimeException("Nutrition Guide not found"));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(catBreedId));

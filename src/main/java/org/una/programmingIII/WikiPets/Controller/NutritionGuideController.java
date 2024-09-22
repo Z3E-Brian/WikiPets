@@ -10,6 +10,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.NutritionGuideDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.NutritionGuideInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -33,76 +34,47 @@ public class NutritionGuideController {
 
     @QueryMapping
     public NutritionGuideDto getNutritionGuideById(@Argument Long id) {
-        try {
-            return nutritionGuideService.getNutritionGuideById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find nutrition guide" + e.getMessage());
-        }
+        return nutritionGuideService.getNutritionGuideById(id);
     }
 
     @QueryMapping
     public NutritionGuideDto getNutritionGuideByTitle(@Argument String title) {
-        try {
-            return nutritionGuideService.getNutritionGuideByTitle(title);
-        } catch (Exception e) {
-            throw new CustomException("Could not find nutrition guide" + e.getMessage());
-        }
+        return nutritionGuideService.getNutritionGuideByTitle(title);
     }
 
     @QueryMapping
     public Map<String, Object> getNutritionGuides(@Argument int page, @Argument int size) {
         try {
             return nutritionGuideService.getAllNutritionGuides(page, size);
-        } catch (Exception e) {
-            throw new CustomException("Could not find nutrition guides" + e.getMessage());
+        } catch (NotFoundElementException e) {
+            throw new NotFoundElementException("Could not find nutrition guides" + e.getMessage());
         }
     }
 
     @MutationMapping
     public NutritionGuideDto createNutritionGuide(@Argument NutritionGuideInput input) {
-        try {
-            NutritionGuideDto nutritionGuideDto = nutritionGuideMapper.convertToDTO(input);
-            return nutritionGuideService.createNutritionGuide(nutritionGuideDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create nutrition guide" + e.getMessage());
-        }
+        NutritionGuideDto nutritionGuideDto = nutritionGuideMapper.convertToDTO(input);
+        return nutritionGuideService.createNutritionGuide(nutritionGuideDto);
     }
 
     @MutationMapping
     public NutritionGuideDto updateNutritionGuide(@Argument NutritionGuideInput input) {
-        try {
-            NutritionGuideDto nutritionGuideDto = nutritionGuideMapper.convertToDTO(input);
-            return nutritionGuideService.updateNutritionGuide(nutritionGuideDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update nutrition guide" + e.getMessage());
-        }
+        NutritionGuideDto nutritionGuideDto = nutritionGuideMapper.convertToDTO(input);
+        return nutritionGuideService.updateNutritionGuide(nutritionGuideDto);
     }
 
     @MutationMapping
-    public boolean deleteNutritionGuide(@Argument Long id) {
-        try {
-            nutritionGuideService.deleteNutritionGuide(id);
-            return true;
-        } catch (Exception e) {
-            throw new CustomException("Could not delete nutrition guide" + e.getMessage());
-        }
+    public Boolean deleteNutritionGuide(@Argument Long id) {
+        return nutritionGuideService.deleteNutritionGuide(id);
     }
 
     @MutationMapping
     public NutritionGuideDto addRecommendedDogBreedNutritionGuide(@Argument Long IdGuide, @Argument Long idDogBreed) {
-        try {
-            return nutritionGuideService.addRecommendedDogBreed(IdGuide, idDogBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not add recommended dog breed" + e.getMessage());
-        }
+        return nutritionGuideService.addRecommendedDogBreed(IdGuide, idDogBreed);
     }
 
     @MutationMapping
     public NutritionGuideDto addRecommendedCatBreedNutritionGuide(@Argument Long IdGuide, @Argument Long idCatBreed) {
-        try {
             return nutritionGuideService.addRecommendedCatBreed(IdGuide, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not add recommended cat breed" + e.getMessage());
-        }
     }
 }
