@@ -66,14 +66,27 @@ public class DogBreedServiceImplementation implements DogBreedService {
 
     @Override
     public Boolean deleteDogBreed(Long id) {
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid DogBreed ID");
+        }
         DogBreed dogBreed = dogBreedRepository.findById(id).orElseThrow(() -> new NotFoundElementException("Dog Breed Not Found with id: " + id));
-        dogBreed.getAdoptionCenters().stream().map(adoptionCenter -> adoptionCenter.getAvailableDogBreeds().iterator()).forEach(iterator -> {
-            while (iterator.hasNext()) {
-                if (iterator.next().equals(dogBreed)) {
-                    iterator.remove();
-                }
-            }
-        });
+        dogBreed.getAdoptionCenters().forEach(adoptionCenter ->
+                adoptionCenter.getAvailableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getHealthIssues().forEach(healthIssue ->
+                healthIssue.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getNutritionGuides().forEach(nutritionGuide ->
+                nutritionGuide.getRecommendedDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getUsers().forEach(user ->
+                user.getFavoriteDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getTrainingGuides().forEach(trainingGuide ->
+                trainingGuide.getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getBehaviorGuides().forEach(behaviorGuide ->
+                behaviorGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getCareTips().forEach(careTip ->
+                careTip.getRelevantDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getGroomingGuides().forEach(groomingGuide ->
+                groomingGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+        dogBreed.getFeedingSchedule().getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
         dogBreedRepository.deleteById(id);
         return true;
     }

@@ -3,8 +3,6 @@ package org.una.programmingIII.WikiPets.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
@@ -21,6 +19,7 @@ import org.una.programmingIII.WikiPets.Repository.CareTipRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -45,12 +44,25 @@ public class CareTipServiceImplementation implements CareTipService {
 
     @Override
     public Map<String, Object> getAllCareTips(int page, int size) {
-        Page<CareTip> careTips = careTipRepository.findAll(PageRequest.of(page, size));
-        careTips.forEach(careTip -> {
-            careTip.setRelevantCatBreeds(careTip.getRelevantCatBreeds().stream().limit(10).collect(Collectors.toList()));
-            careTip.setRelevantDogBreeds(careTip.getRelevantDogBreeds().stream().limit(10).collect(Collectors.toList()));
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<CareTip> careTipPage = careTipRepository.findAll(pageRequest);
+
+        careTipPage.forEach(careTip -> {
+            if (careTip.getRelevantCatBreeds() == null) {
+                careTip.setRelevantCatBreeds(new ArrayList<>());
+            }
+            if (careTip.getRelevantDogBreeds() == null) {
+                careTip.setRelevantDogBreeds(new ArrayList<>());
+            }
         });
-        return Map.of("careTips", careTips.map(this::convertToDto).getContent(), "totalPages", careTips.getTotalPages(), "totalElements", careTips.getTotalElements());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("careTips", careTipPage.getContent());
+        response.put("currentPage", careTipPage.getNumber());
+        response.put("totalItems", careTipPage.getTotalElements());
+        response.put("totalPages", careTipPage.getTotalPages());
+
+        return response;
     }
 
     @Override
@@ -70,34 +82,40 @@ public class CareTipServiceImplementation implements CareTipService {
 
     @Override
     public CareTipDto createCareTip(CareTipDto careTipDto) {
-        if (careTipDto.getContent().isEmpty() || careTipDto.getTitle().isBlank()) {
+        if (careTipDto.getTitle().isBlank() || careTipDto.getContent().isBlank()) {
             throw new BlankInputException("Cant' leave spaces in blank");
         }
-        careTipDto.setCreatedDate(LocalDate.now());
-        careTipDto.setModifiedDate(LocalDate.now());
         CareTip careTip = careTipMapper.convertToEntity(careTipDto);
-        return careTipMapper.convertToDTO(careTipRepository.save(careTip));
+        careTip.setCreatedDate(LocalDate.now());
+        careTip.setModifiedDate(LocalDate.now());
+        careTip = careTipRepository.save(careTip);
+        return careTipMapper.convertToDTO(careTip);
     }
 
     @Override
-    public Boolean deleteCareTip(Long id) {
-        CareTip careTip = careTipRepository.findById(id)
+    public Boolean deleteCareTip(Long careTipId) {
+        CareTip careTip = careTipRepository.findById(careTipId)
                 .orElseThrow(() -> new NotFoundElementException("Care Tip not found"));
-        careTip.getRelevantCatBreeds().stream().map(catBreed -> catBreed.getCareTips().iterator()).forEach(iterator -> {
-            while (iterator.hasNext()) {
-                if (iterator.next().equals(careTip)) {
-                    iterator.remove();
+
+        if (careTip.getRelevantCatBreeds() != null) {
+            careTip.getRelevantCatBreeds().forEach(catBreed -> {
+                if (catBreed.getCareTips() == null) {
+                    catBreed.setCareTips(new ArrayList<>());
                 }
-            }
-        });
-        careTip.getRelevantDogBreeds().stream().map(dogBreed -> dogBreed.getCareTips().iterator()).forEach(iterator -> {
-            while (iterator.hasNext()) {
-                if (iterator.next().equals(careTip)) {
-                    iterator.remove();
+                catBreed.getCareTips().removeIf(ct -> ct.getId().equals(careTipId));
+            });
+        }
+
+        if (careTip.getRelevantDogBreeds() != null) {
+            careTip.getRelevantDogBreeds().forEach(dogBreed -> {
+                if (dogBreed.getCareTips() == null) {
+                    dogBreed.setCareTips(new ArrayList<>());
                 }
-            }
-        });
-        careTipRepository.deleteById(id);
+                dogBreed.getCareTips().removeIf(ct -> ct.getId().equals(careTipId));
+            });
+        }
+
+        careTipRepository.deleteById(careTipId);
         return true;
     }
 
@@ -132,7 +150,10 @@ public class CareTipServiceImplementation implements CareTipService {
         CareTip careTip = careTipRepository.findById(id)
                 .orElseThrow(() -> new NotFoundElementException("Care Tip not found"));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
-        if (!careTip.getRelevantDogBreeds().contains(dogBreed)) {
+ if (careTip.getRelevantDogBreeds() == null) {
+            careTip.setRelevantDogBreeds(new ArrayList<>());
+        }
+ if (!careTip.getRelevantDogBreeds().contains(dogBreed)) {
             careTip.getRelevantDogBreeds().add(dogBreed);
         }
         return careTipMapper.convertToDTO(careTipRepository.save(careTip));
@@ -142,11 +163,19 @@ public class CareTipServiceImplementation implements CareTipService {
     public CareTipDto addCatBreedInCareTip(Long id, Long idCatBreed) {
         CareTip careTip = careTipRepository.findById(id)
                 .orElseThrow(() -> new NotFoundElementException("Care Tip not found"));
-        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
+        CatBreedDto catBreedDto = catBreedService.getBreedById(idCatBreed);
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedDto);
+
+        if (careTip.getRelevantCatBreeds() == null) {
+            careTip.setRelevantCatBreeds(new ArrayList<>());
+        }
+
         if (!careTip.getRelevantCatBreeds().contains(catBreed)) {
             careTip.getRelevantCatBreeds().add(catBreed);
         }
-        return careTipMapper.convertToDTO(careTipRepository.save(careTip));
+
+        careTipRepository.save(careTip);
+        return careTipMapper.convertToDTO(careTip);
     }
 
     private CareTipDto convertToDto(CareTip careTip) {
