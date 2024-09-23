@@ -72,9 +72,9 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
         if (healthIssueDto.getName().isBlank() || healthIssueDto.getDescription().isBlank()) {
             throw new BlankInputException("Can't have important spaces in blank");
         }
-        healthIssueDto.setCreatedDate(LocalDate.now());
-        healthIssueDto.setModifiedDate(LocalDate.now());
         HealthIssue healthIssue = convertToEntity(healthIssueDto);
+        healthIssue.setCreatedDate(LocalDate.now());
+        healthIssue.setModifiedDate(LocalDate.now());
         return convertToDto(healthIssueRepository.save(healthIssue));
     }
 
@@ -85,12 +85,16 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
         }
         HealthIssue healthIssue = healthIssueRepository.findById(id)
                 .orElseThrow(() -> new NotFoundElementException("Health Issue Not Found with id: " + id));
-        healthIssue.getSuitableCatBreeds().forEach(catBreed ->
-                catBreed.getHealthIssues().removeIf(issue -> issue.getId().equals(id))
-        );
-        healthIssue.getSuitableDogBreeds().forEach(dogBreed ->
-                dogBreed.getHealthIssues().removeIf(issue -> issue.getId().equals(id))
-        );
+        if (healthIssue.getSuitableCatBreeds() != null) {
+            healthIssue.getSuitableCatBreeds().forEach(catBreed ->
+                    catBreed.getHealthIssues().removeIf(issue -> issue.getId().equals(id))
+            );
+        }
+        if (healthIssue.getSuitableDogBreeds() != null) {
+            healthIssue.getSuitableDogBreeds().forEach(dogBreed ->
+                    dogBreed.getHealthIssues().removeIf(issue -> issue.getId().equals(id))
+            );
+        }
         healthIssueRepository.deleteById(id);
         return true;
     }
@@ -109,11 +113,14 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
         HealthIssue newHealthIssue = convertToEntity(healthIssueDto);
         newHealthIssue.setCreatedDate(oldHealthIssue.getCreatedDate());
         newHealthIssue.setModifiedDate(LocalDate.now());
-
-        newHealthIssue.setSuitableCatBreeds(oldHealthIssue.getSuitableCatBreeds() != null ?
-                new ArrayList<>(oldHealthIssue.getSuitableCatBreeds()) : new ArrayList<>());
-        newHealthIssue.setSuitableDogBreeds(oldHealthIssue.getSuitableDogBreeds() != null ?
-                new ArrayList<>(oldHealthIssue.getSuitableDogBreeds()) : new ArrayList<>());
+        newHealthIssue.setSuitableCatBreeds(new ArrayList<>());
+        newHealthIssue.setSuitableDogBreeds(new ArrayList<>());
+        oldHealthIssue.getSuitableCatBreeds().stream()
+                .filter(catBreed -> !newHealthIssue.getSuitableCatBreeds().contains(catBreed))
+                .forEach(newHealthIssue.getSuitableCatBreeds()::add);
+        oldHealthIssue.getSuitableDogBreeds().stream()
+                .filter(dogBreed -> !newHealthIssue.getSuitableDogBreeds().contains(dogBreed))
+                .forEach(newHealthIssue.getSuitableDogBreeds()::add);
         return convertToDto(healthIssueRepository.save(newHealthIssue));
     }
 
@@ -122,6 +129,9 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
         HealthIssue healthIssue = healthIssueRepository.findById(IdIssue)
                 .orElseThrow(() -> new NotFoundElementException("Health Issue Not Found with id: " + IdIssue));
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(dogBreedId));
+        if (healthIssue.getSuitableDogBreeds() == null) {
+            healthIssue.setSuitableDogBreeds(new ArrayList<>());
+        }
         if (!healthIssue.getSuitableDogBreeds().contains(dogBreed)) {
             healthIssue.getSuitableDogBreeds().add(dogBreed);
         }
@@ -133,6 +143,9 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
         HealthIssue healthIssue = healthIssueRepository.findById(IdIssue)
                 .orElseThrow(() -> new NotFoundElementException("Health Issue Not Found with id: " + IdIssue));
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(catBreedId));
+        if (healthIssue.getSuitableCatBreeds() == null) {
+            healthIssue.setSuitableCatBreeds(new ArrayList<>());
+        }
         if (!healthIssue.getSuitableCatBreeds().contains(catBreed)) {
             healthIssue.getSuitableCatBreeds().add(catBreed);
         }
