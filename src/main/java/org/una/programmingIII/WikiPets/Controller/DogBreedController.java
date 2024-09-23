@@ -32,9 +32,9 @@ public class DogBreedController {
     }
 
     @QueryMapping
-    public Map<String, Object> getDogBreeds(@Argument int page, @Argument int size) {
+    public Map<String, Object> getDogBreeds(@Argument int page, @Argument int size,@Argument int limit) {
         try {
-            return dogBreedService.getAllDogBreeds(page, size);
+            return dogBreedService.getAllDogBreeds(page, size,limit);
         } catch (Exception e) {
             throw new NotFoundElementException("Could not find dog breeds" + e.getMessage());
         }

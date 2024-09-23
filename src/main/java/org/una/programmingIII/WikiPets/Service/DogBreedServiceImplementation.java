@@ -162,17 +162,17 @@ public Boolean deleteDogBreed(Long id) {
     }
 
     @Override
-    public Map<String, Object> getAllDogBreeds(int page, int size) {
+    public Map<String, Object> getAllDogBreeds(int page, int size,int limit) {
         Page<DogBreed> dogBreedPage = dogBreedRepository.findAll(PageRequest.of(page, size));
         dogBreedPage.forEach(dogBreed -> {
-            dogBreed.setAdoptionCenters(limitListOrDefault(dogBreed.getAdoptionCenters()));
-            dogBreed.setHealthIssues(limitListOrDefault(dogBreed.getHealthIssues()));
-            dogBreed.setNutritionGuides(limitListOrDefault(dogBreed.getNutritionGuides()));
-            dogBreed.setUsers(limitListOrDefault(dogBreed.getUsers()));
-            dogBreed.setTrainingGuides(limitListOrDefault(dogBreed.getTrainingGuides()));
-            dogBreed.setBehaviorGuides(limitListOrDefault(dogBreed.getBehaviorGuides()));
-            dogBreed.setCareTips(limitListOrDefault(dogBreed.getCareTips()));
-            dogBreed.setGroomingGuides(limitListOrDefault(dogBreed.getGroomingGuides()));
+            dogBreed.setAdoptionCenters(limitListOrDefault(dogBreed.getAdoptionCenters(),limit));
+            dogBreed.setHealthIssues(limitListOrDefault(dogBreed.getHealthIssues(),limit));
+            dogBreed.setNutritionGuides(limitListOrDefault(dogBreed.getNutritionGuides(),limit));
+            dogBreed.setUsers(limitListOrDefault(dogBreed.getUsers(),limit));
+            dogBreed.setTrainingGuides(limitListOrDefault(dogBreed.getTrainingGuides(),limit));
+            dogBreed.setBehaviorGuides(limitListOrDefault(dogBreed.getBehaviorGuides(),limit));
+            dogBreed.setCareTips(limitListOrDefault(dogBreed.getCareTips(),limit));
+            dogBreed.setGroomingGuides(limitListOrDefault(dogBreed.getGroomingGuides(),limit));
         });
         Map<String, Object> response = new HashMap<>();
         response.put("dogBreeds", dogBreedPage.map(this::convertToDto).getContent());
@@ -181,12 +181,12 @@ public Boolean deleteDogBreed(Long id) {
         return response;
     }
 
-    private <T> List<T> limitListOrDefault(List<T> list) {
-        return list == null ? new ArrayList<>() : limitList(list);
+    private <T> List<T> limitListOrDefault(List<T> list,int limit) {
+        return list == null ? new ArrayList<>() : limitList(list,limit);
     }
 
-    private <T> List<T> limitList(List<T> list) {
-        return list.stream().limit(10).collect(Collectors.toList());
+    private <T> List<T> limitList(List<T> list,int limit) {
+        return list.stream().limit(limit).collect(Collectors.toList());
     }
 
     private void copyCollections(DogBreed oldDogBreed, DogBreed newDogBreed) {

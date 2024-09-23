@@ -118,7 +118,7 @@ public void getAllDogBreedsTest() {
 
     when(dogBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(dogBreedPage);
 
-    Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10);
+    Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10,10);
 
     assertNotNull(result);
     assertEquals(2, ((List<?>) result.get("dogBreeds")).size());
@@ -210,7 +210,7 @@ public void getAllDogBreedsTest() {
 
         when(dogBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(dogBreedPage);
 
-        Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10);
+        Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10,10);
 
         assertNotNull(result);
         assertEquals(1, ((List<?>) result.get("dogBreeds")).size());
@@ -239,7 +239,7 @@ public void getAllDogBreedsEmptyListTest() {
 
     when(dogBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(dogBreedPage);
 
-    Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10);
+    Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10,10);
 
     assertNotNull(result);
     assertEquals(0, ((List<?>) result.get("dogBreeds")).size());

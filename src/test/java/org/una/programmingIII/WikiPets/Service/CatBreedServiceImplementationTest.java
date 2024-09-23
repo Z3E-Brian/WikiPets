@@ -129,7 +129,7 @@ public class CatBreedServiceImplementationTest {
 
         when(catBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(catBreedPage);
 
-        Map<String, Object> result = catBreedServiceImplementation.getAllCatBreeds(0, 10);
+        Map<String, Object> result = catBreedServiceImplementation.getAllCatBreeds(0, 10,10);
 
         assertNotNull(result);
         assertEquals(2, ((List<?>) result.get("catBreeds")).size());
@@ -221,7 +221,7 @@ public class CatBreedServiceImplementationTest {
 
         when(catBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(catBreedPage);
 
-        Map<String, Object> result = catBreedServiceImplementation.getAllCatBreeds(0, 10);
+        Map<String, Object> result = catBreedServiceImplementation.getAllCatBreeds(0, 10,10);
 
         assertNotNull(result);
         assertEquals(1, ((List<?>) result.get("catBreeds")).size());
@@ -250,7 +250,7 @@ public class CatBreedServiceImplementationTest {
 
         when(catBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(catBreedPage);
 
-        Map<String, Object> result = catBreedServiceImplementation.getAllCatBreeds(0, 10);
+        Map<String, Object> result = catBreedServiceImplementation.getAllCatBreeds(0, 10,10);
 
         assertNotNull(result);
         assertEquals(0, ((List<?>) result.get("catBreeds")).size());
