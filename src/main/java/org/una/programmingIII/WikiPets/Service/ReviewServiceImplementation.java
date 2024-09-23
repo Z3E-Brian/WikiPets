@@ -64,11 +64,12 @@ public class ReviewServiceImplementation implements ReviewService {
             return false;
         }
 
-        if (reviewRepository.existsById(id)) {
-            reviewRepository.deleteById(id);
-            return true;
+        if (!(reviewRepository.existsById(id))) {
+            throw new NotFoundElementException("Review not found with id: " + id);
         }
-        return false;
+        reviewRepository.deleteById(id);
+        return true;
+
     }
 
     @Override

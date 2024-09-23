@@ -65,12 +65,7 @@ public class HealthIssueController {
 
     @MutationMapping
     public boolean deleteHealthIssue(@Argument Long id) {
-        try {
-            healthIssueService.deleteHealthIssue(id);
-            return true;
-        } catch (Exception e) {
-            throw new CustomException("Could not delete health issue" + e.getMessage());
-        }
+           return healthIssueService.deleteHealthIssue(id);
     }
 
     @MutationMapping

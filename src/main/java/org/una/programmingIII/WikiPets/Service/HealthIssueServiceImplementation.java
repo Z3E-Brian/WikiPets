@@ -79,7 +79,7 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
     }
 
     @Override
-    public void deleteHealthIssue(Long id) {
+    public Boolean deleteHealthIssue(Long id) {
         if (id == null || id <= 0) {
             throw new InvalidInputException("Invalid HealthIssue Schedule ID");
         }
@@ -92,6 +92,7 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
                 dogBreed.getHealthIssues().removeIf(issue -> issue.getId().equals(id))
         );
         healthIssueRepository.deleteById(id);
+        return true;
     }
 
     @Override

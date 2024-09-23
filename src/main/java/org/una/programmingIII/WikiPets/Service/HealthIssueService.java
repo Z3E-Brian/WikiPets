@@ -15,7 +15,7 @@ public interface HealthIssueService {
 
     HealthIssueDto createHealthIssue(HealthIssueDto healthIssueDto);
 
-    void deleteHealthIssue(Long id);
+    Boolean deleteHealthIssue(Long id);
 
     HealthIssueDto updateHealthIssue(HealthIssueDto healthIssueDto);
 

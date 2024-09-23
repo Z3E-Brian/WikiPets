@@ -80,7 +80,6 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
     public Boolean deleteFeedingSchedule(Long id) {
         FeedingSchedule feedingSchedule = feedingScheduleRepository.findById(id)
                 .orElseThrow(() -> new NotFoundElementException("FeedingSchedule not found with id: " + id));
-        //buscar la manera de eliminar la relacion con la lista de gatos y perros en one to many relations
         feedingScheduleRepository.delete(feedingSchedule);
         return true;
     }

@@ -19,10 +19,10 @@ public class FeedingSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(mappedBy = "feedingSchedule")
+    @OneToMany(mappedBy = "feedingSchedule", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<CatBreed> catBreeds;
 
-    @OneToMany(mappedBy = "feedingSchedule")
+    @OneToMany(mappedBy = "feedingSchedule", cascade = CascadeType.MERGE, orphanRemoval = true)
     private List<DogBreed> dogBreeds;
 
     @Column(name = "age_group", length = 50, nullable = false)

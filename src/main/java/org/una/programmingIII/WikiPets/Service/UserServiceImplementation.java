@@ -150,9 +150,18 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public Boolean deleteUser(Long id) {
-        if (!userRepository.existsById(id)) {
-            throw new NotFoundElementException("User not found with id: " + id);
+        if (id == null || id <= 0) {
+            throw new InvalidInputException("Invalid User ID");
         }
+        User userToDelete = userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundElementException("User Not Found with id: " + id));
+        userToDelete.getFavoriteCatBreeds().forEach(catBreed ->
+                catBreed.getUsers().removeIf(user -> user.getId().equals(id))
+        );
+        userToDelete.getFavoriteDogBreeds().forEach(dogBreed ->
+                dogBreed.getUsers().removeIf(user -> user.getId().equals(id))
+        );
+
         userRepository.deleteById(id);
         return true;
     }
