@@ -104,8 +104,7 @@ public class ImageController {
     @MutationMapping
     public boolean deleteImage(@Argument Long id) {
         try {
-            imageService.deleteImage(id);
-            return true;
+            return imageService.deleteImage(id);
         } catch (Exception e) {
             throw new CustomException("Could not delete image with id " + id + ". " + e.getMessage(), e);
         }

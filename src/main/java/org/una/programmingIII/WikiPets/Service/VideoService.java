@@ -21,7 +21,7 @@ public interface VideoService {
 
     VideoDto addCatBreedToVideo(Long id, Long idDogBreed);
 
-    void deleteVideo(Long id);
+    boolean deleteVideo(Long id);
 
     Map<String, Object> getAllVideos(int page, int size);
 

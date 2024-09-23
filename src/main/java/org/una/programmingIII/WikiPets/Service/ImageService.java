@@ -16,7 +16,7 @@ public interface ImageService {
 
     ImageDto addCatBreedToImage(Long id, Long idDogBreed);
 
-    void deleteImage(Long id);
+    boolean deleteImage(Long id);
 
     Map<String, Object> getAllImages(int page, int size);
 

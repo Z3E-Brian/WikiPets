@@ -35,16 +35,7 @@ public class VideoController {
             throw new CustomException("Could not find behavior guides" + e.getMessage());
         }
     }
-
-    @QueryMapping
-    public VideoDto getVideoById(@Argument Long id) {
-        try {
-            return videoService.getVideoByid(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find video with id " + id + ". " + e.getMessage(), e);
-        }
-    }
-
+    //doing
     @QueryMapping
     public Map<String, Object> getVideosByDogBreed(@Argument Long id, @Argument int page, @Argument int size) {
         try {
@@ -58,6 +49,15 @@ public class VideoController {
     public Map<String, Object> getVideosByCatBreed(@Argument Long id, @Argument int page, @Argument int size) {
         try {
             return videoService.getVideosByCatBreed(id, page, size);
+        } catch (Exception e) {
+            throw new CustomException("Could not find video with id " + id + ". " + e.getMessage(), e);
+        }
+    }
+
+    @QueryMapping
+    public VideoDto getVideoById(@Argument Long id) {
+        try {
+            return videoService.getVideoByid(id);
         } catch (Exception e) {
             throw new CustomException("Could not find video with id " + id + ". " + e.getMessage(), e);
         }
@@ -101,12 +101,10 @@ public class VideoController {
         }
     }
 
-
     @MutationMapping
     public boolean deleteVideo(@Argument Long id) {
         try {
-            videoService.deleteVideo(id);
-            return true;
+            return videoService.deleteVideo(id);
         } catch (Exception e) {
             throw new CustomException("Could not delete video with id " + id + ". " + e.getMessage(), e);
         }

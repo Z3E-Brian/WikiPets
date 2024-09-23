@@ -73,7 +73,8 @@ public class GroomingGuideController {
         try {
             return groomingGuideService.addSuitableDogBreedToGroomingGuide(id, idDogBreed);
         } catch (Exception e) {
-            throw new CustomException("Could not update grooming guide with id: " + id + ". " + e.getMessage(), e);
+            throw new NotFoundElementException("Could not update grooming guide with id: " + id + ". " + e.getMessage());
+
         }
     }
 
@@ -82,7 +83,7 @@ public class GroomingGuideController {
         try {
             return groomingGuideService.addSuitableCatBreedToGroomingGuide(id, idCatBreed);
         } catch (Exception e) {
-            throw new CustomException("Could not update grooming guide with id: " + id + ". " + e.getMessage(), e);
+            throw new NotFoundElementException("Could not update grooming guide with id: " + id + ". " + e.getMessage());
         }
     }
 
@@ -116,7 +117,7 @@ public class GroomingGuideController {
         try {
             return groomingGuideService.deleteSuitableCatBreedFromGroomingGuide(id, catBreedId);
         } catch (Exception e) {
-            throw new CustomException("Could not remove cat breed from grooming guide with id " + id + ". " + e.getMessage(), e);
+            throw new NotFoundElementException("Could not remove cat breed from grooming guide with id " + id + ". " + e.getMessage());
         }
     }
 
@@ -125,7 +126,7 @@ public class GroomingGuideController {
         try {
             return groomingGuideService.deleteSuitableDogBreedFromGroomingGuide(id, dogBreedId);
         } catch (Exception e) {
-            throw new CustomException("Could not remove dog breed from grooming guide with id " + id + ". " + e.getMessage(), e);
+            throw new NotFoundElementException("Could not remove dog breed from grooming guide with id " + id + ". " + e.getMessage());
         }
     }
 

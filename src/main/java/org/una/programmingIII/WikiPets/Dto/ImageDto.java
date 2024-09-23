@@ -18,8 +18,8 @@ public class ImageDto {
     private Long id;
     private String url;
     private String description;
-    private DogBreed dogBreed;
-    private CatBreed catBreed;
+    private DogBreedDto dogBreedDto;
+    private CatBreedDto catBreedDto;
     private LocalDate createDate;
     private LocalDate lastUpdate;
 }

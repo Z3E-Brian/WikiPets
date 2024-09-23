@@ -15,8 +15,8 @@ public class VideoDto {
     private Long id;
     private String url;
     private String title;
-    private DogBreed dogBreed;
-    private CatBreed catBreed;
+    private DogBreedDto dogBreedDto;
+    private CatBreedDto catBreedDto;
     private LocalDate createDate;
     private LocalDate lastUpdate;
 }
