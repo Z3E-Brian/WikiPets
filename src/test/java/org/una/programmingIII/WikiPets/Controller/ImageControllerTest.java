@@ -9,9 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.una.programmingIII.WikiPets.Dto.ImageDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Input.ImageInput;
+import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.Image;
 import org.una.programmingIII.WikiPets.Service.ImageService;
 
 import java.util.HashMap;
@@ -28,9 +32,19 @@ public class ImageControllerTest {
     @Mock
     private GenericMapper<ImageInput, ImageDto> imageMapper;
 
+    @Mock
+    private GenericMapperFactory mapperFactory;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(mapperFactory.createMapper(ImageInput.class, ImageDto.class)).thenReturn(imageMapper);
+        imageController = new ImageController(imageService, mapperFactory);
+    }
+
+    @Test
+    void testImageControllerConstructor() {
+        assertNotNull(imageController);
     }
 
     @Test

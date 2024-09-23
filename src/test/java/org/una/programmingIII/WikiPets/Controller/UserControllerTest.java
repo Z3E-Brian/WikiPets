@@ -188,4 +188,14 @@ public class UserControllerTest {
     }
 
 
+    @Test
+    void testGenerateFalseUsers() {
+        int numberOfUsers = 5;
+
+        boolean result = userController.generateFalseUsers(numberOfUsers);
+        verify(userService).generateFalseUsers(numberOfUsers);
+        assertTrue(result);
+    }
+
+
 }

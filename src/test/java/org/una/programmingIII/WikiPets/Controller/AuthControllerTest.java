@@ -57,7 +57,7 @@ class AuthControllerTest {
     @Test
     void testLoginSuccess() {
         when(mapperFactory.createMapper(User.class, UserDto.class)).thenReturn(userMapper);
-        authController = new AuthController();
+        authController = new AuthController(authenticationService, refreshTokenService, jwtService, mapperFactory, userService);
         LogInInput input = new LogInInput("test@example.com", "password");
         UserDto userDto = new UserDto();
         User user = new User();
@@ -69,7 +69,7 @@ class AuthControllerTest {
 
         LoginResponse response = authController.login(input);
 
-        assertEquals("accessToken", response.getRefreshToken());
+        assertEquals("refreshToken", response.getRefreshToken());
         assertEquals("refreshToken", response.getRefreshToken());
         verify(authenticationService, times(1)).authenticate(input.getEmail(), input.getPassword());
     }

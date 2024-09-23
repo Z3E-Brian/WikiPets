@@ -37,7 +37,4 @@ public class FeedingSchedule {
     @Column(name = "last_update")
     private LocalDate lastUpdate;
 
-
-    public void removeIf(Object o) {
-    }
 }
