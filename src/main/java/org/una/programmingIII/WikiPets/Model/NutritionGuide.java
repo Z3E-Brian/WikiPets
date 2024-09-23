@@ -26,7 +26,7 @@ public class NutritionGuide {
     @Column(length = 2000, nullable = false)
     private String content;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String dietaryRequirements;
 
     @Column(nullable = false)
