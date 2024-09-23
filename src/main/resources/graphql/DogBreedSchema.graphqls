@@ -17,7 +17,7 @@ extend type Mutation {
     deleteDogBreed(id: ID!): Boolean
 }
 extend type Query {
-    getDogBreeds(page:Int!,size:Int! ): DogBreedResponse
+    getDogBreeds(page:Int!,size:Int! ,limit:Int!): DogBreedResponse
     getDogBreedById(id: ID!): DogBreedDto
 }
 type DogBreedDto{

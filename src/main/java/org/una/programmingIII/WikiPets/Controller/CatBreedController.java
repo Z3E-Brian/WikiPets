@@ -33,9 +33,9 @@ public class CatBreedController {
     }
 
     @QueryMapping
-    public Map<String, Object> getCatBreeds(@Argument int page, @Argument int size) {
+    public Map<String, Object> getCatBreeds(@Argument int page, @Argument int size,@Argument int limit) {
         try {
-            return catBreedService.getAllCatBreeds(page, size);
+            return catBreedService.getAllCatBreeds(page, size,limit);
         } catch (Exception e) {
             throw new NotFoundElementException("Could not find cat breeds" + e.getMessage());
         }

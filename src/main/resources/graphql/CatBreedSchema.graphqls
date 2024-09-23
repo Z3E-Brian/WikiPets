@@ -16,7 +16,7 @@ extend type Mutation {
     deleteCatBreed(id: ID!): Boolean
 }
 extend type Query {
-    getCatBreeds(page:Int!,size:Int! ): CatBreedResponse
+    getCatBreeds(page:Int!,size:Int!,limit:Int!): CatBreedResponse
     getCatBreedById(id: ID!): CatBreedDto
 }
 type CatBreedDto{

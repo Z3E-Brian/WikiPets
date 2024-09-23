@@ -19,5 +19,5 @@ public interface CatBreedService {
 
     CatBreedDto updateCatBreed(CatBreedDto catBreedDto);
 
-    Map<String, Object> getAllCatBreeds(int page, int size);
+    Map<String, Object> getAllCatBreeds(int page, int size,int limit);
 }

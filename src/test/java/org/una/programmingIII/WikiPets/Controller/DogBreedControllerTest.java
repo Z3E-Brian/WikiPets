@@ -43,20 +43,20 @@ public class DogBreedControllerTest {
     @Test
     public void testGetDogBreeds() {
         Map<String, Object> mockResponse = new HashMap<>();
-        when(dogBreedService.getAllDogBreeds(anyInt(), anyInt())).thenReturn(mockResponse);
+        when(dogBreedService.getAllDogBreeds(anyInt(), anyInt(),anyInt())).thenReturn(mockResponse);
 
-        Map<String, Object> response = dogBreedController.getDogBreeds(0, 10);
+        Map<String, Object> response = dogBreedController.getDogBreeds(0, 10,10);
 
-        verify(dogBreedService, times(1)).getAllDogBreeds(0, 10);
+        verify(dogBreedService, times(1)).getAllDogBreeds(0, 10,10);
         assertEquals(mockResponse, response);
     }
 
     @Test
     public void testGetDogBreedsThrowsException() {
-        when(dogBreedService.getAllDogBreeds(anyInt(), anyInt())).thenThrow(new RuntimeException("Error"));
+        when(dogBreedService.getAllDogBreeds(anyInt(), anyInt(),anyInt())).thenThrow(new RuntimeException("Error"));
 
         assertThrows(NotFoundElementException.class, () -> {
-            dogBreedController.getDogBreeds(0, 10);
+            dogBreedController.getDogBreeds(0, 10,10);
         });
     }
 

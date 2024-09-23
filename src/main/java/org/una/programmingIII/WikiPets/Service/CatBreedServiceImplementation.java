@@ -15,6 +15,7 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 
 import org.una.programmingIII.WikiPets.Model.CatBreed;
+import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
 
 import java.time.LocalDate;
@@ -163,17 +164,17 @@ public class CatBreedServiceImplementation implements CatBreedService {
     }
 
     @Override
-    public Map<String, Object> getAllCatBreeds(int page, int size) {
+    public Map<String, Object> getAllCatBreeds(int page, int size,int limit) {
         Page<CatBreed> catBreedPage = catBreedRepository.findAll(PageRequest.of(page, size));
         catBreedPage.forEach(catBreed -> {
-            catBreed.setAdoptionCenters(limitListOrDefault(catBreed.getAdoptionCenters()));
-            catBreed.setHealthIssues(limitListOrDefault(catBreed.getHealthIssues()));
-            catBreed.setNutritionGuides(limitListOrDefault(catBreed.getNutritionGuides()));
-            catBreed.setUsers(limitListOrDefault(catBreed.getUsers()));
-            catBreed.setTrainingGuides(limitListOrDefault(catBreed.getTrainingGuides()));
-            catBreed.setBehaviorGuides(limitListOrDefault(catBreed.getBehaviorGuides()));
-            catBreed.setCareTips(limitListOrDefault(catBreed.getCareTips()));
-            catBreed.setGroomingGuides(limitListOrDefault(catBreed.getGroomingGuides()));
+            catBreed.setAdoptionCenters(limitListOrDefault(catBreed.getAdoptionCenters(),limit));
+            catBreed.setHealthIssues(limitListOrDefault(catBreed.getHealthIssues(),limit));
+            catBreed.setNutritionGuides(limitListOrDefault(catBreed.getNutritionGuides(),limit));
+            catBreed.setUsers(limitListOrDefault(catBreed.getUsers(),limit));
+            catBreed.setTrainingGuides(limitListOrDefault(catBreed.getTrainingGuides(),limit));
+            catBreed.setBehaviorGuides(limitListOrDefault(catBreed.getBehaviorGuides(),limit));
+            catBreed.setCareTips(limitListOrDefault(catBreed.getCareTips(),limit));
+            catBreed.setGroomingGuides(limitListOrDefault(catBreed.getGroomingGuides(),limit));
         });
         Map<String, Object> response = new HashMap<>();
         response.put("catBreeds", catBreedPage.map(this::convertToDto).getContent());
@@ -182,12 +183,12 @@ public class CatBreedServiceImplementation implements CatBreedService {
         return response;
     }
 
-    private <T> List<T> limitListOrDefault(List<T> list) {
-        return list == null ? new ArrayList<>() : limitList(list);
+    private <T> List<T> limitListOrDefault(List<T> list,int limit) {
+        return list == null ? new ArrayList<>() : limitList(list,limit);
     }
 
-    private <T> List<T> limitList(List<T> list) {
-        return list.stream().limit(10).collect(Collectors.toList());
+    private <T> List<T> limitList(List<T> list,int limit) {
+        return list.stream().limit(limit).collect(Collectors.toList());
     }
 
     private void copyCollections(CatBreed oldCatBreed, CatBreed newCatBreed) {
