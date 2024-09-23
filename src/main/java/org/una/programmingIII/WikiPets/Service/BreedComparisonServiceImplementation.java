@@ -1,43 +1,66 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.una.programmingIII.WikiPets.Model.CatBreed;
-import org.una.programmingIII.WikiPets.Model.DogBreed;
-import org.una.programmingIII.WikiPets.Model.BreedComparisonResult;
+import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
+import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Model.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class BreedComparisonServiceImplementation implements BreedComparisonService {
+
+    private final DogBreedService dogBreedService;
+    private final CatBreedService catBreedService;
+
+
+    @Autowired
+    public BreedComparisonServiceImplementation(DogBreedService dogBreedService, CatBreedService catBreedService) {
+        this.dogBreedService = dogBreedService;
+        this.catBreedService = catBreedService;
+    }
+
     @Override
-    public BreedComparisonResult compareBreeds(Object breed1, Object breed2) {
+    public BreedComparisonResult compareCats(Long idCatBreed1, Long idCatBreed2) {
         List<String> similarities = new ArrayList<>();
         List<String> differences = new ArrayList<>();
 
-        if (breed1 instanceof CatBreed && breed2 instanceof CatBreed) {
-            CatBreed catBreed1 = (CatBreed) breed1;
-            CatBreed catBreed2 = (CatBreed) breed2;
-            compareCatBreeds(catBreed1, catBreed2, similarities, differences);
-        } else if (breed1 instanceof DogBreed && breed2 instanceof DogBreed) {
-            DogBreed dogBreed1 = (DogBreed) breed1;
-            DogBreed dogBreed2 = (DogBreed) breed2;
-            compareDogBreeds(dogBreed1, dogBreed2, similarities, differences);
-        } else if (breed1 instanceof DogBreed && breed2 instanceof CatBreed) {
-            DogBreed dogBreed = (DogBreed) breed1;
-            CatBreed catBreed = (CatBreed) breed2;
-            compareMixedBreeds(dogBreed, catBreed, similarities, differences);
-        } else if (breed1 instanceof CatBreed && breed2 instanceof DogBreed) {
-            CatBreed catBreed = (CatBreed) breed1;
-            DogBreed dogBreed = (DogBreed) breed2;
-            compareMixedBreeds(dogBreed, catBreed, similarities, differences);
-        }
+        CatBreedDto catBreed1 = catBreedService.getBreedById(idCatBreed1);
+        CatBreedDto catBreed2 = catBreedService.getBreedById(idCatBreed2);
 
+        compareCatBreeds(catBreed1, catBreed2, similarities, differences);
+        return new BreedComparisonResult(similarities, differences);
+
+    }
+
+    @Override
+    public BreedComparisonResult compareDogs(Long idDogBreed1, Long idDogBreed2) {
+        List<String> similarities = new ArrayList<>();
+        List<String> differences = new ArrayList<>();
+
+        DogBreedDto dogBreed1 = dogBreedService.getBreedById(idDogBreed1);
+        DogBreedDto dogBreed2 = dogBreedService.getBreedById(idDogBreed2);
+
+        compareDogBreeds(dogBreed1, dogBreed2, similarities, differences);
         return new BreedComparisonResult(similarities, differences);
     }
 
     @Override
-    public void compareCatBreeds(CatBreed catBreed1, CatBreed catBreed2, List<String> similarities, List<String> differences) {
+    public BreedComparisonResult compareMixedBreeds(Long idDogBreed, Long idCatBreed) {
+        List<String> similarities = new ArrayList<>();
+        List<String> differences = new ArrayList<>();
+
+        DogBreedDto dogBreed = dogBreedService.getBreedById(idDogBreed);
+        CatBreedDto catBreedDto = catBreedService.getBreedById(idCatBreed);
+
+        compareMixedBreeds(dogBreed, catBreedDto, similarities, differences);
+        return new BreedComparisonResult(similarities, differences);
+    }
+
+
+    private void compareCatBreeds(CatBreedDto catBreed1, CatBreedDto catBreed2, List<String> similarities, List<String> differences) {
         compareFields(catBreed1.getName(), catBreed2.getName(), "Name", similarities, differences);
         compareFields(catBreed1.getOrigin(), catBreed2.getOrigin(), "Origin", similarities, differences);
         compareFields(String.valueOf(catBreed1.getSize()), String.valueOf(catBreed2.getSize()), "Size", similarities, differences);
@@ -48,8 +71,8 @@ public class BreedComparisonServiceImplementation implements BreedComparisonServ
         compareFields(catBreed1.getDescription(), catBreed2.getDescription(), "Description", similarities, differences);
     }
 
-    @Override
-    public void compareDogBreeds(DogBreed dogBreed1, DogBreed dogBreed2, List<String> similarities, List<String> differences) {
+
+    private void compareDogBreeds(DogBreedDto dogBreed1, DogBreedDto dogBreed2, List<String> similarities, List<String> differences) {
         compareFields(dogBreed1.getName(), dogBreed2.getName(), "Name", similarities, differences);
         compareFields(dogBreed1.getOrigin(), dogBreed2.getOrigin(), "Origin", similarities, differences);
         compareFields(String.valueOf(dogBreed1.getSize()), String.valueOf(dogBreed2.getSize()), "Size", similarities, differences);
@@ -60,8 +83,8 @@ public class BreedComparisonServiceImplementation implements BreedComparisonServ
         compareFields(dogBreed1.getDescription(), dogBreed2.getDescription(), "Description", similarities, differences);
     }
 
-    @Override
-    public void compareMixedBreeds(DogBreed dogBreed, CatBreed catBreed, List<String> similarities, List<String> differences) {
+
+    private void compareMixedBreeds(DogBreedDto dogBreed, CatBreedDto catBreed, List<String> similarities, List<String> differences) {
         compareFields(dogBreed.getName(), catBreed.getName(), "Name", similarities, differences);
         compareFields(dogBreed.getOrigin(), catBreed.getOrigin(), "Origin", similarities, differences);
         compareFields(String.valueOf(dogBreed.getSize()), String.valueOf(catBreed.getSize()), "Size", similarities, differences);
@@ -72,8 +95,7 @@ public class BreedComparisonServiceImplementation implements BreedComparisonServ
         compareFields(dogBreed.getDescription(), catBreed.getDescription(), "Description", similarities, differences);
     }
 
-    @Override
-    public void compareFields(String field1, String field2, String fieldName, List<String> similarities, List<String> differences) {
+    private void compareFields(String field1, String field2, String fieldName, List<String> similarities, List<String> differences) {
         if (field1.equals(field2)) {
             similarities.add(fieldName + ": " + field1);
         } else {

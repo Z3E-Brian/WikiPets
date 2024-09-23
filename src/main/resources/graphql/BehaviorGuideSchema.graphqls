@@ -1,0 +1,43 @@
+input BehaviorGuideInput {
+    id: ID
+    title: String!
+    content: String!
+    behavioralIssues: String!
+    solutions: String!
+}
+
+extend type Query {
+    getBehaviorGuideById(id: ID!): BehaviorGuideDto
+    getBehaviorSuitableDogBreeds(id: ID!): [DogBreedDto]
+    getBehaviorSuitableCatBreeds(id: ID!): [CatBreedDto]
+    getAllBehaviorGuides(page: Int!, size: Int!): BehaviorGuideResponse
+}
+
+extend type Mutation {
+    createBehaviorGuide(input: BehaviorGuideInput): BehaviorGuideDto
+    updateBehaviorGuide(input: BehaviorGuideInput): BehaviorGuideDto
+    addSuitableDogBreedToBehaviorGuide(id: ID!, idDogBreed: ID!): BehaviorGuideDto
+    addSuitableCatBreedToBehaviorGuide(id: ID!, idCatBreed: ID!): BehaviorGuideDto
+    removeSuitableCatBreedFromBehaviorGuide(id:ID!,catBreedId: ID!): BehaviorGuideDto
+    removeSuitableDogBreedFromBehaviorGuide(id:ID!,dogBreedId: ID!): BehaviorGuideDto
+    deleteBehaviorGuide(id: ID!): Boolean
+
+}
+
+type BehaviorGuideDto {
+    id: ID
+    title: String!
+    content: String!
+    behavioralIssues: String!
+    solutions: String!
+    createDate: LocalDate
+    lastUpdate: LocalDate
+    suitableDogBreeds: [DogBreedDto]
+    suitableCatBreeds: [CatBreedDto]
+}
+
+type BehaviorGuideResponse {
+    behaviorGuides: [BehaviorGuideDto]
+    totalPages: Int
+    totalElements: Int
+}

@@ -9,12 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface FeedingScheduleRepository extends JpaRepository<FeedingSchedule, Long> {
-
-    // Encontrar por ID (método heredado de JpaRepository)
-    List<FeedingSchedule> findByCatBreedId(Long catBreedId);
-    List<FeedingSchedule> findByDogBreedId(Long dogBreedId);
-    List<FeedingSchedule> findByAgeGroup(String ageGroup);
-    List<FeedingSchedule> findByFeedingTimesContaining(String text);
-
-    boolean existsById(Long id);
 }

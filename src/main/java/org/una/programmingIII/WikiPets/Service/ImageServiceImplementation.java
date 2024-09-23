@@ -1,44 +1,87 @@
 package org.una.programmingIII.WikiPets.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.una.programmingIII.WikiPets.Dto.*;
+import org.una.programmingIII.WikiPets.Dto.ImageDto;
+import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Model.Image;
-import org.una.programmingIII.WikiPets.Dto.ImageDto;
 import org.una.programmingIII.WikiPets.Repository.ImageRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ImageServiceImplementation implements ImageService {
 
     private final ImageRepository imageRepository;
     private final GenericMapper<Image, ImageDto> imageMapper;
+    private final GenericMapper<DogBreed, DogBreedDto> dogBreedMapper;
+    private final GenericMapper<CatBreed, CatBreedDto> catBreedMapper;
+    private final DogBreedService dogBreedService;
+    private final CatBreedService catBreedService;
 
     @Autowired
-    public ImageServiceImplementation(ImageRepository imageRepository, GenericMapperFactory mapperFactory) {
+    public ImageServiceImplementation(ImageRepository imageRepository, GenericMapperFactory mapperFactory, DogBreedService dogBreedService, CatBreedService catBreedService) {
         this.imageRepository = imageRepository;
         this.imageMapper = mapperFactory.createMapper(Image.class, ImageDto.class);
+        this.dogBreedMapper = mapperFactory.createMapper(DogBreed.class, DogBreedDto.class);
+        this.catBreedMapper = mapperFactory.createMapper(CatBreed.class, CatBreedDto.class);
+        this.dogBreedService = dogBreedService;
+        this.catBreedService = catBreedService;
+    }
+    private ImageDto convertToDto(Image image) {return imageMapper.convertToDTO(image);
     }
 
     @Override
-    public List<ImageDto> getAllImages() {
-        return imageRepository.findAll().stream()
-                .map(imageMapper::convertToDTO)
-                .collect(Collectors.toList());
+    public Map<String, Object> getAllImages(int page, int size) {
+        Page<Image> images = imageRepository.findAll(PageRequest.of(page, size));
+        Map<String, Object> response = new HashMap<>();
+        response.put("images", images.map(this::convertToDto).getContent());
+        response.put("totalPages", images.getTotalPages());
+        response.put("totalElements", images.getTotalElements());
+        return response;
+    }
+
+    @Override
+    public Map<String, Object> getImagesByDogBreed(Long id, int page, int size) {
+        DogBreed dogBreed = dogBreedService.getBreedEntityById(id);
+        Page<Image> images = imageRepository.findImagesByDogBreed(dogBreed, PageRequest.of(page, size));
+        Map<String, Object> response = new HashMap<>();
+        response.put("images", images.map(this::convertToDto).getContent());
+        response.put("totalPages", images.getTotalPages());
+        response.put("totalElements", images.getTotalElements());
+        return response;
+    }
+
+    @Override
+    public Map<String, Object> getImagesByCatBreed(Long id, int page, int size) {
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(id));
+        Page<Image> images = imageRepository.findImagesByCatBreed(catBreed, PageRequest.of(page, size));
+        Map<String, Object> response = new HashMap<>();
+        response.put("images", images.map(this::convertToDto).getContent());
+        response.put("totalPages", images.getTotalPages());
+        response.put("totalElements", images.getTotalElements());
+        return response;
     }
 
     @Override
     public ImageDto getImageByid(Long id) {
         Image image = imageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Video Not Found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Image Not Found with id: " + id));
         return imageMapper.convertToDTO(image);
     }
 
     @Override
     public ImageDto createImage(ImageDto imageDto) {
+        imageDto.setCreateDate(LocalDate.now());
+        imageDto.setLastUpdate(LocalDate.now());
         Image image = imageMapper.convertToEntity(imageDto);
         Image savedImage = imageRepository.save(image);
         return imageMapper.convertToDTO(savedImage);
@@ -52,7 +95,52 @@ public class ImageServiceImplementation implements ImageService {
     }
 
     @Override
+    public ImageDto addDogBreedToImage(Long id, Long idDogBreed) {
+        Image image = imageRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Image not found"));
+        DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+        image.setDogBreed(dogBreed);
+        image.setCatBreed(null);
+        return imageMapper.convertToDTO(imageRepository.save(image));
+    }
+    @Override
+    public ImageDto addCatBreedToImage(Long id, Long idCatBreed) {
+        Image image = imageRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Image not found"));
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
+        image.setCatBreed(catBreed);
+        image.setDogBreed(null);
+        return imageMapper.convertToDTO(imageRepository.save(image));
+    }
+
+    @Override
     public void deleteImage(Long id) {
         imageRepository.deleteById(id);
     }
+
+    /*@Override
+    public ImageDto removeDogBreedFromImage(Long id, Long idDogBreed) {
+        Image image = imageRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Image not found"));
+        DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
+        if (image.getDogBreed() != null && image.getDogBreed().equals(dogBreed)) {
+            image.setDogBreed(null);
+        } else {
+            throw new CustomException("Dog breed not found in image");
+        }
+        return imageMapper.convertToDTO(imageRepository.save(image));
+    }
+
+    @Override
+    public ImageDto removeCatBreedFromImage(Long id, Long idCatBreed) {
+        Image image = imageRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Image not found"));
+        CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
+        if (image.getCatBreed() != null && image.getCatBreed().equals(catBreed)) {
+            image.setCatBreed(null);
+        } else {
+            throw new CustomException("Cat breed not found in image");
+        }
+        return imageMapper.convertToDTO(imageRepository.save(image));
+    }*/
 }

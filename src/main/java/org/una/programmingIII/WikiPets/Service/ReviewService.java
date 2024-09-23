@@ -1,13 +1,17 @@
 package org.una.programmingIII.WikiPets.Service;
-
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 
-import java.util.List;
+import java.util.Map;
 
 public interface ReviewService {
-    List<ReviewDto> getAllReviews();
+    Map<String, Object> getReviews(int page, int size);
+
     ReviewDto getReviewById(Long id);
+
     ReviewDto createReview(ReviewDto reviewDto);
+
     ReviewDto updateReview(ReviewDto reviewDto);
-    void deleteReview(Long id);
+
+    boolean deleteReview(Long id);
+
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,18 +19,16 @@ public class FeedingSchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "cat_breed_id")
-    private CatBreed catBreed;
+    @OneToMany(mappedBy = "feedingSchedule", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<CatBreed> catBreeds;
 
-    @ManyToOne
-    @JoinColumn(name = "dog_breed_id")
-    private DogBreed dogBreed;
+    @OneToMany(mappedBy = "feedingSchedule", cascade = CascadeType.MERGE, orphanRemoval = true)
+    private List<DogBreed> dogBreeds;
 
-    @Column(name ="age_group",length = 50, nullable = false)
+    @Column(name = "age_group", length = 50, nullable = false)
     private String ageGroup;
 
-    @Column(name ="feeding_times",length = 500, nullable = false)
+    @Column(name = "feeding_times", length = 500, nullable = false)
     private String feedingTimes;
 
     @Column(name = "create_date", nullable = false, updatable = false)
@@ -39,4 +38,6 @@ public class FeedingSchedule {
     private LocalDate lastUpdate;
 
 
+    public void removeIf(Object o) {
+    }
 }

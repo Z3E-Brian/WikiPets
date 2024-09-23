@@ -20,16 +20,16 @@ public class DogBreedDto {
     private String description;
     private LocalDate createdDate;
     private LocalDate modifiedDate;
-//    private List<AdoptionCenterDto> adoptionCenters;
-//    private List<HealthIssueDto> healthIssues;
-//    private List<NutritionGuideDto> nutritionGuides;
-//    private List<UserDto> users;
-//    private List<TrainingGuideDto> trainingGuides;
-//    private List<BehaviorGuideDto> behaviorGuides;
-//    private List<CareTipDto> careTips;
-//    private List<GroomingGuideDto> groomingGuides;
-//    private List<FeedingScheduleDto> feedingSchedules;
-//    private List<ImageDto> images;
-//    private List<VideoDto> videos;
-//    private List<ReviewDto> reviews;
+    private List<AdoptionCenterDto> adoptionCenters;
+    private List<HealthIssueDto> healthIssues;
+    private List<NutritionGuideDto> nutritionGuides;
+    private List<UserDto> users;
+    private List<TrainingGuideDto> trainingGuides;
+    private List<BehaviorGuideDto> behaviorGuides;
+    private List<CareTipDto> careTips;
+    private List<GroomingGuideDto> groomingGuides;
+    private FeedingScheduleDto feedingSchedule;
+    private List<ImageDto> images;
+    private List<VideoDto> videos;
+    private List<ReviewDto> reviews;
 }

@@ -2,9 +2,11 @@ package org.una.programmingIII.WikiPets.Model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -31,17 +33,18 @@ public class DogBreed {
     private String temperament;
     @Column(length = 2000, nullable = false)
     private String description;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private LocalDate createdDate;
-    @Column (nullable = false)
+    @Column(nullable = false)
     private LocalDate modifiedDate;
-    @ManyToMany(mappedBy ="availableDogBreeds")
+    @ManyToMany(mappedBy = "availableDogBreeds", cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
+    @BatchSize(size = 10)
     private List<AdoptionCenter> adoptionCenters;
     @ManyToMany(mappedBy = "recommendedDogBreeds")
     private List<NutritionGuide> nutritionGuides;
     @ManyToMany(mappedBy = "suitableDogBreeds")
     private List<HealthIssue> healthIssues;
-    @ManyToMany (mappedBy = "favoriteDogBreeds")
+    @ManyToMany(mappedBy = "favoriteDogBreeds")
     private List<User> users;
     @ManyToMany(mappedBy = "dogBreeds")
     private List<TrainingGuide> trainingGuides;
@@ -52,11 +55,26 @@ public class DogBreed {
     @ManyToMany(mappedBy = "suitableDogBreeds")
     private List<GroomingGuide> groomingGuides;
     @OneToMany(mappedBy = "dogBreed")
-    private List<FeedingSchedule> feedingSchedules;
-    @OneToMany(mappedBy = "dogBreed")
     private List<Image> images;
-    @OneToMany  (mappedBy = "dogBreed")
+    @OneToMany(mappedBy = "dogBreed")
     private List<Video> videos;
     @OneToMany(mappedBy = "dogBreed")
     private List<Review> reviews;
+    @ManyToOne
+    @JoinColumn(name = "feeding_schedule_id")
+    private FeedingSchedule feedingSchedule;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DogBreed dogBreed = (DogBreed) o;
+        return Objects.equals(id, dogBreed.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

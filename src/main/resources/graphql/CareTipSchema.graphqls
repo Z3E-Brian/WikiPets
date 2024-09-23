@@ -1,0 +1,31 @@
+input CareTipInput{
+    id: ID
+    title: String!
+    content: String!
+}
+extend type Query {
+    getAllCareTips(page: Int!, size: Int!): CareTipResponse
+    getCareTipById(id: ID!): CareTipDto
+    getCareTipByTitle(title: String!): CareTipDto
+}
+extend type Mutation{
+    createCareTip(input:CareTipInput): CareTipDto
+    updateCareTip(input:CareTipInput): CareTipDto
+    deleteCareTip(id: ID!): Boolean
+    addDogBreedInCareTip(id: ID!, idDogBreed: ID!): CareTipDto
+    addCatBreedInCareTip(id: ID!, idCatBreed: ID!): CareTipDto
+}
+type CareTipDto{
+    id: ID
+    title: String
+    content: String
+    createdDate: LocalDate
+    modifiedDate: LocalDate
+    relevantDogBreeds: [DogBreedDto]
+    relevantCatBreeds: [CatBreedDto]
+}
+type CareTipResponse {
+    careTips: [CareTipDto]
+    totalPages: Int
+    totalElements: Int
+}

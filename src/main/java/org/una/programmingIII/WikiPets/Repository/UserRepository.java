@@ -6,4 +6,5 @@ import org.una.programmingIII.WikiPets.Model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
 }

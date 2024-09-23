@@ -1,17 +1,25 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.springframework.data.domain.Page;
 import org.una.programmingIII.WikiPets.Dto.HealthIssueDto;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+
+import java.util.Map;
+
 
 public interface HealthIssueService {
-    public List<HealthIssueDto> getAllHealthIssues();
+    Map<String, Object> getAllHealthIssues(  int page,  int size);
 
-    public HealthIssueDto getHealthIssueById(Long id);
+    HealthIssueDto getHealthIssueById(Long id);
 
-    public HealthIssueDto createHealthIssue(HealthIssueDto healthIssueDto);
+    HealthIssueDto createHealthIssue(HealthIssueDto healthIssueDto);
 
-    public void deleteHealthIssue(Long id);
+    Boolean deleteHealthIssue(Long id);
 
-    public HealthIssueDto updateHealthIssue(HealthIssueDto healthIssueDto);
+    HealthIssueDto updateHealthIssue(HealthIssueDto healthIssueDto);
+
+    HealthIssueDto addSuitableDogBreed(Long IdIssue, Long dogBreedId);
+
+    HealthIssueDto addSuitableCatBreed(Long IdIssue, Long catBreedId);
 }

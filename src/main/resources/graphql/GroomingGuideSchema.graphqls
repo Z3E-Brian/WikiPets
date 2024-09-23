@@ -1,0 +1,40 @@
+input GroomingGuideInput {
+    id: ID
+    content: String!
+    toolsNeeded: String!
+    steps: String!
+}
+
+extend type Query {
+    getGroomingGuideById(id: ID!): GroomingGuideDto
+    getGroomingSuitableDogBreeds(id: ID!): [DogBreedDto]
+    getGroomingSuitableCatBreeds(id: ID!): [DogBreedDto]
+    getAllGroomingGuides(page: Int!, size: Int!): GroomingGuideResponse
+}
+
+extend type Mutation {
+    createGroomingGuide(input: GroomingGuideInput): GroomingGuideDto
+    updateGroomingGuide(input: GroomingGuideInput): GroomingGuideDto
+    addSuitableDogBreedToGroomingGuide(id: ID!, idDogBreed: ID!): GroomingGuideDto
+    addSuitableCatBreedToGroomingGuide(id: ID!, idCatBreed: ID!): GroomingGuideDto
+    removeSuitableCatBreedFromGroomingGuide(id:ID!,catBreedId: ID!): GroomingGuideDto
+    removeSuitableDogBreedFromGroomingGuide(id:ID!,dogBreedId: ID!): GroomingGuideDto
+    deleteGroomingGuide(id: ID!): Boolean
+}
+
+type GroomingGuideDto {
+    id: ID
+    content: String
+    toolsNeeded: String
+    steps: String
+    createDate: LocalDate
+    lastUpdate: LocalDate
+    suitableDogBreeds: [DogBreedDto]
+    suitableCatBreeds: [CatBreedDto]
+}
+
+type GroomingGuideResponse {
+    groomingGuides: [GroomingGuideDto]
+    totalPages: Int
+    totalElements: Int
+}

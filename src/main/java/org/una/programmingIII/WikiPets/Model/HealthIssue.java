@@ -4,13 +4,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = {"suitableDogBreeds", "suitableCatBreeds"})
 @Table(name = "health_issues")
 public class HealthIssue {
     @Id
@@ -20,6 +23,10 @@ public class HealthIssue {
     private String name;
     @Column(length = 2000, nullable = false)
     private String description;
+    @Column(nullable = false)
+    private LocalDate createdDate;
+    @Column(nullable = false)
+    private LocalDate modifiedDate;
     @ManyToMany
     @JoinTable(
             name = "health_issue_dog_breeds",

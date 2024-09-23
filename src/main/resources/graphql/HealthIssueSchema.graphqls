@@ -1,0 +1,34 @@
+input HealthIssueInput{
+    id: ID
+    name:String!
+    description:String!
+    symptoms:String!
+    treatment:String!
+}
+extend type Query {
+    getHealthIssues(page: Int!, size: Int!): HealthIssueResponse
+    getHealthIssueById(id: ID!): HealthIssueDto
+}
+extend type Mutation{
+    createHealthIssue(input:HealthIssueInput): HealthIssueDto
+    updateHealthIssue(input:HealthIssueInput): HealthIssueDto
+    deleteHealthIssue(id: ID!): Boolean
+    addDogBreedInHealthIssue(id: ID!, idDogBreed: ID!): HealthIssueDto
+    addCatBreedInHealthIssue(id: ID!, idCatBreed: ID!): HealthIssueDto
+}
+type HealthIssueDto{
+    id: ID
+    name:String
+    description:String
+    symptoms:String
+    treatment:String
+    createdDate: LocalDate
+    modifiedDate: LocalDate
+    suitableDogBreeds: [DogBreedDto]
+    suitableCatBreeds: [CatBreedDto]
+}
+type HealthIssueResponse {
+    healthIssues: [HealthIssueDto]
+    totalPages: Int
+    totalElements: Int
+}

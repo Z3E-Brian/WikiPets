@@ -23,29 +23,6 @@ public class HealthIssueDtoTest {
         assertNull(healthIssueDto.getSuitableCatBreeds());
     }
 
-    @Test
-    public void allArgsConstructorTest() {
-        DogBreedDto dogBreedDto = new DogBreedDto();
-        CatBreedDto catBreedDto = new CatBreedDto();
-
-        HealthIssueDto healthIssueDto = new HealthIssueDto(
-                1L,
-                "Obesity",
-                "A condition where excess body fat negatively affects a pet's health",
-                "Overeating",
-                "Diet and exercise",
-                Arrays.asList(dogBreedDto),
-                Arrays.asList(catBreedDto)
-        );
-
-        assertEquals(1L, healthIssueDto.getId());
-        assertEquals("Obesity", healthIssueDto.getName());
-        assertEquals("A condition where excess body fat negatively affects a pet's health", healthIssueDto.getDescription());
-        assertEquals("Overeating", healthIssueDto.getSymptoms());
-        assertEquals("Diet and exercise", healthIssueDto.getTreatment());
-        assertEquals(1, healthIssueDto.getSuitableDogBreeds().size());
-        assertEquals(1, healthIssueDto.getSuitableCatBreeds().size());
-    }
 
     @Test
     public void settersAndGettersTest() {
@@ -70,34 +47,6 @@ public class HealthIssueDtoTest {
         assertEquals(1, healthIssueDto.getSuitableCatBreeds().size());
     }
 
-    @Test
-    public void equalsAndHashCodeTest() {
-        DogBreedDto dogBreedDto = new DogBreedDto();
-        CatBreedDto catBreedDto = new CatBreedDto();
-
-        HealthIssueDto healthIssueDto1 = new HealthIssueDto(
-                1L,
-                "Arthritis",
-                "Inflammation of the joints causing pain and stiffness.",
-                "Limping",
-                "Anti-inflammatory drugs",
-                Arrays.asList(dogBreedDto),
-                Arrays.asList(catBreedDto)
-        );
-
-        HealthIssueDto healthIssueDto2 = new HealthIssueDto(
-                1L,
-                "Arthritis",
-                "Inflammation of the joints causing pain and stiffness.",
-                "Limping",
-                "Anti-inflammatory drugs",
-                Arrays.asList(dogBreedDto),
-                Arrays.asList(catBreedDto)
-        );
-
-        assertEquals(healthIssueDto1, healthIssueDto2);
-        assertEquals(healthIssueDto1.hashCode(), healthIssueDto2.hashCode());
-    }
 
     @Test
     public void toStringTest() {

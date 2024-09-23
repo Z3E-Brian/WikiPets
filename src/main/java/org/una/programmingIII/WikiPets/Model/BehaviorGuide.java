@@ -4,14 +4,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@ToString(exclude = {"suitableDogBreeds", "suitableCatBreeds"})
 @Table(name = "behavior_guides")
 public class BehaviorGuide {
     @Id
