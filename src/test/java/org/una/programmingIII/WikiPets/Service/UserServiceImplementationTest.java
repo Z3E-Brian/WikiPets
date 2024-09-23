@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
@@ -20,6 +23,8 @@ import org.una.programmingIII.WikiPets.Model.User;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -95,7 +100,7 @@ class UserServiceImplementationTest {
         dogBreed.setTemperament("Intelligent, Friendly, Devoted");
         dogBreed.setDescription("Popular house dog");
 
-        CatBreed catBreed = new CatBreed();
+        catBreed = new CatBreed();
         catBreed.setId(1L);
         catBreed.setName("Siamese");
         catBreed.setOrigin("Thailand");
@@ -282,4 +287,27 @@ class UserServiceImplementationTest {
         assertEquals(userDto, result);
         verify(userRepository, times(1)).save(any(User.class));
     }
+
+    @Test
+    void testGetUsers() {
+
+        List<User> userList = List.of(user);
+        Page<User> userPage = new PageImpl<>(userList);
+
+        when(userRepository.findAll(any(PageRequest.class))).thenReturn(userPage);
+
+        Map<String, Object> result = userServiceImplementation.getUsers(0, 2);
+
+        assertNotNull(result);
+        assertTrue(result.containsKey("users"));
+        assertTrue(result.containsKey("totalPages"));
+        assertTrue(result.containsKey("totalElements"));
+
+        assertEquals(1, ((List<?>) result.get("users")).size());
+        assertEquals(userPage.getTotalPages(), result.get("totalPages"));
+        assertEquals(userPage.getTotalElements(), result.get("totalElements"));
+
+        verify(userRepository, times(1)).findAll(any(PageRequest.class));
+    }
+
 }

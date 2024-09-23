@@ -20,9 +20,9 @@ import java.util.Map;
 
 @Service
 public class ReviewServiceImplementation implements ReviewService {
+
     private final ReviewRepository reviewRepository;
     private final GenericMapper<Review, ReviewDto> reviewMapper;
-
     @Autowired
     public ReviewServiceImplementation(ReviewRepository reviewRepository, GenericMapperFactory mapperFactory) {
         this.reviewRepository = reviewRepository;
