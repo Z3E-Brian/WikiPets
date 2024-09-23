@@ -310,7 +310,7 @@ public class AdoptionCenterServiceImplementationTest {
         when(adoptionCenterRepository.save(any(AdoptionCenter.class))).thenReturn(adoptionCenter);
         when(adoptionCenterMapper.convertToDTO(any(AdoptionCenter.class))).thenReturn(adoptionCenterDto);
 
-        DogBreedDto result = adoptionCenterServiceImplementation.getAvailableDogBreeds(1L).get(0);
+        DogBreedDto result = adoptionCenterServiceImplementation.getAvailableDogBreeds(1L).getFirst();
         assertEquals(dogBreedDto, result);
         verify(adoptionCenterRepository, times(1)).findById(anyLong());
     }
@@ -329,7 +329,7 @@ public class AdoptionCenterServiceImplementationTest {
         when(adoptionCenterRepository.save(any(AdoptionCenter.class))).thenReturn(adoptionCenter);
         when(adoptionCenterMapper.convertToDTO(any(AdoptionCenter.class))).thenReturn(adoptionCenterDto);
 
-        CatBreedDto result = adoptionCenterServiceImplementation.getAvailableCatBreeds(1L).get(0);
+        CatBreedDto result = adoptionCenterServiceImplementation.getAvailableCatBreeds(1L).getFirst();
         assertEquals(catBreedDto, result);
         verify(adoptionCenterRepository, times(1)).findById(anyLong());
     }

@@ -112,18 +112,18 @@ public class BehaviorGuideController {
     }
 
     @MutationMapping
-    public BehaviorGuideDto removeSuitableCatBreedFromBehaviorGuide(@Argument Long id, @Argument Long catBreedId) {
+    public BehaviorGuideDto deleteSuitableCatBreedFromBehaviorGuide(@Argument Long id, @Argument Long catBreedId) {
         try {
-            return behaviorGuideService.removeSuitableCatBreedFromBehaviorGuide(id, catBreedId);
+            return behaviorGuideService.deleteSuitableCatBreedFromBehaviorGuide(id, catBreedId);
         } catch (Exception e) {
             throw new CustomException("Could not remove cat breed from behavior guide with id " + id + ". " + e.getMessage(), e);
         }
     }
 
     @MutationMapping
-    public BehaviorGuideDto removeSuitableDogBreedFromBehaviorGuide(@Argument Long id, @Argument Long dogBreedId) {
+    public BehaviorGuideDto deleteSuitableDogBreedFromBehaviorGuide(@Argument Long id, @Argument Long dogBreedId) {
         try {
-            return behaviorGuideService.removeSuitableDogBreedFromBehaviorGuide(id, dogBreedId);
+            return behaviorGuideService.deleteSuitableDogBreedFromBehaviorGuide(id, dogBreedId);
         } catch (Exception e) {
             throw new CustomException("Could not remove dog breed from behavior guide with id " + id + ". " + e.getMessage(), e);
         }

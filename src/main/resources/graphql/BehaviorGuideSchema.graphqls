@@ -18,8 +18,8 @@ extend type Mutation {
     updateBehaviorGuide(input: BehaviorGuideInput): BehaviorGuideDto
     addSuitableDogBreedToBehaviorGuide(id: ID!, idDogBreed: ID!): BehaviorGuideDto
     addSuitableCatBreedToBehaviorGuide(id: ID!, idCatBreed: ID!): BehaviorGuideDto
-    removeSuitableCatBreedFromBehaviorGuide(id:ID!,catBreedId: ID!): BehaviorGuideDto
-    removeSuitableDogBreedFromBehaviorGuide(id:ID!,dogBreedId: ID!): BehaviorGuideDto
+    deleteSuitableCatBreedFromBehaviorGuide(id:ID!,catBreedId: ID!): BehaviorGuideDto
+    deleteSuitableDogBreedFromBehaviorGuide(id:ID!,dogBreedId: ID!): BehaviorGuideDto
     deleteBehaviorGuide(id: ID!): Boolean
 
 }
