@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Dto.GroomingGuideDto;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.GroomingGuideInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -36,7 +37,7 @@ public class GroomingGuideController {
         try {
             return groomingGuideService.getAllGroomingGuides(page, size);
         } catch (Exception e) {
-            throw new CustomException("Could not find grooming guides" + e.getMessage());
+            throw new NotFoundElementException("Could not retrieve grooming guides");
         }
     }
 
@@ -52,7 +53,7 @@ public class GroomingGuideController {
     @QueryMapping
     public List<DogBreedDto> getGroomingSuitableDogBreeds(@Argument Long id) {
         try {
-            return groomingGuideService.getSuitableDogBreeds(id);
+            return groomingGuideService.getGroomingSuitableDogBreeds(id);
         } catch (Exception e) {
             throw new CustomException("Could not find grooming guide" + e.getMessage());
         }
@@ -61,7 +62,7 @@ public class GroomingGuideController {
     @QueryMapping
     public List<CatBreedDto> getGroomingSuitableCatBreeds(@Argument Long id) {
         try {
-            return groomingGuideService.getSuitableCatBreeds(id);
+            return groomingGuideService.getGroomingSuitableCatBreeds(id);
         } catch (Exception e) {
             throw new CustomException("Could not find grooming guide" + e.getMessage());
         }
@@ -106,27 +107,23 @@ public class GroomingGuideController {
     }
 
     @MutationMapping
-    public void deleteGroomingGuide(@Argument Long id) {
-        try {
-            groomingGuideService.deleteGroomingGuide(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete grooming guide with id " + id + ". " + e.getMessage(), e);
-        }
+    public Boolean deleteGroomingGuide(@Argument Long id) {
+        return groomingGuideService.deleteGroomingGuide(id);
     }
 
     @MutationMapping
-    public GroomingGuideDto removeSuitableCatBreedFromGroomingGuide(@Argument Long id, @Argument Long catBreedId) {
+    public GroomingGuideDto deleteSuitableCatBreedFromGroomingGuide(@Argument Long id, @Argument Long catBreedId) {
         try {
-            return groomingGuideService.removeSuitableCatBreedFromGroomingGuide(id, catBreedId);
+            return groomingGuideService.deleteSuitableCatBreedFromGroomingGuide(id, catBreedId);
         } catch (Exception e) {
             throw new CustomException("Could not remove cat breed from grooming guide with id " + id + ". " + e.getMessage(), e);
         }
     }
 
     @MutationMapping
-    public GroomingGuideDto removeSuitableDogBreedFromGroomingGuide(@Argument Long id, @Argument Long dogBreedId) {
+    public GroomingGuideDto deleteSuitableDogBreedFromGroomingGuide(@Argument Long id, @Argument Long dogBreedId) {
         try {
-            return groomingGuideService.removeSuitableDogBreedFromGroomingGuide(id, dogBreedId);
+            return groomingGuideService.deleteSuitableDogBreedFromGroomingGuide(id, dogBreedId);
         } catch (Exception e) {
             throw new CustomException("Could not remove dog breed from grooming guide with id " + id + ". " + e.getMessage(), e);
         }

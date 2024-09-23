@@ -17,8 +17,8 @@ extend type Mutation {
     updateGroomingGuide(input: GroomingGuideInput): GroomingGuideDto
     addSuitableDogBreedToGroomingGuide(id: ID!, idDogBreed: ID!): GroomingGuideDto
     addSuitableCatBreedToGroomingGuide(id: ID!, idCatBreed: ID!): GroomingGuideDto
-    removeSuitableCatBreedFromGroomingGuide(id:ID!,catBreedId: ID!): GroomingGuideDto
-    removeSuitableDogBreedFromGroomingGuide(id:ID!,dogBreedId: ID!): GroomingGuideDto
+    deleteSuitableCatBreedFromGroomingGuide(id:ID!,catBreedId: ID!): GroomingGuideDto
+    deleteSuitableDogBreedFromGroomingGuide(id:ID!,dogBreedId: ID!): GroomingGuideDto
     deleteGroomingGuide(id: ID!): Boolean
 }
 
