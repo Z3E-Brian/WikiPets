@@ -1,7 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.jetbrains.annotations.NotNull;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Dto.GroomingGuideDto;
@@ -23,13 +22,13 @@ public interface GroomingGuideService {
 
     Map<String, Object> getAllGroomingGuides(int page, int size);
 
-    List<DogBreedDto> getSuitableDogBreeds(Long GroomingGuideId);
+    List<DogBreedDto> getGroomingSuitableDogBreeds(Long groomingGuideId);
 
-    List<CatBreedDto> getSuitableCatBreeds(Long GroomingGuideId);
+    List<CatBreedDto> getGroomingSuitableCatBreeds(Long groomingGuideId);
 
-    GroomingGuideDto removeSuitableCatBreedFromGroomingGuide(Long id, Long idCatBreed);
+    GroomingGuideDto deleteSuitableCatBreedFromGroomingGuide(Long id, Long idCatBreed);
 
-    GroomingGuideDto removeSuitableDogBreedFromGroomingGuide(Long id, Long idDogBreed);
+    GroomingGuideDto deleteSuitableDogBreedFromGroomingGuide(Long id, Long idDogBreed);
 
-    void deleteGroomingGuide(Long id);
+    Boolean deleteGroomingGuide(Long id);
 }

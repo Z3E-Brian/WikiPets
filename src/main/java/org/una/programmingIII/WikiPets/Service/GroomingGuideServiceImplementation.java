@@ -1,18 +1,21 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
+import org.una.programmingIII.WikiPets.Dto.GroomingGuideDto;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
-import org.una.programmingIII.WikiPets.Dto.GroomingGuideDto;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.GroomingGuide;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
-import org.una.programmingIII.WikiPets.Model.GroomingGuide;
 import org.una.programmingIII.WikiPets.Repository.GroomingGuideRepository;
 
 import java.time.LocalDate;
@@ -23,7 +26,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-@Validated
 public class GroomingGuideServiceImplementation implements GroomingGuideService {
     private final GroomingGuideRepository groomingGuideRepository;
     private final GenericMapper<DogBreed, DogBreedDto> dogBreedMapper;
@@ -62,14 +64,16 @@ public class GroomingGuideServiceImplementation implements GroomingGuideService 
     }
 
     @Override
-    public GroomingGuideDto getGroomingGuideById(Long id) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + id));
-        return convertToDto(groomingGuide);
+    public GroomingGuideDto getGroomingGuideById(@NotNull Long id) {
+        validateId(id);
+        return groomingGuideRepository.findById(id)
+                .map(this::convertToDto)
+                .orElseThrow(() -> new NotFoundElementException("Grooming guide Not Found with id: " + id));
     }
 
     @Override
-    public GroomingGuideDto createGroomingGuide(@Validated GroomingGuideDto groomingGuideDto) {
+    public GroomingGuideDto createGroomingGuide(@NotNull GroomingGuideDto groomingGuideDto) {
+        validateGroomingGuideDto(groomingGuideDto);
         groomingGuideDto.setCreateDate(LocalDate.now());
         groomingGuideDto.setLastUpdate(LocalDate.now());
         GroomingGuide groomingGuide = convertToEntity(groomingGuideDto);
@@ -77,38 +81,30 @@ public class GroomingGuideServiceImplementation implements GroomingGuideService 
     }
 
     @Override
-    public void deleteGroomingGuide(Long id) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + id));
-        groomingGuide.getSuitableCatBreeds().forEach(catBreed ->
-                catBreed.getHealthIssues().removeIf(grooming -> grooming.getId().equals(id))
-        );
-        groomingGuide.getSuitableDogBreeds().forEach(dogBreed ->
-                dogBreed.getHealthIssues().removeIf(grooming -> grooming.getId().equals(id))
-        );
+    public Boolean deleteGroomingGuide(@NotNull Long id) {
+        validateId(id);
+        GroomingGuide groomingGuide = findGroomingGuideById(id);
+        removeBreedsFromGroomingGuide(groomingGuide, id);
         groomingGuideRepository.deleteById(id);
+        return true;
     }
 
     @Override
-    public GroomingGuideDto updateGroomingGuide(GroomingGuideDto groomingGuideDto) {
-        GroomingGuide oldGroomingGuide = groomingGuideRepository.findById(groomingGuideDto.getId())
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + groomingGuideDto.getId()));
+    public GroomingGuideDto updateGroomingGuide(@NotNull GroomingGuideDto groomingGuideDto) {
+        validateId(groomingGuideDto.getId());
+        validateGroomingGuideDto(groomingGuideDto);
+
+        GroomingGuide oldGroomingGuide = findGroomingGuideById(groomingGuideDto.getId());
         GroomingGuide newGroomingGuide = convertToEntity(groomingGuideDto);
         newGroomingGuide.setCreateDate(oldGroomingGuide.getCreateDate());
         newGroomingGuide.setLastUpdate(LocalDate.now());
-
-        newGroomingGuide.setSuitableCatBreeds(oldGroomingGuide.getSuitableCatBreeds() != null ?
-                new ArrayList<>(oldGroomingGuide.getSuitableCatBreeds()) : new ArrayList<>());
-        newGroomingGuide.setSuitableDogBreeds(oldGroomingGuide.getSuitableDogBreeds() != null ?
-                new ArrayList<>(oldGroomingGuide.getSuitableDogBreeds()) : new ArrayList<>());
-
+        copyCollections(oldGroomingGuide, newGroomingGuide);
         return convertToDto(groomingGuideRepository.save(newGroomingGuide));
     }
 
     @Override
-    public GroomingGuideDto addSuitableDogBreedToGroomingGuide(Long id, Long idDogBreed) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + id));
+    public GroomingGuideDto addSuitableDogBreedToGroomingGuide(@NotNull Long id,@NotNull Long idDogBreed) {
+        GroomingGuide groomingGuide = findGroomingGuideById(id);
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
         if (!groomingGuide.getSuitableDogBreeds().contains(dogBreed)) {
             groomingGuide.getSuitableDogBreeds().add(dogBreed);
@@ -117,9 +113,10 @@ public class GroomingGuideServiceImplementation implements GroomingGuideService 
     }
 
     @Override
-    public GroomingGuideDto addSuitableCatBreedToGroomingGuide(Long id, Long idCatBreed) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + id));
+    public GroomingGuideDto addSuitableCatBreedToGroomingGuide(@NotNull Long id,@NotNull Long idCatBreed) {
+        validateId(id);
+        validateId(idCatBreed);
+        GroomingGuide groomingGuide = findGroomingGuideById(id);
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
         if (!groomingGuide.getSuitableCatBreeds().contains(catBreed)) {
             groomingGuide.getSuitableCatBreeds().add(catBreed);
@@ -128,52 +125,40 @@ public class GroomingGuideServiceImplementation implements GroomingGuideService 
     }
 
     @Override
-    public List<DogBreedDto> getSuitableDogBreeds(Long groomingGuideId) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(groomingGuideId)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + groomingGuideId));
+    public List<DogBreedDto> getGroomingSuitableDogBreeds(@NotNull Long groomingGuideId) {
+        validateId(groomingGuideId);
+        GroomingGuide groomingGuide = findGroomingGuideById(groomingGuideId);
         return groomingGuide.getSuitableDogBreeds().stream()
                 .map(dogBreedMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<CatBreedDto> getSuitableCatBreeds(Long groomingGuideId) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(groomingGuideId)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + groomingGuideId));
+    public List<CatBreedDto> getGroomingSuitableCatBreeds(@NotNull Long groomingGuideId) {
+        validateId(groomingGuideId);
+        GroomingGuide groomingGuide = findGroomingGuideById(groomingGuideId);
         return groomingGuide.getSuitableCatBreeds().stream()
                 .map(catBreedMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public GroomingGuideDto removeSuitableCatBreedFromGroomingGuide(Long id, Long idCatBreed) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + id));
+    public GroomingGuideDto deleteSuitableCatBreedFromGroomingGuide(@NotNull Long id,@NotNull Long idCatBreed) {
+        validateId(id);
+        validateId(idCatBreed);
+        GroomingGuide groomingGuide = findGroomingGuideById(id);
         CatBreed catBreed = catBreedMapper.convertToEntity(catBreedService.getBreedById(idCatBreed));
-        if (catBreed == null) {
-            throw new RuntimeException("Cat breed Not Found with id: " + idCatBreed);
-        }
-        if (groomingGuide.getSuitableCatBreeds().contains(catBreed)) {
-            groomingGuide.getSuitableCatBreeds().remove(catBreed);
-        } else {
-            throw new RuntimeException("Cat breed Not Found in Grooming guide");
-        }
+        groomingGuide.getSuitableCatBreeds().remove(catBreed);
         return convertToDto(groomingGuideRepository.save(groomingGuide));
     }
 
     @Override
-    public GroomingGuideDto removeSuitableDogBreedFromGroomingGuide(Long id, Long idDogBreed) {
-        GroomingGuide groomingGuide = groomingGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Grooming guide Not Found with id: " + id));
+    public GroomingGuideDto deleteSuitableDogBreedFromGroomingGuide(@NotNull Long id,@NotNull Long idDogBreed) {
+        validateId(id);
+        validateId(idDogBreed);
+        GroomingGuide groomingGuide = findGroomingGuideById(id);
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
-        if (dogBreed == null) {
-            throw new RuntimeException("Dog breed Not Found with id: " + idDogBreed);
-        }
-        if (groomingGuide.getSuitableDogBreeds().contains(dogBreed)) {
-            groomingGuide.getSuitableDogBreeds().remove(dogBreed);
-        } else {
-            throw new RuntimeException("Dog breed Not Found in Grooming guide");
-        }
+        groomingGuide.getSuitableDogBreeds().remove(dogBreed);
         return convertToDto(groomingGuideRepository.save(groomingGuide));
     }
 
@@ -183,5 +168,42 @@ public class GroomingGuideServiceImplementation implements GroomingGuideService 
 
     private GroomingGuide convertToEntity(GroomingGuideDto groomingGuideDto) {
         return groomingGuideMapper.convertToEntity(groomingGuideDto);
+    }
+
+    private void copyCollections(@NotNull GroomingGuide oldCenter, @NotNull GroomingGuide newCenter) {
+        newCenter.setSuitableDogBreeds(oldCenter.getSuitableDogBreeds());
+        newCenter.setSuitableCatBreeds(oldCenter.getSuitableCatBreeds());
+    }
+
+    private void validateGroomingGuideDto(@NotNull GroomingGuideDto dto) {
+        if (dto.getSteps() == null || dto.getSteps().trim().isEmpty()) {
+            throw new BlankInputException("Can't accept spaces in blank");
+        }
+        if (dto.getContent() == null || dto.getContent().trim().isEmpty()) {
+            throw new BlankInputException("Can't accept spaces in blank");
+        }
+        if(dto.getToolsNeeded()==null || dto.getToolsNeeded().trim().isEmpty()){
+            throw new BlankInputException("Can't accept spaces in blank");
+        }
+    }
+
+    private void validateId(Long id) {
+        if (id <= 0) {
+            throw new InvalidInputException("Invalid ID");
+        }
+    }
+
+    private GroomingGuide findGroomingGuideById(Long id) {
+        return groomingGuideRepository.findById(id)
+                .orElseThrow(() -> new NotFoundElementException("Adoption Center not found"));
+    }
+
+    private void removeBreedsFromGroomingGuide(@NotNull GroomingGuide groomingGuide, @NotNull Long id) {
+        groomingGuide.getSuitableCatBreeds().forEach(catBreed ->
+                catBreed.getGroomingGuides().removeIf(center -> center.getId().equals(id))
+        );
+        groomingGuide.getSuitableDogBreeds().forEach(dogBreed ->
+                dogBreed.getGroomingGuides().removeIf(center -> center.getId().equals(id))
+        );
     }
 }
