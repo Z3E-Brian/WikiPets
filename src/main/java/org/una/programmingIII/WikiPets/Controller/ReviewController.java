@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
 import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.ReviewInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -38,8 +39,8 @@ public class ReviewController {
     public Map<String, Object> getReviews(@Argument int page, @Argument int size) {
         try {
             return reviewService.getReviews(page, size);
-        } catch (Exception e) {
-            throw new CustomException("Could not retrieve reviews" + e.getMessage());
+        } catch (NotFoundElementException e) {
+            throw new NotFoundElementException("Could not retrieve reviews" + e.getMessage());
         }
     }
 
@@ -47,8 +48,8 @@ public class ReviewController {
     public ReviewDto getReviewById(@Argument Long id) {
         try {
             return reviewService.getReviewById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find adoption center" + e.getMessage());
+        } catch (NotFoundElementException e) {
+            throw new NotFoundElementException("Could not find adoption center" + e.getMessage());
         }
     }
 

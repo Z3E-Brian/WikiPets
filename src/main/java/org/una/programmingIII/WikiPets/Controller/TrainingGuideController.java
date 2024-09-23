@@ -8,6 +8,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.TrainingGuideInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -33,8 +34,8 @@ public class TrainingGuideController {
     public Map<String, Object> getTrainingGuides(@Argument int page, @Argument int size) {
         try {
             return trainingGuideService.getAllTrainingGuides(page, size);
-        } catch (Exception e) {
-            throw new CustomException("Could not retrieve feeding schedules" + e.getMessage());
+        } catch (NotFoundElementException e) {
+            throw new NotFoundElementException("Could not retrieve feeding schedules" + e.getMessage());
         }
     }
 

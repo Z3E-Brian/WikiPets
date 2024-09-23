@@ -18,7 +18,7 @@ public interface BehaviorGuideService {
 
     BehaviorGuideDto createBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
 
-    void deleteBehaviorGuide(Long id);
+    Boolean deleteBehaviorGuide(Long id);
 
     BehaviorGuideDto updateBehaviorGuide(BehaviorGuideDto behaviorGuideDto);
 

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.AdoptionCenter;
@@ -70,10 +71,11 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
     }
 
     @Override
-    public void deleteAdoptionCenter(Long id) {
+    public Boolean deleteAdoptionCenter(Long id) {
         AdoptionCenter adoptionCenter = adoptionCenterRepository.findById(id)
-                .orElseThrow(() -> new CustomException("Adoption center not found with id: " + id));
+                .orElseThrow(() -> new NotFoundElementException("Adoption center not found with id: " + id));
         adoptionCenterRepository.deleteById(id);
+        return true;
     }
 
     @Override

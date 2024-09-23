@@ -14,7 +14,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "traning_guides")
+@Table(name = "training_guides")
 public class TrainingGuide {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,77 +1,56 @@
-//package org.una.programmingIII.WikiPets.Dto;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import java.time.LocalDate;
-//
-//public class ImageDtoTest {
-//
-//    private ImageDto imageDto;
-//
-//    @BeforeEach
-//    public void setUp() {
-//        imageDto = new ImageDto();
-//        imageDto.setId(1L);
-//        imageDto.setUrl("http://example.com/image.jpg");
-//        imageDto.setDescription("Sample Image");
-//        imageDto.setCreateDate(LocalDate.now());
-//        imageDto.setLastUpdate(LocalDate.now());
-//    }
-//
-//    @Test
-//    public void testImageDtoCreation() {
-//        assertNotNull(imageDto);
-//    }
-//
-//    @Test
-//    public void testGetters() {
-//        assertEquals(1L, imageDto.getId());
-//        assertEquals("http://example.com/image.jpg", imageDto.getUrl());
-//        assertEquals("Sample Image", imageDto.getDescription());
-//        assertTrue(imageDto.getIsDogBreed());
-//        assertEquals(101, imageDto.getPetBreedId());
-//        assertEquals(LocalDate.now(), imageDto.getCreateDate());
-//        assertEquals(LocalDate.now(), imageDto.getLastUpdate());
-//    }
-//
-//    @Test
-//    public void testSetters() {
-//        LocalDate newDate = LocalDate.of(2022, 1, 1);
-//
-//        imageDto.setUrl("http://example.com/new_image.jpg");
-//        imageDto.setDescription("New Image");
-//        imageDto.setIsDogBreed(false);
-//        imageDto.setPetBreedId(202);
-//        imageDto.setCreateDate(newDate);
-//        imageDto.setLastUpdate(newDate);
-//
-//        assertEquals("http://example.com/new_image.jpg", imageDto.getUrl());
-//        assertEquals("New Image", imageDto.getDescription());
-//        assertFalse(imageDto.getIsDogBreed());
-//        assertEquals(202, imageDto.getPetBreedId());
-//        assertEquals(newDate, imageDto.getCreateDate());
-//        assertEquals(newDate, imageDto.getLastUpdate());
-//    }
-//
-//    @Test
-//    public void testNoArgsConstructor() {
-//        ImageDto dto = new ImageDto();
-//        assertNotNull(dto);
-//    }
-//
-//    @Test
-//    public void testAllArgsConstructor() {
-//        LocalDate date = LocalDate.of(2022, 1, 1);
-//        ImageDto dto = new ImageDto(2L, "http://example.com/another_image.jpg", "Another Image", false, 303, date, date);
-//
-//        assertEquals(2L, dto.getId());
-//        assertEquals("http://example.com/another_image.jpg", dto.getUrl());
-//        assertEquals("Another Image", dto.getDescription());
-//        assertFalse(dto.getIsDogBreed());
-//        assertEquals(303, dto.getPetBreedId());
-//        assertEquals(date, dto.getCreateDate());
-//        assertEquals(date, dto.getLastUpdate());
-//    }
-//}
+package org.una.programmingIII.WikiPets.Dto;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class ImageDtoTest {
+    private ImageDto imageDto;
+
+    @BeforeEach
+    void setUp() {
+        imageDto = new ImageDto(1L, "http://example.com/image.jpg", "A cute cat", null, null, LocalDate.now(), LocalDate.now());
+    }
+
+    @Test
+    public void testGetters() {
+        assertEquals(1L, imageDto.getId());
+        assertEquals("http://example.com/image.jpg", imageDto.getUrl());
+        assertEquals("A cute cat", imageDto.getDescription());
+        assertEquals(LocalDate.now(), imageDto.getCreateDate());
+        assertEquals(LocalDate.now(), imageDto.getLastUpdate());
+    }
+
+    @Test
+    public void testSetters() {
+        imageDto.setId(2L);
+        imageDto.setUrl("http://example.com/new_image.jpg");
+        imageDto.setDescription("A cute dog");
+
+        assertEquals(2L, imageDto.getId());
+        assertEquals("http://example.com/new_image.jpg", imageDto.getUrl());
+        assertEquals("A cute dog", imageDto.getDescription());
+    }
+
+    @Test
+    public void testNoArgsConstructor() {
+        ImageDto newImageDto = new ImageDto();
+        assertEquals(null, newImageDto.getId());
+        assertEquals(null, newImageDto.getUrl());
+        assertEquals(null, newImageDto.getDescription());
+        assertEquals(null, newImageDto.getCreateDate());
+        assertEquals(null, newImageDto.getLastUpdate());
+    }
+
+    @Test
+    public void testAllArgsConstructor() {
+        LocalDate now = LocalDate.now();
+        ImageDto anotherImageDto = new ImageDto(1L, "http://example.com/image.jpg", "A cute cat", null, null, now, now);
+        assertEquals(1L, anotherImageDto.getId());
+        assertEquals("http://example.com/image.jpg", anotherImageDto.getUrl());
+        assertEquals("A cute cat", anotherImageDto.getDescription());
+    }
+}

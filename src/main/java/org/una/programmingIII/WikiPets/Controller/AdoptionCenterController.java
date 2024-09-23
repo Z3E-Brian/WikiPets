@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.AdoptionCenterInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -36,7 +37,7 @@ public class AdoptionCenterController {
         try {
             return adoptionCenterService.getAllAdoptionCenters(page, size);
         } catch (Exception e) {
-            throw new CustomException("Could not find adoption centers" + e.getMessage());
+            throw new NotFoundElementException("Could not retrieve adoption centers" + e.getMessage());
         }
     }
 
@@ -57,7 +58,8 @@ public class AdoptionCenterController {
             throw new CustomException("Could not find available dog breeds" + e.getMessage());
         }
     }
-@QueryMapping
+
+    @QueryMapping
     public List<CatBreedDto> getAvailableCatBreeds(@Argument Long id) {
         try {
             return adoptionCenterService.getAvailableCatBreeds(id);
@@ -90,8 +92,7 @@ public class AdoptionCenterController {
     @MutationMapping
     public boolean deleteAdoptionCenter(@Argument Long id) {
         try {
-            adoptionCenterService.deleteAdoptionCenter(id);
-            return true;
+            return adoptionCenterService.deleteAdoptionCenter(id);
         } catch (Exception e) {
             throw new CustomException("Could not delete adoption center" + id + ". " + e.getMessage());
         }

@@ -109,4 +109,15 @@ public class UserDtoTest {
 
         assertEquals(expectedString, userDto.toString());
     }
+    @Test
+    public void constructorWithNameAndEmailTest() {
+        UserDto userDto = new UserDto("Alice", "alice@example.com");
+        assertEquals("Alice", userDto.getName());
+        assertEquals("alice@example.com", userDto.getEmail());
+        assertEquals(LocalDate.now(), userDto.getCreateDate());
+        assertEquals(LocalDate.now(), userDto.getLastUpdate());
+        assertEquals(null, userDto.getFavoriteDogBreeds());
+        assertEquals(null, userDto.getFavoriteCatBreeds());
+    }
+
 }

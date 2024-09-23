@@ -46,7 +46,6 @@ public class FeedingScheduleServiceImplementation implements FeedingScheduleServ
             feedingSchedule.setDogBreeds(feedingSchedule.getDogBreeds().stream().limit(10).collect(Collectors.toList()));
         });
         return Map.of("feedingSchedules", feedingSchedules.map(this::convertToDto).getContent(), "totalPages", feedingSchedules.getTotalPages(), "totalElements", feedingSchedules.getTotalElements());
-
     }
 
     @Override

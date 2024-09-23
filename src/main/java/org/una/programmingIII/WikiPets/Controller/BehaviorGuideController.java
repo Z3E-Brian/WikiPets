@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Dto.BehaviorGuideDto;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.BehaviorGuideInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -36,7 +37,7 @@ public class BehaviorGuideController {
         try {
             return behaviorGuideService.getAllBehaviorGuides(page, size);
         } catch (Exception e) {
-            throw new CustomException("Could not find behavior guides" + e.getMessage());
+            throw new NotFoundElementException("Could not retrieve behavior guides");
         }
     }
 
@@ -106,12 +107,8 @@ public class BehaviorGuideController {
     }
 
     @MutationMapping
-    public void deleteBehaviorGuide(@Argument Long id) {
-        try {
-            behaviorGuideService.deleteBehaviorGuide(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete grooming guide with id " + id + ". " + e.getMessage(), e);
-        }
+    public Boolean deleteBehaviorGuide(@Argument Long id) {
+            return behaviorGuideService.deleteBehaviorGuide(id);
     }
 
     @MutationMapping

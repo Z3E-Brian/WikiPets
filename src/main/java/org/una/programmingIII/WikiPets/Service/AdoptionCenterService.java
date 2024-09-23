@@ -22,7 +22,7 @@ public interface AdoptionCenterService {
 
     AdoptionCenterDto removeDogBreedFromAdoptionCenter(Long centerId, Long dogBreedId);
 
-    void deleteAdoptionCenter(Long id);
+     Boolean deleteAdoptionCenter(Long id);
 
     List<DogBreedDto> getAvailableDogBreeds(Long adoptionCenterId);
 

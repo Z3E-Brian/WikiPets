@@ -8,6 +8,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 import org.una.programmingIII.WikiPets.Dto.FeedingScheduleDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.FeedingScheduleInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -29,7 +30,12 @@ public class FeedingScheduleController {
 
     @QueryMapping
     public Map<String, Object> getFeedingSchedules(@Argument int page, @Argument int size) {
+        try {
             return feedingScheduleService.getFeedingSchedules(page, size);
+
+        } catch (NotFoundElementException e) {
+            throw new NotFoundElementException(e.getMessage());
+        }
     }
 
     @QueryMapping
@@ -45,8 +51,8 @@ public class FeedingScheduleController {
 
     @MutationMapping
     public FeedingScheduleDto updateFeedingSchedule(@Argument FeedingScheduleInput input) {
-            FeedingScheduleDto feedingScheduleDto = convertToDto(input);
-            return feedingScheduleService.updateFeedingSchedule(feedingScheduleDto);
+        FeedingScheduleDto feedingScheduleDto = convertToDto(input);
+        return feedingScheduleService.updateFeedingSchedule(feedingScheduleDto);
     }
 
     @MutationMapping
@@ -57,23 +63,23 @@ public class FeedingScheduleController {
 
     @MutationMapping
     public FeedingScheduleDto addDogBreedInFeedingSchedule(@Argument Long id, @Argument Long idDogBreed) {
-            return feedingScheduleService.addDogBreedInFeedingSchedule(id, idDogBreed);
+        return feedingScheduleService.addDogBreedInFeedingSchedule(id, idDogBreed);
     }
 
     @MutationMapping
     public FeedingScheduleDto deleteDogBreedInFeedingSchedule(@Argument Long id, @Argument Long idDogBreed) {
-            return feedingScheduleService.deleteDogBreedInFeedingSchedule(id, idDogBreed);
+        return feedingScheduleService.deleteDogBreedInFeedingSchedule(id, idDogBreed);
     }
 
 
     @MutationMapping
     public FeedingScheduleDto addCatBreedInFeedingSchedule(@Argument Long id, @Argument Long idCatBreed) {
-            return feedingScheduleService.addCatBreedInInFeedingSchedule(id, idCatBreed);
+        return feedingScheduleService.addCatBreedInInFeedingSchedule(id, idCatBreed);
     }
 
     @MutationMapping
     public FeedingScheduleDto deleteCatBreedInFeedingSchedule(@Argument Long id, @Argument Long idCatBreed) {
-            return feedingScheduleService.deleteCatBreedInFeedingSchedule(id, idCatBreed);
+        return feedingScheduleService.deleteCatBreedInFeedingSchedule(id, idCatBreed);
     }
 
 

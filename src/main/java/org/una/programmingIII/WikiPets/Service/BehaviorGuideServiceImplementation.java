@@ -8,6 +8,8 @@ import org.springframework.validation.annotation.Validated;
 import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Dto.BehaviorGuideDto;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
@@ -77,9 +79,12 @@ public class BehaviorGuideServiceImplementation implements BehaviorGuideService 
     }
 
     @Override
-    public void deleteBehaviorGuide(Long id) {
+    public Boolean deleteBehaviorGuide(Long id) {
+        if (id <= 0) {
+            throw new InvalidInputException("Invalid ID");
+        }
         BehaviorGuide behaviorGuide = behaviorGuideRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Behavior guide Not Found with id: " + id));
+                .orElseThrow(() -> new NotFoundElementException("Behavior guide Not Found with id: " + id));
         behaviorGuide.getSuitableCatBreeds().forEach(catBreed ->
                 catBreed.getHealthIssues().removeIf(behavior -> behavior.getId().equals(id))
         );
@@ -87,6 +92,7 @@ public class BehaviorGuideServiceImplementation implements BehaviorGuideService 
                 dogBreed.getHealthIssues().removeIf(behavior -> behavior.getId().equals(id))
         );
         behaviorGuideRepository.deleteById(id);
+        return true;
     }
 
     @Override
