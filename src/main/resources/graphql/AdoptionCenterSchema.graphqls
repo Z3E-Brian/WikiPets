@@ -15,8 +15,8 @@ extend type Mutation{
     createAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
     updateAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
     deleteAdoptionCenter(id: ID!): Boolean
-    removeCatBreedFromAdoptionCenter(id:ID!,catBreedId: ID!): AdoptionCenterDto
-    removeDogBreedFromAdoptionCenter(id:ID!,dogBreedId: ID!): AdoptionCenterDto
+    deleteCatBreedFromAdoptionCenter(id:ID!,catBreedId: ID!): AdoptionCenterDto
+    deleteDogBreedFromAdoptionCenter(id:ID!,dogBreedId: ID!): AdoptionCenterDto
     addDogBreedInAdoptionCenter(id: ID!, idDogBreed: ID!): AdoptionCenterDto
     addCatBreedInAdoptionCenter(id: ID!, idCatBreed: ID!): AdoptionCenterDto
 }

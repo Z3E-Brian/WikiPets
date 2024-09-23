@@ -18,11 +18,11 @@ public interface AdoptionCenterService {
 
     AdoptionCenterDto createAdoptionCenter(AdoptionCenterDto adoptionCenterDto);
 
-    AdoptionCenterDto removeCatBreedFromAdoptionCenter(Long centerId, Long catBreedId);
+    AdoptionCenterDto deleteCatBreedFromAdoptionCenter(Long centerId, Long catBreedId);
 
-    AdoptionCenterDto removeDogBreedFromAdoptionCenter(Long centerId, Long dogBreedId);
+    AdoptionCenterDto deleteDogBreedFromAdoptionCenter(Long centerId, Long dogBreedId);
 
-     Boolean deleteAdoptionCenter(Long id);
+    Boolean deleteAdoptionCenter(Long id);
 
     List<DogBreedDto> getAvailableDogBreeds(Long adoptionCenterId);
 

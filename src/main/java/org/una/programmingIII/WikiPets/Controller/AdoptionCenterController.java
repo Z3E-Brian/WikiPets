@@ -117,18 +117,18 @@ public class AdoptionCenterController {
     }
 
     @MutationMapping
-    public AdoptionCenterDto removeCatBreedFromAdoptionCenter(@Argument Long id, @Argument Long catBreedId) {
+    public AdoptionCenterDto deleteCatBreedFromAdoptionCenter(@Argument Long id, @Argument Long catBreedId) {
         try {
-            return adoptionCenterService.removeCatBreedFromAdoptionCenter(id, catBreedId);
+            return adoptionCenterService.deleteCatBreedFromAdoptionCenter(id, catBreedId);
         } catch (Exception e) {
             throw new CustomException("Could not remove cat breed from adoption center with id " + id + ". " + e.getMessage(), e);
         }
     }
 
     @MutationMapping
-    public AdoptionCenterDto removeDogBreedFromAdoptionCenter(@Argument Long id, @Argument Long dogBreedId) {
+    public AdoptionCenterDto deleteDogBreedFromAdoptionCenter(@Argument Long id, @Argument Long dogBreedId) {
         try {
-            return adoptionCenterService.removeDogBreedFromAdoptionCenter(id, dogBreedId);
+            return adoptionCenterService.deleteDogBreedFromAdoptionCenter(id, dogBreedId);
         } catch (Exception e) {
             throw new CustomException("Could not remove dog breed from adoption center with id " + id + ". " + e.getMessage(), e);
         }
