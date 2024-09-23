@@ -232,6 +232,6 @@ class GroomingGuideControllerTest {
             groomingGuideController.deleteSuitableDogBreedFromGroomingGuide(1L, 2L);
         });
 
-        assertEquals("Could not remove dog breed from grooming guide with id: 1. Dog breed not found", exception.getMessage());
+        assertEquals("Could not remove dog breed from grooming guide with id 1. Dog breed not found", exception.getMessage());
     }
 }
