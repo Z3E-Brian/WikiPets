@@ -19,6 +19,7 @@ import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Repository.AdoptionCenterRepository;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -48,12 +49,16 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
 
     @Override
     public Map<String, Object> getAllAdoptionCenters(int page, int size) {
-        Page<AdoptionCenter> adoptionCenterPage = adoptionCenterRepository.findAll(PageRequest.of(page, size));
-        return Map.of(
-                "adoptionCenters", adoptionCenterPage.map(this::convertToDto).getContent(),
-                "totalPages", adoptionCenterPage.getTotalPages(),
-                "totalElements", adoptionCenterPage.getTotalElements()
-        );
+        Page<AdoptionCenter> adoptionCenters = adoptionCenterRepository.findAll(PageRequest.of(page, size));
+        adoptionCenters.forEach(adoptionCenter -> {
+            adoptionCenter.setAvailableCatBreeds(adoptionCenter.getAvailableCatBreeds().stream().limit(10).collect(Collectors.toList()));
+            adoptionCenter.setAvailableDogBreeds(adoptionCenter.getAvailableDogBreeds().stream().limit(10).collect(Collectors.toList()));
+        });
+        Map<String, Object> response = new HashMap<>();
+        response.put("adoptionCenters", adoptionCenters.map(this::convertToDto).getContent());
+        response.put("totalPages", adoptionCenters.getTotalPages());
+        response.put("totalElements", adoptionCenters.getTotalElements());
+        return response;
     }
 
     @Override
@@ -97,6 +102,8 @@ public class AdoptionCenterServiceImplementation implements AdoptionCenterServic
 
     @Override
     public AdoptionCenterDto addDogBreedInAdoptionCenter(@NotNull Long id,@NotNull Long idDogBreed) {
+        validateId(id);
+        validateId(idDogBreed);
         AdoptionCenter adoptionCenter = findAdoptionCenterById(id);
         DogBreed dogBreed = dogBreedMapper.convertToEntity(dogBreedService.getBreedById(idDogBreed));
         if (!adoptionCenter.getAvailableDogBreeds().contains(dogBreed)) {
