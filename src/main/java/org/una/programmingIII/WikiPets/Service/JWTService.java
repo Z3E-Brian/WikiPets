@@ -46,7 +46,7 @@ public class JWTService {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -68,7 +68,7 @@ public class JWTService {
         return claims.getSubject();
     }
 
-    public boolean isAccessTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         try {
             Date expirationDate = Jwts.parserBuilder()
                     .setSigningKey(key)
@@ -76,21 +76,7 @@ public class JWTService {
                     .parseClaimsJws(token)
                     .getBody()
                     .getExpiration();
-            return expirationDate.before(new Date());
-        } catch (JwtException e) {
-            return false;
-        }
-    }
-
-    public boolean isRefreshTokenExpired(String token) {
-        try {
-            Date expirationDate = Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getExpiration();
-            return expirationDate.before(new Date());
+            return !expirationDate.before(new Date());
         } catch (JwtException e) {
             return false;
         }

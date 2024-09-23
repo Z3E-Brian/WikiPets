@@ -3,22 +3,33 @@ input ChangePasswordInput{
     password: String!
     newPassword: String!
 }
+
+input RecoverPasswordInput{
+    email: String!
+    password: String!
+    token: String!
+}
+
 input LogInInput{
     email: String!
     password: String!
 }
 
 extend type Mutation{
+    recoverPassword(input:RecoverPasswordInput):String
+    initiateRecoverPassword(email: String!): String
     changePassword(input: ChangePasswordInput): Boolean
     createUser(input:UserInput): UserDto
     login(input: LogInInput): LoginResponse
     refreshToken(refreshToken:String!): RefreshTokenDto
 }
+
 type LoginResponse{
     user: UserDto
     token: String
     refreshToken: String
 }
+
 type RefreshTokenDto{
     token: String
 }

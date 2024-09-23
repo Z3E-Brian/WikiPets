@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,28 +28,28 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> {
-//                    auth.requestMatchers("/graphql").permitAll();
-//                    auth.requestMatchers("/graphiql").permitAll();
-//                    auth.anyRequest().authenticated();
-//                })
-//              .addFilterBefore(new GraphQLRequestFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new JWTAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
 
     @Bean
-    public SecurityFilterChain securityFFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())  // Deshabilitar CSRF si no es necesario
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.anyRequest().permitAll();  // Permitir todas las solicitudes sin autenticación
-                });
+                    auth.requestMatchers("/graphql").permitAll();
+                    auth.requestMatchers("/graphiql").permitAll();
+                    auth.anyRequest().authenticated();
+                })
+              .addFilterBefore(new GraphQLRequestFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
+
+//    @Bean
+//    public SecurityFilterChain securityFFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf(AbstractHttpConfigurer::disable)  // Deshabilitar CSRF si no es necesario
+//                .authorizeHttpRequests(auth -> {
+//                    auth.anyRequest().permitAll();  // Permitir todas las solicitudes sin autenticación
+//                });
+//        return http.build();
+//    }
 
 }

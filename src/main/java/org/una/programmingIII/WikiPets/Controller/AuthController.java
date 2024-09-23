@@ -1,5 +1,6 @@
 package org.una.programmingIII.WikiPets.Controller;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -12,6 +13,7 @@ import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Input.ChangePasswordInput;
 import org.una.programmingIII.WikiPets.Input.LogInInput;
+import org.una.programmingIII.WikiPets.Input.RecoverPasswordInput;
 import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -28,6 +30,7 @@ public class AuthController {
     private final JWTService jwtService;
     private final GenericMapper<User, UserDto> userMapper;
     private final UserService userService;
+
 
     @Autowired
     AuthController(AuthenticationService authenticationService, RefreshTokenService refreshTokenService, JWTService jwtService, GenericMapperFactory mapperFactory, UserService userService) {
@@ -62,18 +65,29 @@ public class AuthController {
     }
 
     @MutationMapping
-    public void recoverPassword(@Argument ChangePasswordInput request) {
+    public void changePassword(@Argument ChangePasswordInput input) {
         try {
-            authenticationService.initiatePasswordRecovery(request.getEmail());
+            authenticationService.changePassword(input.getEmail(), input.getPassword(), input.getNewPassword());
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid credentials");
         }
     }
 
     @MutationMapping
-    public void changePassword(@Argument ChangePasswordInput input) {
+    public String initiateRecoverPassword(@Argument String email) {
         try {
-            authenticationService.changePassword(input.getEmail(), input.getPassword(), input.getNewPassword());
+            return authenticationService.initiatePasswordRecovery(email);
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid credentials");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @MutationMapping
+    public String recoverPassword(@Argument RecoverPasswordInput input) {
+        try {
+            return authenticationService.completePasswordRecovery(input);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid credentials");
         }
