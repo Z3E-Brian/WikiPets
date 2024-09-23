@@ -1,80 +1,100 @@
-//package org.una.programmingIII.WikiPets.Model;
-//
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import java.time.LocalDate;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//
-//public class FeedingScheduleTest {
-//    FeedingSchedule feedingSchedule;
-//
-//    @BeforeEach
-//    void setUp() {
-//        LocalDate nowDate = LocalDate.now();
-//        CatBreed catBreed = new CatBreed();
-//        catBreed.setName("Siamese");
-//
-//        feedingSchedule = new FeedingSchedule();
-//        feedingSchedule.setId(1L);
-//        feedingSchedule.setCatBreed(catBreed);
-//        feedingSchedule.setAgeGroup("Kitten");
-//        feedingSchedule.setFeedingTimes("Three times a day");
-//        feedingSchedule.setCreateDate(nowDate);
-//        feedingSchedule.setLastUpdate(nowDate);
-//    }
-//
-//    @Test
-//    public void argsGettersTest() {
-//        assertEquals(1L, feedingSchedule.getId());
-//        assertEquals("Siamese", feedingSchedule.getCatBreed().getName());
-//        assertEquals("Kitten", feedingSchedule.getAgeGroup());
-//        assertEquals("Three times a day", feedingSchedule.getFeedingTimes());
-//    }
-//
-//    @Test
-//    public void argsSettersTest() {
-//        LocalDate nowDate = LocalDate.now();
-//        DogBreed dogBreed = new DogBreed();
-//        dogBreed.setName("Labrador");
-//
-//        feedingSchedule.setId(2L);
-//        feedingSchedule.setDogBreed(dogBreed);
-//        feedingSchedule.setAgeGroup("Puppy");
-//        feedingSchedule.setFeedingTimes("Twice a day");
-//
-//        assertEquals(2L, feedingSchedule.getId());
-//        assertEquals("Labrador", feedingSchedule.getDogBreed().getName());
-//        assertEquals("Puppy", feedingSchedule.getAgeGroup());
-//        assertEquals("Twice a day", feedingSchedule.getFeedingTimes());
-//    }
-//
-//    @Test
-//    public void equalsAndHashCodeTest() {
-//        LocalDate nowDate = LocalDate.now();
-//
-//        FeedingSchedule feedingSchedule1 = new FeedingSchedule(1L, new CatBreed(), null, "Kitten", "Three times a day", nowDate, nowDate);
-//        FeedingSchedule feedingSchedule2 = new FeedingSchedule(1L, new CatBreed(), null, "Kitten", "Three times a day", nowDate, nowDate);
-//
-//        assertEquals(feedingSchedule1, feedingSchedule2);
-//        assertEquals(feedingSchedule1.hashCode(), feedingSchedule2.hashCode());
-//    }
-//
-//    @Test
-//    public void notEqualsAndHashCodeTest() {
-//        LocalDate nowDate = LocalDate.now();
-//        FeedingSchedule feedingSchedule1 = new FeedingSchedule(1L, new CatBreed(), null, "Kitten", "Three times a day", nowDate, nowDate);
-//        FeedingSchedule feedingSchedule2 = new FeedingSchedule(2L, null, new DogBreed(), "Puppy", "Twice a day", nowDate, nowDate);
-//
-//        assertNotEquals(feedingSchedule1, feedingSchedule2);
-//        assertNotEquals(feedingSchedule1.hashCode(), feedingSchedule2.hashCode());
-//    }
-//
-//    @Test
-//    public void toStringTest() {
-//        LocalDate nowDate = LocalDate.now();
-//        //assertEquals("FeedingSchedule(id=1, catBreed=CatBreed(id=1, name=Siamese, origin=Thailand, size=2, coat=Short, color=Cream with points, lifeSpan=12-16 years, temperament=Affectionate, Social, Vocal, description=Popular breed known for its striking appearance and vocal nature., createdDate=" + nowDate + ", modifiedDate=" + nowDate + "), dogBreed=null, ageGroup=Kitten, feedingTimes=Three times a day, createDate=" + nowDate + ", lastUpdate=" + nowDate + ")", feedingSchedule.toString());
-//    }
-//}
+package org.una.programmingIII.WikiPets.Model;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class FeedingScheduleTest {
+
+    private FeedingSchedule feedingSchedule;
+    private CatBreed catBreed;
+    private DogBreed dogBreed;
+
+    @BeforeEach
+    void setUp() {
+        LocalDate nowDate = LocalDate.now();
+
+        catBreed = new CatBreed();
+        catBreed.setId(1L);
+        catBreed.setName("Siamese");
+
+        dogBreed = new DogBreed();
+        dogBreed.setId(1L);
+        dogBreed.setName("Golden Retriever");
+
+        List<CatBreed> catBreeds = new ArrayList<>();
+        catBreeds.add(catBreed);
+
+        List<DogBreed> dogBreeds = new ArrayList<>();
+        dogBreeds.add(dogBreed);
+
+        feedingSchedule = new FeedingSchedule();
+        feedingSchedule.setId(1L);
+        feedingSchedule.setCatBreeds(catBreeds);
+        feedingSchedule.setDogBreeds(dogBreeds);
+        feedingSchedule.setAgeGroup("Puppy");
+        feedingSchedule.setFeedingTimes("Twice a day");
+        feedingSchedule.setCreateDate(nowDate);
+        feedingSchedule.setLastUpdate(nowDate);
+    }
+
+    @Test
+    public void gettersTest() {
+        assertEquals(1L, feedingSchedule.getId());
+        assertEquals("Puppy", feedingSchedule.getAgeGroup());
+        assertEquals("Twice a day", feedingSchedule.getFeedingTimes());
+        assertEquals("Siamese", feedingSchedule.getCatBreeds().get(0).getName());
+        assertEquals("Golden Retriever", feedingSchedule.getDogBreeds().get(0).getName());
+    }
+
+    @Test
+    public void settersTest() {
+        LocalDate nowDate = LocalDate.now();
+
+        feedingSchedule.setAgeGroup("Adult");
+        feedingSchedule.setFeedingTimes("Once a day");
+
+        assertEquals("Adult", feedingSchedule.getAgeGroup());
+        assertEquals("Once a day", feedingSchedule.getFeedingTimes());
+    }
+
+    @Test
+    public void equalsAndHashCodeTest() {
+        LocalDate nowDate = LocalDate.now();
+
+        FeedingSchedule feedingSchedule1 = new FeedingSchedule(1L, feedingSchedule.getCatBreeds(), feedingSchedule.getDogBreeds(), "Puppy", "Twice a day", nowDate, nowDate);
+        FeedingSchedule feedingSchedule2 = new FeedingSchedule(1L, feedingSchedule.getCatBreeds(), feedingSchedule.getDogBreeds(), "Puppy", "Twice a day", nowDate, nowDate);
+
+        assertEquals(feedingSchedule1, feedingSchedule2);
+        assertEquals(feedingSchedule1.hashCode(), feedingSchedule2.hashCode());
+    }
+
+    @Test
+    public void notEqualsAndHashCodeTest() {
+        FeedingSchedule feedingSchedule1 = new FeedingSchedule();
+        feedingSchedule1.setId(1L);
+        FeedingSchedule feedingSchedule2 = new FeedingSchedule();
+        feedingSchedule2.setId(2L);
+
+        assertNotEquals(feedingSchedule1, feedingSchedule2);
+        assertNotEquals(feedingSchedule1.hashCode(), feedingSchedule2.hashCode());
+    }
+
+    @Test
+    public void toStringTest() {
+        String result = feedingSchedule.toString();
+
+        assertTrue(result.contains("FeedingSchedule"));
+        assertTrue(result.contains("id=1"));
+        assertTrue(result.contains("ageGroup=Puppy"));
+        assertTrue(result.contains("feedingTimes=Twice a day"));
+
+        assertTrue(result.contains("catBreeds"));
+        assertTrue(result.contains("dogBreeds"));
+    }
+}

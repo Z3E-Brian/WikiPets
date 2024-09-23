@@ -1,99 +1,138 @@
-//package org.una.programmingIII.WikiPets.Dto;
-//
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import java.time.LocalDate;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertNotEquals;
-//
-//public class TrainingGuideDtoTest {
-//    TrainingGuideDto trainingGuideDto;
-//
-//    @BeforeEach
-//    void setUp() {
-//        List<CatBreedDto> catBreeds = new ArrayList<>();
-//        catBreeds.add(new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
-//
-//        List<DogBreedDto> dogBreeds = new ArrayList<>();
-//        dogBreeds.add(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now(),null,null,null,null,null,null,null,null,null,null,null,null));
-//
-//        trainingGuideDto = new TrainingGuideDto();
-//        trainingGuideDto.setId(1L);
-//        trainingGuideDto.setTitle("Basic Training Guide for Pets");
-//        trainingGuideDto.setContent("This is a basic training guide for both cats and dogs.");
-//        trainingGuideDto.setCatsBreedDto(catBreeds);
-//        trainingGuideDto.setDogsBreedDto(dogBreeds);
-//    }
-//
-//    @Test
-//    public void argsGettersTest() {
-//        assertEquals(1L, trainingGuideDto.getId());
-//        assertEquals("Basic Training Guide for Pets", trainingGuideDto.getTitle());
-//        assertEquals("This is a basic training guide for both cats and dogs.", trainingGuideDto.getContent());
-//        assertEquals(1, trainingGuideDto.getCatsBreedDto().size());
-//        assertEquals(1, trainingGuideDto.getDogsBreedDto().size());
-//    }
-//
-//    @Test
-//    public void argsSettersTest() {
-//        trainingGuideDto.setId(2L);
-//        trainingGuideDto.setTitle("Advanced Training Guide for Cats");
-//        trainingGuideDto.setContent("This is an advanced training guide specifically for cats.");
-//        trainingGuideDto.setCatsBreedDto(new ArrayList<>()); // Empty list for cats
-//        trainingGuideDto.setDogsBreedDto(null); // No dogs
-//
-//        assertEquals(2L, trainingGuideDto.getId());
-//        assertEquals("Advanced Training Guide for Cats", trainingGuideDto.getTitle());
-//        assertEquals("This is an advanced training guide specifically for cats.", trainingGuideDto.getContent());
-//        assertEquals(0, trainingGuideDto.getCatsBreedDto().size());
-//        assertEquals(null, trainingGuideDto.getDogsBreedDto());
-//    }
-//
-//    @Test
-//    public void equalsAndHashCodeTest() {
-//        List<CatBreedDto> catBreeds = new ArrayList<>();
-//        catBreeds.add(new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
-//
-//        List<DogBreedDto> dogBreeds = new ArrayList<>();
-//        dogBreeds.add(new DogBreedDto(1L, "Labrador", "Canada", 3, "Short", "Yellow", "10-12 years", "Friendly, Active", "Well-known for being friendly and good with children.", LocalDate.now(), LocalDate.now(),null,null,null,null,null,null,null,null,null,null,null,null));
-//
-//        TrainingGuideDto trainingGuideDto1 = new TrainingGuideDto(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, dogBreeds, LocalDate.now(), LocalDate.now());
-//        TrainingGuideDto trainingGuideDto2 = new TrainingGuideDto(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, dogBreeds, LocalDate.now(), LocalDate.now());
-//
-//        assertEquals(trainingGuideDto1, trainingGuideDto2);
-//        assertEquals(trainingGuideDto1.hashCode(), trainingGuideDto2.hashCode());
-//    }
-//
-//    @Test
-//    public void notEqualsAndHashCodeTest() {
-//        List<CatBreedDto> catBreeds = new ArrayList<>();
-//        catBreeds.add(new CatBreedDto(1L, "Siamese", "Thailand", 2, "Short", "Cream with points", "12-16 years", "Affectionate, Social, Vocal", "Popular breed known for its striking appearance and vocal nature.", LocalDate.now(), LocalDate.now()));
-//
-//        TrainingGuideDto trainingGuideDto1 = new TrainingGuideDto(1L, "Basic Training Guide for Pets", "This is a basic training guide for both cats and dogs.", catBreeds, new ArrayList<>(), LocalDate.now(), LocalDate.now());
-//        TrainingGuideDto trainingGuideDto2 = new TrainingGuideDto(2L, "Advanced Training Guide for Dogs", "This is an advanced training guide specifically for dogs.", new ArrayList<>(), null, LocalDate.now(), LocalDate.now());
-//
-//        assertEquals(trainingGuideDto1.hashCode(), trainingGuideDto1.hashCode());
-//        assertNotEquals(trainingGuideDto1, trainingGuideDto2);
-//        assertNotEquals(trainingGuideDto1.hashCode(), trainingGuideDto2.hashCode());
-//    }
-//
-//    @Test
-//    public void toStringTest() {
-//        LocalDate nowDate = LocalDate.now();
-//        assertEquals("TrainingGuideDto(id=1, title=Basic Training Guide for Pets, " +
-//                "content=This is a basic training guide for both cats and dogs., " +
-//                "catsBreedDto=[CatBreedDto(id=1, name=Siamese, origin=Thailand, size=2, " +
-//                "coat=Short, color=Cream with points, lifeSpan=12-16 years, temperament=Affectionate, " +
-//                "Social, Vocal, description=Popular breed known for its striking appearance and vocal nature., " +
-//                "createdDate="+nowDate+", modifiedDate="+nowDate+")], " +
-//                "dogsBreedDto=[DogBreedDto(id=1, name=Labrador, origin=Canada, size=3, coat=Short, color=Yellow, " +
-//                "lifeSpan=10-12 years, temperament=Friendly, Active, " +
-//                "description=Well-known for being friendly and good with children., " +
-//                "createdDate="+nowDate+", modifiedDate="+nowDate+")], " +
-//                "createDate=null, lastUpdate=null)", trainingGuideDto.toString());
-//    }
-//}
+package org.una.programmingIII.WikiPets.Dto;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+public class TrainingGuideDtoTest {
+
+    private TrainingGuideDto trainingGuideDto;
+    private CatBreedDto catBreedDto;
+    private DogBreedDto dogBreedDto;
+
+    @BeforeEach
+    void setUp() {
+        LocalDate nowDate = LocalDate.now();
+
+        // Configuración para catBreedDto
+        catBreedDto = new CatBreedDto();
+        catBreedDto.setId(1L);
+        catBreedDto.setName("Siamese");
+        catBreedDto.setOrigin("Thailand");
+        catBreedDto.setSize(5);
+        catBreedDto.setCoat("Short");
+        catBreedDto.setColor("Cream with darker points");
+        catBreedDto.setLifeSpan("12-20 years");
+        catBreedDto.setTemperament("Social, Affectionate");
+        catBreedDto.setDescription("Siamese cats are known for their striking appearance and vocal personality.");
+        catBreedDto.setCreatedDate(nowDate);
+        catBreedDto.setModifiedDate(nowDate);
+
+        // Configuración para dogBreedDto
+        dogBreedDto = new DogBreedDto();
+        dogBreedDto.setId(1L);
+        dogBreedDto.setName("Labrador");
+        dogBreedDto.setOrigin("Canada");
+        dogBreedDto.setSize(3);
+        dogBreedDto.setCoat("Short");
+        dogBreedDto.setColor("Yellow");
+        dogBreedDto.setLifeSpan("10-12 years");
+        dogBreedDto.setTemperament("Friendly, Active, Outgoing");
+        dogBreedDto.setDescription("One of the most popular breeds in the world.");
+        dogBreedDto.setCreatedDate(nowDate);
+        dogBreedDto.setModifiedDate(nowDate);
+
+        // Creando listas de razas
+        List<CatBreedDto> catBreeds = new ArrayList<>();
+        catBreeds.add(catBreedDto);
+
+        List<DogBreedDto> dogBreeds = new ArrayList<>();
+        dogBreeds.add(dogBreedDto);
+
+        // Configuración de TrainingGuideDto
+        trainingGuideDto = new TrainingGuideDto();
+        trainingGuideDto.setId(1L);
+        trainingGuideDto.setTitle("Training Your Pet");
+        trainingGuideDto.setContent("A comprehensive guide to training your pet.");
+        trainingGuideDto.setCatBreeds(catBreeds);
+        trainingGuideDto.setDogBreeds(dogBreeds);
+        trainingGuideDto.setCreateDate(nowDate);
+        trainingGuideDto.setLastUpdate(nowDate);
+    }
+
+    @Test
+    public void argsGettersTest() {
+        assertEquals(1L, trainingGuideDto.getId());
+        assertEquals("Training Your Pet", trainingGuideDto.getTitle());
+        assertEquals("A comprehensive guide to training your pet.", trainingGuideDto.getContent());
+        assertEquals("Siamese", trainingGuideDto.getCatBreeds().get(0).getName());
+        assertEquals("Labrador", trainingGuideDto.getDogBreeds().get(0).getName());
+    }
+
+    @Test
+    public void argsSettersTest() {
+        LocalDate nowDate = LocalDate.now();
+
+        List<CatBreedDto> newCatBreeds = new ArrayList<>();
+        CatBreedDto newCatBreed = new CatBreedDto(2L, "Persian", "Iran", 4, "Long", "White", "10-15 years", "Calm, Affectionate", "Known for its long hair and flat face.", nowDate, nowDate, null, null, null, null, null, null, null, null, null, null, null, null);
+        newCatBreeds.add(newCatBreed);
+
+        List<DogBreedDto> newDogBreeds = new ArrayList<>();
+        DogBreedDto newDogBreed = new DogBreedDto(2L, "German Shepherd", "Germany", 4, "Medium", "Black and Tan", "9-13 years", "Intelligent, Loyal, Courageous", "Popular as a working dog.", nowDate, nowDate, null, null, null, null, null, null, null, null, null, null, null, null);
+        newDogBreeds.add(newDogBreed);
+
+        trainingGuideDto.setId(2L);
+        trainingGuideDto.setTitle("Advanced Pet Training");
+        trainingGuideDto.setContent("An advanced guide to training your pet.");
+        trainingGuideDto.setCatBreeds(newCatBreeds);
+        trainingGuideDto.setDogBreeds(newDogBreeds);
+
+        assertEquals(2L, trainingGuideDto.getId());
+        assertEquals("Advanced Pet Training", trainingGuideDto.getTitle());
+        assertEquals("An advanced guide to training your pet.", trainingGuideDto.getContent());
+        assertEquals("Persian", trainingGuideDto.getCatBreeds().get(0).getName());
+        assertEquals("German Shepherd", trainingGuideDto.getDogBreeds().get(0).getName());
+    }
+
+    @Test
+    public void equalsAndHashCodeTest() {
+        LocalDate nowDate = LocalDate.now();
+
+        List<CatBreedDto> catBreeds1 = new ArrayList<>();
+        catBreeds1.add(catBreedDto);
+
+        List<DogBreedDto> dogBreeds1 = new ArrayList<>();
+        dogBreeds1.add(dogBreedDto);
+
+        TrainingGuideDto trainingGuideDto1 = new TrainingGuideDto(1L, "Training Your Pet", "A comprehensive guide to training your pet.", catBreeds1, dogBreeds1, nowDate, nowDate);
+        TrainingGuideDto trainingGuideDto2 = new TrainingGuideDto(1L, "Training Your Pet", "A comprehensive guide to training your pet.", catBreeds1, dogBreeds1, nowDate, nowDate);
+
+        assertEquals(trainingGuideDto1, trainingGuideDto2);
+        assertEquals(trainingGuideDto1.hashCode(), trainingGuideDto2.hashCode());
+    }
+
+    @Test
+    public void notEqualsAndHashCodeTest() {
+        LocalDate nowDate = LocalDate.now();
+
+        TrainingGuideDto trainingGuideDto1 = new TrainingGuideDto(1L, "Training Your Pet", "A comprehensive guide to training your pet.", new ArrayList<>(), new ArrayList<>(), nowDate, nowDate);
+        TrainingGuideDto trainingGuideDto2 = new TrainingGuideDto(2L, "Advanced Pet Training", "An advanced guide to training your pet.", new ArrayList<>(), new ArrayList<>(), nowDate, nowDate);
+
+        assertNotEquals(trainingGuideDto1, trainingGuideDto2);
+        assertNotEquals(trainingGuideDto1.hashCode(), trainingGuideDto2.hashCode());
+    }
+
+    @Test
+    public void toStringTest() {
+        LocalDate nowDate = LocalDate.now();
+
+        String expected = "TrainingGuideDto(id=1, title=Training Your Pet, content=A comprehensive guide to training your pet., createDate=" + nowDate + ", lastUpdate=" + nowDate + ")";
+        assertEquals(expected, trainingGuideDto.toString());
+    }
+}
