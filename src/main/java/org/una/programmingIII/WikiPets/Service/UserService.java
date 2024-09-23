@@ -37,4 +37,6 @@ public interface UserService {
     UserDto addReviewInUser(Long id, Long idReview);
 
     UserDto deleteReviewInUser(Long id, Long idReview);
+
+    void generateFalseUsers(int amount);
 }

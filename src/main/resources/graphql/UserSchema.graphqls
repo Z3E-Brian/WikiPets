@@ -19,6 +19,7 @@ type Mutation {
     deleteCatBreedInUser(id:ID!,idCatBreed:ID!):UserDto
     addReviewInUser(id:ID!,idReview:ID!):UserDto
     deleteReviewInUser(id:ID!,idReview:ID!):UserDto
+    generateFalseUsers(numberOfUsers:Int!):Boolean
 }
 
 type UserDto {

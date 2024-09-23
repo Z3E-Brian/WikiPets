@@ -1,5 +1,6 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import jakarta.transaction.Transactional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.UserRepository;
+import com.github.javafaker.Faker;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -44,6 +46,7 @@ public class UserServiceImplementation implements UserService {
     private final GenericMapper<User, UserInput> userMapperInput;
 
     private final PasswordEncoder passwordEncoder;
+    private final Faker faker = new Faker();
 
     @Autowired
     public UserServiceImplementation(UserRepository userRepository, GenericMapperFactory mapperFactory, PasswordEncoder passwordEncoder, DogBreedService dogBreedService, CatBreedService catBreedService, ReviewService reviewService) {
@@ -212,4 +215,21 @@ public class UserServiceImplementation implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    @Transactional
+    public void generateFalseUsers(int amount) {
+        for (int i = 0; i < amount; i++) {
+            User userFalse = new User();
+            userFalse.setName(faker.name().fullName());
+            String email = faker.internet().emailAddress();
+            userFalse.setEmail(email);
+            String password = faker.internet().password();
+            String encodedPassword = passwordEncoder.encode(password);
+            userFalse.setPassword(encodedPassword);
+            userFalse.setCreateDate(LocalDate.now());
+            userFalse.setLastUpdate(LocalDate.now());
+            System.out.println("Email: " + email + " Password: " + password);
+            User savedUser = userRepository.save(userFalse);
+        }
+}
 }

@@ -83,6 +83,11 @@ public class UserController {
     public UserDto deleteReviewInUser(@Argument Long id, @Argument Long idReview) {
         return userService.deleteReviewInUser(id, idReview);
     }
+    @MutationMapping
+    public boolean generateFalseUsers(@Argument int numberOfUsers) {
+        userService.generateFalseUsers(numberOfUsers);
+        return true;
+}
 
     private UserDto convertToDto(UserInput userInput) {
         return userMapper.convertToDTO(userInput);
