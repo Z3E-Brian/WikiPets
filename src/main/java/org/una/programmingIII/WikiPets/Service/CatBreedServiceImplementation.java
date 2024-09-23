@@ -1,5 +1,7 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import com.github.javafaker.Faker;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +18,7 @@ import org.una.programmingIII.WikiPets.Model.CatBreed;
 
 import org.una.programmingIII.WikiPets.Model.CatBreed;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
+import org.una.programmingIII.WikiPets.Model.User;
 import org.una.programmingIII.WikiPets.Repository.CatBreedRepository;
 
 import java.time.LocalDate;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
 public class CatBreedServiceImplementation implements CatBreedService {
     private final CatBreedRepository catBreedRepository;
     private final GenericMapper<CatBreed, CatBreedDto> catBreedMapper;
+    private final Faker faker = new Faker();
 
     @Autowired
     public CatBreedServiceImplementation(CatBreedRepository catBreedRepository, GenericMapperFactory mapperFactory) {
@@ -164,17 +168,17 @@ public class CatBreedServiceImplementation implements CatBreedService {
     }
 
     @Override
-    public Map<String, Object> getAllCatBreeds(int page, int size,int limit) {
+    public Map<String, Object> getAllCatBreeds(int page, int size, int limit) {
         Page<CatBreed> catBreedPage = catBreedRepository.findAll(PageRequest.of(page, size));
         catBreedPage.forEach(catBreed -> {
-            catBreed.setAdoptionCenters(limitListOrDefault(catBreed.getAdoptionCenters(),limit));
-            catBreed.setHealthIssues(limitListOrDefault(catBreed.getHealthIssues(),limit));
-            catBreed.setNutritionGuides(limitListOrDefault(catBreed.getNutritionGuides(),limit));
-            catBreed.setUsers(limitListOrDefault(catBreed.getUsers(),limit));
-            catBreed.setTrainingGuides(limitListOrDefault(catBreed.getTrainingGuides(),limit));
-            catBreed.setBehaviorGuides(limitListOrDefault(catBreed.getBehaviorGuides(),limit));
-            catBreed.setCareTips(limitListOrDefault(catBreed.getCareTips(),limit));
-            catBreed.setGroomingGuides(limitListOrDefault(catBreed.getGroomingGuides(),limit));
+            catBreed.setAdoptionCenters(limitListOrDefault(catBreed.getAdoptionCenters(), limit));
+            catBreed.setHealthIssues(limitListOrDefault(catBreed.getHealthIssues(), limit));
+            catBreed.setNutritionGuides(limitListOrDefault(catBreed.getNutritionGuides(), limit));
+            catBreed.setUsers(limitListOrDefault(catBreed.getUsers(), limit));
+            catBreed.setTrainingGuides(limitListOrDefault(catBreed.getTrainingGuides(), limit));
+            catBreed.setBehaviorGuides(limitListOrDefault(catBreed.getBehaviorGuides(), limit));
+            catBreed.setCareTips(limitListOrDefault(catBreed.getCareTips(), limit));
+            catBreed.setGroomingGuides(limitListOrDefault(catBreed.getGroomingGuides(), limit));
         });
         Map<String, Object> response = new HashMap<>();
         response.put("catBreeds", catBreedPage.map(this::convertToDto).getContent());
@@ -183,11 +187,11 @@ public class CatBreedServiceImplementation implements CatBreedService {
         return response;
     }
 
-    private <T> List<T> limitListOrDefault(List<T> list,int limit) {
-        return list == null ? new ArrayList<>() : limitList(list,limit);
+    private <T> List<T> limitListOrDefault(List<T> list, int limit) {
+        return list == null ? new ArrayList<>() : limitList(list, limit);
     }
 
-    private <T> List<T> limitList(List<T> list,int limit) {
+    private <T> List<T> limitList(List<T> list, int limit) {
         return list.stream().limit(limit).collect(Collectors.toList());
     }
 
@@ -214,4 +218,28 @@ public class CatBreedServiceImplementation implements CatBreedService {
         return catBreedMapper.convertToEntity(catBreedDto);
     }
 
+
+    @Override
+    @Transactional
+    public void generateFalseCatBreed(int amount) {
+        String[] coats = {"Short", "Medium", "Long"};
+        String[] temperaments = {"Friendly", "Independent", "Curious", "Affectionate"};
+        String[] lifeSpans = {"12-15 years", "15-20 years", "10-12 years"};
+
+        for (int i = 0; i < amount; i++) {
+            CatBreed catBreed = new CatBreed();
+            catBreed.setName(faker.cat().name());
+            catBreed.setOrigin(faker.cat().breed());
+            catBreed.setLifeSpan(lifeSpans[faker.number().numberBetween(0, lifeSpans.length)]);
+            catBreed.setSize(faker.number().numberBetween(1, 5));
+            catBreed.setCoat(coats[faker.number().numberBetween(0, coats.length)]);
+            catBreed.setColor(faker.color().name());
+            catBreed.setTemperament(temperaments[faker.number().numberBetween(0, temperaments.length)]);
+            catBreed.setDescription(faker.lorem().paragraph());
+            catBreed.setCreatedDate(LocalDate.now());
+            catBreed.setModifiedDate(LocalDate.now());
+
+            catBreedRepository.save(catBreed);
+        }
+    }
 }

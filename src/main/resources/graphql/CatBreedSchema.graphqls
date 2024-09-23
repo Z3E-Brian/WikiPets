@@ -14,6 +14,7 @@ extend type Mutation {
     createCatBreed(input:CatBreedInput): CatBreedDto
     updateCatBreed(input:CatBreedInput): CatBreedDto
     deleteCatBreed(id: ID!): Boolean
+    generateFalseCatBreeds(amount: Int!): Boolean
 }
 extend type Query {
     getCatBreeds(page:Int!,size:Int!,limit:Int!): CatBreedResponse

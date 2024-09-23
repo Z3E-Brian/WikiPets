@@ -62,4 +62,10 @@ public class CatBreedController {
     public Boolean deleteCatBreed(@Argument Long id) {
         return catBreedService.deleteCatBreed(id);
     }
+
+    @MutationMapping
+    public Boolean generateFalseCatBreeds(@Argument int amount){
+         catBreedService.generateFalseCatBreed(amount);
+         return true;
+    }
 }

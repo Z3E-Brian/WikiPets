@@ -61,4 +61,9 @@ public class DogBreedController {
     public Boolean deleteDogBreed(@Argument Long id) {
         return dogBreedService.deleteDogBreed(id);
     }
+    @MutationMapping
+    public Boolean generateFalseDogBreeds(@Argument int amount){
+        dogBreedService.generateFalseDogBreed(amount);
+        return true;
+    }
 }

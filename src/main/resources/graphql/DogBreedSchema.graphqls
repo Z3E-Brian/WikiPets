@@ -15,10 +15,12 @@ extend type Mutation {
     createDogBreed(input:DogBreedInput): DogBreedDto
     updateDogBreed(input:DogBreedInput): DogBreedDto
     deleteDogBreed(id: ID!): Boolean
+    generateFalseDogBreeds(amount: Int!): Boolean
 }
 extend type Query {
     getDogBreeds(page:Int!,size:Int! ,limit:Int!): DogBreedResponse
     getDogBreedById(id: ID!): DogBreedDto
+
 }
 type DogBreedDto{
     id: ID

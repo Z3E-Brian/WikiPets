@@ -1,5 +1,7 @@
 package org.una.programmingIII.WikiPets.Service;
 
+import com.github.javafaker.Faker;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +12,7 @@ import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
+import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Model.DogBreed;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
@@ -27,7 +30,7 @@ public class DogBreedServiceImplementation implements DogBreedService {
 
     private final DogBreedRepository dogBreedRepository;
     private final GenericMapper<DogBreed, DogBreedDto> dogBreedMapper;
-
+    private final Faker faker = new Faker();
     @Autowired
     public DogBreedServiceImplementation(DogBreedRepository dogBreedRepository, GenericMapperFactory mapperFactory) {
         this.dogBreedRepository = dogBreedRepository;
@@ -210,6 +213,29 @@ public Boolean deleteDogBreed(Long id) {
 
     private DogBreed convertToEntity(DogBreedDto dogBreedDto) {
         return dogBreedMapper.convertToEntity(dogBreedDto);
+    }
+    @Override
+    @Transactional
+    public void generateFalseDogBreed(int amount) {
+        String[] coats = {"Short", "Medium", "Long"};
+        String[] temperaments = {"Friendly", "Independent", "Curious", "Affectionate"};
+        String[] lifeSpans = {"12-15 years", "15-20 years", "10-12 years"};
+
+        for (int i = 0; i < amount; i++) {
+            DogBreed dogBreed = new DogBreed();
+            dogBreed.setName(faker.dog().name());
+            dogBreed.setOrigin(faker.dog().breed());
+            dogBreed.setLifeSpan(lifeSpans[faker.number().numberBetween(0, lifeSpans.length)]);
+            dogBreed.setSize(faker.number().numberBetween(1, 5));
+            dogBreed.setCoat(coats[faker.number().numberBetween(0, coats.length)]);
+            dogBreed.setColor(faker.color().name());
+            dogBreed.setTemperament(temperaments[faker.number().numberBetween(0, temperaments.length)]);
+            dogBreed.setDescription(faker.lorem().paragraph());
+            dogBreed.setCreatedDate(LocalDate.now());
+            dogBreed.setModifiedDate(LocalDate.now());
+
+            dogBreedRepository.save(dogBreed);
+        }
     }
 
 }

@@ -22,4 +22,5 @@ public interface DogBreedService {
     DogBreedDto updateDogBreed(DogBreedDto dogBreedDto);
 
     Map<String, Object> getAllDogBreeds(int page, int size,int limit);
+    void generateFalseDogBreed(int amount);
 }
