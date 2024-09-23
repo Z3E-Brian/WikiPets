@@ -10,10 +10,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.una.programmingIII.WikiPets.Controller.ReviewController;
 import org.una.programmingIII.WikiPets.Dto.ReviewDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.ReviewInput;
+import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.ReviewService;
 
 import java.util.HashMap;
@@ -28,25 +31,31 @@ public class ReviewControllerTest {
     private ReviewService reviewService;
 
     @Mock
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
     private GenericMapper<ReviewInput, ReviewDto> reviewMapper;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(mapperFactory.createMapper(ReviewInput.class, ReviewDto.class)).thenReturn(reviewMapper);
+        reviewController = new ReviewController(reviewService, mapperFactory);
+    }
+
+    @Test
+    void testReviewControllerConstructor() {
+        assertNotNull(reviewController);
     }
 
     @Test
     void testGetReviews() {
-        // Arrange
         int page = 1;
         int size = 10;
         Map<String, Object> expectedReviews = new HashMap<>();
         when(reviewService.getReviews(page, size)).thenReturn(expectedReviews);
-
-        // Act
         Map<String, Object> result = reviewController.getReviews(page, size);
 
-        // Assert
         assertEquals(expectedReviews, result);
         verify(reviewService).getReviews(page, size);
     }

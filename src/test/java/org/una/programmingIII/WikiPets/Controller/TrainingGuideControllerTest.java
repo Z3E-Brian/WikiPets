@@ -8,11 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.una.programmingIII.WikiPets.Controller.TrainingGuideController;
 import org.una.programmingIII.WikiPets.Dto.TrainingGuideDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.TrainingGuideInput;
+import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.TrainingGuideService;
 
 import java.util.HashMap;
@@ -27,11 +30,21 @@ public class TrainingGuideControllerTest {
     private TrainingGuideService trainingGuideService;
 
     @Mock
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
     private GenericMapper<TrainingGuideInput, TrainingGuideDto> trainingGuideMapper;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(mapperFactory.createMapper(TrainingGuideInput.class, TrainingGuideDto.class)).thenReturn(trainingGuideMapper);
+        trainingGuideController = new TrainingGuideController(trainingGuideService, mapperFactory);
+    }
+
+    @Test
+    void testTrainingGuideControllerConstructor() {
+        assertNotNull(trainingGuideController);
     }
 
     @Test
@@ -51,45 +64,37 @@ public class TrainingGuideControllerTest {
 
     @Test
     void testGetTrainingGuidesException() {
-        // Arrange
         int page = 1;
         int size = 10;
-        when(trainingGuideService.getAllTrainingGuides(page, size)).thenThrow(new RuntimeException("Error"));
+        when(trainingGuideService.getAllTrainingGuides(page, size)).thenThrow(new NotFoundElementException(""));
 
-        // Act & Assert
-        Exception exception = assertThrows(CustomException.class, () -> {
+        NotFoundElementException exception = assertThrows(NotFoundElementException.class, () -> {
             trainingGuideController.getTrainingGuides(page, size);
         });
-        assertEquals("Could not retrieve feeding schedulesError", exception.getMessage());
+        assertEquals("Could not retrieve feeding schedules", exception.getMessage());
     }
 
     @Test
     void testGetTrainingGuideById() {
-        // Arrange
         Long id = 1L;
         TrainingGuideDto expectedGuide = new TrainingGuideDto();
         when(trainingGuideService.getTrainingGuideById(id)).thenReturn(expectedGuide);
 
-        // Act
         TrainingGuideDto result = trainingGuideController.getTrainingGuideById(id);
 
-        // Assert
         assertEquals(expectedGuide, result);
         verify(trainingGuideService).getTrainingGuideById(id);
     }
 
     @Test
     void testCreateTrainingGuide() {
-        // Arrange
         TrainingGuideInput input = new TrainingGuideInput();
         TrainingGuideDto expectedGuideDto = new TrainingGuideDto();
         when(trainingGuideMapper.convertToDTO(input)).thenReturn(expectedGuideDto);
         when(trainingGuideService.createTrainingGuide(expectedGuideDto)).thenReturn(expectedGuideDto);
 
-        // Act
         TrainingGuideDto result = trainingGuideController.createTrainingGuide(input);
 
-        // Assert
         assertEquals(expectedGuideDto, result);
         verify(trainingGuideMapper).convertToDTO(input);
         verify(trainingGuideService).createTrainingGuide(expectedGuideDto);
@@ -97,16 +102,13 @@ public class TrainingGuideControllerTest {
 
     @Test
     void testUpdateTrainingGuide() {
-        // Arrange
         TrainingGuideInput input = new TrainingGuideInput();
         TrainingGuideDto expectedGuideDto = new TrainingGuideDto();
         when(trainingGuideMapper.convertToDTO(input)).thenReturn(expectedGuideDto);
         when(trainingGuideService.updateTrainingGuide(expectedGuideDto)).thenReturn(expectedGuideDto);
 
-        // Act
         TrainingGuideDto result = trainingGuideController.updateTrainingGuide(input);
 
-        // Assert
         assertEquals(expectedGuideDto, result);
         verify(trainingGuideMapper).convertToDTO(input);
         verify(trainingGuideService).updateTrainingGuide(expectedGuideDto);
@@ -114,78 +116,61 @@ public class TrainingGuideControllerTest {
 
     @Test
     void testDeleteTrainingGuide() {
-        // Arrange
         Long id = 1L;
         when(trainingGuideService.deleteTrainingGuide(id)).thenReturn(true);
 
-        // Act
         Boolean result = trainingGuideController.deleteTrainingGuide(id);
 
-        // Assert
         assertTrue(result);
         verify(trainingGuideService).deleteTrainingGuide(id);
     }
 
     @Test
     void testAddDogBreedInTrainingGuide() {
-        // Arrange
         Long id = 1L;
         Long dogBreedId = 1L;
         TrainingGuideDto expectedGuideDto = new TrainingGuideDto();
         when(trainingGuideService.addDogBreedInTrainingGuide(id, dogBreedId)).thenReturn(expectedGuideDto);
 
-        // Act
         TrainingGuideDto result = trainingGuideController.addDogBreedInTrainingGuide(id, dogBreedId);
 
-        // Assert
         assertEquals(expectedGuideDto, result);
         verify(trainingGuideService).addDogBreedInTrainingGuide(id, dogBreedId);
     }
 
     @Test
     void testDeleteDogBreedInTrainingGuide() {
-        // Arrange
         Long id = 1L;
         Long dogBreedId = 1L;
         TrainingGuideDto expectedGuideDto = new TrainingGuideDto();
         when(trainingGuideService.deleteDogBreedInTrainingGuide(id, dogBreedId)).thenReturn(expectedGuideDto);
 
-        // Act
         TrainingGuideDto result = trainingGuideController.deleteDogBreedInTrainingGuide(id, dogBreedId);
-
-        // Assert
         assertEquals(expectedGuideDto, result);
         verify(trainingGuideService).deleteDogBreedInTrainingGuide(id, dogBreedId);
     }
 
     @Test
     void testAddCatBreedInTrainingGuide() {
-        // Arrange
         Long id = 1L;
         Long catBreedId = 1L;
         TrainingGuideDto expectedGuideDto = new TrainingGuideDto();
         when(trainingGuideService.addCatBreedInTrainingGuide(id, catBreedId)).thenReturn(expectedGuideDto);
 
-        // Act
         TrainingGuideDto result = trainingGuideController.addCatBreedInTrainingGuide(id, catBreedId);
 
-        // Assert
         assertEquals(expectedGuideDto, result);
         verify(trainingGuideService).addCatBreedInTrainingGuide(id, catBreedId);
     }
 
     @Test
     void testDeleteCatBreedInTrainingGuide() {
-        // Arrange
         Long id = 1L;
         Long catBreedId = 1L;
         TrainingGuideDto expectedGuideDto = new TrainingGuideDto();
         when(trainingGuideService.deleteCatBreedInTrainingGuide(id, catBreedId)).thenReturn(expectedGuideDto);
 
-        // Act
         TrainingGuideDto result = trainingGuideController.deleteCatBreedInTrainingGuide(id, catBreedId);
-
-        // Assert
         assertEquals(expectedGuideDto, result);
         verify(trainingGuideService).deleteCatBreedInTrainingGuide(id, catBreedId);
     }

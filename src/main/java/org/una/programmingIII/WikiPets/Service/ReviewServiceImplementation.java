@@ -23,6 +23,7 @@ public class ReviewServiceImplementation implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final GenericMapper<Review, ReviewDto> reviewMapper;
+
     @Autowired
     public ReviewServiceImplementation(ReviewRepository reviewRepository, GenericMapperFactory mapperFactory) {
         this.reviewRepository = reviewRepository;
@@ -61,7 +62,7 @@ public class ReviewServiceImplementation implements ReviewService {
     @Override
     public boolean deleteReview(Long id) {
         if (id == null || id <= 0) {
-            return false;
+            throw new InvalidInputException("Invalid review id");
         }
 
         if (!(reviewRepository.existsById(id))) {

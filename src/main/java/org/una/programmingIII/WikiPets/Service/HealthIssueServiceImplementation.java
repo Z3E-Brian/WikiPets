@@ -63,7 +63,7 @@ public class HealthIssueServiceImplementation implements HealthIssueService {
             throw new InvalidInputException("Invalid HealthIssue Schedule ID");
         }
         HealthIssue healthIssue = healthIssueRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Health Issue Not Found with id: " + id));
+                .orElseThrow(() -> new NotFoundElementException("Health Issue Not Found with id: " + id));
         return convertToDto(healthIssue);
     }
 

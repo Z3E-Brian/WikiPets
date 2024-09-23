@@ -36,101 +36,62 @@ public class AdoptionCenterController {
     public Map<String, Object> getAdoptionCenters(@Argument int page, @Argument int size) {
         try {
             return adoptionCenterService.getAllAdoptionCenters(page, size);
-        } catch (Exception e) {
+        } catch (NotFoundElementException e) {
             throw new NotFoundElementException("Could not retrieve adoption centers" + e.getMessage());
         }
     }
 
     @QueryMapping
     public AdoptionCenterDto getAdoptionCenterById(@Argument Long id) {
-        try {
-            return adoptionCenterService.getAdoptionCenterById(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find adoption center " + id + ". " + e.getMessage());
-        }
+        return adoptionCenterService.getAdoptionCenterById(id);
     }
 
     @QueryMapping
     public List<DogBreedDto> getAvailableDogBreeds(@Argument Long id) {
-        try {
-            return adoptionCenterService.getAvailableDogBreeds(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find available dog breeds" + e.getMessage());
-        }
+        return adoptionCenterService.getAvailableDogBreeds(id);
     }
 
     @QueryMapping
     public List<CatBreedDto> getAvailableCatBreeds(@Argument Long id) {
-        try {
-            return adoptionCenterService.getAvailableCatBreeds(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not find available dog breeds" + e.getMessage());
-        }
+        return adoptionCenterService.getAvailableCatBreeds(id);
     }
 
 
     @MutationMapping
     public AdoptionCenterDto createAdoptionCenter(@Argument AdoptionCenterInput input) {
-        try {
-            AdoptionCenterDto adoptionCenterDto = adoptionCenterMapper.convertToDTO(input);
-            return adoptionCenterService.createAdoptionCenter(adoptionCenterDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not create adoption center" + e.getMessage());
-        }
+        AdoptionCenterDto adoptionCenterDto = adoptionCenterMapper.convertToDTO(input);
+        return adoptionCenterService.createAdoptionCenter(adoptionCenterDto);
+
     }
 
     @MutationMapping
     public AdoptionCenterDto updateAdoptionCenter(@Argument AdoptionCenterInput input) {
-        try {
-            AdoptionCenterDto adoptionCenterDto = adoptionCenterMapper.convertToDTO(input);
-            return adoptionCenterService.updateAdoptionCenter(adoptionCenterDto);
-        } catch (Exception e) {
-            throw new CustomException("Could not update adoption center" + e.getMessage());
-        }
+        AdoptionCenterDto adoptionCenterDto = adoptionCenterMapper.convertToDTO(input);
+        return adoptionCenterService.updateAdoptionCenter(adoptionCenterDto);
     }
 
     @MutationMapping
     public boolean deleteAdoptionCenter(@Argument Long id) {
-        try {
-            return adoptionCenterService.deleteAdoptionCenter(id);
-        } catch (Exception e) {
-            throw new CustomException("Could not delete adoption center" + id + ". " + e.getMessage());
-        }
+        return adoptionCenterService.deleteAdoptionCenter(id);
     }
 
     @MutationMapping
     public AdoptionCenterDto addDogBreedInAdoptionCenter(@Argument Long id, @Argument Long idDogBreed) {
-        try {
-            return adoptionCenterService.addDogBreedInAdoptionCenter(id, idDogBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not update adoption center with id: " + id + ". " + e.getMessage(), e);
-        }
+        return adoptionCenterService.addDogBreedInAdoptionCenter(id, idDogBreed);
     }
 
     @MutationMapping
     public AdoptionCenterDto addCatBreedInAdoptionCenter(@Argument Long id, @Argument Long idCatBreed) {
-        try {
-            return adoptionCenterService.addCatBreedInAdoptionCenter(id, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not update adoption center with id: " + id + ". " + e.getMessage(), e);
-        }
+        return adoptionCenterService.addCatBreedInAdoptionCenter(id, idCatBreed);
     }
 
     @MutationMapping
     public AdoptionCenterDto deleteCatBreedFromAdoptionCenter(@Argument Long id, @Argument Long catBreedId) {
-        try {
-            return adoptionCenterService.deleteCatBreedFromAdoptionCenter(id, catBreedId);
-        } catch (Exception e) {
-            throw new CustomException("Could not remove cat breed from adoption center with id " + id + ". " + e.getMessage(), e);
-        }
+        return adoptionCenterService.deleteCatBreedFromAdoptionCenter(id, catBreedId);
     }
 
     @MutationMapping
     public AdoptionCenterDto deleteDogBreedFromAdoptionCenter(@Argument Long id, @Argument Long dogBreedId) {
-        try {
-            return adoptionCenterService.deleteDogBreedFromAdoptionCenter(id, dogBreedId);
-        } catch (Exception e) {
-            throw new CustomException("Could not remove dog breed from adoption center with id " + id + ". " + e.getMessage(), e);
-        }
+        return adoptionCenterService.deleteDogBreedFromAdoptionCenter(id, dogBreedId);
     }
 }

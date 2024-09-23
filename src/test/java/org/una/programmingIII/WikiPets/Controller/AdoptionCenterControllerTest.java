@@ -9,12 +9,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.una.programmingIII.WikiPets.Dto.AdoptionCenterDto;
+import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
+import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.AdoptionCenterInput;
+import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.AdoptionCenterService;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AdoptionCenterControllerTest {
@@ -26,11 +33,16 @@ public class AdoptionCenterControllerTest {
     private AdoptionCenterService adoptionCenterService;
 
     @Mock
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
     private GenericMapper<AdoptionCenterInput, AdoptionCenterDto> adoptionCenterMapper;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(mapperFactory.createMapper(AdoptionCenterInput.class, AdoptionCenterDto.class)).thenReturn(adoptionCenterMapper);
+        adoptionCenterController = new AdoptionCenterController(adoptionCenterService, mapperFactory);
     }
 
     @Test
@@ -108,4 +120,91 @@ public class AdoptionCenterControllerTest {
         assertTrue(result);
         verify(adoptionCenterService).deleteAdoptionCenter(id);
     }
+
+    @Test
+    void testAdoptionCenterControllerConstructor() {
+        assertNotNull(adoptionCenterController);
+    }
+
+    @Test
+    void testGetAvailableDogBreeds() {
+        Long id = 1L;
+        List<DogBreedDto> expectedBreeds = new ArrayList<>();
+        when(adoptionCenterService.getAvailableDogBreeds(id)).thenReturn(expectedBreeds);
+
+        List<DogBreedDto> result = adoptionCenterController.getAvailableDogBreeds(id);
+
+        assertEquals(expectedBreeds, result);
+        verify(adoptionCenterService).getAvailableDogBreeds(id);
+    }
+
+    @Test
+    void testGetAvailableCatBreeds() {
+        Long id = 1L;
+        List<CatBreedDto> expectedBreeds = new ArrayList<>();
+        when(adoptionCenterService.getAvailableCatBreeds(id)).thenReturn(expectedBreeds);
+
+        List<CatBreedDto> result = adoptionCenterController.getAvailableCatBreeds(id);
+
+        assertEquals(expectedBreeds, result);
+        verify(adoptionCenterService).getAvailableCatBreeds(id);
+    }
+
+    @Test
+    void testAddDogBreedInAdoptionCenter() {
+        Long id = 1L;
+        Long dogBreedId = 2L;
+        AdoptionCenterDto expectedCenterDto = new AdoptionCenterDto();
+        when(adoptionCenterService.addDogBreedInAdoptionCenter(id, dogBreedId)).thenReturn(expectedCenterDto);
+
+        AdoptionCenterDto result = adoptionCenterController.addDogBreedInAdoptionCenter(id, dogBreedId);
+
+        assertEquals(expectedCenterDto, result);
+        verify(adoptionCenterService).addDogBreedInAdoptionCenter(id, dogBreedId);
+    }
+
+    @Test
+    void testAddCatBreedInAdoptionCenter() {
+        Long id = 1L;
+        Long catBreedId = 3L;
+        AdoptionCenterDto expectedCenterDto = new AdoptionCenterDto();
+        when(adoptionCenterService.addCatBreedInAdoptionCenter(id, catBreedId)).thenReturn(expectedCenterDto);
+
+        AdoptionCenterDto result = adoptionCenterController.addCatBreedInAdoptionCenter(id, catBreedId);
+
+        assertEquals(expectedCenterDto, result);
+        verify(adoptionCenterService).addCatBreedInAdoptionCenter(id, catBreedId);
+    }
+
+    @Test
+    void testDeleteCatBreedFromAdoptionCenter() {
+        Long id = 1L;
+        Long catBreedId = 3L;
+        AdoptionCenterDto expectedCenterDto = new AdoptionCenterDto();
+        when(adoptionCenterService.deleteCatBreedFromAdoptionCenter(id, catBreedId)).thenReturn(expectedCenterDto);
+
+        AdoptionCenterDto result = adoptionCenterController.deleteCatBreedFromAdoptionCenter(id, catBreedId);
+
+        assertEquals(expectedCenterDto, result);
+        verify(adoptionCenterService).deleteCatBreedFromAdoptionCenter(id, catBreedId);
+    }
+
+    @Test
+    void testDeleteDogBreedFromAdoptionCenter() {
+        Long id = 1L;
+        Long dogBreedId = 2L;
+        AdoptionCenterDto expectedCenterDto = new AdoptionCenterDto();
+        when(adoptionCenterService.deleteDogBreedFromAdoptionCenter(id, dogBreedId)).thenReturn(expectedCenterDto);
+
+        AdoptionCenterDto result = adoptionCenterController.deleteDogBreedFromAdoptionCenter(id, dogBreedId);
+
+        assertEquals(expectedCenterDto, result);
+        verify(adoptionCenterService).deleteDogBreedFromAdoptionCenter(id, dogBreedId);
+    }
+
+    @Test
+    void testAdoptionCenterControllerControllerConstructor() {
+        assertNotNull(adoptionCenterController);
+    }
 }
+

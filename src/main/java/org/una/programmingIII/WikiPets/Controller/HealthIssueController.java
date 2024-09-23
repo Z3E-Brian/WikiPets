@@ -70,19 +70,11 @@ public class HealthIssueController {
 
     @MutationMapping
     public HealthIssueDto addDogBreedInHealthIssue(@Argument Long id, @Argument Long idDogBreed) {
-        try {
             return healthIssueService.addSuitableDogBreed(id, idDogBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not add dog breed to health issue" + e.getMessage());
-        }
     }
 
     @MutationMapping
     public HealthIssueDto addCatBreedInHealthIssue(@Argument Long id, @Argument Long idCatBreed) {
-        try {
             return healthIssueService.addSuitableCatBreed(id, idCatBreed);
-        } catch (Exception e) {
-            throw new CustomException("Could not add cat breed to health issue" + e.getMessage());
-        }
     }
 }
