@@ -15,6 +15,7 @@ import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,32 +65,56 @@ public class DogBreedServiceImplementation implements DogBreedService {
         return convertToDto(savedDogBreed);
     }
 
-    @Override
-    public Boolean deleteDogBreed(Long id) {
-        if (id == null || id <= 0) {
-            throw new InvalidInputException("Invalid DogBreed ID");
-        }
-        DogBreed dogBreed = dogBreedRepository.findById(id).orElseThrow(() -> new NotFoundElementException("Dog Breed Not Found with id: " + id));
+ @Override
+public Boolean deleteDogBreed(Long id) {
+    if (id == null || id <= 0) {
+        throw new InvalidInputException("Invalid DogBreed ID");
+    }
+    DogBreed dogBreed = dogBreedRepository.findById(id)
+            .orElseThrow(() -> new NotFoundElementException("Dog Breed Not Found with id: " + id));
+
+    removeDogBreedReferences(dogBreed, id);
+    dogBreedRepository.deleteById(id);
+    return true;
+}
+
+private void removeDogBreedReferences(DogBreed dogBreed, Long id) {
+    if (dogBreed.getAdoptionCenters() != null) {
         dogBreed.getAdoptionCenters().forEach(adoptionCenter ->
                 adoptionCenter.getAvailableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    }
+    if (dogBreed.getHealthIssues() != null) {
         dogBreed.getHealthIssues().forEach(healthIssue ->
                 healthIssue.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    }
+    if (dogBreed.getNutritionGuides() != null) {
         dogBreed.getNutritionGuides().forEach(nutritionGuide ->
                 nutritionGuide.getRecommendedDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    }
+    if (dogBreed.getUsers() != null) {
         dogBreed.getUsers().forEach(user ->
                 user.getFavoriteDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    }
+    if (dogBreed.getTrainingGuides() != null) {
         dogBreed.getTrainingGuides().forEach(trainingGuide ->
                 trainingGuide.getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    }
+    if (dogBreed.getBehaviorGuides() != null) {
         dogBreed.getBehaviorGuides().forEach(behaviorGuide ->
                 behaviorGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    }
+    if (dogBreed.getCareTips() != null) {
         dogBreed.getCareTips().forEach(careTip ->
                 careTip.getRelevantDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    }
+    if (dogBreed.getGroomingGuides() != null) {
         dogBreed.getGroomingGuides().forEach(groomingGuide ->
                 groomingGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-        dogBreed.getFeedingSchedule().getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
-        dogBreedRepository.deleteById(id);
-        return true;
     }
+    if (dogBreed.getFeedingSchedule() != null) {
+        dogBreed.getFeedingSchedule().getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+    }
+}
 
     @Override
     public DogBreedDto updateDogBreed(DogBreedDto dogBreedDto) {
@@ -113,20 +138,24 @@ public class DogBreedServiceImplementation implements DogBreedService {
     public Map<String, Object> getAllDogBreeds(int page, int size) {
         Page<DogBreed> dogBreedPage = dogBreedRepository.findAll(PageRequest.of(page, size));
         dogBreedPage.forEach(dogBreed -> {
-            dogBreed.setAdoptionCenters(limitList(dogBreed.getAdoptionCenters()));
-            dogBreed.setHealthIssues(limitList(dogBreed.getHealthIssues()));
-            dogBreed.setNutritionGuides(limitList(dogBreed.getNutritionGuides()));
-            dogBreed.setUsers(limitList(dogBreed.getUsers()));
-            dogBreed.setTrainingGuides(limitList(dogBreed.getTrainingGuides()));
-            dogBreed.setBehaviorGuides(limitList(dogBreed.getBehaviorGuides()));
-            dogBreed.setCareTips(limitList(dogBreed.getCareTips()));
-            dogBreed.setGroomingGuides(limitList(dogBreed.getGroomingGuides()));
+            dogBreed.setAdoptionCenters(limitListOrDefault(dogBreed.getAdoptionCenters()));
+            dogBreed.setHealthIssues(limitListOrDefault(dogBreed.getHealthIssues()));
+            dogBreed.setNutritionGuides(limitListOrDefault(dogBreed.getNutritionGuides()));
+            dogBreed.setUsers(limitListOrDefault(dogBreed.getUsers()));
+            dogBreed.setTrainingGuides(limitListOrDefault(dogBreed.getTrainingGuides()));
+            dogBreed.setBehaviorGuides(limitListOrDefault(dogBreed.getBehaviorGuides()));
+            dogBreed.setCareTips(limitListOrDefault(dogBreed.getCareTips()));
+            dogBreed.setGroomingGuides(limitListOrDefault(dogBreed.getGroomingGuides()));
         });
         Map<String, Object> response = new HashMap<>();
         response.put("dogBreeds", dogBreedPage.map(this::convertToDto).getContent());
         response.put("totalPages", dogBreedPage.getTotalPages());
         response.put("totalElements", dogBreedPage.getTotalElements());
         return response;
+    }
+
+    private <T> List<T> limitListOrDefault(List<T> list) {
+        return list == null ? new ArrayList<>() : limitList(list);
     }
 
     private <T> List<T> limitList(List<T> list) {

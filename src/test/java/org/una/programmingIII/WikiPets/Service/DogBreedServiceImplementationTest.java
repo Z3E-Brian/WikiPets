@@ -8,18 +8,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.una.programmingIII.WikiPets.Exception.BlankInputException;
+import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
-import org.una.programmingIII.WikiPets.Model.DogBreed;
+import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Repository.DogBreedRepository;
 
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -100,28 +100,32 @@ public class DogBreedServiceImplementationTest {
         assertNotNull(result);
         assertEquals(1L, result.getId());
     }
-    /*
-    @Test
-    public void deleteDogBreedTest() {
-        when(dogBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
-        Boolean result = dogBreedServiceImplementation.deleteDogBreed(1L);
-        assertTrue(result);
-        verify(dogBreedRepository, times(1)).deleteById(1L);
-    }
+
+@Test
+public void deleteDogBreedTest() {
+    DogBreed dogBreed = new DogBreed();
+    dogBreed.setId(1L);
+
+    when(dogBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(dogBreed));
+    Boolean result = dogBreedServiceImplementation.deleteDogBreed(1L);
+    assertTrue(result);
+    verify(dogBreedRepository, times(1)).deleteById(1L);
+}
 
 @Test
 public void getAllDogBreedsTest() {
-    Page<DogBreed> dogBreedPage = new PageImpl<>(Collections.singletonList(dogBreed));
-    when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenReturn(dogBreedDto);
+    List<DogBreed> dogBreedList = Arrays.asList(new DogBreed(), new DogBreed());
+    Page<DogBreed> dogBreedPage = new PageImpl<>(dogBreedList);
+
     when(dogBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(dogBreedPage);
 
     Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10);
 
     assertNotNull(result);
-    assertEquals(1, ((List<?>) result.get("dogBreeds")).size());
+    assertEquals(2, ((List<?>) result.get("dogBreeds")).size());
     assertEquals(1, result.get("totalPages"));
-    assertEquals(1L, result.get("totalElements"));
-}*/
+    assertEquals(2L, result.get("totalElements"));
+}
     @Test
     public void getBreedEntityByIdTest() {
         when(dogBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(dogBreed));
@@ -140,4 +144,180 @@ public void getAllDogBreedsTest() {
             dogBreedServiceImplementation.deleteDogBreed(1L);
         });
     }
+    @Test
+    public void createDogBreedBlankNameTest() {
+        DogBreedDto dogBreedDto = new DogBreedDto();
+        dogBreedDto.setName("");
+
+        assertThrows(InvalidInputException.class, () -> {
+            dogBreedServiceImplementation.createDogBreed(dogBreedDto);
+        });
+    }
+
+    @Test
+    public void updateDogBreedInvalidIdTest() {
+        DogBreedDto dogBreedDto = new DogBreedDto();
+        dogBreedDto.setId(0L);
+
+        assertThrows(InvalidInputException.class, () -> {
+            dogBreedServiceImplementation.updateDogBreed(dogBreedDto);
+        });
+    }
+
+    @Test
+    public void updateDogBreedBlankNameTest() {
+        DogBreedDto dogBreedDto = new DogBreedDto();
+        dogBreedDto.setId(1L);
+        dogBreedDto.setName("");
+
+        assertThrows(BlankInputException.class, () -> {
+            dogBreedServiceImplementation.updateDogBreed(dogBreedDto);
+        });
+    }
+
+    @Test
+    public void updateDogBreedNotFoundTest() {
+        DogBreedDto dogBreedDto = new DogBreedDto();
+        dogBreedDto.setId(1L);
+        dogBreedDto.setName("Golden Retriever");
+
+        when(dogBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {
+            dogBreedServiceImplementation.updateDogBreed(dogBreedDto);
+        });
+    }
+
+    @Test
+    public void deleteDogBreedInvalidIdTest() {
+        assertThrows(InvalidInputException.class, () -> {
+            dogBreedServiceImplementation.deleteDogBreed(0L);
+        });
+    }
+
+    @Test
+    public void getAllDogBreedsLimitListsTest() {
+        DogBreed dogBreed = new DogBreed();
+        dogBreed.setAdoptionCenters(Arrays.asList(new AdoptionCenter(), new AdoptionCenter()));
+        dogBreed.setHealthIssues(Arrays.asList(new HealthIssue(), new HealthIssue()));
+        dogBreed.setNutritionGuides(Arrays.asList(new NutritionGuide(), new NutritionGuide()));
+        dogBreed.setUsers(Arrays.asList(new User(), new User()));
+        dogBreed.setTrainingGuides(Arrays.asList(new TrainingGuide(), new TrainingGuide()));
+        dogBreed.setBehaviorGuides(Arrays.asList(new BehaviorGuide(), new BehaviorGuide()));
+        dogBreed.setCareTips(Arrays.asList(new CareTip(), new CareTip()));
+        dogBreed.setGroomingGuides(Arrays.asList(new GroomingGuide(), new GroomingGuide()));
+
+        Page<DogBreed> dogBreedPage = new PageImpl<>(Arrays.asList(dogBreed));
+
+        when(dogBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(dogBreedPage);
+
+        Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10);
+
+        assertNotNull(result);
+        assertEquals(1, ((List<?>) result.get("dogBreeds")).size());
+        assertEquals(1, result.get("totalPages"));
+        assertEquals(1L, result.get("totalElements"));
+    }
+    @Test
+    public void getBreedByIdInvalidIdTest() {
+        assertThrows(InvalidInputException.class, () -> {
+            dogBreedServiceImplementation.getBreedById(0L);
+        });
+    }
+
+    @Test
+    public void getBreedByIdNotFoundTest() {
+        when(dogBreedRepository.findById(Mockito.anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundElementException.class, () -> {
+            dogBreedServiceImplementation.getBreedById(1L);
+        });
+    }
+
+@Test
+public void getAllDogBreedsEmptyListTest() {
+    Page<DogBreed> dogBreedPage = new PageImpl<>(Collections.emptyList());
+
+    when(dogBreedRepository.findAll(Mockito.any(PageRequest.class))).thenReturn(dogBreedPage);
+
+    Map<String, Object> result = dogBreedServiceImplementation.getAllDogBreeds(0, 10);
+
+    assertNotNull(result);
+    assertEquals(0, ((List<?>) result.get("dogBreeds")).size());
+    assertEquals(1, result.get("totalPages"));
+    assertEquals(0L, result.get("totalElements"));
+}
+@Test
+public void removeDogBreedReferencesWithNullListsTest() {
+    dogBreed.setAdoptionCenters(null);
+    dogBreed.setHealthIssues(null);
+    dogBreed.setNutritionGuides(null);
+    dogBreed.setUsers(null);
+    dogBreed.setTrainingGuides(null);
+    dogBreed.setBehaviorGuides(null);
+    dogBreed.setCareTips(null);
+    dogBreed.setGroomingGuides(null);
+    dogBreed.setFeedingSchedule(null);
+
+    when(dogBreedRepository.findById(1L)).thenReturn(Optional.of(dogBreed));
+
+    dogBreedServiceImplementation.deleteDogBreed(1L);
+
+    verify(dogBreedRepository, times(1)).deleteById(1L);
+}
+@Test
+public void deleteDogBreedWithReferencesTest() {
+    AdoptionCenter adoptionCenter = new AdoptionCenter();
+    adoptionCenter.setAvailableDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+
+    dogBreed.setAdoptionCenters(Collections.singletonList(adoptionCenter));
+
+    when(dogBreedRepository.findById(1L)).thenReturn(Optional.of(dogBreed));
+
+    dogBreedServiceImplementation.deleteDogBreed(1L);
+
+    assertTrue(adoptionCenter.getAvailableDogBreeds().isEmpty());
+    verify(dogBreedRepository, times(1)).deleteById(1L);
+}
+    @Test
+    public void createDogBreedMappingExceptionTest() {
+        when(dogBreedMapper.convertToEntity(Mockito.any(DogBreedDto.class))).thenThrow(new RuntimeException("Mapping error"));
+
+        assertThrows(RuntimeException.class, () -> {
+            dogBreedServiceImplementation.createDogBreed(dogBreedDto);
+        });
+    }
+   @Test
+public void createDogBreedSetsDatesCorrectlyTest() {
+    when(dogBreedMapper.convertToEntity(Mockito.any(DogBreedDto.class))).thenAnswer(invocation -> {
+        DogBreedDto dto = invocation.getArgument(0);
+        DogBreed breed = new DogBreed();
+        breed.setName(dto.getName());
+        breed.setCreatedDate(LocalDate.now());
+        breed.setModifiedDate(LocalDate.now());
+        return breed;
+    });
+    when(dogBreedRepository.save(Mockito.any(DogBreed.class))).thenAnswer(invocation -> {
+        DogBreed breed = invocation.getArgument(0);
+        breed.setId(1L);
+        return breed;
+    });
+    when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenAnswer(invocation -> {
+        DogBreed breed = invocation.getArgument(0);
+        DogBreedDto dto = new DogBreedDto();
+        dto.setId(breed.getId());
+        dto.setName(breed.getName());
+        dto.setCreatedDate(breed.getCreatedDate());
+        dto.setModifiedDate(breed.getModifiedDate());
+        return dto;
+    });
+
+    DogBreedDto result = dogBreedServiceImplementation.createDogBreed(dogBreedDto);
+
+    assertNotNull(result);
+    assertEquals(LocalDate.now(), result.getCreatedDate());
+    assertEquals(LocalDate.now(), result.getModifiedDate());
+}
+
+
 }
