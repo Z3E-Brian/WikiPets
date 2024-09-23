@@ -78,43 +78,70 @@ public Boolean deleteDogBreed(Long id) {
     return true;
 }
 
-private void removeDogBreedReferences(DogBreed dogBreed, Long id) {
-    if (dogBreed.getAdoptionCenters() != null) {
-        dogBreed.getAdoptionCenters().forEach(adoptionCenter ->
-                adoptionCenter.getAvailableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
+    private void removeDogBreedReferences(DogBreed dogBreed, Long id) {
+        if (dogBreed.getAdoptionCenters() != null) {
+            dogBreed.getAdoptionCenters().forEach(adoptionCenter -> {
+                if (adoptionCenter.getAvailableDogBreeds() != null) {
+                    adoptionCenter.getAvailableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getHealthIssues() != null) {
+            dogBreed.getHealthIssues().forEach(healthIssue -> {
+                if (healthIssue.getSuitableDogBreeds() != null) {
+                    healthIssue.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getNutritionGuides() != null) {
+            dogBreed.getNutritionGuides().forEach(nutritionGuide -> {
+                if (nutritionGuide.getRecommendedDogBreeds() != null) {
+                    nutritionGuide.getRecommendedDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getUsers() != null) {
+            dogBreed.getUsers().forEach(user -> {
+                if (user.getFavoriteDogBreeds() != null) {
+                    user.getFavoriteDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getTrainingGuides() != null) {
+            dogBreed.getTrainingGuides().forEach(trainingGuide -> {
+                if (trainingGuide.getDogBreeds() != null) {
+                    trainingGuide.getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getBehaviorGuides() != null) {
+            dogBreed.getBehaviorGuides().forEach(behaviorGuide -> {
+                if (behaviorGuide.getSuitableDogBreeds() != null) {
+                    behaviorGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getCareTips() != null) {
+            dogBreed.getCareTips().forEach(careTip -> {
+                if (careTip.getRelevantDogBreeds() != null) {
+                    careTip.getRelevantDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getGroomingGuides() != null) {
+            dogBreed.getGroomingGuides().forEach(groomingGuide -> {
+                if (groomingGuide.getSuitableDogBreeds() != null) {
+                    groomingGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+                }
+            });
+        }
+        if (dogBreed.getFeedingSchedule() != null) {
+            if (dogBreed.getFeedingSchedule().getDogBreeds() != null) {
+                dogBreed.getFeedingSchedule().getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
+            }
+        }
     }
-    if (dogBreed.getHealthIssues() != null) {
-        dogBreed.getHealthIssues().forEach(healthIssue ->
-                healthIssue.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-    }
-    if (dogBreed.getNutritionGuides() != null) {
-        dogBreed.getNutritionGuides().forEach(nutritionGuide ->
-                nutritionGuide.getRecommendedDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-    }
-    if (dogBreed.getUsers() != null) {
-        dogBreed.getUsers().forEach(user ->
-                user.getFavoriteDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-    }
-    if (dogBreed.getTrainingGuides() != null) {
-        dogBreed.getTrainingGuides().forEach(trainingGuide ->
-                trainingGuide.getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-    }
-    if (dogBreed.getBehaviorGuides() != null) {
-        dogBreed.getBehaviorGuides().forEach(behaviorGuide ->
-                behaviorGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-    }
-    if (dogBreed.getCareTips() != null) {
-        dogBreed.getCareTips().forEach(careTip ->
-                careTip.getRelevantDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-    }
-    if (dogBreed.getGroomingGuides() != null) {
-        dogBreed.getGroomingGuides().forEach(groomingGuide ->
-                groomingGuide.getSuitableDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id)));
-    }
-    if (dogBreed.getFeedingSchedule() != null) {
-        dogBreed.getFeedingSchedule().getDogBreeds().removeIf(dogBreed1 -> dogBreed1.getId().equals(id));
-    }
-}
+
 
     @Override
     public DogBreedDto updateDogBreed(DogBreedDto dogBreedDto) {

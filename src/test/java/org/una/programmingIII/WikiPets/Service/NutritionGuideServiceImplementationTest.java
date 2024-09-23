@@ -14,6 +14,7 @@ import org.una.programmingIII.WikiPets.Dto.CatBreedDto;
 import org.una.programmingIII.WikiPets.Dto.DogBreedDto;
 import org.una.programmingIII.WikiPets.Exception.BlankInputException;
 import org.una.programmingIII.WikiPets.Exception.InvalidInputException;
+import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.CatBreed;
@@ -281,4 +282,35 @@ public class NutritionGuideServiceImplementationTest {
         assertEquals("Nutrition Guide not found", exception.getMessage());
         verify(nutritionGuideRepository, times(1)).findById(1L);
     }
+    @Test
+    void updateNutritionGuide_ValidInputTest() {
+        NutritionGuideDto nutritionGuideDto = new NutritionGuideDto();
+        nutritionGuideDto.setId(1L);
+        nutritionGuideDto.setTitle("Updated Title");
+        nutritionGuideDto.setContent("Updated Content");
+
+        NutritionGuide oldNutritionGuide = new NutritionGuide();
+        oldNutritionGuide.setId(1L);
+        oldNutritionGuide.setTitle("Old Title");
+        oldNutritionGuide.setContent("Old Content");
+        oldNutritionGuide.setCreatedDate(LocalDate.now().minusDays(1));
+        oldNutritionGuide.setRecommendedCatBreeds(new ArrayList<>());
+        oldNutritionGuide.setRecommendedDogBreeds(new ArrayList<>());
+
+        when(nutritionGuideRepository.findById(1L)).thenReturn(Optional.of(oldNutritionGuide));
+        when(nutritionGuideMapper.convertToEntity(nutritionGuideDto)).thenReturn(oldNutritionGuide);
+        when(nutritionGuideMapper.convertToDTO(any(NutritionGuide.class))).thenReturn(nutritionGuideDto);
+        when(nutritionGuideRepository.save(any(NutritionGuide.class))).thenReturn(oldNutritionGuide);
+
+        NutritionGuideDto result = nutritionGuideServiceImplementation.updateNutritionGuide(nutritionGuideDto);
+
+        assertEquals("Updated Title", result.getTitle());
+        assertEquals("Updated Content", result.getContent());
+        assertNotNull(result.getId());
+        verify(nutritionGuideRepository, times(1)).findById(1L);
+        verify(nutritionGuideRepository, times(1)).save(any(NutritionGuide.class));
+    }
+
+
+
 }

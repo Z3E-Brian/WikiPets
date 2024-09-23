@@ -30,7 +30,6 @@ public class DogBreedServiceImplementationTest {
     private DogBreedServiceImplementation dogBreedServiceImplementation;
     @Mock
     private DogBreedRepository dogBreedRepository;
-
     @Mock
     private GenericMapper<DogBreed, DogBreedDto> dogBreedMapper;
     @Mock
@@ -317,7 +316,79 @@ public void createDogBreedSetsDatesCorrectlyTest() {
     assertNotNull(result);
     assertEquals(LocalDate.now(), result.getCreatedDate());
     assertEquals(LocalDate.now(), result.getModifiedDate());
-}
+}@Test
+    public void removeDogBreedReferencesWithAllListsPopulated() {
+        AdoptionCenter adoptionCenter = new AdoptionCenter();
+        adoptionCenter.setAvailableDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setAdoptionCenters(Collections.singletonList(adoptionCenter));
 
+        HealthIssue healthIssue = new HealthIssue();
+        healthIssue.setSuitableDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setHealthIssues(Collections.singletonList(healthIssue));
+
+        NutritionGuide nutritionGuide = new NutritionGuide();
+        nutritionGuide.setRecommendedDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setNutritionGuides(Collections.singletonList(nutritionGuide));
+
+
+        User user = new User();
+        user.setFavoriteDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setUsers(Collections.singletonList(user));
+
+        TrainingGuide trainingGuide = new TrainingGuide();
+        trainingGuide.setDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setTrainingGuides(Collections.singletonList(trainingGuide));
+
+        BehaviorGuide behaviorGuide = new BehaviorGuide();
+        behaviorGuide.setSuitableDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setBehaviorGuides(Collections.singletonList(behaviorGuide));
+
+        CareTip careTip = new CareTip();
+        careTip.setRelevantDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setCareTips(Collections.singletonList(careTip));
+
+        GroomingGuide groomingGuide = new GroomingGuide();
+        groomingGuide.setSuitableDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setGroomingGuides(Collections.singletonList(groomingGuide));
+
+        FeedingSchedule feedingSchedule = new FeedingSchedule();
+        feedingSchedule.setDogBreeds(new ArrayList<>(Collections.singletonList(dogBreed)));
+        dogBreed.setFeedingSchedule(feedingSchedule);
+
+        when(dogBreedRepository.findById(1L)).thenReturn(Optional.of(dogBreed));
+
+
+        dogBreedServiceImplementation.deleteDogBreed(1L);
+
+        assertTrue(adoptionCenter.getAvailableDogBreeds().isEmpty());
+        assertTrue(healthIssue.getSuitableDogBreeds().isEmpty());
+        assertTrue(nutritionGuide.getRecommendedDogBreeds().isEmpty());
+        assertTrue(user.getFavoriteDogBreeds().isEmpty());
+        assertTrue(trainingGuide.getDogBreeds().isEmpty());
+        assertTrue(behaviorGuide.getSuitableDogBreeds().isEmpty());
+        assertTrue(careTip.getRelevantDogBreeds().isEmpty());
+        assertTrue(groomingGuide.getSuitableDogBreeds().isEmpty());
+        assertTrue(feedingSchedule.getDogBreeds().isEmpty());
+    }
+
+
+    @Test
+public void removeDogBreedReferencesWithAllNullLists() {
+    dogBreed.setAdoptionCenters(null);
+    dogBreed.setHealthIssues(null);
+    dogBreed.setNutritionGuides(null);
+    dogBreed.setUsers(null);
+    dogBreed.setTrainingGuides(null);
+    dogBreed.setBehaviorGuides(null);
+    dogBreed.setCareTips(null);
+    dogBreed.setGroomingGuides(null);
+    dogBreed.setFeedingSchedule(null);
+
+    when(dogBreedRepository.findById(1L)).thenReturn(Optional.of(dogBreed));
+
+    dogBreedServiceImplementation.deleteDogBreed(1L);
+
+    verify(dogBreedRepository, times(1)).deleteById(1L);
+}
 
 }
