@@ -8,10 +8,13 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.una.programmingIII.WikiPets.Dto.NutritionGuideDto;
+import org.una.programmingIII.WikiPets.Dto.UserDto;
 import org.una.programmingIII.WikiPets.Exception.CustomException;
 import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.NutritionGuideInput;
+import org.una.programmingIII.WikiPets.Input.UserInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
+import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Service.NutritionGuideService;
 
 import java.util.HashMap;
@@ -29,6 +32,9 @@ class NutritionGuideControllerTest {
     private NutritionGuideService nutritionGuideService;
 
     @Mock
+    private GenericMapperFactory mapperFactory;
+
+    @Mock
     private GenericMapper<NutritionGuideInput, NutritionGuideDto> nutritionGuideMapper;
 
     private NutritionGuideDto nutritionGuideDto;
@@ -39,6 +45,13 @@ class NutritionGuideControllerTest {
         MockitoAnnotations.openMocks(this);
         nutritionGuideDto = new NutritionGuideDto();
         nutritionGuideInput = new NutritionGuideInput();
+        when(mapperFactory.createMapper(NutritionGuideInput.class, NutritionGuideDto.class)).thenReturn(nutritionGuideMapper);
+        nutritionGuideController = new NutritionGuideController(nutritionGuideService, mapperFactory);
+    }
+
+    @Test
+    void testNutritionGuideControllerConstructor() {
+        assertNotNull(nutritionGuideController);
     }
 
     @Test
