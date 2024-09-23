@@ -28,27 +28,27 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http.csrf(csrf -> csrf.disable())
-//                .authorizeHttpRequests(auth -> {
-//                    auth.requestMatchers("/graphql").permitAll();
-//                    auth.requestMatchers("/graphiql").permitAll();
-//                    auth.anyRequest().authenticated();
-//                })
-//              .addFilterBefore(new GraphQLRequestFilter(), UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(new JWTAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())  // Deshabilitar CSRF si no es necesario
+        http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.anyRequest().permitAll();  // Permitir todas las solicitudes sin autenticación
-                });
+                    auth.requestMatchers("/graphql").permitAll();
+                    auth.requestMatchers("/graphiql").permitAll();
+                   auth.anyRequest().authenticated();
+                })
+              .addFilterBefore(new GraphQLRequestFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTAuthorizationFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf(csrf -> csrf.disable())  // Deshabilitar CSRF si no es necesario
+//                .authorizeHttpRequests(auth -> {
+//                    auth.anyRequest().permitAll();  // Permitir todas las solicitudes sin autenticación
+//                });
+//        return http.build();
+//    }
 
 }

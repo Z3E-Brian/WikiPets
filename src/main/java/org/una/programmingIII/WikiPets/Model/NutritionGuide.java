@@ -20,13 +20,13 @@ public class NutritionGuide {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 200)
     private String title;
 
     @Column(length = 2000, nullable = false)
     private String content;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String dietaryRequirements;
 
     @Column(nullable = false)

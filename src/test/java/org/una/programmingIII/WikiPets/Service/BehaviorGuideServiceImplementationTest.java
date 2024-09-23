@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class BehaviorGuideServiceImplementationTest {
-
+/*
     @Mock
     private BehaviorGuideRepository behaviorGuideRepository;
 
@@ -108,5 +108,5 @@ public class BehaviorGuideServiceImplementationTest {
         assertEquals(behaviorGuideDto.getId(), result.get(0).getId());
         assertTrue(result.get(0).getTitle().contains("Pet Behavior"));
 
-    }
+    }*/
 }

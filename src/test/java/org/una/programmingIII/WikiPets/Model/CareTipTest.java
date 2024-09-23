@@ -12,8 +12,12 @@ public class CareTipTest {
     void gettersAndSettersTest() {
         List<DogBreed> dogBreeds = new ArrayList<>();
         List<CatBreed> catBreeds = new ArrayList<>();
-        CareTip careTip = new CareTip(1L, "Title", "Content", dogBreeds, catBreeds);
-
+        CareTip careTip = new CareTip();
+        careTip.setId(1L);
+        careTip.setTitle("Title");
+        careTip.setContent("Content");
+        careTip.setRelevantDogBreeds(dogBreeds);
+        careTip.setRelevantCatBreeds(catBreeds);
         assertEquals(1L, careTip.getId());
         assertEquals("Title", careTip.getTitle());
         assertEquals("Content", careTip.getContent());

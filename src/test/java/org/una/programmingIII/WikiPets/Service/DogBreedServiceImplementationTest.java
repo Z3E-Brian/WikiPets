@@ -74,7 +74,7 @@ public class DogBreedServiceImplementationTest {
 
     @Test
     public void updateDogBreedTest() {
-        when(dogBreedMapper.convertToEntity(Mockito.any(DogBreedDto.class))).thenReturn(dogBreed);
+      when(dogBreedMapper.convertToEntity(Mockito.any(DogBreedDto.class))).thenReturn(dogBreed);
         when(dogBreedMapper.convertToDTO(Mockito.any(DogBreed.class))).thenReturn(dogBreedDto);
         when(dogBreedRepository.save(Mockito.any(DogBreed.class))).thenReturn(dogBreed);
 

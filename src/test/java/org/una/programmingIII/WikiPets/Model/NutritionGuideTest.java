@@ -12,7 +12,13 @@ public class NutritionGuideTest {
     void gettersAndSettersTest() {
         List<DogBreed> dogBreeds = new ArrayList<>();
         List<CatBreed> catBreeds = new ArrayList<>();
-        NutritionGuide nutritionGuide = new NutritionGuide(1L, "Title", "Content", dogBreeds, catBreeds, "Dietary");
+        NutritionGuide nutritionGuide = new NutritionGuide();
+        nutritionGuide.setId(1L);
+        nutritionGuide.setTitle("Title");
+        nutritionGuide.setContent("Content");
+        nutritionGuide.setRecommendedDogBreeds(dogBreeds);
+        nutritionGuide.setRecommendedCatBreeds(catBreeds);
+        nutritionGuide.setDietaryRequirements("Dietary");
 
         assertEquals(1L, nutritionGuide.getId());
         assertEquals("Title", nutritionGuide.getTitle());

@@ -26,15 +26,14 @@ public class HealthIssueTest {
         DogBreed dogBreed = new DogBreed();
         CatBreed catBreed = new CatBreed();
 
-        HealthIssue healthIssue = new HealthIssue(
-                1L,
-                "Obesity",
-                "A condition where excess body fat negatively affects a pet's health",
-                Arrays.asList(dogBreed),
-                Arrays.asList(catBreed),
-                "Overeating",
-                "Diet and exercise"
-        );
+        HealthIssue healthIssue = new HealthIssue();
+        healthIssue.setId(1L);
+        healthIssue.setName("Obesity");
+        healthIssue.setDescription("A condition where excess body fat negatively affects a pet's health");
+        healthIssue.setSuitableDogBreeds(Arrays.asList(dogBreed));
+        healthIssue.setSuitableCatBreeds(Arrays.asList(catBreed));
+        healthIssue.setSymptoms("Overeating");
+        healthIssue.setTreatment("Diet and exercise");
 
         assertEquals(1L, healthIssue.getId());
         assertEquals("Obesity", healthIssue.getName());
@@ -74,28 +73,27 @@ public class HealthIssueTest {
         DogBreed dogBreed = new DogBreed();
         CatBreed catBreed = new CatBreed();
 
-        HealthIssue healthIssue1 = new HealthIssue(
-                1L,
-                "Arthritis",
-                "Inflammation of the joints causing pain and stiffness.",
-                Arrays.asList(dogBreed),
-                Arrays.asList(catBreed),
-                "Limping",
-                "Anti-inflammatory drugs"
-        );
 
-        HealthIssue healthIssue2 = new HealthIssue(
-                1L,
-                "Arthritis",
-                "Inflammation of the joints causing pain and stiffness.",
-                Arrays.asList(dogBreed),
-                Arrays.asList(catBreed),
-                "Limping",
-                "Anti-inflammatory drugs"
-        );
+                HealthIssue healthIssue1 = new HealthIssue();
+        healthIssue1.setId(1L);
+        healthIssue1.setName("Obesity");
+        healthIssue1.setDescription("A condition where excess body fat negatively affects a pet's health");
+        healthIssue1.setSuitableDogBreeds(Arrays.asList(dogBreed));
+        healthIssue1.setSuitableCatBreeds(Arrays.asList(catBreed));
+        healthIssue1.setSymptoms("Overeating");
+        healthIssue1.setTreatment("Diet and exercise");
 
-        assertEquals(healthIssue1, healthIssue2);
-        assertEquals(healthIssue1.hashCode(), healthIssue2.hashCode());
+        HealthIssue healthIssue = new HealthIssue();
+        healthIssue.setId(1L);
+        healthIssue.setName("Obesity");
+        healthIssue.setDescription("A condition where excess body fat negatively affects a pet's health");
+        healthIssue.setSuitableDogBreeds(Arrays.asList(dogBreed));
+        healthIssue.setSuitableCatBreeds(Arrays.asList(catBreed));
+        healthIssue.setSymptoms("Overeating");
+        healthIssue.setTreatment("Diet and exercise");
+
+        assertEquals(healthIssue1, healthIssue);
+        assertEquals(healthIssue1.hashCode(), healthIssue.hashCode());
     }
 
     @Test

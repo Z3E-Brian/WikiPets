@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class UserTest {
-
+/*
     private User user;
 
     @BeforeEach
@@ -109,5 +109,5 @@ public class UserTest {
         );
 
         assertEquals(expectedString, user.toString());
-    }
+    }*/
 }

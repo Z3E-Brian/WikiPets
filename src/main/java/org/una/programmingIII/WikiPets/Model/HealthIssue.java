@@ -41,8 +41,8 @@ public class HealthIssue {
             inverseJoinColumns = @JoinColumn(name = "cat_breed_id")
     )
     private List<CatBreed> suitableCatBreeds;
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String symptoms;
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String treatment;
 }
