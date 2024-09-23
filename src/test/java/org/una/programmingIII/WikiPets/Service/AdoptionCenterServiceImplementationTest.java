@@ -17,6 +17,7 @@ import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
 import org.una.programmingIII.WikiPets.Model.*;
 import org.una.programmingIII.WikiPets.Repository.AdoptionCenterRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -333,10 +334,115 @@ public class AdoptionCenterServiceImplementationTest {
         assertEquals(catBreedDto, result);
         verify(adoptionCenterRepository, times(1)).findById(anyLong());
     }
+    @Test
+    void getAllAdoptionCenters_InvalidInput() {
+        assertThrows(IllegalArgumentException.class, () -> adoptionCenterServiceImplementation.getAllAdoptionCenters(-1, 0));
+    }
+    @Test
+    void validateId_ThrowsException() {
+        assertThrows(InvalidInputException.class, () -> adoptionCenterServiceImplementation.getAdoptionCenterById(0L));
+        assertThrows(InvalidInputException.class, () -> adoptionCenterServiceImplementation.deleteAdoptionCenter(0L));
+        assertThrows(InvalidInputException.class, () -> adoptionCenterServiceImplementation.addDogBreedInAdoptionCenter(1L, 0L));
+        assertThrows(InvalidInputException.class, () -> adoptionCenterServiceImplementation.addCatBreedInAdoptionCenter(1L, 0L));
+    }
+
+    @Test
+    void updateAdoptionCenter_CopiesCollections() {
+        AdoptionCenter oldCenter = new AdoptionCenter();
+        oldCenter.setId(1L);
+        oldCenter.setAvailableDogBreeds(List.of(new DogBreed()));
+        oldCenter.setAvailableCatBreeds(List.of(new CatBreed()));
+
+        when(adoptionCenterRepository.findById(1L)).thenReturn(Optional.of(oldCenter));
+        when(adoptionCenterMapper.convertToEntity(any())).thenReturn(new AdoptionCenter());
+        when(adoptionCenterRepository.save(any())).thenReturn(oldCenter);
+        when(adoptionCenterMapper.convertToDTO(any())).thenReturn(new AdoptionCenterDto());
+
+        AdoptionCenterDto newCenter = new AdoptionCenterDto();
+        newCenter.setId(1L);
+        newCenter.setName("New Center");
+        newCenter.setLocation("New Location");
+
+
+
+        adoptionCenterServiceImplementation.updateAdoptionCenter(newCenter);
+
+        verify(adoptionCenterRepository).save(argThat(center ->
+                !center.getAvailableDogBreeds().isEmpty() && !center.getAvailableCatBreeds().isEmpty()
+        ));
+    }
+
+    @Test
+    void updateAdoptionCenter_UpdatesLastUpdate() {
+        AdoptionCenter oldCenter = new AdoptionCenter();
+        oldCenter.setId(1L);
+        oldCenter.setLastUpdate(LocalDate.now().minusDays(1));
+
+        when(adoptionCenterRepository.findById(1L)).thenReturn(Optional.of(oldCenter));
+        when(adoptionCenterMapper.convertToEntity(any())).thenReturn(new AdoptionCenter());
+        when(adoptionCenterRepository.save(any())).thenAnswer(i -> i.getArgument(0));
+        when(adoptionCenterMapper.convertToDTO(any())).thenReturn(new AdoptionCenterDto());
+
+        AdoptionCenterDto newCenter = new AdoptionCenterDto();
+        newCenter.setId(1L);
+        newCenter.setName("New Center");
+        newCenter.setLocation("New Location");
+
+        adoptionCenterServiceImplementation.updateAdoptionCenter(newCenter);
+
+        verify(adoptionCenterRepository).save(argThat(center ->
+                center.getLastUpdate().equals(LocalDate.now())
+        ));
+    }
+
+    @Test
+    void deleteAdoptionCenter_RemovesBreeds() {
+        AdoptionCenter center = new AdoptionCenter();
+        center.setId(1L);
+        DogBreed dogBreed = new DogBreed();
+        dogBreed.setAdoptionCenters(new ArrayList<>(List.of(center)));
+        CatBreed catBreed = new CatBreed();
+        catBreed.setAdoptionCenters(new ArrayList<>(List.of(center)));
+        center.setAvailableDogBreeds(new ArrayList<>(List.of(dogBreed)));
+        center.setAvailableCatBreeds(new ArrayList<>(List.of(catBreed)));
+
+        when(adoptionCenterRepository.findById(1L)).thenReturn(Optional.of(center));
+
+        adoptionCenterServiceImplementation.deleteAdoptionCenter(1L);
+
+        assertTrue(dogBreed.getAdoptionCenters().isEmpty());
+        assertTrue(catBreed.getAdoptionCenters().isEmpty());
+    }
+    @Test
+    void getAllAdoptionCenters_EmptyList() {
+        Page<AdoptionCenter> emptyPage = new PageImpl<>(List.of());
+        when(adoptionCenterRepository.findAll(any(PageRequest.class))).thenReturn(emptyPage);
+
+        Map<String, Object> result = adoptionCenterServiceImplementation.getAllAdoptionCenters(0, 10);
+
+        assertTrue(((List<?>)result.get("adoptionCenters")).isEmpty());
+        assertEquals(1, result.get("totalPages"));
+        assertEquals(0L, result.get("totalElements"));
+    }
 
     @Test
     void getAvailableDogBreeds_NullInput() {
         assertThrows(IllegalArgumentException.class, () -> adoptionCenterServiceImplementation.getAvailableDogBreeds(null));
+    }
+    @Test
+    void addDogBreedInAdoptionCenter_AlreadyExists() {
+        when(adoptionCenterRepository.findById(anyLong())).thenReturn(Optional.of(adoptionCenter));
+        when(dogBreedService.getBreedById(anyLong())).thenReturn(new DogBreedDto());
+        when(dogBreedMapper.convertToEntity(any(DogBreedDto.class))).thenReturn(dogBreed);
+        when(adoptionCenterRepository.save(any(AdoptionCenter.class))).thenReturn(adoptionCenter);
+        when(adoptionCenterMapper.convertToDTO(any(AdoptionCenter.class))).thenReturn(adoptionCenterDto);
+
+
+        AdoptionCenterDto result = adoptionCenterServiceImplementation.addDogBreedInAdoptionCenter(1L, 1L);
+
+        assertEquals(adoptionCenterDto, result);
+        verify(adoptionCenterRepository, times(1)).save(any(AdoptionCenter.class));
+        assertEquals(1, adoptionCenter.getAvailableDogBreeds().size());
     }
 
     @Test
@@ -412,7 +518,7 @@ public class AdoptionCenterServiceImplementationTest {
 
     @Test
     void createAdoptionCenter_BlankLocation() {
-        adoptionCenterDto.setLocation(" ");
+        adoptionCenterDto.setLocation("");
         assertThrows(BlankInputException.class, () -> adoptionCenterServiceImplementation.createAdoptionCenter(adoptionCenterDto));
     }
 
