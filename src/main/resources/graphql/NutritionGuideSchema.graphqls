@@ -1,0 +1,33 @@
+input NutritionGuideInput{
+    id: ID
+    title: String!
+    content: String!
+    dietaryRequirements: String!
+}
+extend type Query {
+    getNutritionGuides(page: Int!, size: Int!): NutritionGuideResponse
+    getNutritionGuideById(id: ID!): NutritionGuideDto
+    getNutritionGuideByTitle(title: String!): NutritionGuideDto
+}
+extend type Mutation{
+    createNutritionGuide(input:NutritionGuideInput): NutritionGuideDto
+    updateNutritionGuide(input:NutritionGuideInput): NutritionGuideDto
+    deleteNutritionGuide(id: ID!): Boolean
+    addRecommendedDogBreedNutritionGuide(IdGuide: ID!, idDogBreed: ID!): NutritionGuideDto
+    addRecommendedCatBreedNutritionGuide(IdGuide: ID!, idCatBreed: ID!): NutritionGuideDto
+}
+type NutritionGuideDto{
+    id: ID
+    title: String
+    content: String
+    dietaryRequirements: String
+    createdDate: LocalDate
+    modifiedDate: LocalDate
+    recommendedDogBreeds: [DogBreedDto]
+    recommendedCatBreeds: [CatBreedDto]
+}
+type NutritionGuideResponse {
+    nutritionGuides: [NutritionGuideDto]
+    totalPages: Int
+    totalElements: Int
+}

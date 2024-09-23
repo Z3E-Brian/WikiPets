@@ -1,0 +1,36 @@
+input ImageInput {
+    id: ID
+    url: String
+    description: String
+}
+
+extend type Query {
+    getImageById(id: ID!): ImageDto
+    getImages(page: Int!, size: Int!): ImageResponse
+    getImagesByDogBreed(id: ID!, page: Int!, size: Int!): ImageResponse
+    getImagesByCatBreed(id: ID!, page: Int!, size: Int!): ImageResponse
+}
+
+extend type Mutation {
+    createImage(input: ImageInput): ImageDto
+    updateImage(input: ImageInput): ImageDto
+    addDogBreedToImage(id: ID!, idDogBreed: ID!): ImageDto
+    addCatBreedToImage(id: ID!, idCatBreed: ID!): ImageDto
+    deleteImage(id: ID!): Boolean
+}
+
+type ImageDto {
+    id: ID
+    url: String
+    description: String
+    dogBreed: DogBreedDto
+    catBreed: CatBreedDto
+    createDate: LocalDate
+    lastUpdate: LocalDate
+}
+
+type ImageResponse {
+    images: [ImageDto]
+    totalPages: Int
+    totalElements: Int
+}

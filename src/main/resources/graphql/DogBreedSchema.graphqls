@@ -1,0 +1,50 @@
+scalar LocalDate
+input DogBreedInput {
+    id: ID
+    name: String!
+    origin: String!
+    size: Int!
+    coat: String!
+    color: String!
+    lifeSpan: String!
+    temperament: String!
+    description: String!
+}
+
+extend type Mutation {
+    createDogBreed(input:DogBreedInput): DogBreedDto
+    updateDogBreed(input:DogBreedInput): DogBreedDto
+    deleteDogBreed(id: ID!): Boolean
+    generateFalseDogBreeds(amount: Int!): Boolean
+}
+extend type Query {
+    getDogBreeds(page:Int!,size:Int! ,limit:Int!): DogBreedResponse
+    getDogBreedById(id: ID!): DogBreedDto
+
+}
+type DogBreedDto{
+    id: ID
+    name: String
+    origin: String
+    size: Int
+    coat: String
+    color: String
+    lifeSpan: String
+    temperament: String
+    description: String
+    createdDate: LocalDate
+    modifiedDate: LocalDate
+    feedingSchedule : FeedingScheduleDto
+    adoptionCenters: [AdoptionCenterDto]
+    careTips: [CareTipDto]
+    groomingGuides: [GroomingGuideDto]
+    healthIssues: [HealthIssueDto]
+    nutritionGuides: [NutritionGuideDto]
+    trainingGuides: [TrainingGuideDto]
+    reviews: [ReviewDto]
+}
+type DogBreedResponse {
+    dogBreeds: [DogBreedDto]
+    totalPages: Int
+    totalElements: Int
+}

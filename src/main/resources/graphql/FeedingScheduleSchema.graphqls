@@ -1,0 +1,32 @@
+input FeedingScheduleInput{
+    id: ID
+    ageGroup: String!
+    feedingTimes: String!
+}
+extend type Query {
+    getFeedingSchedules(page: Int!, size: Int!): FeedingScheduleResponse
+    getFeedingScheduleById(id: ID!): FeedingScheduleDto
+}
+extend type Mutation{
+    createFeedingSchedule(input:FeedingScheduleInput): FeedingScheduleDto
+    updateFeedingSchedule(input:FeedingScheduleInput): FeedingScheduleDto
+    deleteFeedingSchedule(id: ID!): Boolean
+    addDogBreedInFeedingSchedule(id: ID!, idDogBreed: ID!): FeedingScheduleDto
+    deleteDogBreedInFeedingSchedule(id: ID!, idDogBreed: ID!): FeedingScheduleDto
+    addCatBreedInFeedingSchedule(id: ID!, idCatBreed: ID!): FeedingScheduleDto
+    deleteCatBreedInFeedingSchedule(id: ID!, idCatBreed: ID!): FeedingScheduleDto
+}
+type FeedingScheduleDto{
+    id: ID
+    ageGroup: String
+    feedingTimes: String
+    catBreeds: [CatBreedDto]
+    dogBreeds: [DogBreedDto]
+    createDate: LocalDate
+    lastUpdate: LocalDate
+}
+type FeedingScheduleResponse {
+    feedingSchedules: [FeedingScheduleDto]
+    totalPages: Int
+    totalElements: Int
+}

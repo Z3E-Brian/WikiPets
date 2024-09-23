@@ -1,0 +1,41 @@
+input UserInput {
+    id: ID
+    name: String!
+    email: String!
+    password: String
+}
+
+type Query {
+    getUsers(page: Int!, size: Int!): UserResponse
+    getUserById(id: ID!): UserDto
+}
+
+type Mutation {
+    deleteUser(id: ID!): Boolean
+    updateUser (input:UserInput): UserDto
+    addDogBreedInUser(id:ID!,idDogBreed:ID!):UserDto
+    deleteDogBreedInUser(id:ID!,idDogBreed:ID!):UserDto
+    addCatBreedInUser(id:ID!,idCatBreed:ID!):UserDto
+    deleteCatBreedInUser(id:ID!,idCatBreed:ID!):UserDto
+    addReviewInUser(id:ID!,idReview:ID!):UserDto
+    deleteReviewInUser(id:ID!,idReview:ID!):UserDto
+    generateFalseUsers(numberOfUsers:Int!):Boolean
+}
+
+type UserDto {
+    id: ID
+    name: String
+    email: String
+    reviews:[ReviewDto]
+    favoriteDogBreeds:[DogBreedDto]
+    favoriteCatBreeds:[CatBreedDto]
+}
+
+type UserResponse {
+    users: [UserDto]
+    totalPages: Int
+    totalElements: Int
+}
+
+
+

@@ -1,0 +1,36 @@
+input AdoptionCenterInput{
+    id: ID
+    name: String!
+    location: String!
+}
+
+extend type Query {
+    #getAdoptionCenters: [AdoptionCenterDto]
+    getAdoptionCenterById(id: ID!): AdoptionCenterDto
+    getAvailableDogBreeds(id: ID!): [DogBreedDto]
+    getAdoptionCenters(page: Int!, size: Int!): AdoptionCenterResponse
+    getAvailableCatBreeds(id: ID!): [DogBreedDto]
+}
+extend type Mutation{
+    createAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
+    updateAdoptionCenter(input:AdoptionCenterInput): AdoptionCenterDto
+    deleteAdoptionCenter(id: ID!): Boolean
+    deleteCatBreedFromAdoptionCenter(id:ID!,catBreedId: ID!): AdoptionCenterDto
+    deleteDogBreedFromAdoptionCenter(id:ID!,dogBreedId: ID!): AdoptionCenterDto
+    addDogBreedInAdoptionCenter(id: ID!, idDogBreed: ID!): AdoptionCenterDto
+    addCatBreedInAdoptionCenter(id: ID!, idCatBreed: ID!): AdoptionCenterDto
+}
+type AdoptionCenterDto{
+    id: ID
+    name: String
+    location: String
+    availableDogBreeds: [DogBreedDto]
+    availableCatBreeds: [CatBreedDto]
+    createDate: LocalDate
+    lastUpdate: LocalDate
+}
+type AdoptionCenterResponse {
+    adoptionCenters: [AdoptionCenterDto]
+    totalPages: Int
+    totalElements: Int
+}

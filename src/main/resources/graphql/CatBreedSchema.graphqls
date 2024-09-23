@@ -1,0 +1,48 @@
+input CatBreedInput {
+    id: ID
+    name: String!
+    origin: String!
+    size: Int!
+    coat: String!
+    color: String!
+    lifeSpan: String!
+    temperament: String!
+    description: String!
+}
+
+extend type Mutation {
+    createCatBreed(input:CatBreedInput): CatBreedDto
+    updateCatBreed(input:CatBreedInput): CatBreedDto
+    deleteCatBreed(id: ID!): Boolean
+    generateFalseCatBreeds(amount: Int!): Boolean
+}
+extend type Query {
+    getCatBreeds(page:Int!,size:Int!,limit:Int!): CatBreedResponse
+    getCatBreedById(id: ID!): CatBreedDto
+}
+type CatBreedDto{
+    id: ID
+    name: String
+    origin: String
+    size: Int
+    coat: String
+    color: String
+    lifeSpan: String
+    temperament: String
+    description: String
+    createdDate: LocalDate
+    modifiedDate: LocalDate
+    feedingSchedule : FeedingScheduleDto
+    adoptionCenters: [AdoptionCenterDto]
+    careTips: [CareTipDto]
+    groomingGuides: [GroomingGuideDto]
+    healthIssues: [HealthIssueDto]
+    nutritionGuides: [NutritionGuideDto]
+    trainingGuides: [TrainingGuideDto]
+    reviews: [ReviewDto]
+}
+type CatBreedResponse {
+    catBreeds: [CatBreedDto]
+    totalPages: Int
+    totalElements: Int
+}
