@@ -1,5 +1,6 @@
 package org.una.programmingIII.WikiPets.Config;
 
+import jakarta.servlet.DispatcherType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
+                    // Lets the error page answer with the status set by the filters (401) instead of 403.
+                    auth.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll();
                     auth.requestMatchers("/graphql").permitAll();
                     auth.requestMatchers("/graphiql").permitAll();
                     auth.anyRequest().authenticated();
