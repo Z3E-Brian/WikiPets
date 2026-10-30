@@ -51,7 +51,7 @@ public class AuthenticationService {
         if(user==null){
             throw  new NotFoundElementException("No user founded");
         }
-        String token = jtwService.generateAccessToken(email);
+        String token = jtwService.generatePasswordResetToken(email);
 
         emailService.sendSimpleEmail(email,
                 "Password recovery",
@@ -65,8 +65,7 @@ public class AuthenticationService {
         if(user==null){
             throw new NotFoundElementException("User not found");
         }
-        System.out.println(!jtwService.isTokenExpired(recoverPasswordInput.getToken()));
-        if(jtwService.isTokenExpired(recoverPasswordInput.getToken())){
+        if(jtwService.isTokenValid(recoverPasswordInput.getToken(), JWTService.TokenPurpose.PASSWORD_RESET)){
             user.setPassword(passwordEncoder.encode(recoverPasswordInput.getPassword()));
             user.setLastUpdate(LocalDate.now());
             userService.updateUser(user);

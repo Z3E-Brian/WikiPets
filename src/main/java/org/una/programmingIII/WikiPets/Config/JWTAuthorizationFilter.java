@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.una.programmingIII.WikiPets.Service.JWTService;
+import org.una.programmingIII.WikiPets.Service.JWTService.TokenPurpose;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
         String token = header.substring(7);
         try {
-            if (!jwtService.validateToken(token)) {
+            if (!jwtService.isTokenValid(token, TokenPurpose.ACCESS)) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
                 return;
             }

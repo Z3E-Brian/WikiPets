@@ -12,73 +12,89 @@ import java.util.Date;
 
 @Service
 public class JWTService {
-    private final int accessTokenExpiration;
-    private final int refreshTokenExpiration;
+    private static final String PURPOSE_CLAIM = "purpose";
+
+    /**
+     * What a token was issued for. Every token carries its purpose in the "purpose" claim and is
+     * only accepted for that purpose, so a refresh or password reset token can not be used as an
+     * access token (and an access token can not be used to reset a password).
+     */
+    public enum TokenPurpose {
+        ACCESS("access"),
+        REFRESH("refresh"),
+        PASSWORD_RESET("password_reset");
+
+        private final String claimValue;
+
+        TokenPurpose(String claimValue) {
+            this.claimValue = claimValue;
+        }
+
+        public String getClaimValue() {
+            return claimValue;
+        }
+    }
+
+    private final long accessTokenExpiration;
+    private final long refreshTokenExpiration;
+    private final long passwordResetTokenExpiration;
     private final Key key;
+
     @Autowired
-    JWTService(@Value("${jwt.secret}") String secretKey,
-               @Value("${jwt.access-token-expiration}") long accessTokenExpiration,
-               @Value("${jwt.refresh-token-expiration}") long refreshTokenExpiration) {
-        this.accessTokenExpiration = (int) accessTokenExpiration;
-        this.refreshTokenExpiration = (int) refreshTokenExpiration;
+    public JWTService(@Value("${jwt.secret}") String secretKey,
+                      @Value("${jwt.access-token-expiration}") long accessTokenExpiration,
+                      @Value("${jwt.refresh-token-expiration}") long refreshTokenExpiration,
+                      @Value("${jwt.password-reset-token-expiration}") long passwordResetTokenExpiration) {
+        this.accessTokenExpiration = accessTokenExpiration;
+        this.refreshTokenExpiration = refreshTokenExpiration;
+        this.passwordResetTokenExpiration = passwordResetTokenExpiration;
         this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     public String generateAccessToken(User user) {
-        return Jwts.builder()
-                .setSubject(user.getEmail())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+        return generateToken(user.getEmail(), TokenPurpose.ACCESS, accessTokenExpiration);
     }
 
     public String generateRefreshToken(User user) {
-        return Jwts.builder()
-                .setSubject(user.getEmail())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+        return generateToken(user.getEmail(), TokenPurpose.REFRESH, refreshTokenExpiration);
     }
 
-    public String generateAccessToken(String email) {
-        return Jwts.builder()
-                .setSubject(email)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
+    public String generatePasswordResetToken(String email) {
+        return generateToken(email, TokenPurpose.PASSWORD_RESET, passwordResetTokenExpiration);
     }
 
-    public boolean validateToken(String token) {
+    /**
+     * Returns true only if the token is correctly signed, has not expired and was issued for the
+     * given purpose.
+     */
+    public boolean isTokenValid(String token, TokenPurpose purpose) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
-        } catch (JwtException e) {
+            String tokenPurpose = parseClaims(token).get(PURPOSE_CLAIM, String.class);
+            return purpose.getClaimValue().equals(tokenPurpose);
+        } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
 
     public String getEmailFromToken(String token) {
-        Claims claims = Jwts.parserBuilder().setSigningKey(key)
+        return parseClaims(token).getSubject();
+    }
+
+    private String generateToken(String email, TokenPurpose purpose, long expiration) {
+        return Jwts.builder()
+                .setSubject(email)
+                .claim(PURPOSE_CLAIM, purpose.getClaimValue())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    private Claims parseClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getSubject();
-    }
-
-    public boolean isTokenExpired(String token) {
-        try {
-            Date expirationDate = Jwts.parserBuilder()
-                    .setSigningKey(key)
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getExpiration();
-            return !expirationDate.before(new Date());
-        } catch (JwtException e) {
-            return false;
-        }
     }
 }

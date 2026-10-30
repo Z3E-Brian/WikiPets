@@ -18,7 +18,7 @@ public class RefreshTokenService {
     }
 
     public String refreshAccessToken(String refreshToken) {
-        if (jwtService.validateToken(refreshToken)) {
+        if (jwtService.isTokenValid(refreshToken, JWTService.TokenPurpose.REFRESH)) {
             String email = jwtService.getEmailFromToken(refreshToken);
             User user = userService.findByEmail(email);
             return jwtService.generateAccessToken(user);
