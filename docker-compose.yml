@@ -3,8 +3,6 @@ version: '3.8'
 services:
   postgres:
     image: postgres:16.4
-    env_file:
-      - .env
     ports:
       - "6000:5432"
     volumes:
@@ -21,8 +19,6 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    env_file:
-      - .env
     ports:
       - "5051:80"
     depends_on:
