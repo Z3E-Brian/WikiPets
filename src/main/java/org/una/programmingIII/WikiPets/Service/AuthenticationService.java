@@ -7,7 +7,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.una.programmingIII.WikiPets.Dto.UserDto;
-import org.una.programmingIII.WikiPets.Exception.NotFoundElementException;
 import org.una.programmingIII.WikiPets.Input.RecoverPasswordInput;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapper;
 import org.una.programmingIII.WikiPets.Mapper.GenericMapperFactory;
@@ -17,9 +16,11 @@ import java.time.LocalDate;
 
 @Service
 public class AuthenticationService {
+    static final String PASSWORD_RECOVERY_REQUESTED = "If the account exists, we sent an email with the instructions to recover the password";
+    static final String INVALID_RECOVERY_TOKEN = "Invalid token";
 
     private final UserService userService;
-    private final JWTService jtwService;
+    private final JWTService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final GenericMapper<User, UserDto> userMapper;
     private final EmailService emailService;
@@ -29,7 +30,7 @@ public class AuthenticationService {
         this.userService = userService;
         this.userMapper = mapperFactory.createMapper(User.class, UserDto.class);
         this.passwordEncoder = passwordEncoder;
-        this.jtwService = jwtService;
+        this.jwtService = jwtService;
         this.emailService = emailService;
     }
 
@@ -46,32 +47,39 @@ public class AuthenticationService {
         return userMapper.convertToDTO(user);
     }
 
+    /**
+     * Sends a single-purpose password reset token to the email. The answer is the same whether the
+     * account exists or not, so this mutation can not be used to find out which emails are registered.
+     */
     public String initiatePasswordRecovery(String email) throws MessagingException {
         User user = userService.findByEmail(email);
-        if(user==null){
-            throw  new NotFoundElementException("No user founded");
+        if (user != null) {
+            String token = jwtService.generatePasswordResetToken(user.getEmail());
+            emailService.sendSimpleEmail(user.getEmail(),
+                    "Password recovery",
+                    "Use this token to recover your password: " + token);
         }
-        String token = jtwService.generatePasswordResetToken(email);
-
-        emailService.sendSimpleEmail(email,
-                "Password recovery",
-                "Use this token to recover your password: " + token);
-
-        return "Email sent successfully";
+        return PASSWORD_RECOVERY_REQUESTED;
     }
 
+    /**
+     * Changes the password only if the token is a valid password reset token issued for the same
+     * email that is being recovered.
+     */
     public String completePasswordRecovery(RecoverPasswordInput recoverPasswordInput) {
+        String token = recoverPasswordInput.getToken();
+        if (!jwtService.isTokenValid(token, JWTService.TokenPurpose.PASSWORD_RESET)
+                || !jwtService.getEmailFromToken(token).equals(recoverPasswordInput.getEmail())) {
+            return INVALID_RECOVERY_TOKEN;
+        }
         User user = userService.findByEmail(recoverPasswordInput.getEmail());
-        if(user==null){
-            throw new NotFoundElementException("User not found");
+        if (user == null) {
+            return INVALID_RECOVERY_TOKEN;
         }
-        if(jtwService.isTokenValid(recoverPasswordInput.getToken(), JWTService.TokenPurpose.PASSWORD_RESET)){
-            user.setPassword(passwordEncoder.encode(recoverPasswordInput.getPassword()));
-            user.setLastUpdate(LocalDate.now());
-            userService.updateUser(user);
-           return "Password updated successfully";
-        }
-        return "Invalid token";
+        user.setPassword(passwordEncoder.encode(recoverPasswordInput.getPassword()));
+        user.setLastUpdate(LocalDate.now());
+        userService.updateUser(user);
+        return "Password updated successfully";
     }
 
     public void changePassword(String email, String password, String newPassword) {
