@@ -5,16 +5,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-import java.util.stream.Collectors;
-
+/**
+ * Caches the body of POST /graphql requests so JWTAuthorizationFilter can read it to detect the
+ * public operations and the GraphQL handler can still read it afterwards.
+ */
 public class GraphQLRequestFilter extends OncePerRequestFilter {
-    private static final Logger logger = LoggerFactory.getLogger(GraphQLRequestFilter.class);
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -22,14 +21,6 @@ public class GraphQLRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         if (request.getMethod().equalsIgnoreCase("POST") && request.getRequestURI().equals("/graphql")) {
             CachedBodyHttpServletRequest cachedBodyRequest = new CachedBodyHttpServletRequest(request);
-            String body = cachedBodyRequest.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-
-            if (body.contains("\"operationName\":\"login\"") || body.contains("mutation { login")||body.contains("login(input: { ")) {
-                logger.info("Login operation detected, skipping authentication");
-                filterChain.doFilter(cachedBodyRequest, response);
-                cachedBodyRequest.clearBody();
-                return;
-            }
             filterChain.doFilter(cachedBodyRequest, response);
             cachedBodyRequest.clearBody();
         } else {

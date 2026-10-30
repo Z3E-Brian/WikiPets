@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
     private final JWTService jwtService;
+    private final PublicGraphQLOperations publicGraphQLOperations = new PublicGraphQLOperations();
 
     public JWTAuthorizationFilter(JWTService jwtService) {
         this.jwtService = jwtService;
@@ -32,7 +33,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         String requestURI = request.getRequestURI();
         String header = request.getHeader("Authorization");
 
-        if (requestURI.equals("/graphiql") || isLoginRequest(request)) {
+        if (requestURI.equals("/graphiql") || isPublicGraphQLRequest(request)) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -59,9 +60,16 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private boolean isLoginRequest(HttpServletRequest request) throws IOException {
+    /**
+     * Login and password recovery are the only operations allowed without a token. The body is
+     * readable here because GraphQLRequestFilter caches it for POST /graphql.
+     */
+    private boolean isPublicGraphQLRequest(HttpServletRequest request) throws IOException {
+        if (!request.getMethod().equalsIgnoreCase("POST") || !request.getRequestURI().equals("/graphql")) {
+            return false;
+        }
         String body = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-        return body.contains("\"operationName\":\"login\"") || body.contains("mutation { login") || body.contains("login(input: { ");
+        return publicGraphQLOperations.isPublic(body);
     }
 
     private void authenticate(String token) {
