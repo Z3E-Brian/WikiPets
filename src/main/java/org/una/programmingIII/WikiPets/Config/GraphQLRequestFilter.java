@@ -23,7 +23,6 @@ public class GraphQLRequestFilter extends OncePerRequestFilter {
         if (request.getMethod().equalsIgnoreCase("POST") && request.getRequestURI().equals("/graphql")) {
             CachedBodyHttpServletRequest cachedBodyRequest = new CachedBodyHttpServletRequest(request);
             String body = cachedBodyRequest.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-            logger.info("GraphQL request body: {}", body);
 
             if (body.contains("\"operationName\":\"login\"") || body.contains("mutation { login")||body.contains("login(input: { ")) {
                 logger.info("Login operation detected, skipping authentication");
