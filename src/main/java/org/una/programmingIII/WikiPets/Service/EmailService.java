@@ -4,6 +4,7 @@ package org.una.programmingIII.WikiPets.Service;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
+    private final JavaMailSender mailSender;
+    private final String fromAddress;
+
     @Autowired
-    private JavaMailSender mailSender;
+    public EmailService(JavaMailSender mailSender, @Value("${spring.mail.username}") String fromAddress) {
+        this.mailSender = mailSender;
+        this.fromAddress = fromAddress;
+    }
 
     public void sendSimpleEmail(String toEmail, String subject, String body) throws MessagingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -40,9 +47,8 @@ public class EmailService {
         helper.setText(htmlBody, true);
         helper.setTo(toEmail);
         helper.setSubject(subject);
-        helper.setFrom("dio3sancho@gmail.com");
+        helper.setFrom(fromAddress);
 
         mailSender.send(mimeMessage);
-        System.out.println("Correo enviado a " + toEmail);
     }
 }
